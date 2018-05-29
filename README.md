@@ -19,6 +19,13 @@ ArbNumerics exports three types: `ArbFloat`, `ArbBall`, `ArbComplex`.  `ArbFloat
 
 While the bounds of an `ArbBall` or `ArbComplex` are available, the default is to show these values as digit sequences which almost assuredly are accurate, in a round to nearest sense, to the precision displayed.  Math with `ArbFloat` does not provide the assurance one gets using `ArbBall`, as an `ArbFloat` is a point value.  While some effort has been taken to provide you with more reliable results from math with `ArbFloat` values than would be the case using the underlying library itself, `ArbBall` or `ArbComplex` are suggested for work that is important to you.  `ArbFloat` is appropriate when exactness is not required during development, or with applications that are approximating something at increasing precisions.
 
+## Installation
+
+This requires Julia v0.7-, and access to the Arb C library.  Do this: `using Pkg; Pkg.add("Nemo")`. There will commence all sorts of activity.  If you are doing this before Nemo.jl has a v0.7 release, you will see a message that the  installation failed.  _That is OK!_  Now you have the Arb C library and I can find it.
+Now exit Julia `exit()` and restart Julia. Do this: `using Pkg; Pkg.add("ArbNumerics")`. That should do it.
+
+If you have an older version of Nemo installed, or if you are unsure about that, please do this first `using Pkg; Pkg.rm("Nemo"); Pkg.rm("Nemo")`.
+
 ## Constructors
 
 Initially, the default precision is set to 106 bits.  All Arb types use the same default precision. You can change this to e.g. 750 bits: `setprecision(ArbFloat, 750)` or `setprecision(ArbBall, 750)`. While you may use whatever precision you like, the underlying C library is optimized for precisions <= 4_000 bits (roughly).
