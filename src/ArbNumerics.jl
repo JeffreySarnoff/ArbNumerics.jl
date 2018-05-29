@@ -25,8 +25,8 @@ export ArbFloat, ArbBall, ArbComplex,
        getprecision, resetprecision,
 
        signs, signbits,
-       significand_bits, relerror_bits, ulp, ulps, epss,
-       trim, 
+       significand_bits, relerror_bits, relaccuracy_bits,
+       trim_bits, ulp, ulps, epss,
 
        # other functions
        square, cube, rsqrt, pow, root, loghypot,
