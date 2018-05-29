@@ -102,7 +102,7 @@ end
 
 
 for (A,F) in ((:loghypot, :acb_log_hypot), (:atan2, :acb_atan2),
-              (:ellipticP, :acb_elliptic_pi), (:ellipticP, :acb_elliptic_p),
+              (:ellipticP, :acb_elliptic_p), (:ellipticPi, :acb_elliptic_pi),
               (:ellipticZeta, :acb_elliptic_zeta), (:ellipticSigma, :acb_elliptic_sigma),
              )
     @eval begin
