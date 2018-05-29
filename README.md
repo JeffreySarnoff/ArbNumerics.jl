@@ -33,7 +33,7 @@ julia> Pkg.add("ArbNumerics");
 julia> using ArbNumerics
 julia> exit()
 ```
-There will commence much activity (getting source codes over the internet and compiling them).  If you are doing this before Nemo.jl has a v0.7 release, you may see warnings.  _That is OK!_.
+There will commence much activity (getting source codes over the internet and compiling them takes time).  If you are doing this before Nemo.jl has a v0.7 release, you may see warnings.  _That is OK!_.
 
 That should do it.  There should not be any error messages.  If there are, let me know.
 
