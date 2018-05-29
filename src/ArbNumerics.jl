@@ -52,7 +52,7 @@ import Base: hash,
 
        iszero, isone, isinteger, isfinite, isinf, isnan, issubnormal,
        zero, one,
-       precision, setprecision,
+       precision, setprecision, eps,
 
        abs, signbit, sign, copysign, flipsign,
 
