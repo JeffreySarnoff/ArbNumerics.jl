@@ -95,7 +95,6 @@ include("values/intraconvert.jl")
 include("values/interconvert.jl")
 include("values/conversions.jl")
 include("values/specialvals.jl")
-include("values/characterizing.jl")
 include("values/compare.jl")
 
 include("float/prearith.jl")
