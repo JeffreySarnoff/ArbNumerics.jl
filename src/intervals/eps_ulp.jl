@@ -26,8 +26,9 @@ end
     defined as the difference between
     the position of the top bit in the radius
     and the top bit in the midpoint, plus one.
-    The result is clamped between plus/minus ARF_PREC_EXACT.
-    
+    The result is clamped between plus/minus ARF_PREC_EXACT
+    (ARF_PREC_EXACT == ±(2^{63}-1) inclusive on a 64-bit machine).
+
     acb_rel_error_bits
     
     Returns the effective relative error of x measured in bits.
