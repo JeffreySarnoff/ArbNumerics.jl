@@ -105,3 +105,26 @@ end
 function bounds_abs(x::Arb{P}) where {P}
     lowerbound_abs(x), upperbound_abs(x)
 end
+
+
+function increase_radius(x::Arb{P}, err::Arf{P}) where {P}
+    ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    return x
+end
+
+function increase_radius(x::Arb{P}, err::Arb{P}) where {P}
+    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    return x
+end
+
+function decrease_radius(x::Arb{P}, err::Arf{P}) where {P}
+    err = -err
+    ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    return x
+end
+
+function decrease_radius(x::Arb{P}, err::Arb{P}) where {P}
+    err = -err
+    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    return x
+end
