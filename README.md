@@ -21,13 +21,19 @@ While the bounds of an `ArbBall` or `ArbComplex` are available, the default is t
 
 ## Installation
 
-This requires Julia v0.7-, and access to the Arb C library.  Do this (don't be concerned with the messages): `using Pkg; Pkg.rm("Nemo"); Pkg.rm("Nemo");` `Pkg.clone("https://github.com/wbhart/Nemo.jl.git"); Pkg.build("Nemo")`. There will commence all sorts of activity.  If you are doing this before Nemo.jl has a v0.7 release, you will see a message that the  installation failed.  _That is OK!_  
+This requires Julia v0.7-, and access to the Arb C library.  Do this (don't be concerned with the messages):
+```julia
+julia> using Pkg; Pkg.rm("Nemo"); Pkg.rm("Nemo");
+julia> Pkg.clone("https://github.com/wbhart/Nemo.jl.git"); Pkg.build("Nemo");`
+```
+There will commence much activity (getting source codes over the internet and compiling them).  If you are doing this before Nemo.jl has a v0.7 release, you may see warnings.  _That is OK!_.
+
+There should not be any error messages.  If there are, let me know.
 
 Now you have the Arb C library and I can find it.
 
 Restart Julia and do this: `using Pkg; Pkg.add("ArbNumerics"); Pkg.build("ArbNumerics"); using ArbNumerics`.
 
-There should not be any error messages.  If there are, let me know.
 
 ## Use
 
