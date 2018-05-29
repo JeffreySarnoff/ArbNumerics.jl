@@ -9,6 +9,14 @@ notifications:
   email: false
 git:
   depth: 99999999
+  
+## uncomment the following lines to allow failures on nightly julia
+## (tests will run but not make your overall status red)
+## NEEDED as Nemo.jl is not v0.7- ready, as yet
+matrix:
+  allow_failures:
+    - julia: nightly
+
 #script: # the default script is equivalent to the following
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("Example"); Pkg.test("Example"; coverage=true)';
