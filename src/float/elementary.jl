@@ -59,7 +59,7 @@ for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1,
     end
 end
 
-for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
+for (A,F) in ((:ellipticK, :acb_elliptic_k), (:ellipticE, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi)
              )
     @eval begin
@@ -102,8 +102,8 @@ end
 
 
 for (A,F) in ((:loghypot, :acb_log_hypot), (:atan2, :acb_atan2),
-              (:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
-              (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
+              (:ellipticP, :acb_elliptic_pi), (:ellipticP, :acb_elliptic_p),
+              (:ellipticZeta, :acb_elliptic_zeta), (:ellipticSigma, :acb_elliptic_sigma),
              )
     @eval begin
         function ($A)(x::Acb{P}, y::Acb{P}, prec::Int) where {P}
@@ -115,8 +115,8 @@ for (A,F) in ((:loghypot, :acb_log_hypot), (:atan2, :acb_atan2),
     end
 end
 
-for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
-              (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
+for (A,F) in ((:ellipticPi, :acb_elliptic_pi), (:ellipticP, :acb_elliptic_p),
+              (:ellipticZeta, :acb_elliptic_zeta), (:ellipticSigma, :acb_elliptic_sigma),
              )
     @eval begin
         function ($A)(x::Arb{P}, y::Arb{P}, prec::Int) where {P}
@@ -163,7 +163,7 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
     end
 end
 
-for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
+for (A,F) in ((:ellipticK, :acb_elliptic_k), (:ellipticE, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi))
     @eval begin
         function ($A)(x::Arf{P}, prec::Int) where P
