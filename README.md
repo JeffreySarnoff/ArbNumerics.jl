@@ -139,6 +139,25 @@ Float16(1.414)
 
 ----
 
+### Intervals
+
+#### parts
+
+- midpoint, radius
+- upperbound, lowerbound, bounds
+- upperbound_abs, lowerbound_abs, bounds_abs
+
+#### construction
+
+- setball(midpoint, radius)
+- setinterval(lobound, hibound)
+
+#### retrieval
+
+- getball, getinterval
+
+----
+
 ## The Arb C library
 
 - [Arb](https://arblib.org) is a C library for rigorous real and complex arithmetic with arbitrary precision.    
