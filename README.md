@@ -29,6 +29,11 @@ Restart Julia and do this: `using Pkg; Pkg.add("ArbNumerics"); Pkg.build("ArbNum
 
 There should not be any error messages.  If there are, let me know.
 
+## Use
+
+After the installation is done. `using ArbNumerics` will make this package available.
+
+Reading the sections that follow gives you a good platform from which to develop.
 
 ## Constructors
 
