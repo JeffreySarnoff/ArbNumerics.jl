@@ -39,7 +39,7 @@ julia> using ArbNumerics
 julia> exit()
 ```
 
-You should be good to go.
+That should do it.
 
 ## Use
 
