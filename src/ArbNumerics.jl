@@ -25,8 +25,8 @@ export ArbFloat, ArbBall, ArbComplex,
        getprecision, resetprecision,
 
        signs, signbits,
-       significand_bits, rel_error_bits, rel_accuracy_bits, trim_bits,
-       trim,
+       significand_bits, relerror_bits, ulp, ulps, epss,
+       trim, 
 
        # other functions
        square, cube, rsqrt, pow, root, loghypot,
@@ -104,6 +104,7 @@ include("float/morearith.jl")
 include("float/elementary.jl")
 
 include("intervals/intervalparts.jl")
+include("intervals/eps_ulp.jl")
 
 const ArbFloat = Arf
 const ArbBall = Arb
