@@ -131,8 +131,8 @@ Float16(1.414)
 - `shi`, `chi`
 
 ##### elliptic functions
-- `elliptice`, `elliptick`, `ellipticp`, `ellipticpi`
-- `ellipticzeta`, `ellipticsigma`
+- `ellipticE`, `ellipticK`, `ellipticP`, `ellipticPi`
+- `ellipticZeta`, `ellipticSigma`
 
 ##### arithmetic-geometric mean
 - `agm`, `agm1`
