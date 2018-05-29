@@ -28,10 +28,6 @@ function library_filepath(libsdir::String, filenames::Vector{String}, libname::S
     return joinpath( libsdir, libfile )
 end
 
-NemoLibsDir = abspath(joinpath( package_directory("Nemo"), "local/lib"))
-libFiles = readdir(NemoLibsDir)
-
-libarb = library_filepath( NemoLibsDir, libFiles, "libarb" )
 hasnemo =
     try
         Pkg.status("Nemo"); true
@@ -45,26 +41,40 @@ hasarb =
     catch
         false
     end
-    
+
+hasflint =
+    try
+        libdirpath("flint"); true
+    catch
+        false
+    end
+
 if hasnemo
 
     NemoLibsDir = abspath(joinpath( package_directory("Nemo"), "local/lib"))
     libFiles = readdir(NemoLibsDir)
 
     const LibArb = library_filepath( NemoLibsDir, libFiles, "libarb" )
+    const LibFlint = library_filepath( NemoLibsDir, libFiles, "libflint" )
 
-elseif hasarb
+elseif hasarb && hasflint
     
     const LibArb = realpath(libdirpath("arb"))
+    const LibFlint = realpath(libdirpath("flint"))
 
 else
 
-   throw(ErrorException("You must first add Nemo.jl or get and compile the Arb C library"))
+   throw(ErrorException("You must first add Nemo.jl or get and compile the Arb and Flint C libraries"))
 
 end
 
-
 # @ccall(@libarb(library_function), ReturnType, (arg types), args)
+
 macro libarb(libraryfunction)
     (:($libraryfunction), LibArb)
 end
+
+macro libflint(libraryfunction)
+    (:($libraryfunction), LibFlint)
+end
+
