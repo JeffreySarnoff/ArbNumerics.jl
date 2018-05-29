@@ -41,21 +41,21 @@ hasnemo =
     
 hasarb =
     try
-        libdirpath(arb); true
+        libdirpath("arb"); true
     catch
         false
     end
     
-if hasarb
-    
-    const LibArb = realpath(libdirpath("arb"))
-
-elseif hasnemo
+if hasnemo
 
     NemoLibsDir = abspath(joinpath( package_directory("Nemo"), "local/lib"))
     libFiles = readdir(NemoLibsDir)
 
     const LibArb = library_filepath( NemoLibsDir, libFiles, "libarb" )
+
+elseif hasarb
+    
+    const LibArb = realpath(libdirpath("arb"))
 
 else
 
