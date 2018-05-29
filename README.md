@@ -139,7 +139,7 @@ Float16(1.414)
 
 ----
 
-### Intervals
+## Intervals
 
 #### parts
 
@@ -149,12 +149,21 @@ Float16(1.414)
 
 #### construction
 
-- setball(midpoint, radius)
-- setinterval(lobound, hibound)
+- `setball(midpoint, radius)`
+- `setinterval(lobound, hibound)`
 
 #### retrieval
 
-- getball, getinterval
+- `midpooint, radius = getball(x::ArbBall)`
+- `lobound, hibound = getinterval(x::ArbBall)`
+
+### working with intervals
+
+The radii are kept using an Arb C library internal structure that has a 30 bit unsigned significand and a power-of-2 exponent that is, essentially, a BigInt.  All radii are nonnegative.  From the Arb documentation:
+
+> The mag_t type holds an unsigned floating-point number with a fixed-precision mantissa (30 bits) and an arbitrary-precision exponent ..., suited for representing magnitude bounds. The special values zero and positive infinity are supported, but not NaN.   Operations that involve rounding will always produce a valid bound, For performance reasons, no attempt is made to compute the best possible bounds: in general, a bound may be several ulps larger/smaller than the optimal bound.
+
+When constructing intervals using radii, you should scale the radius to be orders of magnitude smaller than the midpoint -- whenever your working values permit this. 
 
 ----
 
