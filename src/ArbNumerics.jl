@@ -8,6 +8,7 @@ export ArbFloat, ArbBall, ArbComplex,
        midpoint, radius, 
        lowerbound, upperbound, bounds,
        lowerbound_abs, upperbound_abs, bounds_abs,
+       increase_radius, decrease_radius,
        precision_shown, bits4digits, digits4bits,
 
        ispos, isneg, isnonpos, isnonneg,
