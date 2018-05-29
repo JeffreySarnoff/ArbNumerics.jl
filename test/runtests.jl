@@ -1,4 +1,4 @@
-sing ArbNumbers
+using ArbNumerics
 using Test
 
 setprecision(BigFloat, 512)
