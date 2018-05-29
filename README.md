@@ -25,7 +25,7 @@ This requires Julia v0.7-, and access to the Arb C library.  Do this (don't be c
 
 Now you have the Arb C library and I can find it.
 
-Exit `exit()` and restart Julia. Do this: `using Pkg; Pkg.add("ArbNumerics"); Pkg.build("ArbNumerics"); using ArbNumerics`. There should not be any error messages.  If there are, let me know.
+Restart Julia. Do this: `using Pkg; Pkg.add("ArbNumerics"); Pkg.build("ArbNumerics"); using ArbNumerics`. There should not be any error messages.  If there are, let me know.
 
 
 ## Constructors
