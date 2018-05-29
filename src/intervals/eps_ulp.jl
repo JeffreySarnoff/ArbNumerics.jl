@@ -113,7 +113,7 @@ end
 function ulp(x::Arf{P}) where {P}
     w = Mag()
     #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision P.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), z, w, P)
+    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), w, x, P)
     z = Arf{P}(w)
     return z
 end
@@ -121,7 +121,7 @@ end
 function eps(x::Arf{P}) where {P}
     w = Mag()
     #   Sets z to twice the magnitude of the unit in the last place (ulp) of x at precision P.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), z, w, P)
+    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), w, x, P)
     z = Arf{P}(w)
     z += z
     return z
@@ -131,7 +131,7 @@ function ulp(x::Arf{P}, prec::Int) where {P}
     prec < MINIMUM_PRECISION && throw(DomainError("bit precision ($prec) is too low"))
     w = Mag()
     #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision prec.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), z, w, prec)
+    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), w, x, prec)
     z = Arf{P}(w)
     return z
 end
@@ -140,7 +140,7 @@ function eps(x::Arf{P}, prec::Int) where {P}
     prec < MINIMUM_PRECISION && throw(DomainError("bit precision ($prec) is too low"))
     w = Mag()
     #   Sets z to twice the magnitude of the unit in the last place (ulp) of x at precision prec.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), z, w, prec)
+    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{Arf}, Clong), w, x, prec)
     z = Arf{P}(w)
     z += z
     return z
