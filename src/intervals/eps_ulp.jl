@@ -92,23 +92,23 @@ eps(x::Acb{P}) where {P} = eps(midpoint_byref(real(x)))
 ulps(x::Acb{P}) where {P} = ulp(midpoint_byref(real(x))), ulp(midpoint_byref(imag(x)))
 epss(x::Acb{P}) where {P} = eps(midpoint_byref(real(x))), eps(midpoint_byref(imag(x)))
 
-function increase_radius(x::Arb{P}, err::Arf{P})
+function increase_radius(x::Arb{P}, err::Arf{P}) where {P}
     ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
     return x
 end
 
-function increase_radius(x::Arb{P}, err::Arb{P})
+function increase_radius(x::Arb{P}, err::Arb{P}) where {P}
     ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
     return x
 end
 
-function reduce_radius(x::Arb{P}, err::Arf{P})
+function reduce_radius(x::Arb{P}, err::Arf{P}) where {P}
     err = -err
     ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
     return x
 end
 
-function reduce_radius(x::Arb{P}, err::Arb{P})
+function reduce_radius(x::Arb{P}, err::Arb{P}) where {P}
     err = -err
     ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
     return x
