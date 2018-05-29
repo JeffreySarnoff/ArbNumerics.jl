@@ -34,8 +34,8 @@ export ArbFloat, ArbBall, ArbComplex,
        agm1, agm,
        logsinpi, barnesg, logbarnesg,
        ei, si, ci, shi, chi,
-       elliptick, elliptice, ellipticpi, ellipticp,
-       ellipticzeta, ellipticsigma,
+       ellipticK, ellipticE, ellipticPi, ellipticP,
+       ellipticZeta, ellipticSigma,
        zeta, eta, xi                  # Reimann
 
 
