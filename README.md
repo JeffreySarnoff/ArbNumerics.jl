@@ -163,7 +163,7 @@ The radii are kept using an Arb C library internal structure that has a 30 bit u
 
 > The mag_t type holds an unsigned floating-point number with a fixed-precision mantissa (30 bits) and an arbitrary-precision exponent ..., suited for representing magnitude bounds. The special values zero and positive infinity are supported, but not NaN.   Operations that involve rounding will always produce a valid bound, For performance reasons, no attempt is made to compute the best possible bounds: in general, a bound may be several ulps larger/smaller than the optimal bound.
 
-When constructing intervals using radii, you should scale the radius to be orders of magnitude smaller than the midpoint -- whenever your working values permit this. 
+When constructing intervals , you should scale the radius to be as small as possible while preserving enclosure. 
 
 ----
 
