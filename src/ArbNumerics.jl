@@ -77,28 +77,18 @@ import Base.Math:  max, min, minmax,
        clamp, clamp!,
        beta, lbeta, gamma, lgamma, lfact
 
-# extra bits to compensate for questionable
-#   last 2-4 digits in some BigFloat funcs
-#   use a value int 12:16
-const BigFloatFluff = 14
-
-include("support/multiversion.jl")
-include("support/abstractions.jl")
 
 include("libarb/libarb.jl")
 include("libarb/roundingmodes.jl")
-#include("libarb/cstructs.jl")
 include("libarb/Mag.jl")
 include("libarb/Arf.jl")
 include("libarb/Arb.jl")
 include("libarb/Acb.jl")
 include("libarb/promote.jl")
-
-include("support/bitsdigits.jl")
-
 include("libarb/string.jl")
 include("libarb/show.jl")
 
+include("values/bitsdigits.jl")
 include("values/intraconvert.jl")
 include("values/interconvert.jl")
 include("values/conversions.jl")
