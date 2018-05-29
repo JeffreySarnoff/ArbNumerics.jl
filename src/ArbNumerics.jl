@@ -78,6 +78,8 @@ import Base.Math:  max, min, minmax,
        beta, lbeta, gamma, lgamma, lfact
 
 
+include("arblib.jl")
+
 include("libarb/roundingmodes.jl")
 include("libarb/Mag.jl")
 include("libarb/Arf.jl")
