@@ -7,6 +7,8 @@ julia:
   - nightly
 notifications:
   email: false
+git:
+  depth: 99999999
 #script: # the default script is equivalent to the following
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("Example"); Pkg.test("Example"; coverage=true)';
