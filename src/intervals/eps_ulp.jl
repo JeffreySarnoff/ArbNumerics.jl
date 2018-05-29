@@ -36,12 +36,12 @@ end
     and whose radius is the larger out of the real and imaginary radiuses of x.
 =#
 
-function relerr_bits(x::Arb{P}) where {P}
+function relerror_bits(x::Arb{P}) where {P}
     nbits = ccall(@libarb(arb_rel_error_bits), Clong, (Ref{Arb},), x)
     return nbits
 end
 
-function relerr_bits(x::Acb{P}) where {P}
+function relerror_bits(x::Acb{P}) where {P}
     nbits = ccall(@libarb(crb_rel_error_bits), Clong, (Ref{Acb},), x)
     return nbits
 end
