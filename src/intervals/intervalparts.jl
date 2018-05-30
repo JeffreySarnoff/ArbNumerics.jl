@@ -19,12 +19,14 @@ function getinterval(x::Arb{P}) where {P}
 end
 
 function setball(mid::Arf{P}, rad::Arf{P}) where {P}
+    signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     lbound = mid - rad
     ubound = mid + rad
     setinterval(lbound, ubound)
 end
 
 function setball(mid::Arb{P}, rad::Arb{P}) where {P}
+    signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))    
     setball(Arf{P}(mid), Arf{P}(rad))
 end
 
@@ -34,6 +36,10 @@ end
 
 function getball(x::Arb{P}) where {P}
     midpoint(x), radius(x)
+end
+
+function getball(x::Arf{P}) where {P}
+    x, zero(typeof(x))
 end
 
 
