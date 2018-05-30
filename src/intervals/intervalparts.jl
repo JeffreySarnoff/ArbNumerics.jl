@@ -125,7 +125,7 @@ function increase_radius(x::Arb{P}, err::Arb{P}) where {P}
     return x
 end
 
-increase_radius(x::Arb{P}) = increase_radius(x, ulp(x))
+increase_radius(x::Arb{P}) where {P} = increase_radius(x, ulp(x))
 
 function decrease_radius(x::Arb{P}, err::Arf{P}) where {P}
     err = -abs(err)
@@ -139,4 +139,4 @@ function decrease_radius(x::Arb{P}, err::Arb{P}) where {P}
     return x
 end
 
-decrease_radius(x::Arb{P}) = decrease_radius(x, ulp(x))
+decrease_radius(x::Arb{P}) where {P} = decrease_radius(x, ulp(x))
