@@ -108,23 +108,25 @@ end
 
 
 function increase_radius(x::Arb{P}, err::Arf{P}) where {P}
+    err >= 0 || throw(ErrorException("nonnegative err required ($err)"))
     ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
     return x
 end
 
 function increase_radius(x::Arb{P}, err::Arb{P}) where {P}
-    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    err >= 0 || throw(ErrorException("nonnegative err required ($err)"))
+    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arb}), x, err)
     return x
 end
 
 function decrease_radius(x::Arb{P}, err::Arf{P}) where {P}
-    err = -err
+    err = -abs(err)
     ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
     return x
 end
 
 function decrease_radius(x::Arb{P}, err::Arb{P}) where {P}
-    err = -err
-    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    err = -abs(err)
+    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arb}), x, err)
     return x
 end
