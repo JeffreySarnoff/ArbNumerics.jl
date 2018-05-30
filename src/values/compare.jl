@@ -81,7 +81,22 @@ function (>=)(x::Arb{P}, y::Arb{P})  where {P}
     0 != ccall(@libarb(arb_ge), Cint, (Ref{Arb}, Ref{Arb}), x, y)
 end
 
-                                                # Acb comparisons < > <= >=
+# Acb comparisons < > <= >=
+
+
+for F in (:(==), :(!=), :(<), :(<=), :(>=), :(>), :isequal, :isless)
+    @eval begin
+        $F(x::Arf{P}, y::T) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+            $F(promote(x, y)...,)
+        $F(x::T, y::Arf{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+            $F(promote(x, y)...,)
+        $F(x::Arb{P}, y::T) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+            $F(promote(x, y)...,)
+        $F(x::T, y::Arb{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+            $F(promote(x, y)...,)
+    end
+end
+
 
 #=
        x < 2^y   x == 2^y   x > 2^y
