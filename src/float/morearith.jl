@@ -176,7 +176,7 @@ function root(x::Arb{P}, y::T) where {P, T<:Integer}
     ccall(@libarb(arb_root_ui), Cvoid, (Ref{Arb}, Ref{Arb}, Culong, Clong), z, x, u, P)
     return z
 end
-root(x::Arf{P}, y::T) where {P, T<:AbstractFloat} = pow(x, -y)
+root(x::Arb{P}, y::T) where {P, T<:AbstractFloat} = pow(x, -y)
 
 function root(x::Acb{P}, y::T) where {P, T<:Integer}
     y < 0 && return pow(x, abs(y))
@@ -185,4 +185,4 @@ function root(x::Acb{P}, y::T) where {P, T<:Integer}
     ccall(@libarb(acb_root_ui), Cvoid, (Ref{Arb}, Ref{Arb}, Culong, Clong), z, x, u, P)
     return z
 end
-root(x::Arf{P}, y::T) where {P, T<:AbstractFloat} = pow(x, -y)
+root(x::Acb{P}, y::T) where {P, T<:AbstractFloat} = pow(x, -y)
