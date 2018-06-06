@@ -66,12 +66,6 @@ ArbBall{Q}(x::ArbComplex{P}) where {P,Q} = ArbBall{Q}(real(x))
 ArbComplex{Q}(x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(ArbBall{Q}(ArbFloat{Q}(x)))
 ArbComplex{Q}(x::ArbBall{P}) where {P,Q} = ArbComplex{Q}(ArbBall{Q}(x))
 
-@inline convert(::Type{ArbFloat}, x::ArbBall{P}) where {P} = ArbFloat(x)
-@inline convert(::Type{ArbFloat}, x::ArbComplex{P}) where {P} = ArbFloat(x)
-@inline convert(::Type{ArbBall}, x::ArbFloat{P}) where {P} = ArbBall(x)
-@inline convert(::Type{ArbBall}, x::ArbComplex{P}) where {P} = ArbBall(x)
-@inline convert(::Type{ArbComplex}, x::ArbFloat{P}) where {P} = ArbComplex(x)
-@inline convert(::Type{ArbComplex}, x::ArbBall{P}) where {P} = ArbComplex(x)
 
 @inline convert(::Type{ArbFloat{Q}}, x::ArbBall{P}) where {P,Q} = ArbFloat{Q}(x)
 @inline convert(::Type{ArbFloat{Q}}, x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(x)
