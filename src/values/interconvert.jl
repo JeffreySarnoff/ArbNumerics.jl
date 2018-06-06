@@ -4,22 +4,22 @@ convert(::Type{Mag}, x::UInt64) = Mag(x)
 
 convert(::Type{Mag}, x::Float64) = Mag(x)
 
-convert(::Type{Arf{P}}, x::Int64) where {P} = Arf{P}(x)
+convert(::Type{ArbFloat{P}}, x::Int64) where {P} = ArbFloat{P}(x)
 
-convert(::Type{Arf{P}}, x::UInt64) where {P} = Arf{P}(x)
+convert(::Type{ArbFloat{P}}, x::UInt64) where {P} = ArbFloat{P}(x)
 
-convert(::Type{Arf{P}}, x::Float64) where {P} = Arf{P}(x)
-
-
-convert(::Type{Arb{P}}, x::Int64) where {P} = Arb{P}(x)
-
-convert(::Type{Arb{P}}, x::UInt64) where {P} = Arb{P}(x)
-
-convert(::Type{Arb{P}}, x::Float64) where {P} = Arb{P}(x)
+convert(::Type{ArbFloat{P}}, x::Float64) where {P} = ArbFloat{P}(x)
 
 
-convert(::Type{Acb{P}}, x::Int64) where {P} = Acb{P}(x)
+convert(::Type{ArbBall{P}}, x::Int64) where {P} = ArbBall{P}(x)
 
-convert(::Type{Acb{P}}, x::UInt64) where {P} = Acb{P}(x)
+convert(::Type{ArbBall{P}}, x::UInt64) where {P} = ArbBall{P}(x)
 
-convert(::Type{Acb{P}}, x::Float64) where {P} = Acb{P}(x)
+convert(::Type{ArbBall{P}}, x::Float64) where {P} = ArbBall{P}(x)
+
+
+convert(::Type{ArbComplex{P}}, x::Int64) where {P} = ArbComplex{P}(x)
+
+convert(::Type{ArbComplex{P}}, x::UInt64) where {P} = ArbComplex{P}(x)
+
+convert(::Type{ArbComplex{P}}, x::Float64) where {P} = ArbComplex{P}(x)

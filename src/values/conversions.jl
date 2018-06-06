@@ -6,103 +6,103 @@ function Float64(x::Mag)
     return z
 end
 
-function Float64(x::Arf{P}, roundingmode::RoundingMode=RoundNearest) where {P}
+function Float64(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P}
     rounding = match_rounding_mode(roundingmode)
-    z = ccall(@libarb(arf_get_d), Float64, (Ref{Arf}, Cint), x, rounding)
+    z = ccall(@libarb(arf_get_d), Float64, (Ref{ArbFloat}, Cint), x, rounding)
     return z
 end
-Float32(x::Arf{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::Arf{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
+Float32(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
+Float16(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
 
-function Float64(x::Arb{P}, roundingmode::RoundingMode=RoundNearest) where {P}
+function Float64(x::ArbBall{P}, roundingmode::RoundingMode=RoundNearest) where {P}
     x = midpoint(x)
-    y = Arf{P}(x)
+    y = ArbFloat{P}(x)
     Float64(y, roundingmode)
 end
-Float32(x::Arb{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::Arb{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
+Float32(x::ArbBall{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
+Float16(x::ArbBall{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
 
-function Float64(x::Acb{P}, roundingmode::RoundingMode=RoundNearest) where {P}
+function Float64(x::ArbComplex{P}, roundingmode::RoundingMode=RoundNearest) where {P}
     x = midpoint(real(x))
-    y = Arf{P}(x)
+    y = ArbFloat{P}(x)
     Float64(y, roundingmode)
 end
-Float32(x::Acb{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::Acb{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
+Float32(x::ArbComplex{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
+Float16(x::ArbComplex{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
 
 # parts
 
-function real(x::Acb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(acb_get_real), Cvoid, (Ref{Arb}, Ref{Acb}), z, x)
+function real(x::ArbComplex{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(acb_get_real), Cvoid, (Ref{ArbBall}, Ref{ArbComplex}), z, x)
     return z
 end
 
-function imag(x::Acb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(acb_get_imag), Cvoid, (Ref{Arb}, Ref{Acb}), z, x)
+function imag(x::ArbComplex{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(acb_get_imag), Cvoid, (Ref{ArbBall}, Ref{ArbComplex}), z, x)
     return z
 end
 
-function arg(x::Acb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(acb_arg), Cvoid, (Ref{Arb}, Ref{Acb}, Clong), z, x, P)
+function arg(x::ArbComplex{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(acb_arg), Cvoid, (Ref{ArbBall}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
 
 # retype
 
-Arf(x::Arb{P}) where {P} = Arf{P}(x)
-Arf(x::Acb{P}) where {P} = Arf{P}(real(x))
-Arb(x::Arf{P}) where {P} = Arb{P}(x)
-Arb(x::Acb{P}) where {P} = Arb{P}(real(x))
-# Acb(x::Arf{P}) where {P} = Acb{P}(Arb{P}(x))
-# Acb(x::Arb{P}) where {P} = Acb{P}(x)
+ArbFloat(x::ArbBall{P}) where {P} = ArbFloat{P}(x)
+ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(real(x))
+ArbBall(x::ArbFloat{P}) where {P} = ArbBall{P}(x)
+ArbBall(x::ArbComplex{P}) where {P} = ArbBall{P}(real(x))
+# ArbComplex(x::ArbFloat{P}) where {P} = ArbComplex{P}(ArbBall{P}(x))
+# ArbComplex(x::ArbBall{P}) where {P} = ArbComplex{P}(x)
 
-Arf{Q}(x::Arb{P}) where {P,Q} = Arf{Q}(Arb{Q}(x))
-Arf{Q}(x::Acb{P}) where {P,Q} = Arf{Q}(Arb{Q}(real(x)))
-Arb{Q}(x::Arf{P}) where {P,Q} = Arb{Q}(Arf{Q}(x))
-Arb{Q}(x::Acb{P}) where {P,Q} = Arb{Q}(real(x))
-Acb{Q}(x::Arf{P}) where {P,Q} = Acb{Q}(Arb{Q}(Arf{Q}(x)))
-Acb{Q}(x::Arb{P}) where {P,Q} = Acb{Q}(Arb{Q}(x))
+ArbFloat{Q}(x::ArbBall{P}) where {P,Q} = ArbFloat{Q}(ArbBall{Q}(x))
+ArbFloat{Q}(x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(ArbBall{Q}(real(x)))
+ArbBall{Q}(x::ArbFloat{P}) where {P,Q} = ArbBall{Q}(ArbFloat{Q}(x))
+ArbBall{Q}(x::ArbComplex{P}) where {P,Q} = ArbBall{Q}(real(x))
+ArbComplex{Q}(x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(ArbBall{Q}(ArbFloat{Q}(x)))
+ArbComplex{Q}(x::ArbBall{P}) where {P,Q} = ArbComplex{Q}(ArbBall{Q}(x))
 
-@inline convert(::Type{Arf}, x::Arb{P}) where {P} = Arf(x)
-@inline convert(::Type{Arf}, x::Acb{P}) where {P} = Arf(x)
-@inline convert(::Type{Arb}, x::Arf{P}) where {P} = Arb(x)
-@inline convert(::Type{Arb}, x::Acb{P}) where {P} = Arb(x)
-@inline convert(::Type{Acb}, x::Arf{P}) where {P} = Acb(x)
-@inline convert(::Type{Acb}, x::Arb{P}) where {P} = Acb(x)
+@inline convert(::Type{ArbFloat}, x::ArbBall{P}) where {P} = ArbFloat(x)
+@inline convert(::Type{ArbFloat}, x::ArbComplex{P}) where {P} = ArbFloat(x)
+@inline convert(::Type{ArbBall}, x::ArbFloat{P}) where {P} = ArbBall(x)
+@inline convert(::Type{ArbBall}, x::ArbComplex{P}) where {P} = ArbBall(x)
+@inline convert(::Type{ArbComplex}, x::ArbFloat{P}) where {P} = ArbComplex(x)
+@inline convert(::Type{ArbComplex}, x::ArbBall{P}) where {P} = ArbComplex(x)
 
-@inline convert(::Type{Arf{Q}}, x::Arb{P}) where {P,Q} = Arf{Q}(x)
-@inline convert(::Type{Arf{Q}}, x::Acb{P}) where {P,Q} = Arf{Q}(x)
-@inline convert(::Type{Arb{Q}}, x::Arf{P}) where {P,Q} = Arb{Q}(x)
-@inline convert(::Type{Arb{Q}}, x::Acb{P}) where {P,Q} = Arb{Q}(x)
-@inline convert(::Type{Acb{Q}}, x::Arf{P}) where {P,Q} = Acb{Q}(x)
-@inline convert(::Type{Acb{Q}}, x::Arb{P}) where {P,Q} = Acb{Q}(x)
+@inline convert(::Type{ArbFloat{Q}}, x::ArbBall{P}) where {P,Q} = ArbFloat{Q}(x)
+@inline convert(::Type{ArbFloat{Q}}, x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(x)
+@inline convert(::Type{ArbBall{Q}}, x::ArbFloat{P}) where {P,Q} = ArbBall{Q}(x)
+@inline convert(::Type{ArbBall{Q}}, x::ArbComplex{P}) where {P,Q} = ArbBall{Q}(x)
+@inline convert(::Type{ArbComplex{Q}}, x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(x)
+@inline convert(::Type{ArbComplex{Q}}, x::ArbBall{P}) where {P,Q} = ArbComplex{Q}(x)
 
 
 
 # change precision
 
-function Arf{P}(x::Arf{Q}, roundingmode::RoundingMode) where {P,Q}
+function ArbFloat{P}(x::ArbFloat{Q}, roundingmode::RoundingMode) where {P,Q}
     rounding = match_rounding_mode(roundingmode)
-    z = Arf{P}()
+    z = ArbFloat{P}()
     rnd = ccall(@libarb(arf_set_round), Cint,
-                (Ref{Arf}, Ref{Arf}, Clong, Cint), z, x, P, rounding)
+                (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, P, rounding)
     return z
 end
-Arf{P}(x::Arf{Q}) where {P,Q} = Arf{P}(x, RoundNearest)
+ArbFloat{P}(x::ArbFloat{Q}) where {P,Q} = ArbFloat{P}(x, RoundNearest)
 
-function Arb{P}(x::Arb{Q}) where {P,Q}
-    z = Arb{P}()
+function ArbBall{P}(x::ArbBall{Q}) where {P,Q}
+    z = ArbBall{P}()
     ccall(@libarb(arb_set_round), Cvoid,
-          (Ref{Arb}, Ref{Arb}, Clong), z, x, P)
+          (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, P)
     return z
 end
 
-function Acb{P}(x::Acb{Q}) where {P,Q}
-    z = Acb{P}()
+function ArbComplex{P}(x::ArbComplex{Q}) where {P,Q}
+    z = ArbComplex{P}()
     ccall(@libarb(acb_set_round), Cvoid,
-          (Ref{Acb}, Ref{Acb}, Clong), z, x, P)
+          (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end

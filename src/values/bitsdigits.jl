@@ -11,8 +11,8 @@ const log2of10 = log2(10)
     bits = log10of2 * nbits
     bits += 0.125
     floor(Int, bits)
-end    
-    
+end
+
 @inline function bits4digits(ndigits)
     digs = log2of10 * ndigits
     digs += 2.625
@@ -40,24 +40,24 @@ const ExtraBits = BitsOfStability + BitsOfAbsorbtion
 # these typed significands have this many signficant bits
 
 precision(::Type{Mag}) = 30 # bits of significand
-precision(::Type{Arf{P}}) where {P} = P
-precision(::Type{Arb{P}}) where {P} = P
-precision(::Type{Acb{P}}) where {P} = P
+precision(::Type{ArbFloat{P}}) where {P} = P
+precision(::Type{ArbBall{P}}) where {P} = P
+precision(::Type{ArbComplex{P}}) where {P} = P
 
-precision(x::Arf{P}) where {P} = P
-precision(x::Arb{P}) where {P} = P
-precision(x::Acb{P}) where {P} = P
+precision(x::ArbFloat{P}) where {P} = P
+precision(x::ArbBall{P}) where {P} = P
+precision(x::ArbComplex{P}) where {P} = P
 
 # these typed significands have this many signficant bits shown
 
 precision_shown(::Type{Mag}) = 30 # bits of significand
-precision_shown(::Type{Arf{P}}) where {P} = evincedbits(P)
-precision_shown(::Type{Arb{P}}) where {P} = evincedbits(P)
-precision_shown(::Type{Acb{P}}) where {P} = evincedbits(P)
+precision_shown(::Type{ArbFloat{P}}) where {P} = evincedbits(P)
+precision_shown(::Type{ArbBall{P}}) where {P} = evincedbits(P)
+precision_shown(::Type{ArbComplex{P}}) where {P} = evincedbits(P)
 
-precision_shown(x::Arf{P}) where {P} = evincedbits(P)
-precision_shown(x::Arb{P}) where {P} = evincedbits(P)
-precision_shown(x::Acb{P}) where {P} = evincedbits(P)
+precision_shown(x::ArbFloat{P}) where {P} = evincedbits(P)
+precision_shown(x::ArbBall{P}) where {P} = evincedbits(P)
+precision_shown(x::ArbComplex{P}) where {P} = evincedbits(P)
 
 # default precision
 const MINIMUM_PRECISION = 11
@@ -73,12 +73,12 @@ function resetprecision(::Type{BigFloat})
     prec = getprecision(BigFloat)
     setprecision(BigFloat, prec)
 end
-    
-precision(::Type{Arf}) = evincedbits(DEFAULT_PRECISION[1])
-precision(::Type{Arb}) = evincedbits(DEFAULT_PRECISION[1])
-precision(::Type{Acb}) = evincedbits(DEFAULT_PRECISION[1])
 
-function setprecision(::Type{T}, n::Int) where {T<:Union{Arf,Arb,Acb}}
+precision(::Type{ArbFloat}) = evincedbits(DEFAULT_PRECISION[1])
+precision(::Type{ArbBall}) = evincedbits(DEFAULT_PRECISION[1])
+precision(::Type{ArbComplex}) = evincedbits(DEFAULT_PRECISION[1])
+
+function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbBall,ArbComplex}}
     global DEFAULT_PRECISION
     n <= MINIMUM_PRECISION && throw(DomainError("precision must be >= $MINIMUM_PRECISION"))
     newprecision = workingbits(n)
@@ -88,33 +88,33 @@ function setprecision(::Type{T}, n::Int) where {T<:Union{Arf,Arb,Acb}}
     return n
 end
 
-function Arf(x)
+function ArbFloat(x)
     prec = DEFAULT_PRECISION[1]
-    res  = Arf{prec}(x)
+    res  = ArbFloat{prec}(x)
     return res
 end
 
-@inline function Arb(x)
+@inline function ArbBall(x)
     prec = DEFAULT_PRECISION[1]
-    res  = Arb{prec}(x)
+    res  = ArbBall{prec}(x)
     return res
 end
 
-@inline function Acb(x)
+@inline function ArbComplex(x)
     prec = DEFAULT_PRECISION[1]
-    res  = Acb{prec}(x)
+    res  = ArbComplex{prec}(x)
     return res
 end
 
 
-@inline function Acb(x, y)
+@inline function ArbComplex(x, y)
     prec = DEFAULT_PRECISION[1]
-    res  = Acb{prec}(x, y)
+    res  = ArbComplex{prec}(x, y)
     return res
 end
 
-@inline function Acb(x, y::T) where {T<:AbstractFloat}
+@inline function ArbComplex(x, y::T) where {T<:AbstractFloat}
     prec = DEFAULT_PRECISION[1]
-    res  = Acb{prec}(x, y)
+    res  = ArbComplex{prec}(x, y)
     return res
 end
