@@ -73,7 +73,7 @@ Arb{P}(x::T) where {P, T<:Union{Float16, Float32}} = Arb{P}(Float64(x))
 
 function Arb{P}(x::BigFloat) where {P}
     z = Arb{P}()
-    ccall(@libarb(arb_set_mpfr), Cvoid, (Ref{Arb}, Ref{BigFloat}), z, x)
+    ccall(@libarb(arb_set_interval_mpfr), Cvoid, (Ref{Arb}, Ref{BigFloat}, Ref{BigFloat}, Clong), z, x, x, P)
     return z
 end
 Arb{P}(x::BigInt) where {P} = Arb{P}(BigFloat(x))
