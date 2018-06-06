@@ -5,7 +5,7 @@ module ArbNumerics
 export ArbFloat, ArbBall, ArbComplex,
        LowerBound, UpperBound,
        getinterval, setinterval, getball, setball,
-       midpoint, radius, 
+       midpoint, radius,
        lowerbound, upperbound, bounds,
        lowerbound_abs, upperbound_abs, bounds_abs,
        increase_radius, decrease_radius,
@@ -84,9 +84,9 @@ include("support/abstractions.jl")
 
 include("libarb/roundingmodes.jl")
 include("libarb/Mag.jl")
-include("libarb/Arf.jl")
-include("libarb/Arb.jl")
-include("libarb/Acb.jl")
+include("libarb/ArbFloat.jl")
+include("libarb/ArbBall.jl")
+include("libarb/ArbComplex.jl")
 include("libarb/promote.jl")
 include("libarb/string.jl")
 include("libarb/show.jl")
@@ -106,8 +106,5 @@ include("float/elementary.jl")
 include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
-const ArbFloat = Arf
-const ArbBall = Arb
-const ArbComplex  = Acb
 
 end # ArbNumerics
