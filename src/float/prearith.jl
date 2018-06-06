@@ -1,43 +1,43 @@
-function (-)(x::Arf{P}) where {P}
-    z = Arf{P}()
-    ccall(@libarb(arf_neg), Cvoid, (Ref{Arf}, Ref{Arf}), z, x)
+function (-)(x::ArbFloat{P}) where {P}
+    z = ArbFloat{P}()
+    ccall(@libarb(arf_neg), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
     return z
 end
 
-function (-)(x::Arb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(arb_neg), Cvoid, (Ref{Arb}, Ref{Arb}), z, x)
+function (-)(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_neg), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
     return z
 end
 
-function (-)(x::Acb{P}) where {P}
-    z = Acb{P}()
-    ccall(@libarb(acb_neg), Cvoid, (Ref{Acb}, Ref{Acb}), z, x)
+function (-)(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_neg), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
     return z
 end
 
-function abs(x::Arf{P}) where {P}
-    z = Arf{P}()
-    ccall(@libarb(arf_abs), Cvoid, (Ref{Arf}, Ref{Arf}), z, x)
+function abs(x::ArbFloat{P}) where {P}
+    z = ArbFloat{P}()
+    ccall(@libarb(arf_abs), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
     return z
 end
 
-function abs(x::Arb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(arb_abs), Cvoid, (Ref{Arb}, Ref{Arb}), z, x)
+function abs(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_abs), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
     return z
 end
 
-function abs(x::Acb{P}) where {P}
-    z = Acb{P}()
-    ccall(@libarb(acb_abs), Cvoid, (Ref{Acb}, Ref{Acb}, Clong), z, x, P)
+function abs(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_abs), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
 
 
-function sign(x::Arf{P}) where {P}
-    thesgn = ccall(@libarb(arf_sgn), Cint, (Ref{Arf},), x)
-    return Arf{P}(thesgn)
+function sign(x::ArbFloat{P}) where {P}
+    thesgn = ccall(@libarb(arf_sgn), Cint, (Ref{ArbFloat},), x)
+    return ArbFloat{P}(thesgn)
 end
 
 #=
@@ -47,9 +47,9 @@ end
     The result is [0±1]
        if x contains both zero and nonzero numbers.
 =#
-function sign(x::Arb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(arb_sgn), Cvoid, (Ref{Arb}, Ref{Arb}), z, x)
+function sign(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_sgn), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
     return z
 end
 
@@ -65,20 +65,20 @@ end
         for z strictly in the right half plane, -1 for z strictly in the left half plane,
        and the sign of the imaginary part when z is on the imaginary axis.
 =#
-function sign(x::Acb{P}) where {P}
-    z = Arb{P}()
-    ccall(@libarb(acb_csgn), Cvoid, (Ref{Arb}, Ref{Acb}), z, x)
+function sign(x::ArbComplex{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(acb_csgn), Cvoid, (Ref{ArbBall}, Ref{ArbComplex}), z, x)
     return z
 end
 
-function signs(x::Acb{P}) where {P}
+function signs(x::ArbComplex{P}) where {P}
     return sign(real(x)), sign(imag(x))
 end
 
 signbit(x::Mag) = false
-signbit(x::Arf{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
-signbit(x::Arb{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
-signbit(x::Acb{P}, ::Type{RealPart}) where {P} = signbit(real(x))
-signbit(x::Acb{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
-signbit(x::Acb{P}) where {P} = signbit(x, RealPart)
-signbits(x::Acb{P}) where {P} = signbit(x, RealPart), signbit(x, ImagPart)
+signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+signbit(x::ArbBall{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
+signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
+signbit(x::ArbComplex{P}) where {P} = signbit(x, RealPart)
+signbits(x::ArbComplex{P}) where {P} = signbit(x, RealPart), signbit(x, ImagPart)
