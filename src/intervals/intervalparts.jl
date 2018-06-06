@@ -1,142 +1,142 @@
-function setinterval(lo::Arf{P}, hi::Arf{P}) where {P}
+function setinterval(lo::ArbFloat{P}, hi::ArbFloat{P}) where {P}
     lo > hi && return setinterval(hi, lo)
-    z = Arb{P}()
-    ccall(@libarb(arb_set_interval_arf), Cvoid, (Ref{Arb}, Ref{Arf}, Ref{Arf}, Clong), z, lo, hi, P)
+    z = ArbBall{P}()
+    ccall(@libarb(arb_set_interval_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}, Ref{ArbFloat}, Clong), z, lo, hi, P)
     return z
 end
 
-function setinterval(lo::Arb{P}, hi::Arb{P}) where {P}
+function setinterval(lo::ArbBall{P}, hi::ArbBall{P}) where {P}
     lo > hi && return setinterval(hi, lo)
-    setinterval(lowerbound(lo, Arf), upperbound(hi, Arf))
+    setinterval(lowerbound(lo, ArbFloat), upperbound(hi, ArbFloat))
 end
 
-function getinterval(x::Arb{P}, ::Type{Arf}) where {P}
-    Arf{P}(lowerbound(x)), Arf{P}(upperbound(x))
+function getinterval(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    ArbFloat{P}(lowerbound(x)), ArbFloat{P}(upperbound(x))
 end
 
-function getinterval(x::Arb{P}) where {P}
+function getinterval(x::ArbBall{P}) where {P}
    lowerbound(x), upperbound(x)
 end
 
-function setball(mid::Arf{P}, rad::Arf{P}) where {P}
+function setball(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P}
     signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     lbound = mid - rad
     ubound = mid + rad
     setinterval(lbound, ubound)
 end
 
-function setball(mid::Arb{P}, rad::Arb{P}) where {P}
-    signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))    
-    setball(Arf{P}(mid), Arf{P}(rad))
+function setball(mid::ArbBall{P}, rad::ArbBall{P}) where {P}
+    signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
+    setball(ArbFloat{P}(mid), ArbFloat{P}(rad))
 end
 
-function getball(x::Arb{P}, ::Type{Arf}) where {P}
-    Arf{P}(midpoint(x)), Arf{P}(radius(x))
+function getball(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    ArbFloat{P}(midpoint(x)), ArbFloat{P}(radius(x))
 end
 
-function getball(x::Arb{P}) where {P}
+function getball(x::ArbBall{P}) where {P}
     midpoint(x), radius(x)
 end
 
-function getball(x::Arf{P}) where {P}
+function getball(x::ArbFloat{P}) where {P}
     x, zero(typeof(x))
 end
 
 
-@inline function upperbound(x::Arb{P}, ::Type{Arf}) where {P}
-    w = Arf{P}()  
-    ccall(@libarb(arb_get_ubound_arf), Cvoid, (Ref{Arf}, Ref{Arb}, Clong), w, x, P)
+@inline function upperbound(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    w = ArbFloat{P}()
+    ccall(@libarb(arb_get_ubound_arf), Cvoid, (Ref{ArbFloat}, Ref{ArbBall}, Clong), w, x, P)
     return w
 end
 
-function upperbound(x::Arb{P}) where {P}
-    w = upperbound(x, Arf)
-    z = Arb{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{Arb}, Ref{Arf}), z, w)
+function upperbound(x::ArbBall{P}) where {P}
+    w = upperbound(x, ArbFloat)
+    z = ArbBall{P}()
+    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), z, w)
     return z
 end
 
-@inline function lowerbound(x::Arb{P}, ::Type{Arf}) where {P}
-    w = Arf{P}()  
-    ccall(@libarb(arb_get_lbound_arf), Cvoid, (Ref{Arf}, Ref{Arb}, Clong), w, x, P)
+@inline function lowerbound(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    w = ArbFloat{P}()
+    ccall(@libarb(arb_get_lbound_arf), Cvoid, (Ref{ArbFloat}, Ref{ArbBall}, Clong), w, x, P)
     return w
 end
 
-function lowerbound(x::Arb{P}) where {P}
-    w = lowerbound(x, Arf)
-    z = Arb{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{Arb}, Ref{Arf}), z, w)
+function lowerbound(x::ArbBall{P}) where {P}
+    w = lowerbound(x, ArbFloat)
+    z = ArbBall{P}()
+    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), z, w)
     return z
 end
 
-function bounds(x::Arb{P}, ::Type{Arf}) where {P}
-    lowerbound(x, Arf), upperbound(x, Arf)
+function bounds(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    lowerbound(x, ArbFloat), upperbound(x, ArbFloat)
 end
 
-function bounds(x::Arb{P}) where {P}
+function bounds(x::ArbBall{P}) where {P}
     lowerbound(x), upperbound(x)
 end
 
 
-@inline function upperbound_abs(x::Arb{P}, ::Type{Arf}) where {P}
-    w = Arf{P}()  
-    ccall(@libarb(arb_get_abs_ubound_arf), Cvoid, (Ref{Arf}, Ref{Arb}, Clong), w, x, P)
+@inline function upperbound_abs(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    w = ArbFloat{P}()
+    ccall(@libarb(arb_get_abs_ubound_arf), Cvoid, (Ref{ArbFloat}, Ref{ArbBall}, Clong), w, x, P)
     return w
 end
 
-function upperbound_abs(x::Arb{P}) where {P}
-    w = upperbound_abs(x, Arf)
-    z = Arb{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{Arb}, Ref{Arf}), z, w)
+function upperbound_abs(x::ArbBall{P}) where {P}
+    w = upperbound_abs(x, ArbFloat)
+    z = ArbBall{P}()
+    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), z, w)
     return z
 end
 
-@inline function lowerbound_abs(x::Arb{P}, ::Type{Arf}) where {P}
-    w = Arf{P}()  
-    ccall(@libarb(arb_get_abs_lbound_arf), Cvoid, (Ref{Arf}, Ref{Arb}, Clong), w, x, P)
+@inline function lowerbound_abs(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    w = ArbFloat{P}()
+    ccall(@libarb(arb_get_abs_lbound_arf), Cvoid, (Ref{ArbFloat}, Ref{ArbBall}, Clong), w, x, P)
     return w
 end
 
-function lowerbound_abs(x::Arb{P}) where {P}
-    w = lowerbound(x, Arf)
-    z = Arb{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{Arb}, Ref{Arf}), z, w)
+function lowerbound_abs(x::ArbBall{P}) where {P}
+    w = lowerbound(x, ArbFloat)
+    z = ArbBall{P}()
+    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), z, w)
     return z
 end
 
-function bounds_abs(x::Arb{P}, ::Type{Arf}) where {P}
-    lowerbound_abs(x, Arf), upperbound_abs(x, Arf)
+function bounds_abs(x::ArbBall{P}, ::Type{ArbFloat}) where {P}
+    lowerbound_abs(x, ArbFloat), upperbound_abs(x, ArbFloat)
 end
 
-function bounds_abs(x::Arb{P}) where {P}
+function bounds_abs(x::ArbBall{P}) where {P}
     lowerbound_abs(x), upperbound_abs(x)
 end
 
 
-function increase_radius(x::Arb{P}, err::Arf{P}) where {P}
+function increase_radius(x::ArbBall{P}, err::ArbFloat{P}) where {P}
     err >= 0 || throw(ErrorException("nonnegative err required ($err)"))
-    ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), x, err)
     return x
 end
 
-function increase_radius(x::Arb{P}, err::Arb{P}) where {P}
+function increase_radius(x::ArbBall{P}, err::ArbBall{P}) where {P}
     err >= 0 || throw(ErrorException("nonnegative err required ($err)"))
-    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arb}), x, err)
+    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), x, err)
     return x
 end
 
-increase_radius(x::Arb{P}) where {P} = increase_radius(x, ulp(x))
+increase_radius(x::ArbBall{P}) where {P} = increase_radius(x, ulp(x))
 
-function decrease_radius(x::Arb{P}, err::Arf{P}) where {P}
+function decrease_radius(x::ArbBall{P}, err::ArbFloat{P}) where {P}
     err = -abs(err)
-    ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{Arb}, Ref{Arf}), x, err)
+    ccall(@libarb(arb_add_error_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), x, err)
     return x
 end
 
-function decrease_radius(x::Arb{P}, err::Arb{P}) where {P}
+function decrease_radius(x::ArbBall{P}, err::ArbBall{P}) where {P}
     err = -abs(err)
-    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{Arb}, Ref{Arb}), x, err)
+    ccall(@libarb(arb_add_error_arb), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), x, err)
     return x
 end
 
-decrease_radius(x::Arb{P}) where {P} = decrease_radius(x, ulp(x))
+decrease_radius(x::ArbBall{P}) where {P} = decrease_radius(x, ulp(x))
