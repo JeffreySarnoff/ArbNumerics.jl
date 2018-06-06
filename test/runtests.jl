@@ -7,8 +7,8 @@ DIGITS = 78;
 afpi = ArbFloat(pi, bits4digits(DIGITS))
 abpi = ArbBall(pi, bits4digits(DIGITS))
 
-@test DIGITS == length(string(afpi)) - 1 # (-1 for the decimal point) 
-@test DIGITS == length(string(abpi)) - 1 # (-1 for the decimal point) 
+@test DIGITS == length(string(afpi)) - 1 # (-1 for the decimal point)
+@test DIGITS == length(string(abpi)) - 1 # (-1 for the decimal point)
 
 float64  = 0.125
 bigfloat = BigFloat(float64)
