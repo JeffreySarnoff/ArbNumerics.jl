@@ -52,8 +52,10 @@ end
 
 # retype
 
-Arb(x::Arf{P}) where {P} = Arb{P}(x)
 Arf(x::Arb{P}) where {P} = Arf{P}(x)
+Arf(x::Acb{P}) where {P} = Arf{P}(real(x))
+Arb(x::Arf{P}) where {P} = Arb{P}(x)
+Arb(x::Acb{P}) where {P} = Arb{P}(real(x))
 Acb(x::Arf{P}) where {P} = Acb{P}(Arb{P}(x))
 Acb(x::Arb{P}) where {P} = Acb{P}(x)
 
@@ -63,6 +65,22 @@ Arb{Q}(x::Arf{P}) where {P,Q} = Arb{Q}(Arf{Q}(x))
 Arb{Q}(x::Acb{P}) where {P,Q} = Arb{Q}(real(x))
 Acb{Q}(x::Arf{P}) where {P,Q} = Acb{Q}(Arb{Q}(Arf{Q}(x)))
 Acb{Q}(x::Arb{P}) where {P,Q} = Acb{Q}(Arb{Q}(x))
+
+@inline convert(::Type{Arf}, x::Arb{P}) where {P} = Arf(x)
+@inline convert(::Type{Arf}, x::Acb{P}) where {P} = Arf(x)
+@inline convert(::Type{Arb}, x::Arf{P}) where {P} = Arb(x)
+@inline convert(::Type{Arb}, x::Acf{P}) where {P} = Arb(x)
+@inline convert(::Type{Acb}, x::Arf{P}) where {P} = Acb(x)
+@inline convert(::Type{Acb}, x::Arb{P}) where {P} = Acb(x)
+
+@inline convert(::Type{Arf{Q}}, x::Arb{P}) where {P,Q} = Arf{Q}(x)
+@inline convert(::Type{Arf{Q}}, x::Acb{P}) where {P,Q} = Arf{Q}(x)
+@inline convert(::Type{Arb{Q}}, x::Arf{P}) where {P,Q} = Arb{Q}(x)
+@inline convert(::Type{Arb{Q}}, x::Acf{P}) where {P,Q} = Arb{Q}(x)
+@inline convert(::Type{Acb{Q}}, x::Arf{P}) where {P,Q} = Acb{Q}(x)
+@inline convert(::Type{Acb{Q}}, x::Arb{P}) where {P,Q} = Acb{Q}(x)
+
+
 
 # change precision
 
