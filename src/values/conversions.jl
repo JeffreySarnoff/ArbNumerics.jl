@@ -50,6 +50,19 @@ function arg(x::Acb{P}) where {P}
     return z
 end
 
+# retype
+
+Arb(x::Arf{P}) where {P} = Arb{P}(x)
+Arf(x::Arb{P}) where {P} = Arf{P}(x)
+Acb(x::Arf{P}) where {P} = Acb{P}(Arb{P}(x))
+Acb(x::Arb{P}) where {P} = Acb{P}(x)
+
+Arf{Q}(x::Arb{P}) where {P,Q} = Arf{Q}(Arb{Q}(x))
+Arf{Q}(x::Acb{P}) where {P,Q} = Arf{Q}(Arb{Q}(real(x)))
+Arb{Q}(x::Arf{P}) where {P,Q} = Arb{Q}(Arf{Q}(x))
+Arb{Q}(x::Acb{P}) where {P,Q} = Arb{Q}(real(x))
+Acb{Q}(x::Arf{P}) where {P,Q} = Acb{Q}(Arb{Q}(Arf{Q}(x)))
+Acb{Q}(x::Arb{P}) where {P,Q} = Acb{Q}(Arb{Q}(x))
 
 # change precision
 
