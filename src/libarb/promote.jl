@@ -35,6 +35,14 @@ promote_rule(::Type{Arf{P}}, x::Acb{Q}) where {P,Q} =
 promote_rule(::Type{Arb{P}}, x::Acb{Q}) where {P,Q} =
     P>Q ? Acb{P} : Acb{Q}
 
+convert(::Type{Arf}, x::Arf{P}) where {P} = x
+convert(::Type{Arb}, x::Arb{P}) where {P} = x
+convert(::Type{Acb}, x::Acb{P}) where {P} = x
+convert(::Type{Arf}, x::Arb{P}) where {P} = Arf{P}(x)
+convert(::Type{Arf}, x::Acb{P}) where {P} = Arf{P}(real(x))
+convert(::Type{Arb}, x::Acb{P}) where {P} = real(x)
+convert(::Type{Arb}, x::Arf{P}) where {P} = Arb{P}(x)
+convert(::Type{Acb}, x::Arf{P}) where {P} = Acb{P}(x)
 
 convert(::Type{Arb{P}}, x::Acb{P}) where {P} = real(x)
 convert(::Type{Arf{P}}, x::Acb{P}) where {P} = midpoint(real(x), Arf{P})
