@@ -14,11 +14,11 @@ ARF_RND_UP     (1)
     Round to the nearest representable number in the direction away from zero.
 =#
 
-const ArbRoundNearest  = Cint(4) # RoundingMode{:Nearest}()
-const ArbRoundDown     = Cint(2) # RoundingMode{:Down}()
-const ArbRoundUp       = Cint(3) # RoundingMode{:Up}()
-const ArbRoundToZero   = Cint(0) # RoundingMode{:ToZero}()
-const ArbRoundFromZero = Cint(1) # RoundingMode{:FromZero}()
+const ArbBallRoundNearest  = Cint(4) # RoundingMode{:Nearest}()
+const ArbBallRoundDown     = Cint(2) # RoundingMode{:Down}()
+const ArbBallRoundUp       = Cint(3) # RoundingMode{:Up}()
+const ArbBallRoundToZero   = Cint(0) # RoundingMode{:ToZero}()
+const ArbBallRoundFromZero = Cint(1) # RoundingMode{:FromZero}()
 
 const MpfrRoundNearest  = Cint(0) # RoundingMode{:Nearest}()
 const MpfrRoundDown     = Cint(3) # RoundingMode{:Down}()
@@ -28,18 +28,18 @@ const MpfrRoundFromZero = Cint(4) # RoundingMode{:FromZero}()
 
 # matched with Julia's terminology
 
-match_rounding_mode(::Type{Val{ArbRoundNearest}})      = RoundNearest
-match_rounding_mode(::Type{Val{ArbRoundDown}})         = RoundDown
-match_rounding_mode(::Type{Val{ArbRoundUp}})           = RoundUp
-match_rounding_mode(::Type{Val{ArbRoundToZero}})       = RoundToZero
-match_rounding_mode(::Type{Val{ArbRoundFromZero}})     = RoundFromZero
+match_rounding_mode(::Type{Val{ArbBallRoundNearest}})      = RoundNearest
+match_rounding_mode(::Type{Val{ArbBallRoundDown}})         = RoundDown
+match_rounding_mode(::Type{Val{ArbBallRoundUp}})           = RoundUp
+match_rounding_mode(::Type{Val{ArbBallRoundToZero}})       = RoundToZero
+match_rounding_mode(::Type{Val{ArbBallRoundFromZero}})     = RoundFromZero
 
-match_rounding_mode(::Type{Val{RoundNearest}})         = ArbRoundNearest
-match_rounding_mode(::Type{Val{RoundDown}})            = ArbRoundDown
-match_rounding_mode(::Type{Val{RoundUp}})              = ArbRoundUp
-match_rounding_mode(::Type{Val{RoundToZero}})          = ArbRoundToZero
-match_rounding_mode(::Type{Val{RoundFromZero}})        = ArbRoundFromZero
-match_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = ArbRoundNearest
+match_rounding_mode(::Type{Val{RoundNearest}})         = ArbBallRoundNearest
+match_rounding_mode(::Type{Val{RoundDown}})            = ArbBallRoundDown
+match_rounding_mode(::Type{Val{RoundUp}})              = ArbBallRoundUp
+match_rounding_mode(::Type{Val{RoundToZero}})          = ArbBallRoundToZero
+match_rounding_mode(::Type{Val{RoundFromZero}})        = ArbBallRoundFromZero
+match_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = ArbBallRoundNearest
 match_rounding_mode(::Type{Val{RoundNearestTiesUp}})   = throw(ErrorException("RoundNearestTiesUp is not supported"))
 
 

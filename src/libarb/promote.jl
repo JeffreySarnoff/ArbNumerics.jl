@@ -1,79 +1,79 @@
-promote_rule(::Type{Acb{P}}, ::Type{Arb{P}}) where {P} = Acb{P}
-promote_rule(::Type{Acb{P}}, ::Type{Arf{P}}) where {P} = Acb{P}
-promote_rule(::Type{Arb{P}}, ::Type{Arf{P}}) where {P} = Arb{P}
-promote_rule(::Type{Acb{P}}, ::Type{Mag}) where {P} = Acb{P}
-promote_rule(::Type{Arb{P}}, ::Type{Mag}) where {P} = Arb{P}
-promote_rule(::Type{Arf{P}}, ::Type{Mag}) where {P} = Arf{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{ArbBall{P}}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbBall{P}}, ::Type{ArbFloat{P}}) where {P} = ArbBall{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{Mag}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbBall{P}}, ::Type{Mag}) where {P} = ArbBall{P}
+promote_rule(::Type{ArbFloat{P}}, ::Type{Mag}) where {P} = ArbFloat{P}
 
-promote_rule(::Type{Arf{P}}, ::Type{BigInt}) where {P} = Arf{P}
-promote_rule(::Type{Arb{P}}, ::Type{BigInt}) where {P} = Arb{P}
-promote_rule(::Type{Acb{P}}, ::Type{BigInt}) where {P} = Acb{P}
+promote_rule(::Type{ArbFloat{P}}, ::Type{BigInt}) where {P} = ArbFloat{P}
+promote_rule(::Type{ArbBall{P}}, ::Type{BigInt}) where {P} = ArbBall{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{BigInt}) where {P} = ArbComplex{P}
 
-promote_rule(::Type{Arf{P}}, ::Type{BigFloat}) where {P} = Arf{P}
-promote_rule(::Type{Arb{P}}, ::Type{BigFloat}) where {P} = Arb{P}
-promote_rule(::Type{Acb{P}}, ::Type{BigFloat}) where {P} = Acb{P}
+promote_rule(::Type{ArbFloat{P}}, ::Type{BigFloat}) where {P} = ArbFloat{P}
+promote_rule(::Type{ArbBall{P}}, ::Type{BigFloat}) where {P} = ArbBall{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{BigFloat}) where {P} = ArbComplex{P}
 
-promote_rule(::Type{Arf{P}}, ::Type{I}) where {P, I<:Integer} = Arf{P}
-promote_rule(::Type{Arb{P}}, ::Type{I}) where {P, I<:Integer} = Arb{P}
-promote_rule(::Type{Acb{P}}, ::Type{I}) where {P, I<:Integer} = Acb{P}
+promote_rule(::Type{ArbFloat{P}}, ::Type{I}) where {P, I<:Integer} = ArbFloat{P}
+promote_rule(::Type{ArbBall{P}}, ::Type{I}) where {P, I<:Integer} = ArbBall{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{I}) where {P, I<:Integer} = ArbComplex{P}
 
-promote_rule(::Type{Arf{P}}, ::Type{F}) where {P, F<:AbstractFloat} = Arf{P}
-promote_rule(::Type{Arb{P}}, ::Type{F}) where {P, F<:AbstractFloat} = Arb{P}
-promote_rule(::Type{Acb{P}}, ::Type{F}) where {P, F<:AbstractFloat} = Acb{P}
-promote_rule(::Type{Acb{P}}, ::Type{C}) where {P, C<:Complex} = Acb{P}
+promote_rule(::Type{ArbFloat{P}}, ::Type{F}) where {P, F<:AbstractFloat} = ArbFloat{P}
+promote_rule(::Type{ArbBall{P}}, ::Type{F}) where {P, F<:AbstractFloat} = ArbBall{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{F}) where {P, F<:AbstractFloat} = ArbComplex{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{C}) where {P, C<:Complex} = ArbComplex{P}
 
-promote_rule(::Type{Arf{P}}, x::Arf{Q}) where {P,Q} =
-    P>Q ? Arf{P} : Arf{Q}
-promote_rule(::Type{Arb{P}}, x::Arb{Q}) where {P,Q} =
-    P>Q ? Arb{P} : Arb{Q}
-promote_rule(::Type{Acb{P}}, x::Acb{Q}) where {P,Q} =
-    P>Q ? Acb{P} : Acb{Q}
-promote_rule(::Type{Arf{P}}, x::Arb{Q}) where {P,Q} =
-    P>Q ? Arb{P} : Arb{Q}
-promote_rule(::Type{Arf{P}}, x::Acb{Q}) where {P,Q} =
-    P>Q ? Acb{P} : Acb{Q}
-promote_rule(::Type{Arb{P}}, x::Acb{Q}) where {P,Q} =
-    P>Q ? Acb{P} : Acb{Q}
+promote_rule(::Type{ArbFloat{P}}, x::ArbFloat{Q}) where {P,Q} =
+    P>Q ? ArbFloat{P} : ArbFloat{Q}
+promote_rule(::Type{ArbBall{P}}, x::ArbBall{Q}) where {P,Q} =
+    P>Q ? ArbBall{P} : ArbBall{Q}
+promote_rule(::Type{ArbComplex{P}}, x::ArbComplex{Q}) where {P,Q} =
+    P>Q ? ArbComplex{P} : ArbComplex{Q}
+promote_rule(::Type{ArbFloat{P}}, x::ArbBall{Q}) where {P,Q} =
+    P>Q ? ArbBall{P} : ArbBall{Q}
+promote_rule(::Type{ArbFloat{P}}, x::ArbComplex{Q}) where {P,Q} =
+    P>Q ? ArbComplex{P} : ArbComplex{Q}
+promote_rule(::Type{ArbBall{P}}, x::ArbComplex{Q}) where {P,Q} =
+    P>Q ? ArbComplex{P} : ArbComplex{Q}
 
-convert(::Type{Arf}, x::Arf{P}) where {P} = x
-convert(::Type{Arb}, x::Arb{P}) where {P} = x
-convert(::Type{Acb}, x::Acb{P}) where {P} = x
-convert(::Type{Arf}, x::Arb{P}) where {P} = Arf{P}(x)
-convert(::Type{Arf}, x::Acb{P}) where {P} = Arf{P}(real(x))
-convert(::Type{Arb}, x::Acb{P}) where {P} = real(x)
-convert(::Type{Arb}, x::Arf{P}) where {P} = Arb{P}(x)
-convert(::Type{Acb}, x::Arf{P}) where {P} = Acb{P}(x)
+convert(::Type{ArbFloat}, x::ArbFloat{P}) where {P} = x
+convert(::Type{ArbBall}, x::ArbBall{P}) where {P} = x
+convert(::Type{ArbComplex}, x::ArbComplex{P}) where {P} = x
+convert(::Type{ArbFloat}, x::ArbBall{P}) where {P} = ArbFloat{P}(x)
+convert(::Type{ArbFloat}, x::ArbComplex{P}) where {P} = ArbFloat{P}(real(x))
+convert(::Type{ArbBall}, x::ArbComplex{P}) where {P} = real(x)
+convert(::Type{ArbBall}, x::ArbFloat{P}) where {P} = ArbBall{P}(x)
+convert(::Type{ArbComplex}, x::ArbFloat{P}) where {P} = ArbComplex{P}(x)
 
-convert(::Type{Arb{P}}, x::Acb{P}) where {P} = real(x)
-convert(::Type{Arf{P}}, x::Acb{P}) where {P} = midpoint(real(x), Arf{P})
-convert(::Type{Mag}, x::Acb{P}) where {P} = radius(real(x), Mag)
+convert(::Type{ArbBall{P}}, x::ArbComplex{P}) where {P} = real(x)
+convert(::Type{ArbFloat{P}}, x::ArbComplex{P}) where {P} = midpoint(real(x), ArbFloat{P})
+convert(::Type{Mag}, x::ArbComplex{P}) where {P} = radius(real(x), Mag)
 
-convert(::Type{Acb{P}}, x::Arb{P}) where {P} = Acb{P}(x)
-convert(::Type{Acb{P}}, x::Arf{P}) where {P} = Acb{P}(Arb{P}(x))
-convert(::Type{Acb{P}}, x::Mag) where {P} = Acb{P}(Arf{P}(x))
+convert(::Type{ArbComplex{P}}, x::ArbBall{P}) where {P} = ArbComplex{P}(x)
+convert(::Type{ArbComplex{P}}, x::ArbFloat{P}) where {P} = ArbComplex{P}(ArbBall{P}(x))
+convert(::Type{ArbComplex{P}}, x::Mag) where {P} = ArbComplex{P}(ArbFloat{P}(x))
 
-convert(::Type{Arf{P}}, x::Arb{P}) where {P} = midpoint(x, Arf{P})
-convert(::Type{Mag}, x::Arb{P}) where {P} = radius(x, Mag)
+convert(::Type{ArbFloat{P}}, x::ArbBall{P}) where {P} = midpoint(x, ArbFloat{P})
+convert(::Type{Mag}, x::ArbBall{P}) where {P} = radius(x, Mag)
 
-convert(::Type{Arb{P}}, x::Arf{P}) where {P} = Arb{P}(x)
-convert(::Type{Arb{P}}, x::Mag) where {P} = Arb{P}(Arf{P}(x))
+convert(::Type{ArbBall{P}}, x::ArbFloat{P}) where {P} = ArbBall{P}(x)
+convert(::Type{ArbBall{P}}, x::Mag) where {P} = ArbBall{P}(ArbFloat{P}(x))
 
-convert(::Type{Mag}, x::Arf{P}) where {P} = Mag(x)
-convert(::Type{Arf{P}}, x::Mag) where {P} = Arf{P}(x)
+convert(::Type{Mag}, x::ArbFloat{P}) where {P} = Mag(x)
+convert(::Type{ArbFloat{P}}, x::Mag) where {P} = ArbFloat{P}(x)
 
-convert(::Type{Arf{P}}, x::BigFloat) where {P} = Arf{P}(x)
-convert(::Type{Arb{P}}, x::BigFloat) where {P} = Arb{P}(x)
-convert(::Type{Acb{P}}, x::BigFloat) where {P} = Acb{P}(x)
+convert(::Type{ArbFloat{P}}, x::BigFloat) where {P} = ArbFloat{P}(x)
+convert(::Type{ArbBall{P}}, x::BigFloat) where {P} = ArbBall{P}(x)
+convert(::Type{ArbComplex{P}}, x::BigFloat) where {P} = ArbComplex{P}(x)
 
-convert(::Type{Arf{P}}, x::BigInt) where {P} = Arf{P}(x)
-convert(::Type{Arb{P}}, x::BigInt) where {P} = Arb{P}(x)
-convert(::Type{Acb{P}}, x::BigInt) where {P} = Acb{P}(x)
+convert(::Type{ArbFloat{P}}, x::BigInt) where {P} = ArbFloat{P}(x)
+convert(::Type{ArbBall{P}}, x::BigInt) where {P} = ArbBall{P}(x)
+convert(::Type{ArbComplex{P}}, x::BigInt) where {P} = ArbComplex{P}(x)
 
-convert(::Type{Arf{P}}, x::I) where {P, I<:Integer} = Arf{P}(x)
-convert(::Type{Arb{P}}, x::I) where {P, I<:Integer} = Arb{P}(x)
-convert(::Type{Acb{P}}, x::I) where {P, I<:Integer} = Acb{P}(x)
+convert(::Type{ArbFloat{P}}, x::I) where {P, I<:Integer} = ArbFloat{P}(x)
+convert(::Type{ArbBall{P}}, x::I) where {P, I<:Integer} = ArbBall{P}(x)
+convert(::Type{ArbComplex{P}}, x::I) where {P, I<:Integer} = ArbComplex{P}(x)
 
-convert(::Type{Arf{P}}, x::AbstractFloat) where {P} = Arf{P}(x)
-convert(::Type{Arb{P}}, x::AbstractFloat) where {P} = Arb{P}(x)
-convert(::Type{Acb{P}}, x::AbstractFloat) where {P} = Acb{P}(x)
-convert(::Type{Acb{P}}, x::Complex) where {P} = Acb{P}(x)
+convert(::Type{ArbFloat{P}}, x::AbstractFloat) where {P} = ArbFloat{P}(x)
+convert(::Type{ArbBall{P}}, x::AbstractFloat) where {P} = ArbBall{P}(x)
+convert(::Type{ArbComplex{P}}, x::AbstractFloat) where {P} = ArbComplex{P}(x)
+convert(::Type{ArbComplex{P}}, x::Complex) where {P} = ArbComplex{P}(x)
