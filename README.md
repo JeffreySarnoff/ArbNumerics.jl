@@ -23,7 +23,7 @@ While the bounds of an `ArbBall` or `ArbComplex` are available, the default is t
 
 This requires Julia v0.7-, and access to the Arb and Flint C libraries.
 
-Do this (don't be concerned with the messages). You may copy and paste into the REPL:
+Do this (don't be concerned with the messages).  Copy and paste into the REPL:
 ```julia
 julia> using Pkg
 julia> Pkg.rm("Nemo"); Pkg.rm("Nemo"); # twice
