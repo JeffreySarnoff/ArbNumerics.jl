@@ -1,3 +1,5 @@
+const BigFloatFuzz = 32
+
 # this many digits[bits] (are given by) that many bits[digits]
 # sum([abs(i-maximin_digits(maximin_bits(i))) for i=24:4000])
 
