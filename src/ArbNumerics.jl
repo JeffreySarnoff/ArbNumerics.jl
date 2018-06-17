@@ -94,7 +94,7 @@ include("libarb/show.jl")
 include("values/bitsdigits.jl")
 include("values/intraconvert.jl")
 include("values/interconvert.jl")
-include("values/conversions.jl")
+include("values/constructors.jl")
 include("values/specialvals.jl")
 include("values/compare.jl")
 
