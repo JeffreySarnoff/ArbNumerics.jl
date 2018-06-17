@@ -114,7 +114,31 @@ function hypot(x::ArbComplex{P}, y::ArbComplex{P}) where {P}
     return z
 end
 
+"""
+    addmul(x, y, z)
 
+x + (y * z)
+"""
+addmul(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = muladd(y, z, x)
+
+"""
+    submul(x, y, z)
+
+x - (y * z)
+"""
+submul(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = -muladd(y, z, -x)
+
+"""
+    mulsub(x, y, z)
+
+(x * y) - z
+"""
+addmul(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = muladd(x, y, -z)
+
+fma((x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = muladd(x, y, z)
+
+
+        
 function pow(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     x1 = ArbBall{P}(x)
     y1 = ArbBall{P}(y)
