@@ -1,43 +1,11 @@
-function (-)(x::ArbFloat{P}) where {P}
-    z = ArbFloat{P}()
-    ccall(@libarb(arf_neg), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
-    return z
-end
 
-function (-)(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_neg), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
-    return z
-end
-
-function (-)(x::ArbComplex{P}) where {P}
-    z = ArbComplex{P}()
-    ccall(@libarb(acb_neg), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
-    return z
-end
-
-function abs(x::ArbFloat{P}) where {P}
-    z = ArbFloat{P}()
-    ccall(@libarb(arf_abs), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
-    return z
-end
-
-function abs(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_abs), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
-    return z
-end
-
-function abs(x::ArbComplex{P}) where {P}
-    z = ArbComplex{P}()
-    ccall(@libarb(acb_abs), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
-end
-
-abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
-abs2(x::ArbBall{P})    where {P} = square( abs(x) )
-abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
-
+signbit(x::Mag) = false
+signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+signbit(x::ArbBall{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
+signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
+signbit(x::ArbComplex{P}) where {P} = signbit(x, RealPart)
+signbits(x::ArbComplex{P}) where {P} = signbit(x, RealPart), signbit(x, ImagPart)
 
 
 function sign(x::ArbFloat{P}) where {P}
@@ -80,10 +48,64 @@ function signs(x::ArbComplex{P}) where {P}
     return sign(real(x)), sign(imag(x))
 end
 
-signbit(x::Mag) = false
-signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
-signbit(x::ArbBall{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
-signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
-signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
-signbit(x::ArbComplex{P}) where {P} = signbit(x, RealPart)
-signbits(x::ArbComplex{P}) where {P} = signbit(x, RealPart), signbit(x, ImagPart)
+
+function (-)(x::ArbFloat{P}) where {P}
+    z = ArbFloat{P}()
+    ccall(@libarb(arf_neg), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
+    return z
+end
+
+function (-)(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_neg), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
+    return z
+end
+
+function (-)(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_neg), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
+    return z
+end
+
+function abs(x::ArbFloat{P}) where {P}
+    z = ArbFloat{P}()
+    ccall(@libarb(arf_abs), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
+    return z
+end
+
+function abs(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_abs), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
+    return z
+end
+
+function abs(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_abs), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
+    return z
+end
+
+abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
+abs2(x::ArbBall{P})    where {P} = square( abs(x) )
+abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
+
+
+function (inv)(x::ArbFloat{P}) where {P}
+    x1 = ArbBall(x)
+    z1 = ArbBall{P}()
+    ccall(@libarb(arb_inv), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}, Clong), z1, x1, P)
+    z = ArbFloat(z1)
+    return z
+end
+
+function (inv)(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_inv), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, P)
+    return z
+end
+
+function (inv)(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_inv), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
+    return z
+end
