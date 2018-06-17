@@ -1,7 +1,9 @@
-
 signbit(x::Mag) = false
+
 signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+
 signbit(x::ArbBall{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+
 signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
 signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
 signbit(x::ArbComplex{P}) where {P} = signbit(x, RealPart)
