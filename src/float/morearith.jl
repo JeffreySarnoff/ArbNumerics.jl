@@ -152,7 +152,7 @@ muladd(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = addmul(z, x, 
 """
 mulsub(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = -submul(z, x, y)
 
-fma((x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = muladd(x, y, z)
+fma(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = muladd(x, y, z)
 
 
         
