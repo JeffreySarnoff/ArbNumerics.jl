@@ -6,29 +6,55 @@ function Float64(x::Mag)
     return z
 end
 
-function Float64(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P}
+function Float64(x::ArbFloat{P}) where {P}
+    rounding = match_rounding_mode(RoundNearest)
+    z = ccall(@libarb(arf_get_d), Float64, (Ref{ArbFloat}, Cint), x, rounding)
+    return z
+end
+Float32(x::ArbFloat{P}) where {P} = Float32(Float64(x))
+Float16(x::ArbFloat{P}) where {P} = Float16(Float64(x))
+
+function Float64(x::ArbBall{P}) where {P}
+    x = midpoint(x)
+    y = ArbFloat{P}(x)
+    Float64(y)
+end
+Float32(x::ArbBall{P}) where {P} = Float32(Float64(x))
+Float16(x::ArbBall{P}) where {P} = Float16(Float64(x))
+
+function Float64(x::ArbComplex{P}) where {P}
+    x = midpoint(real(x))
+    y = ArbFloat{P}(x)
+    Float64(y)
+end
+Float32(x::ArbComplex{P}) where {P} = Float32(Float64(x))
+Float16(x::ArbComplex{P}) where {P} = Float16(Float64(x))
+
+
+
+function Float64(x::ArbFloat{P}, roundingmode::RoundingMode) where {P}
     rounding = match_rounding_mode(roundingmode)
     z = ccall(@libarb(arf_get_d), Float64, (Ref{ArbFloat}, Cint), x, rounding)
     return z
 end
-Float32(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
+Float32(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
+Float16(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
 
-function Float64(x::ArbBall{P}, roundingmode::RoundingMode=RoundNearest) where {P}
+function Float64(x::ArbBall{P}, roundingmode::RoundingMode) where {P}
     x = midpoint(x)
     y = ArbFloat{P}(x)
     Float64(y, roundingmode)
 end
-Float32(x::ArbBall{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::ArbBall{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
+Float32(x::ArbBall{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
+Float16(x::ArbBall{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
 
-function Float64(x::ArbComplex{P}, roundingmode::RoundingMode=RoundNearest) where {P}
+function Float64(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
     x = midpoint(real(x))
     y = ArbFloat{P}(x)
     Float64(y, roundingmode)
 end
-Float32(x::ArbComplex{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::ArbComplex{P}, roundingmode::RoundingMode=RoundNearest) where {P} = Float16(Float64(x, roundingmode))
+Float32(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
+Float16(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
 
 # parts
 
