@@ -55,7 +55,7 @@ import Base: hash,
        zero, one,
        precision, setprecision, eps,
 
-       abs, signbit, sign, copysign, flipsign,
+       abs, abs2, signbit, sign, copysign, flipsign,
 
        (==), (!=), (<), (<=), (>=), (>), isequal, isless,
        (+), (-), (*), (/), (\), inv,
