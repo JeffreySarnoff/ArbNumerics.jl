@@ -30,6 +30,7 @@ export ArbFloat, ArbBall, ArbComplex,
        trim_bits, ulp, ulps, epss,
 
        # other functions
+       addmul, submul, mulsub,
        square, cube, rsqrt, pow, root, loghypot,
        # special functions
        agm1, agm,
@@ -60,7 +61,8 @@ import Base: hash,
        (==), (!=), (<), (<=), (>=), (>), isequal, isless,
        (+), (-), (*), (/), (\), inv,
        div, fld, cld, rem, mod, divrem, fldmod,
-       ceil, floor, trunc, round
+       ceil, floor, trunc, round,
+       muladd, fma
 
 import Base.Math:  max, min, minmax,
        exponent, significand,
