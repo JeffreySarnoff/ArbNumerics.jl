@@ -34,6 +34,11 @@ function abs(x::ArbComplex{P}) where {P}
     return z
 end
 
+abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
+abs2(x::ArbBall{P})    where {P} = square( abs(x) )
+abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
+
+
 
 function sign(x::ArbFloat{P}) where {P}
     thesgn = ccall(@libarb(arf_sgn), Cint, (Ref{ArbFloat},), x)
