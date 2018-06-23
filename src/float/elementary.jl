@@ -101,7 +101,7 @@ for (A,F) in ((:loghypot, :arb_log_hypot),
 end
 
 
-for (A,F) in ((:loghypot, :acb_log_hypot), (:atan2, :acb_atan2),
+for (A,F) in ((:loghypot, :acb_log_hypot),
               (:ellipticP, :acb_elliptic_p), (:ellipticPi, :acb_elliptic_pi),
               (:ellipticZeta, :acb_elliptic_zeta), (:ellipticSigma, :acb_elliptic_sigma),
              )
