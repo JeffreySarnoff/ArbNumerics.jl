@@ -38,7 +38,8 @@ export ArbFloat, ArbBall, ArbComplex,
        ei, si, ci, shi, chi,
        ellipticK, ellipticE, ellipticPi, ellipticP,
        ellipticZeta, ellipticSigma,
-       zeta, eta, xi                  # Reimann
+       zeta, eta, xi,                  # Reimann
+       π, ℯ, γ, φ, catalan
 
 
 import Base: hash,
@@ -94,6 +95,8 @@ import SpecialFunctions:
        zeta
        sinint, cosint
  =#
+
+import Base.MathConstants: π, ℯ, γ, φ, catalan
 
 include("support/arblib.jl")
 include("support/abstractions.jl")
