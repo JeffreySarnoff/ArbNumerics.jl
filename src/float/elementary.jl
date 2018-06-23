@@ -27,7 +27,7 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
     end
 end
 
-
+atan(y::ArbBall{P}, x::ArbBall{P}) where {P} = atan2(y, x)
 
 for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1, :acb_expm1),
               (:sin, :acb_sin), (:cos, :acb_cos), (:tan, :acb_tan),
