@@ -127,6 +127,12 @@ void arb_hypgeom_bessel_k_scaled(arb_t res, const arb_t nu, const arb_t z, slong
     Computes the function ezKν(z)
 void acb_hypgeom_bessel_k_scaled(acb_t res, const acb_t nu, const acb_t z, slong prec
 
+
+void arb_hypgeom_airy(arb_t ai, arb_t ai_prime, arb_t bi, arb_t bi_prime, const arb_t z, slong prec)
+    Computes the Airy functions (Ai(z),Ai′(z),Bi(z),Bi′(z))
+simultaneously. Any of the four function values can be omitted by passing NULL for the unwanted output variables, speeding up the evaluation.
+void acb_hypgeom_airy(acb_t ai, acb_t ai_prime, acb_t bi, acb_t bi_prime, const acb_t z, slong prec)
+    Computes Airy functions using an automatic algorithm choice.
  =#
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
