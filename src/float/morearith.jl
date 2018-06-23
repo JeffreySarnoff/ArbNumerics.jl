@@ -292,10 +292,30 @@ end
 function risingfactorial(x::ArbBall{P}, n::ArbFloat{P}) where {P}
     z = ArbBall{P}()
     u = Culong(Clong(x))
-    ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, z, x, n, P)
+    ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, n, P)
     return z
 end
+    
 
-   
+function binomial(n::ArbFloat{P}, k::ArbFloat{P})
+    z = ArbBall{P}()
+    un = Culong(Clong(n))
+    uk = Culong(Clong(k))
+    ccall(@libarb(arb_bin_uiui), Cvoid, (Ref{ArbBall}, Culong, Culong, Clong), z, ux, un, P)
+    return midpoint_byref(z)
+end 
+
+function binomial(n::ArbBall{P}, k::ArbBall{P})
+    z = ArbBall{P}()
+    un = Culong(Clong(n))
+    uk = Culong(Clong(k))
+    ccall(@libarb(arb_bin_uiui), Cvoid, (Ref{ArbBall}, Culong, Culong, Clong), z, ux, un, P)
+    return z
+end 
+
+
+    
+       
+           
             
     
