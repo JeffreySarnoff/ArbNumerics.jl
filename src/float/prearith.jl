@@ -92,21 +92,15 @@ abs2(x::ArbBall{P})    where {P} = square( abs(x) )
 abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
 
 
-function (inv)(x::ArbFloat{P}) where {P}
-    x1 = ArbBall(x)
-    z1 = ArbBall{P}()
-    ccall(@libarb(arb_inv), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}, Clong), z1, x1, P)
-    z = ArbFloat(z1)
-    return z
-end
+inv(x::ArbFloat{P}) where {P} = ArbFloat{P}( inv(ArbBall{P}(x)) )
 
-function (inv)(x::ArbBall{P}) where {P}
+function inv(x::ArbBall{P}) where {P}
     z = ArbBall{P}()
     ccall(@libarb(arb_inv), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, P)
     return z
 end
 
-function (inv)(x::ArbComplex{P}) where {P}
+function inv(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_inv), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
