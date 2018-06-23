@@ -227,3 +227,75 @@ function root(x::ArbComplex{P}, y::T) where {P, T<:Integer}
     return z
 end
 root(x::ArbComplex{P}, y::T) where {P, T<:AbstractFloat} = pow(x, -y)
+
+
+
+function factorial(x::Signed) where {P}
+    z = ArbBall{P}()
+    u = Culong(x)
+    ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbBall}, Culong, Clong), z, u, P)
+    return z
+end
+
+function factorial(x::ArbFloat{P}) where {P}
+    z = ArbBall{P}()
+    u = Culong(Clong(x))
+    ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbBall}, Culong, Clong), z, u, P)
+    return midpoint_byref(z)
+end
+
+function factorial(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    u = Culong(Clong(x))
+    ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbBall}, Culong, Clong), z, u, P)
+    return z
+end
+
+function doublefactorial(x::Signed) where {P}
+    z = ArbBall{P}()
+    u = Culong(x)
+    ccall(@libarb(arb_doublefac_ui), Cvoid, (Ref{ArbBall}, Culong, Clong), z, u, P)
+    return z
+end
+
+function doublefactorial(x::ArbFloat{P}) where {P}
+    z = ArbBall{P}()
+    u = Culong(Clong(x))
+    ccall(@libarb(arb_doublefac_ui), Cvoid, (Ref{ArbBall}, Culong, Clong), z, u, P)
+    return midpoint_byref(z)
+end
+
+function doublefactorial(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    u = Culong(Clong(x))
+    ccall(@libarb(arb_doublefac_ui), Cvoid, (Ref{ArbBall}, Culong, Clong), z, u, P)
+    return z
+end
+
+
+function risingfactorial(x::Signed, n::Signed) where {P}
+    z = ArbBall{P}()
+    ux = Culong(x)
+    un = Culong(n)        
+    ccall(@libarb(arb_rising_ui), Cvoid, (Ref{ArbBall}, Culong, Culong, Clong), z, ux, un, P)
+    return z
+end
+
+function risingfactorial(x::ArbFloat{P}, n::ArbFloat{P}) where {P}
+    z = ArbBall{P}()
+    ux = Culong(Clong(x))
+    un = Culong(Clong(n))
+    ccall(@libarb(arb_rising_ui), Cvoid, (Ref{ArbBall}, Culong, Culong, Clong), z, ux, un, P)
+    return midpoint_byref(z)
+end
+
+function risingfactorial(x::ArbBall{P}, n::ArbFloat{P}) where {P}
+    z = ArbBall{P}()
+    u = Culong(Clong(x))
+    ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, z, x, n, P)
+    return z
+end
+
+   
+            
+    
