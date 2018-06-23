@@ -39,6 +39,7 @@ export ArbFloat, ArbBall, ArbComplex,
        ellipticK, ellipticE, ellipticPi, ellipticP,
        ellipticZeta, ellipticSigma,
        zeta, eta, xi,                  # Reimann
+       lambertw,
        π, ℯ, γ, φ, catalan
 
 
