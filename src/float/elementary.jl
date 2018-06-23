@@ -29,6 +29,17 @@ end
 
 atan(y::ArbBall{P}, x::ArbBall{P}) where {P} = atan2(y, x)
 
+const Cint0 = zero(Cint)
+
+function lambertw(x::ArbBall{P}) where {P}
+    z = ArbBall{P}()
+    ccall(@libarb(arb_lambertw), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Cint, Clong), z, x, Cint0, P)
+    return z
+end
+
+lambertw(x::ArbFloat{P}) where {P} = ArbFloat{P}(lambertw(ArbBall{P}(x)))
+
+
 for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1, :acb_expm1),
               (:sin, :acb_sin), (:cos, :acb_cos), (:tan, :acb_tan),
               (:csc, :acb_csc), (:sec, :acb_sec), (:cot, :acb_cot),
