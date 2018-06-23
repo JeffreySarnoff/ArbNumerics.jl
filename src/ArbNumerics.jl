@@ -32,6 +32,7 @@ export ArbFloat, ArbBall, ArbComplex,
        # other functions
        addmul, submul, mulsub,
        square, cube, rsqrt, pow, root, loghypot,
+       rising,
        # special functions
        agm1, agm,
        logsinpi, barnesg, logbarnesg,
@@ -64,7 +65,8 @@ import Base: hash,
        (+), (-), (*), (/), (\), inv,
        div, fld, cld, rem, mod, divrem, fldmod,
        ceil, floor, trunc, round,
-       muladd, fma
+       muladd, fma,
+       factorial, binomial
 
 import Base.Math:  max, min, minmax,
        exponent, significand,
