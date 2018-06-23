@@ -97,6 +97,36 @@ import SpecialFunctions:
        hankelh1, hankelh1x, hankelh2, hankelh2x,
        zeta
        sinint, cosint
+
+besselj
+void arb_hypgeom_bessel_j(arb_t res, const arb_t nu, const arb_t z, slong prec)
+    Computes the Bessel function of the first kind Jν(z)
+void acb_hypgeom_bessel_j(acb_t res, const acb_t nu, const acb_t z, slong prec)
+
+bessely
+void arb_hypgeom_bessel_y(arb_t res, const arb_t nu, const arb_t z, slong prec)
+    Computes the Bessel function of the second kind Yν(z)
+void acb_hypgeom_bessel_y(acb_t res, const acb_t nu, const acb_t z, slong prec)
+
+besseli
+void arb_hypgeom_bessel_i(arb_t res, const arb_t nu, const arb_t z, slong prec)
+    Computes the modified Bessel function of the first kind Iν(z)=zν(iz)−νJν(iz)
+void acb_hypgeom_bessel_i(acb_t res, const acb_t nu, const acb_t z, slong prec)
+
+besselk
+void arb_hypgeom_bessel_k(arb_t res, const arb_t nu, const arb_t z, slong prec)
+    Computes the modified Bessel function of the second kind Kν(z)
+void acb_hypgeom_bessel_k(acb_t res, const acb_t nu, const acb_t z, slong prec)
+
+
+void arb_hypgeom_bessel_i_scaled(arb_t res, const arb_t nu, const arb_t z, slong prec)
+    Computes the function e−zIν(z)
+void acb_hypgeom_bessel_i_scaled(acb_t res, const acb_t nu, const acb_t z, slong prec)
+
+void arb_hypgeom_bessel_k_scaled(arb_t res, const arb_t nu, const arb_t z, slong prec)
+    Computes the function ezKν(z)
+void acb_hypgeom_bessel_k_scaled(acb_t res, const acb_t nu, const acb_t z, slong prec
+
  =#
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
