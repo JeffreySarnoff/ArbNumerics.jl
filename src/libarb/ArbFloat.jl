@@ -26,6 +26,10 @@ arf_clear(x::ArbFloat{P}) where {P} = ccall(@libarb(arf_clear), Cvoid, (Ref{ArbF
 ArbFloat{P}(x::ArbFloat{P}) where {P} = x
 ArbFloat(x::ArbFloat{P}) where {P} = x
 
+ArbFloat{P}(x::Missing) where {P} = missing
+ArbFloat(x::Missing) = missing
+
+
 @inline sign_bit(x::ArbFloat{P}) where {P} = isodd(x.size)
 
 ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision ($prec) is too low"))
