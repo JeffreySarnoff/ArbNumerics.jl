@@ -32,3 +32,6 @@ for fn in (:sqrt, :log, :log1p, :exp, :expm1)
     @eval v2 = parse(Float64, string(midpoint($fn(arbball))))
     @test v1 == v2
 end
+
+a = 2*log(ArbFloat(2))
+@test exp(lambertw(a)) == 2
