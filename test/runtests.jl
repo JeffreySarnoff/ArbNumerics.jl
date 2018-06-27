@@ -16,8 +16,8 @@ arbball  = ArbBall(float64, 64)
 
 for fn in (:sin, :cos, :tan, :csc, :sec, :cot,
            :asin, :acos, :atan)
-    @eval v1 = Meta.parse(Float64, string($fn(bigfloat)))
-    @eval v2 = Meta.parse(Float64, string(midpoint($fn(arbball))))
+    @eval v1 = parse(Float64, string($fn(bigfloat)))
+    @eval v2 = parse(Float64, string(midpoint($fn(arbball))))
     @test v1 == v2
 end
 
