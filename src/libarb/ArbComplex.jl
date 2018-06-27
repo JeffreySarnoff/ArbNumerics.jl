@@ -32,6 +32,9 @@ clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{Ar
 ArbComplex{P}(x::ArbComplex{P}) where {P} = x
 ArbComplex(x::ArbComplex{P}) where {P} = x
 
+ArbComplex{P}(x::Missing) where {P} = missing
+ArbComplex(x::Missing) = missing
+
 ArbComplex(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{workingbits(prec)}(x) : throw(DomainError("bit precision ($prec) is too low"))
 ArbComplex(x, y, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{workingbits(prec)}(x, y) : throw(DomainError("bit precision ($prec) is too low"))
 
