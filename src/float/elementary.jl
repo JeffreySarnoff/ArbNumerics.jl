@@ -39,6 +39,12 @@ end
 
 lambertw(x::ArbFloat{P}) where {P} = ArbFloat{P}(lambertw(ArbBall{P}(x)))
 
+function lambertw(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    zer = Fmpz(0)
+    ccall(@libarb(acb_lambertw), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{Fmpz}, Cint, Clong), z, x, zer, 0, 128)
+    return z
+end
 
 for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1, :acb_expm1),
               (:sin, :acb_sin), (:cos, :acb_cos), (:tan, :acb_tan),
