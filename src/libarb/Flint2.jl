@@ -13,3 +13,5 @@ mutable struct Fmpz
         return z
     end
 end
+
+Fmpz(x::Fmpz) = x
