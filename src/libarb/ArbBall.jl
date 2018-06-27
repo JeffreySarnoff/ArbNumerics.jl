@@ -36,6 +36,9 @@ arb_clear(x::ArbBall{P}) where {P} = ccall(@libarb(arb_clear), Cvoid, (Ref{ArbBa
 ArbBall{P}(x::ArbBall{P}) where {P} = x
 ArbBall(x::ArbBall{P}) where {P} = x
 
+ArbBall{P}(x::Missing) where {P} = missing
+ArbBall(x::Missing) = missing
+
 @inline sign_bit(x::ArbBall{P}) where {P} = isodd(x.mid_size)
 
 ArbBall(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbBall{workingbits(prec)}(x) : throw(DomainError("bit precision ($prec) is too low"))
