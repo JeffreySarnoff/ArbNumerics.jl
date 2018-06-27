@@ -114,7 +114,9 @@ Float16(1.414)
 
 - `+`,`-`, `*`, `/`
 - `square`, `cube`, `sqrt`, `cbrt`, `hypot`
-- `pow` `pow(x,PI)`, `root` `root(x,PI)` where PI is an integer > 0
+- `pow(x,i)`, `root(x,i)` _where i is an integer > 0_
+- `factorial`, `doublefactorial`, `risingfactorial`
+- `binomial`
 
 #### elementary functions
 
@@ -129,6 +131,7 @@ Float16(1.414)
 - `erf`, `erfc`, `erfi`
 - `ei`, `si`, `ci`
 - `shi`, `chi`
+- `zeta`, `lambertw`
 
 ##### elliptic functions
 - `ellipticE`, `ellipticK`, `ellipticP`, `ellipticPi`
