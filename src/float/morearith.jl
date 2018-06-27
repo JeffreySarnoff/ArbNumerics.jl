@@ -297,7 +297,7 @@ function risingfactorial(x::ArbBall{P}, n::ArbFloat{P}) where {P}
 end
     
 
-function binomial(n::ArbFloat{P}, k::ArbFloat{P})
+function binomial(n::ArbFloat{P}, k::ArbFloat{P}) where {P}
     z = ArbBall{P}()
     un = Culong(Clong(n))
     uk = Culong(Clong(k))
@@ -305,7 +305,7 @@ function binomial(n::ArbFloat{P}, k::ArbFloat{P})
     return midpoint_byref(z)
 end 
 
-function binomial(n::ArbBall{P}, k::ArbBall{P})
+function binomial(n::ArbBall{P}, k::ArbBall{P}) where {P}
     z = ArbBall{P}()
     un = Culong(Clong(n))
     uk = Culong(Clong(k))
