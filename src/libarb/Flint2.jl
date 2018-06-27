@@ -15,3 +15,5 @@ mutable struct Fmpz
 end
 
 Fmpz(x::Fmpz) = x
+
+fmpz_clear(a::Fmpz) = ccall(@libflint(fmpz_clear), Cvoid, (Ref{Fmpz},), a)
