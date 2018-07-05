@@ -71,8 +71,12 @@ if hasnemo
 
 end
 
-if !hasarb && !hasnemo
+if !@isdefined LibArbBall
    throw(ErrorException("You must first add Nemo.jl or get and compile the ArbBall and Flint C libraries"))
+end
+
+if !@isdefined LibFlint
+   throw(ErrorException("You must first add Nemo.jl or get and compile the Flint C library"))
 end
 
 # @ccall(@libarb(library_function), ReturnType, (arg types), args)
