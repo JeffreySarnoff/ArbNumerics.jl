@@ -170,6 +170,25 @@ When constructing intervals , you should scale the radius to be as small as poss
 
 ----
 
+### a caution for BigFloat
+
+```julia
+ulia> p=64;setprecision(BigFloat,p);
+
+julia> ArbFloat(pi,p+8)
+3.14159265358979323846
+
+julia> ArbFloat(pi,p),BigFloat(pi)
+(3.141592653589793238, 3.14159265358979323851)
+
+julia> [ArbFloat(pi,p), BigFloat(pi)]
+2-element Array{ArbFloat{88},1}:
+ 3.141592653589793238
+ 3.141592653589793239
+```
+
+----
+
 ## The ArbBall C library
 
 - [ArbBall](https://arblib.org) is a C library for rigorous real and complex arithmetic with arbitrary precision.
