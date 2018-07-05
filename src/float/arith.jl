@@ -106,9 +106,9 @@ for F in (:(+), :(-), :(*), :(/), :(^))
     ($F)(x::Integer, y::ArbFloat{P}) where {P} = ($F)(promote(x, y)...,)
     ($F)(x::Integer, y::ArbBall{P}) where {P} = ($F)(promote(x, y)...,)
     ($F)(x::Integer, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::AbstractFloat, y::ArbFloat{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::AbstractFloat, y::ArbBall{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::AbstractFloat, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
+    ($F)(x::IEEEFloat, y::ArbFloat{P}) where {P} = ($F)(promote(x, y)...,)
+    ($F)(x::IEEEFloat, y::ArbBall{P}) where {P} = ($F)(promote(x, y)...,)
+    ($F)(x::IEEEFloat, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
     ($F)(x::Complex, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
   end
 end
