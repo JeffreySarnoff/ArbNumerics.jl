@@ -1,4 +1,4 @@
-mutable struct Fmpz
+mutable struct Fmpz <: Signed
     d::Int
     
     function Fmpz()
