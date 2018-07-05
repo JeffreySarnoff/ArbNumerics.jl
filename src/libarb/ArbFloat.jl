@@ -7,7 +7,7 @@ the special values zero, plus infinity, minus infinity, or NaN (not-a-number).
 There is currently no support for negative zero, unsigned infinity, or a NaN with a payload.
 """ ArbFloat
 
-mutable struct ArbFloat{P}     # P is the precision in bits
+mutable struct ArbFloat{P} <: AbstractFloat    # P is the precision in bits
     exp::Int        # fmpz         exponent of 2 (2^exp)
     size::UInt      # mp_size_t    nwords and sign (lsb holds sign of significand)
     d1::UInt        # significand  unsigned, immediate value or the initial span
