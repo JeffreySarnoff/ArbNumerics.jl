@@ -1,6 +1,6 @@
 # ArbComplex structs hold complex balls given as ArbBall pairs
 
-mutable struct ArbComplex{P}    # P is the precision in bits
+mutable struct ArbComplex{P}  <: Complex  # P is the precision in bits
                          #      real midpoint
     real_mid_exp::Int    # fmpz         exponent of 2 (2^exp)
     real_mid_size::UInt  # mp_size_t    nwords and sign (lsb holds sign of significand)
