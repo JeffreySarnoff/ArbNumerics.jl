@@ -21,7 +21,18 @@ While the bounds of an `ArbBall` or `ArbComplex` are available, the default is t
 
 ## Installation
 
-This requires Julia v0.7-, and access to the ArbBall and Flint C libraries.
+### this works for me
+
+```julia
+pkg> rm ArbNumerics
+pkg> dev ArbNumerics
+pkg> up
+pkg> build ArbNumerics  # takes a while
+pkg> precompile
+julia> using ArbNumerics
+```
+
+### alternative
 
 Do this (don't be concerned with the messages).  Copy and paste into the REPL:
 ```julia
