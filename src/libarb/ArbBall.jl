@@ -13,7 +13,7 @@ on the midpoint are carried out (operations on the radius are always done using 
 
 # ArbBall structs hold balls given as midpoint, radius
 
-mutable struct ArbBall{P}     # P is the precision in bits
+mutable struct ArbBall{P} <: Real     # P is the precision in bits
                     #      midpoint
     mid_exp::Int    # fmpz         exponent of 2 (2^exp)
     mid_size::UInt  # mp_size_t    nwords and sign (lsb holds sign of significand)
