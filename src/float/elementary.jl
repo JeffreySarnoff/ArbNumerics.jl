@@ -41,7 +41,7 @@ lambertw(x::ArbFloat{P}) where {P} = ArbFloat{P}(lambertw(ArbBall{P}(x)))
 
 const FmpzZero = Fmpz(0)
 function lambertw(x::ArbComplex{P}) where {P}
-    z = ArbComplex{P}())
+    z = ArbComplex{P}()
     ccall(@libarb(acb_lambertw), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{Fmpz}, Cint, Clong), z, x, FmpzZero, 0, 128)
     return z
 end
