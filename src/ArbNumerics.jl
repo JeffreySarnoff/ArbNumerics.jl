@@ -85,9 +85,11 @@ import Base.Math:  max, min, minmax,
 
 
 using SpecialFunctions
-import SpecialFunctions: beta, lbeta, gamma, lgamma, lfact
+import SpecialFunctions: beta, lbeta, gamma, lgamma, lfact,
+     airyai, airyaiprime, airybi, airybiprime
+
   #=
-       airyai, airyaiprime, airybi, airybiprime, airyaix, airyaiprimex, airybix, airybiprimex,
+        airyaix, airyaiprimex, airybix, airybiprimex,
        besselh, besselhx, besseli, besselix, besselj, besselj0, besselj1, besseljx,
        besselk, besselkx, bessely, bessely0, bessely1, besselyx,
        dawson,
