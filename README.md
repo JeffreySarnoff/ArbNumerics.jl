@@ -137,18 +137,41 @@ Float16(1.414)
 - `sinh`, `cosh`, `tanh`, `csch`, `sech`, `coth`
 - `asinh`, `acosh`, `atanh`
 
-#### special functions
-- `gamma`, `lgamma`, `rgamma`, `digamma`
+#### gamma functions
+
+- `gamma`, `lgamma`
+- `rgamma`, `digamma`
+
+#### error functions
+
 - `erf`, `erfc`, `erfi`
-- `ei`, `si`, `ci`
-- `shi`, `chi`
-- `zeta`, `lambertw`
+
+#### Bessel functions
+
+- `besselj`, `besselj0`, `besselj1`
+- `bessely`, `bessely0`, `bessely1`
+- `besseli`, `besselk`
+       
+#### Airy functions
+
+- `airyai`, `airyaiprime`
+- `airybi`, `airybiprime`
 
 ##### elliptic functions
-- `elliptice`, `elliptick`, `ellipticp`, `ellipticpi`
+
+- `elliptice`, `elliptick`
+- `ellipticp`, `ellipticpi`
 - `ellipticzeta`, `ellipticsigma`
 
+#### other special functions
+
+- `ei`, `si`, `ci`
+- `shi`, `chi`
+- `zeta`, `eta`, `xi`    # Reimann
+- `lambertw`
+
 ##### arithmetic-geometric mean
+
 - `agm`, `agm1`
 
 ----
