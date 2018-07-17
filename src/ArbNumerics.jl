@@ -89,7 +89,7 @@ import Base.Math:  max, min, minmax,
 using SpecialFunctions
 import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, trigamma,
      beta, lbeta, sinint, cosint,
-     erf, erfc, erfcinv, erfcx, erfi, efinv,
+     erf, erfc, erfcinv, erfcx, erfi, erfinv,
      airyai, airyaiprime, airybi, airybiprime,
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
