@@ -7,7 +7,8 @@
 When computing elementary and special functions
 with 20..1200 radix 10 digits, this is _best-in-show_.
 
-(please see Acknowledgements(https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements))
+please see Acknowledgements(https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements))
+
 -----
 
 [![Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)
