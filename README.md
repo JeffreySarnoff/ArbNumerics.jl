@@ -4,8 +4,7 @@
 #### Copyright © 2015-2018 by Jeffrey Sarnoff.
 ####  This work is released under The MIT License.
 
-When computing elementary and special functions
-with 20..1200 radix 10 digits, this is [best-in-show](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements).
+For multiprecision numerical computing using 20..1200 digit values with arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).  It really is _best-in-show_ for reliable results.
 
 -----
 
