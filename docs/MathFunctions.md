@@ -1,4 +1,4 @@
-## ArbNumerics: supported functions
+## ArbNumerics: mathematical functions
 
 #### arithmetic functions
 
