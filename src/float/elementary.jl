@@ -1,5 +1,3 @@
-
-
 for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1, :arb_expm1),
               (:sin, :arb_sin), (:cos, :arb_cos), (:tan, :arb_tan),
               (:csc, :arb_csc), (:sec, :arb_sec), (:cot, :arb_cot),
