@@ -40,7 +40,7 @@
 
 - `agm`, `agm1`
 
-##### elliptic functions
+#### elliptic functions
 
 - `elliptice`, `elliptick`
 - `ellipticp`, `ellipticpi`
@@ -54,13 +54,13 @@
 - `lambertw`
 
 
-## Intervals
+## ArbNumerics: interval support
 
 #### parts
 
-- midpoint, radius
-- upperbound, lowerbound, bounds
-- upperbound_abs, lowerbound_abs, bounds_abs
+- `midpoint`, `radius`
+- `upperbound`, `lowerbound`, `bounds`
+- `upperbound_abs`, `lowerbound_abs`, `bounds_abs`
 
 #### construction
 
