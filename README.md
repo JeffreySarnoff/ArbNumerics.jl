@@ -145,8 +145,8 @@ Float16(1.414)
 - `zeta`, `lambertw`
 
 ##### elliptic functions
-- `ellipticE`, `ellipticK`, `ellipticP`, `ellipticPi`
-- `ellipticZeta`, `ellipticSigma`
+- `elliptice`, `elliptick`, `ellipticp`, `ellipticpi`
+- `ellipticzeta`, `ellipticsigma`
 
 ##### arithmetic-geometric mean
 - `agm`, `agm1`
