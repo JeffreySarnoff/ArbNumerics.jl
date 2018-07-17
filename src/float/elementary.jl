@@ -18,7 +18,7 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
               (:shi, :arb_hypgeom_shi), (:chi, :arb_hypgeom_chi),
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, prec::Int) where P
+        function ($A)(x::ArbBall{P}, prec::Int=P) where P
             z = ArbBall{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, prec)
             return z
@@ -67,7 +67,7 @@ for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1,
               (:shi, :acb_hypgeom_shi), (:chi, :acb_hypgeom_chi),
              )
     @eval begin
-        function ($A)(x::ArbComplex{P}, prec::Int) where P
+        function ($A)(x::ArbComplex{P}, prec::Int=P) where P
             z = ArbComplex{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, prec)
             return z
@@ -80,7 +80,7 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi)
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, prec::Int) where {P}
+        function ($A)(x::ArbBall{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             xc = ArbComplex{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, xc, prec)
@@ -94,7 +94,7 @@ end
 
 for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2))
     @eval begin
-        function ($A)(x::ArbFloat{P}, y::ArbFloat{P}, prec::Int) where P
+        function ($A)(x::ArbFloat{P}, y::ArbFloat{P}, prec::Int=P) where P
             z = ArbBall{P}()
             xb = ArbBall{P}(x)
             yb = ArbBall{P}(y)
@@ -108,7 +108,7 @@ end
 for (A,F) in ((:loghypot, :arb_log_hypot),
               (:atan2, :arb_atan2), (:agm, :arb_agm) )
     @eval begin
-        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int) where {P}
+        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int=P) where {P}
             z = ArbBall{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, y, prec)
             return z
@@ -123,7 +123,7 @@ for (A,F) in ((:loghypot, :acb_log_hypot),
               (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
              )
     @eval begin
-        function ($A)(x::ArbComplex{P}, y::ArbComplex{P}, prec::Int) where {P}
+        function ($A)(x::ArbComplex{P}, y::ArbComplex{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, y, prec)
             return z
@@ -136,7 +136,7 @@ for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
               (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int) where {P}
+        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             xc = ArbComplex{P}(x)
             yc = ArbComplex{P}(y)
@@ -170,7 +170,7 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
               (:shi, :arb_hypgeom_shi), (:chi, :arb_hypgeom_chi),
              )
     @eval begin
-        function ($A)(x::ArbFloat{P}, prec::Int) where P
+        function ($A)(x::ArbFloat{P}, prec::Int=P) where P
             z = ArbBall{P}()
             xb = ArbBall{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, xb, prec)
@@ -183,7 +183,7 @@ end
 for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi))
     @eval begin
-        function ($A)(x::ArbFloat{P}, prec::Int) where P
+        function ($A)(x::ArbFloat{P}, prec::Int=P) where P
             z = ArbComplex{P}()
             xc = ArbComplex{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, xc, prec)
@@ -192,7 +192,6 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
          ($A)(x::ArbFloat{P}) where {P} = ($A)(x, P)
     end
 end
-
 
 function agm1(x::ArbBall{P}) where {P}
     x1 = ArbComplex{P}(x)
