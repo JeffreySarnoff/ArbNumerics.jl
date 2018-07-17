@@ -4,7 +4,8 @@
 #### Copyright © 2015-2018 by Jeffrey Sarnoff.
 ####  This work is released under The MIT License.
 
-For multiprecision numerical computing using 20..1200 digit values with arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).  It really is _best-in-show_ for reliable results.
+For multiprecision numerical computing using 20..1200 digit values with arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).  If you use these types to calculate with a precision that is at least 2.1875 times the bit precision you want to report, it really is _best-in-show_ for reliable values.  
+
 
 -----
 
@@ -218,6 +219,13 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 
 This work develops parts the Arb C library within Julia.  It is entirely dependent on Fredrik Johansson's work and the libraries required are fetched and made ready by the good work of William Hart and the Nemo.jl team.  The essential libraries (`Arb` and `Flint`) and the build file are their work, used with permission.
 
+----
+
+## Alternatives
+
+ValidatedNumerics.jl and other packages available at [JuliaIntervals](https://github.com/JuliaIntervals) provide an alternative approach to developing correctly contained results.  Those packages are very good and worthwhile when you do not require multiprecision numerics.
+
+----
 ## notes
 
 - To propose internal changes, please use pull requests.
