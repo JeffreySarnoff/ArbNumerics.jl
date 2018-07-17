@@ -14,18 +14,18 @@ function (!=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     0 == ccall(@libarb(arf_equal), Cint, (Ref{ArbFloat}, Ref{ArbFloat}), x, y)
 end
 
-function (==)(x::ArbBall{P}, y::ArbBall{P})  where {P}
-    0 != ccall(@libarb(arb_eq), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+function (==)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    0 != ccall(@libarb(arb_eq), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
-function (!=)(x::ArbBall{P}, y::ArbBall{P})  where {P}
-    0 != ccall(@libarb(arb_ne), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+function (!=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    0 != ccall(@libarb(arb_ne), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 function (==)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 != ccall(@libarb(acb_eq), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+    0 != ccall(@libarb(acb_eq), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 function (!=)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 != ccall(@libarb(acb_ne), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+    0 != ccall(@libarb(acb_ne), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 
@@ -68,17 +68,17 @@ function (=>)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     (x > y) || (x == y)
 end
 
-function (<)(x::ArbBall{P}, y::ArbBall{P})  where {P}
-    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+function (<)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
-function (>)(x::ArbBall{P}, y::ArbBall{P})  where {P}
-    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+function (>)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
-function (<=)(x::ArbBall{P}, y::ArbBall{P})  where {P}
-    0 != ccall(@libarb(arb_le), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+function (<=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    0 != ccall(@libarb(arb_le), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
-function (>=)(x::ArbBall{P}, y::ArbBall{P})  where {P}
-    0 != ccall(@libarb(arb_ge), Cint, (Ref{ArbBall}, Ref{ArbBall}), x, y)
+function (>=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    0 != ccall(@libarb(arb_ge), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 # ArbComplex comparisons < > <= >=
@@ -90,9 +90,9 @@ for F in (:(==), :(!=), :(<), :(<=), :(>=), :(>), :isequal, :isless)
             $F(promote(x, y)...,)
         $F(x::T, y::ArbFloat{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
             $F(promote(x, y)...,)
-        $F(x::ArbBall{P}, y::T) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+        $F(x::ArbReal{P}, y::T) where {P, T<:Union{Integer, Base.IEEEFloat}} =
             $F(promote(x, y)...,)
-        $F(x::T, y::ArbBall{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+        $F(x::T, y::ArbReal{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
             $F(promote(x, y)...,)
     end
 end
@@ -140,19 +140,19 @@ end
 
 minmax(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = (x <= y ? (x, y) : (y, x))
 
-function min(x::ArbBall{P}, y::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_min), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}), z, x, y)
+function min(x::ArbReal{P}, y::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_min), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}), z, x, y)
     return z
 end
 
-function max(x::ArbBall{P}, y::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_max), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}), z, x, y)
+function max(x::ArbReal{P}, y::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_max), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}), z, x, y)
     return z
 end
 
-minmax(x::ArbBall{P}, y::ArbBall{P}) where {P} = (x <= y ? (x, y) : (y, x))
+minmax(x::ArbReal{P}, y::ArbReal{P}) where {P} = (x <= y ? (x, y) : (y, x))
 
 function min(x::ArbComplex{P}, y::ArbComplex{P}, noNaNs::Bool=false) where {P}
     z = ArbComplex{P}()

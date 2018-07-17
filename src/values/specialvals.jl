@@ -43,43 +43,43 @@ function nan!(x::ArbFloat{P}) where {P}
     return x
 end
 
-function zero!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_zero), Cvoid, (Ref{ArbBall},), x)
+function zero!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_zero), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function one!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_one), Cvoid, (Ref{ArbBall},), x)
+function one!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_one), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function inf!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_pos_inf), Cvoid, (Ref{ArbBall},), x)
+function inf!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_pos_inf), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function posinf!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_pos_inf), Cvoid, (Ref{ArbBall},), x)
+function posinf!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_pos_inf), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function neginf!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_neg_inf), Cvoid, (Ref{ArbBall},), x)
+function neginf!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_neg_inf), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function pminf!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_zero_pm_inf), Cvoid, (Ref{ArbBall},), x)
+function pminf!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_zero_pm_inf), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function indeterminate!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_indeterminate), Cvoid, (Ref{ArbBall},), x)
+function indeterminate!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_indeterminate), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
-function nan!(x::ArbBall{P}) where {P}
-    ccall(@libarb(arb_nan), Cvoid, (Ref{ArbBall},), x)
+function nan!(x::ArbReal{P}) where {P}
+    ccall(@libarb(arb_nan), Cvoid, (Ref{ArbReal},), x)
     return x
 end
 
@@ -95,8 +95,8 @@ function one!(x::ArbComplex{P}) where {P}
 end
 
 function inf!(x::ArbComplex{P}) where {P}
-    rea = ArbBall{P}()
-    ima = ArbBall{P}()
+    rea = ArbReal{P}()
+    ima = ArbReal{P}()
     rea = inf!(rea)
     ima = inf!(ima)
     z = ArbComplex{P}(rea, ima)
@@ -104,8 +104,8 @@ function inf!(x::ArbComplex{P}) where {P}
 end
 
 function posinf!(x::ArbComplex{P}) where {P}
-    rea = ArbBall{P}()
-    ima = ArbBall{P}()
+    rea = ArbReal{P}()
+    ima = ArbReal{P}()
     rea = posinf!(rea)
     ima = zero!(ima)
     z = ArbComplex{P}(rea, ima)
@@ -113,8 +113,8 @@ function posinf!(x::ArbComplex{P}) where {P}
 end
 
 function neginf!(x::ArbComplex{P}) where {P}
-    rea = ArbBall{P}()
-    ima = ArbBall{P}()
+    rea = ArbReal{P}()
+    ima = ArbReal{P}()
     rea = neginf!(rea)
     ima = zero!(ima)
     z = ArbComplex{P}(rea, ima)
@@ -122,8 +122,8 @@ function neginf!(x::ArbComplex{P}) where {P}
 end
 
 function pminf!(x::ArbComplex{P}) where {P}
-    rea = ArbBall{P}()
-    ima = ArbBall{P}()
+    rea = ArbReal{P}()
+    ima = ArbReal{P}()
     rea = pminf!(rea)
     ima = pminf!(ima)
     z = ArbComplex{P}(rea, ima)
@@ -131,8 +131,8 @@ function pminf!(x::ArbComplex{P}) where {P}
 end
 
 function indeterminate!(x::ArbComplex{P}) where {P}
-    rea = ArbBall{P}()
-    ima = ArbBall{P}()
+    rea = ArbReal{P}()
+    ima = ArbReal{P}()
     rea = indeterminate!(rea)
     ima = indeterminate!(ima)
     z = ArbComplex{P}(rea, ima)
@@ -140,8 +140,8 @@ function indeterminate!(x::ArbComplex{P}) where {P}
 end
 
 function nan!(x::ArbComplex{P}) where {P}
-    rea = ArbBall{P}()
-    ima = ArbBall{P}()
+    rea = ArbReal{P}()
+    ima = ArbReal{P}()
     rea = nan!(rea)
     ima = nan!(ima)
     z = ArbComplex{P}(rea, ima)
@@ -151,14 +151,14 @@ end
 
 zero(::Type{Mag}) = Mag()
 zero(::Type{ArbFloat{P}}) where {P} = ArbFloat{P}()
-zero(::Type{ArbBall{P}}) where {P} = ArbBall{P}()
+zero(::Type{ArbReal{P}}) where {P} = ArbReal{P}()
 zero(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}()
 zero(x::Mag) = zero(typeof(x))
 zero(x::ArbFloat{P}) where {P} = zero(typeof(x))
-zero(x::ArbBall{P}) where {P} = zero(typeof(x))
+zero(x::ArbReal{P}) where {P} = zero(typeof(x))
 zero(x::ArbComplex{P}) where {P} = zero(typeof(x))
 zero(::Type{ArbFloat}) = zero(ArbFloat{DEFAULT_PRECISION[1]})
-zero(::Type{ArbBall}) = zero(ArbBall{DEFAULT_PRECISION[1]})
+zero(::Type{ArbReal}) = zero(ArbReal{DEFAULT_PRECISION[1]})
 zero(::Type{ArbComplex}) = zero(ArbComplex{DEFAULT_PRECISION[1]})
 
 function one(::Type{Mag})
@@ -171,8 +171,8 @@ function one(::Type{ArbFloat{P}}) where {P}
     one!(z)
     return z
 end
-function one(::Type{ArbBall{P}}) where {P}
-    z = ArbBall{P}()
+function one(::Type{ArbReal{P}}) where {P}
+    z = ArbReal{P}()
     one!(z)
     return z
 end
@@ -184,10 +184,10 @@ end
 
 one(x::Mag) = zero(typeof(x))
 one(x::ArbFloat{P}) where {P} = one(typeof(x))
-one(x::ArbBall{P}) where {P} = one(typeof(x))
+one(x::ArbReal{P}) where {P} = one(typeof(x))
 one(x::ArbComplex{P}) where {P} = one(typeof(x))
 one(::Type{ArbFloat}) = one(ArbFloat{DEFAULT_PRECISION[1]})
-one(::Type{ArbBall}) = one(ArbBall{DEFAULT_PRECISION[1]})
+one(::Type{ArbReal}) = one(ArbReal{DEFAULT_PRECISION[1]})
 one(::Type{ArbComplex}) = one(ArbComplex{DEFAULT_PRECISION[1]})
 
 function inf(::Type{Mag})
@@ -200,8 +200,8 @@ function inf(::Type{ArbFloat{P}}) where {P}
     inf!(z)
     return z
 end
-function inf(::Type{ArbBall{P}}) where {P}
-    z = ArbBall{P}()
+function inf(::Type{ArbReal{P}}) where {P}
+    z = ArbReal{P}()
     inf!(z)
     return z
 end
@@ -213,10 +213,10 @@ end
 
 inf(x::Mag) = inf(typeof(x))
 inf(x::ArbFloat{P}) where {P} = inf(typeof(x))
-inf(x::ArbBall{P}) where {P} = inf(typeof(x))
+inf(x::ArbReal{P}) where {P} = inf(typeof(x))
 inf(x::ArbComplex{P}) where {P} = inf(typeof(x))
 inf(::Type{ArbFloat}) = inf(ArbFloat{DEFAULT_PRECISION[1]})
-inf(::Type{ArbBall}) = inf(ArbBall{DEFAULT_PRECISION[1]})
+inf(::Type{ArbReal}) = inf(ArbReal{DEFAULT_PRECISION[1]})
 inf(::Type{ArbComplex}) = inf(ArbComplex{DEFAULT_PRECISION[1]})
 
 posinf(::Type{Mag}) = throw(DomainError("use `inf(Mag)`."))
@@ -225,8 +225,8 @@ function posinf(::Type{ArbFloat{P}}) where {P}
     posinf!(z)
     return z
 end
-function posinf(::Type{ArbBall{P}}) where {P}
-    z = ArbBall{P}()
+function posinf(::Type{ArbReal{P}}) where {P}
+    z = ArbReal{P}()
     posinf!(z)
     return z
 end
@@ -238,10 +238,10 @@ end
 
 posinf(x::Mag) = posinf(typeof(x))
 posinf(x::ArbFloat{P}) where {P} = posinf(typeof(x))
-posinf(x::ArbBall{P}) where {P} = posinf(typeof(x))
+posinf(x::ArbReal{P}) where {P} = posinf(typeof(x))
 posinf(x::ArbComplex{P}) where {P} = posinf(typeof(x))
 posinf(::Type{ArbFloat}) = posinf(ArbFloat{DEFAULT_PRECISION[1]})
-posinf(::Type{ArbBall}) = posinf(ArbBall{DEFAULT_PRECISION[1]})
+posinf(::Type{ArbReal}) = posinf(ArbReal{DEFAULT_PRECISION[1]})
 posinf(::Type{ArbComplex}) = posinf(ArbComplex{DEFAULT_PRECISION[1]})
 
 neginf(::Type{Mag}) = throw(DomainError("use `inf(Mag)`."))
@@ -250,8 +250,8 @@ function neginf(::Type{ArbFloat{P}}) where {P}
     neginf!(z)
     return z
 end
-function neginf(::Type{ArbBall{P}}) where {P}
-    z = ArbBall{P}()
+function neginf(::Type{ArbReal{P}}) where {P}
+    z = ArbReal{P}()
     neginf!(z)
     return z
 end
@@ -263,19 +263,19 @@ end
 
 neginf(x::Mag) = neginf(typeof(x))
 neginf(x::ArbFloat{P}) where {P} = neginf(typeof(x))
-neginf(x::ArbBall{P}) where {P} = neginf(typeof(x))
+neginf(x::ArbReal{P}) where {P} = neginf(typeof(x))
 neginf(x::ArbComplex{P}) where {P} = neginf(typeof(x))
 neginf(::Type{ArbFloat}) = neginf(ArbFloat{DEFAULT_PRECISION[1]})
-neginf(::Type{ArbBall}) = neginf(ArbBall{DEFAULT_PRECISION[1]})
+neginf(::Type{ArbReal}) = neginf(ArbReal{DEFAULT_PRECISION[1]})
 neginf(::Type{ArbComplex}) = neginf(ArbComplex{DEFAULT_PRECISION[1]})
 
-allextendedreals(::Type{ArbBall{P}}) where {P} = pminf!(zero(ArbBall{P}))
-allextendedreals(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}(allextendedreals(ArbBall{P}), zero(ArbBall{P}))
-allextendedimags(::Type{ArbBall{P}}) where {P} = ArbComplex{P}(zero(ArbBall{P}), allextendedreals(ArbBall{P}))
-allextendedcomplex(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}(allextendedreals(ArbBall{P}), allextendedreals(ArbBall{P}))
-allextendedreals(::Type{ArbBall}) = allextendedreals(ArbBall{DEFAULT_PRECISION[1]})
-allextendedreals(::Type{ArbComplex}) = ArbComplex{DEFAULT_PRECISION[1]}(allextendedreals(ArbBall), zero(ArbBall))
-allextendedimags(::Type{ArbComplex}) = ArbComplex{DEFAULT_PRECISION[1]}(zero(ArbBall), allextendedreals(ArbBall))
+allextendedreals(::Type{ArbReal{P}}) where {P} = pminf!(zero(ArbReal{P}))
+allextendedreals(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}(allextendedreals(ArbReal{P}), zero(ArbReal{P}))
+allextendedimags(::Type{ArbReal{P}}) where {P} = ArbComplex{P}(zero(ArbReal{P}), allextendedreals(ArbReal{P}))
+allextendedcomplex(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}(allextendedreals(ArbReal{P}), allextendedreals(ArbReal{P}))
+allextendedreals(::Type{ArbReal}) = allextendedreals(ArbReal{DEFAULT_PRECISION[1]})
+allextendedreals(::Type{ArbComplex}) = ArbComplex{DEFAULT_PRECISION[1]}(allextendedreals(ArbReal), zero(ArbReal))
+allextendedimags(::Type{ArbComplex}) = ArbComplex{DEFAULT_PRECISION[1]}(zero(ArbReal), allextendedreals(ArbReal))
 
 NaN(::Type{Mag}) = throw(DomainError("nan(Mag) does not exist"))
 function NaN(::Type{ArbFloat{P}}) where {P}
@@ -283,19 +283,19 @@ function NaN(::Type{ArbFloat{P}}) where {P}
     nan!(z)
     return z
 end
-function NaN(::Type{ArbBall{P}}) where {P}
-    z = ArbBall{P}()
+function NaN(::Type{ArbReal{P}}) where {P}
+    z = ArbReal{P}()
     nan!(z)
     return z
 end
-NaN(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}(NaN(ArbBall{P}), NaN(ArbBall{P}))
+NaN(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}(NaN(ArbReal{P}), NaN(ArbReal{P}))
 
 NaN(x::Mag) = NaN(typeof(x))
 NaN(x::ArbFloat{P}) where {P} = NaN(typeof(x))
-NaN(x::ArbBall{P}) where {P} = NaN(typeof(x))
+NaN(x::ArbReal{P}) where {P} = NaN(typeof(x))
 NaN(x::ArbComplex{P}) where {P} = NaN(typeof(x))
 NaN(::Type{ArbFloat}) = NaN(ArbFloat{DEFAULT_PRECISION[1]})
-NaN(::Type{ArbBall}) = NaN(ArbBall{DEFAULT_PRECISION[1]})
+NaN(::Type{ArbReal}) = NaN(ArbReal{DEFAULT_PRECISION[1]})
 NaN(::Type{ArbComplex}) = NaN(ArbComplex{DEFAULT_PRECISION[1]})
 
 
@@ -382,55 +382,55 @@ function isnan(x::ArbFloat{P}) where {P}
 end
 
 
-function isspecial(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_special), Cint, (Ref{ArbBall},), x)
+function isspecial(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_special), Cint, (Ref{ArbReal},), x)
 end
 
-function isnormal(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_normal), Cint, (Ref{ArbBall},), x)
+function isnormal(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_normal), Cint, (Ref{ArbReal},), x)
 end
 
-function isfinite(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_finite), Cint, (Ref{ArbBall},), x)
+function isfinite(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_finite), Cint, (Ref{ArbReal},), x)
 end
 
-function isnonfinite(x::ArbBall{P}) where {P}
-    0 == ccall(@libarb(arb_is_finite), Cint, (Ref{ArbBall},), x)
+function isnonfinite(x::ArbReal{P}) where {P}
+    0 == ccall(@libarb(arb_is_finite), Cint, (Ref{ArbReal},), x)
 end
 
-function iszero(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_zero), Cint, (Ref{ArbBall},), x)
+function iszero(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_zero), Cint, (Ref{ArbReal},), x)
 end
 
-function isone(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_one), Cint, (Ref{ArbBall},), x)
+function isone(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_one), Cint, (Ref{ArbReal},), x)
 end
 
-function isnonzero(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_nonzero), Cint, (Ref{ArbBall},), x)
+function isnonzero(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_nonzero), Cint, (Ref{ArbReal},), x)
 end
 
-function isexact(x::ArbBall{P}) where {P}
-    0 != ccall(@libarb(arb_is_exact), Cint, (Ref{ArbBall},), x)
+function isexact(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_exact), Cint, (Ref{ArbReal},), x)
 end
 
-function isinexact(x::ArbBall{P}) where {P}
-    0 == ccall(@libarb(arb_is_exact), Cint, (Ref{ArbBall},), x)
+function isinexact(x::ArbReal{P}) where {P}
+    0 == ccall(@libarb(arb_is_exact), Cint, (Ref{ArbReal},), x)
 end
 
-function isinf(x::ArbBall{P}) where {P}
+function isinf(x::ArbReal{P}) where {P}
     isinf(ArbFloat{P}(x))
 end
 
-function isposinf(x::ArbBall{P}) where {P}
+function isposinf(x::ArbReal{P}) where {P}
     isposinf(ArbFloat{P}(x))
 end
 
-function isneginf(x::ArbBall{P}) where {P}
+function isneginf(x::ArbReal{P}) where {P}
     isneginf(ArbFloat{P}(x))
 end
 
-function isnan(x::ArbBall{P}) where {P}
+function isnan(x::ArbReal{P}) where {P}
     isnan(ArbFloat{P}(x))
 end
 

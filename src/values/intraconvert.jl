@@ -6,7 +6,7 @@ function ArbFloat{P}(x::Mag) where {P}
     return z
 end
 
-ArbBall{P}(x::Mag) where {P} = ArbBall{P}(ArbFloat{P}(x))
+ArbReal{P}(x::Mag) where {P} = ArbReal{P}(ArbFloat{P}(x))
 
 
 function ArbComplex{P}(rea::Mag) where {P}
@@ -15,24 +15,24 @@ function ArbComplex{P}(rea::Mag) where {P}
 end
 
 function ArbComplex{P}(rea::ArbFloat{P}, ima::ArbFloat{P}) where {P}
-    realpart = ArbBall{P}(rea)
-    imagpart = ArbBall{P}(ima)
+    realpart = ArbReal{P}(rea)
+    imagpart = ArbReal{P}(ima)
     result = ArbComplex{P}(realpart, imagpart)
     return result
 end
 convert(::Type{ArbComplex{P}}, rea::ArbFloat{P}, ima::ArbFloat{P}) where {P} = ArbComplex{P}(rea, ima)
 
-function ArbComplex{P}(rea::ArbBall{P}, ima::ArbBall{P}) where {P}
+function ArbComplex{P}(rea::ArbReal{P}, ima::ArbReal{P}) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_arb_arb), Cvoid,
-          (Ref{ArbComplex}, Ref{ArbBall}, Ref{ArbBall}), z, rea, ima)
+          (Ref{ArbComplex}, Ref{ArbReal}, Ref{ArbReal}), z, rea, ima)
     return z
 end
-convert(::Type{ArbComplex{P}}, rea::ArbBall{P}, ima::ArbBall{P}) where {P} = ArbComplex{P}(rea, ima)
+convert(::Type{ArbComplex{P}}, rea::ArbReal{P}, ima::ArbReal{P}) where {P} = ArbComplex{P}(rea, ima)
 
 function ArbComplex{P}(rea::Mag, ima::Mag) where {P}
-    realpart = ArbBall{P}(rea)
-    imagpart = ArbBall{P}(ima)
+    realpart = ArbReal{P}(rea)
+    imagpart = ArbReal{P}(ima)
     result = ArbComplex{P}(realpart, imagpart)
     return result
 end
@@ -44,9 +44,9 @@ function Mag(x::ArbFloat{P}) where {P}
     return z
 end
 
-function Mag(x::ArbBall{P}) where {P}
+function Mag(x::ArbReal{P}) where {P}
     z = Mag()
-    ccall(@libarb(arb_get_mag), Cvoid, (Ref{Mag}, Ref{ArbBall}), z, x)
+    ccall(@libarb(arb_get_mag), Cvoid, (Ref{Mag}, Ref{ArbReal}), z, x)
     return z
 end
 
@@ -74,23 +74,23 @@ function Mag(x::ArbFloat{P}, ::Type{LowerBound}) where {P}
     return z
 end
 
-ArbFloat{P}(x::ArbBall{P}) where {P} = ArbFloat{P}(x, UpperBound)
+ArbFloat{P}(x::ArbReal{P}) where {P} = ArbFloat{P}(x, UpperBound)
 
-function ArbFloat{P}(x::ArbBall{P}, ::Type{UpperBound}) where {P}
+function ArbFloat{P}(x::ArbReal{P}, ::Type{UpperBound}) where {P}
     z = ArbFloat{P}()
     ccall(@libarb(arb_get_ubound_arf), Cvoid,
-          (Ref{ArbFloat}, Ref{ArbBall}, Clong), z, x, P)
+          (Ref{ArbFloat}, Ref{ArbReal}, Clong), z, x, P)
     return z
 end
-convert(::Type{ArbFloat{P}}, x::ArbBall{P}, ::Type{UpperBound}) where {P} = ArbFloat{P}(x)
+convert(::Type{ArbFloat{P}}, x::ArbReal{P}, ::Type{UpperBound}) where {P} = ArbFloat{P}(x)
 
-function ArbFloat{P}(x::ArbBall{P}, ::Type{LowerBound}) where {P}
+function ArbFloat{P}(x::ArbReal{P}, ::Type{LowerBound}) where {P}
     z = ArbFloat{P}()
     ccall(@libarb(arb_get_lbound_arf), Cvoid,
-          (Ref{ArbFloat}, Ref{ArbBall}, Clong), z, x, P)
+          (Ref{ArbFloat}, Ref{ArbReal}, Clong), z, x, P)
     return z
 end
-convert(::Type{ArbFloat{P}}, x::ArbBall{P}, ::Type{LowerBound}) where {P} = ArbFloat{P}(x)
+convert(::Type{ArbFloat{P}}, x::ArbReal{P}, ::Type{LowerBound}) where {P} = ArbFloat{P}(x)
 
 ArbFloat{P}(x::ArbComplex{P}) where {P} = ArbFloat{P}(x, UpperBound)
 
@@ -137,6 +137,6 @@ end
 function Mag(x::ArbComplex{P}, ::Type{LowerBound}) where {P}
     z = Mag()
     ccall(@libarb(acb_get_mag_lower), Cvoid,
-          (Ref{Mag}, Ref{ArbBall}, Clong), z, x, P)
+          (Ref{Mag}, Ref{ArbReal}, Clong), z, x, P)
     return z
 end

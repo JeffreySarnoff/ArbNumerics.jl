@@ -43,22 +43,22 @@ const ExtraBits = BitsOfStability + BitsOfAbsorbtion
 
 precision(::Type{Mag}) = 30 # bits of significand
 precision(::Type{ArbFloat{P}}) where {P} = P
-precision(::Type{ArbBall{P}}) where {P} = P
+precision(::Type{ArbReal{P}}) where {P} = P
 precision(::Type{ArbComplex{P}}) where {P} = P
 
 precision(x::ArbFloat{P}) where {P} = P
-precision(x::ArbBall{P}) where {P} = P
+precision(x::ArbReal{P}) where {P} = P
 precision(x::ArbComplex{P}) where {P} = P
 
 # these typed significands have this many signficant bits shown
 
 precision_shown(::Type{Mag}) = 30 # bits of significand
 precision_shown(::Type{ArbFloat{P}}) where {P} = evincedbits(P)
-precision_shown(::Type{ArbBall{P}}) where {P} = evincedbits(P)
+precision_shown(::Type{ArbReal{P}}) where {P} = evincedbits(P)
 precision_shown(::Type{ArbComplex{P}}) where {P} = evincedbits(P)
 
 precision_shown(x::ArbFloat{P}) where {P} = evincedbits(P)
-precision_shown(x::ArbBall{P}) where {P} = evincedbits(P)
+precision_shown(x::ArbReal{P}) where {P} = evincedbits(P)
 precision_shown(x::ArbComplex{P}) where {P} = evincedbits(P)
 
 # default precision
@@ -77,10 +77,10 @@ function resetprecision(::Type{BigFloat})
 end
 
 precision(::Type{ArbFloat}) = evincedbits(DEFAULT_PRECISION[1])
-precision(::Type{ArbBall}) = evincedbits(DEFAULT_PRECISION[1])
+precision(::Type{ArbReal}) = evincedbits(DEFAULT_PRECISION[1])
 precision(::Type{ArbComplex}) = evincedbits(DEFAULT_PRECISION[1])
 
-function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbBall,ArbComplex}}
+function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
     global DEFAULT_PRECISION
     n <= MINIMUM_PRECISION && throw(DomainError("precision must be >= $MINIMUM_PRECISION"))
     newprecision = workingbits(n)
@@ -96,9 +96,9 @@ function ArbFloat(x)
     return res
 end
 
-@inline function ArbBall(x)
+@inline function ArbReal(x)
     prec = DEFAULT_PRECISION[1]
-    res  = ArbBall{prec}(x)
+    res  = ArbReal{prec}(x)
     return res
 end
 
