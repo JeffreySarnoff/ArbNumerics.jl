@@ -2,13 +2,13 @@ using BinDeps
 using Pkg
 using Libdl
 
-
 oldwdir = pwd()
 
 @show M4_VERSION = "1.4.17"
 @show YASM_VERSION = "1.3.0"
 @show MPIR_VERSION = "3.0.0"
 @show MPFR_VERSION = "4.0.0"
+@show ANTIC_VERSION = "96b37f6242526f95f68f1f15c925db5a4a19a21c"
 @show FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
 @show ARB_VERSION = "e0c823ab52c7a909acb692597864e748d73cdebe"
 
@@ -16,17 +16,18 @@ pkgdir = dirname(dirname(@__FILE__))
 wdir = joinpath(pkgdir, "deps")
 vdir = joinpath(pkgdir, "local")
 
-if "ARB_MAKE_CLEAN" in keys(ENV) && ENV["ARB_MAKE_CLEAN"] == "1"
+if "NEMO_MAKE_CLEAN" in keys(ENV) && ENV["NEMO_MAKE_CLEAN"] == "1"
   print("
 ===============================================================================
 =
-=  ARB_MAKE_CLEAN = 1
+=  NEMO_MAKE_CLEAN = 1
 =  Removing old sources and builds
 =
 ================================================================================\n")
 
   rm(joinpath(wdir, "flint2"), force = true, recursive = true)
   rm(joinpath(wdir, "arb"), force = true, recursive = true)
+  rm(joinpath(wdir, "antic"), force = true, recursive = true)
   rm(joinpath(wdir, "mpfr-4.0.0"), force = true, recursive = true)
   rm(joinpath(wdir, "mpir-3.0.0"), force = true, recursive = true)
   rm(joinpath(wdir, "yasm-1.3.0"), force = true, recursive = true)
@@ -52,7 +53,7 @@ else
     mkdir(joinpath(vdir, "lib"))
 end
 
-LDFLAGS = "-Wl,-rpath,$vdir/lib -Wl,-rpath,\$\$ORIGIN/../share/julia/site/v$(VERSION.major).$(VERSION.minor)/ArbNumerics/local/lib"
+LDFLAGS = "-Wl,-rpath,$vdir/lib -Wl,-rpath,\$\$ORIGIN/../share/julia/site/v$(VERSION.major).$(VERSION.minor)/Nemo/local/lib"
 DLCFLAGS = "-fPIC -fno-common"
 
 cd(wdir)
@@ -265,6 +266,28 @@ if !is_windows()
   println("DONE")
 end
 
+ # install ANTIC
+
+if !is_windows()
+  println("Cloning antic ... ")
+  try
+    run(`git clone https://github.com/wbhart/antic.git`)
+    cd(joinpath("$wdir", "antic"))
+    run(`git checkout $ANTIC_VERSION`)
+    cd(wdir)
+  catch
+    if ispath(joinpath("$wdir", "antic"))
+      #open(`patch -R --forward -d antic -r -`, "r", open("../deps-PIE-ftbfs.patch"))
+      cd(joinpath("$wdir", "antic"))
+      run(`git fetch`)
+      run(`git checkout $ANTIC_VERSION`)
+      cd(wdir)
+    end
+  end
+  #open(`patch --forward -d antic -r -`, "r", open("../deps-PIE-ftbfs.patch"))
+  println("DONE")
+end
+
 cd(wdir)
 
 if is_windows()
@@ -285,6 +308,31 @@ else
    end
    println("DONE")
 end
+
+if is_windows()
+   println("Downloading antic ... ")
+   if Int == Int32
+      download_dll("http://nemocas.org/binaries/w32-libantic.dll", joinpath(vdir, "lib", "libantic.dll"))
+   else
+      download_dll("http://nemocas.org/binaries/w64-libantic.dll", joinpath(vdir, "lib", "libantic.dll"))
+   end
+   println("DONE")
+else
+   println("Building antic ... ")
+   cd(joinpath("$wdir", "antic"))
+   withenv("LD_LIBRARY_PATH"=>"$vdir/lib", "LDFLAGS"=>LDFLAGS) do
+      run(`./configure --prefix=$vdir --disable-static --enable-shared --with-mpir=$vdir --with-mpfr=$vdir --with-flint=$vdir`)
+      run(`make -j4`)
+      run(`make install`)
+   end
+   println("DONE")
+end
+
+cd(wdir)
+
+push!(Libdl.DL_LOAD_PATH, joinpath(vdir, "lib"))
+
+cd(oldwdir)
 
 
 cd(wdir)
