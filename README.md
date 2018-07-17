@@ -21,34 +21,14 @@ While the bounds of an `ArbReal` or `ArbComplex` are available, the default is t
 
 ## Installation
 
-### this works for me
-
 ```julia
 pkg> rm ArbNumerics
-pkg> dev ArbNumerics
-pkg> up
+pkg> add ArbNumerics
 pkg> build ArbNumerics  # takes a while
 pkg> precompile
-julia> using ArbNumerics
 ```
-
-### alternative
-
-Do this (don't be concerned with the messages).  Copy and paste into the REPL:
-```julia
-julia> using Pkg
-julia> Pkg.rm("Nemo"); Pkg.rm("Nemo"); # twice
-julia> Pkg.clone("https://github.com/wbhart/Nemo.jl.git");
-julia> Pkg.build("Nemo");
-julia> Pkg.add("ArbNumerics");
-julia> using ArbNumerics
-julia> exit()
-```
-There will commence much activity (getting source codes over the internet and compiling them takes time).  If you are doing this before Nemo.jl has a v0.7 release, you may see warnings.  _That is OK!_.
 
 That should do it.  There should not be any error messages.  If there are, let me know.
-
-## Use
 
 After the installation is done. `using ArbNumerics` will make this package available.
 
@@ -235,6 +215,9 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 - The code is thread-safe, portable, and extensively tested. The library outperforms others.
 
 
+## Acknowledgements
+
+This work develops parts the Arb C library within Julia.  It is entirely dependent on Fredrik Johansson's work and the libraries required are fetched and made ready by the good work of William Hart and the Nemo.jl team.  The build file is theirs, as are the essential libraries (`Arb` and `Flint`).  They are used with permission.
 
 ## notes
 
