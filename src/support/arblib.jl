@@ -50,7 +50,7 @@ hasflint =
     end
 
 if hasarb
-    const LibArbBall = realpath(libdirpath("arb"))
+    const LibArbReal = realpath(libdirpath("arb"))
 end    
 
 if hasflint
@@ -63,7 +63,7 @@ if hasnemo
     libFiles = readdir(NemoLibsDir)
 
     if !hasarb
-        const LibArbBall = library_filepath( NemoLibsDir, libFiles, "libarb" )
+        const LibArbReal = library_filepath( NemoLibsDir, libFiles, "libarb" )
     end
     if !hasflint
         const LibFlint = library_filepath( NemoLibsDir, libFiles, "libflint" )
@@ -71,8 +71,8 @@ if hasnemo
 
 end
 
-if !@isdefined LibArbBall
-   throw(ErrorException("You must first add Nemo.jl or get and compile the ArbBall and Flint C libraries"))
+if !@isdefined LibArbReal
+   throw(ErrorException("You must first add Nemo.jl or get and compile the ArbReal and Flint C libraries"))
 end
 
 if !@isdefined LibFlint
@@ -82,7 +82,7 @@ end
 # @ccall(@libarb(library_function), ReturnType, (arg types), args)
 
 macro libarb(libraryfunction)
-    (:($libraryfunction), LibArbBall)
+    (:($libraryfunction), LibArbReal)
 end
 
 macro libflint(libraryfunction)
