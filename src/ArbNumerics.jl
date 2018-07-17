@@ -2,7 +2,7 @@ __precompile__()
 
 module ArbNumerics
 
-export ArbFloat, ArbBall, ArbComplex,
+export ArbFloat, ArbReal, ArbComplex,
        LowerBound, UpperBound,
        getinterval, setinterval, getball, setball,
        midpoint, radius,
@@ -110,7 +110,7 @@ include("support/abstractions.jl")
 include("libarb/roundingmodes.jl")
 include("libarb/Mag.jl")
 include("libarb/ArbFloat.jl")
-include("libarb/ArbBall.jl")
+include("libarb/ArbReal.jl")
 include("libarb/ArbComplex.jl")
 include("libarb/Flint2.jl")
 include("libarb/promote.jl")
