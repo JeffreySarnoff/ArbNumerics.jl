@@ -44,8 +44,8 @@ export ArbFloat, ArbBall, ArbComplex,
        π, ℯ, γ, φ, catalan
 
 
-import Base: hash,
-       promote_rule, promote_type, convert,
+import Base: IEEEFloat,
+       hash, promote_rule, promote_type, convert,
        copy, deepcopy, string, show,
 
        zero, one,
