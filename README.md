@@ -5,9 +5,7 @@
 ####  This work is released under The MIT License.
 
 When computing elementary and special functions
-with 20..1200 radix 10 digits, this is _best-in-show_.
-
-please see [my acknowledgements](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements))
+with 20..1200 radix 10 digits, this is _best-in-show_ [thanks](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).
 
 -----
 
