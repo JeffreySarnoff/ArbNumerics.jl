@@ -69,5 +69,5 @@
 
 #### retrieval
 
-- `midpooint, radius = getball(x::ArbBall)`
-- `lobound, hibound = getinterval(x::ArbBall)`
+- `midpooint, radius = getball(x::ArbReal)`
+- `lobound, hibound = getinterval(x::ArbReal)`
