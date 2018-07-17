@@ -95,53 +95,12 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      eta, zeta
 
   #=
-        airyaix, airyaiprimex, airybix, airybiprimex,
-       besselh, besselhx, besseli, besselix, besselj, besselj0, besselj1, besseljx,
-       besselk, besselkx, bessely, bessely0, bessely1, besselyx,
+       besselhx, besselix, besseljx, besselk
        dawson,
-       erf, erfc, erfcinv, erfcx, erfi, erfinv,
-       eta,
-       digamma, invdigamma, polygamma, trigamma,
+       invdigamma, polygamma, trigamma,
        hankelh1, hankelh1x, hankelh2, hankelh2x,
-       zeta
        sinint, cosint
-
-besselj
-void arb_hypgeom_bessel_j(arb_t res, const arb_t nu, const arb_t z, slong prec)
-    Computes the Bessel function of the first kind Jν(z)
-void acb_hypgeom_bessel_j(acb_t res, const acb_t nu, const acb_t z, slong prec)
-
-bessely
-void arb_hypgeom_bessel_y(arb_t res, const arb_t nu, const arb_t z, slong prec)
-    Computes the Bessel function of the second kind Yν(z)
-void acb_hypgeom_bessel_y(acb_t res, const acb_t nu, const acb_t z, slong prec)
-
-besseli
-void arb_hypgeom_bessel_i(arb_t res, const arb_t nu, const arb_t z, slong prec)
-    Computes the modified Bessel function of the first kind Iν(z)=zν(iz)−νJν(iz)
-void acb_hypgeom_bessel_i(acb_t res, const acb_t nu, const acb_t z, slong prec)
-
-besselk
-void arb_hypgeom_bessel_k(arb_t res, const arb_t nu, const arb_t z, slong prec)
-    Computes the modified Bessel function of the second kind Kν(z)
-void acb_hypgeom_bessel_k(acb_t res, const acb_t nu, const acb_t z, slong prec)
-
-
-void arb_hypgeom_bessel_i_scaled(arb_t res, const arb_t nu, const arb_t z, slong prec)
-    Computes the function e−zIν(z)
-void acb_hypgeom_bessel_i_scaled(acb_t res, const acb_t nu, const acb_t z, slong prec)
-
-void arb_hypgeom_bessel_k_scaled(arb_t res, const arb_t nu, const arb_t z, slong prec)
-    Computes the function ezKν(z)
-void acb_hypgeom_bessel_k_scaled(acb_t res, const acb_t nu, const acb_t z, slong prec
-
-
-void arb_hypgeom_airy(arb_t ai, arb_t ai_prime, arb_t bi, arb_t bi_prime, const arb_t z, slong prec)
-    Computes the Airy functions (Ai(z),Ai′(z),Bi(z),Bi′(z))
-simultaneously. Any of the four function values can be omitted by passing NULL for the unwanted output variables, speeding up the evaluation.
-void acb_hypgeom_airy(acb_t ai, acb_t ai_prime, acb_t bi, acb_t bi_prime, const acb_t z, slong prec)
-    Computes Airy functions using an automatic algorithm choice.
- =#
+=#
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
@@ -169,7 +128,8 @@ include("float/prearith.jl")
 include("float/arith.jl")
 include("float/morearith.jl")
 include("float/elementary.jl")
-include("float/morespecials.jl")
+include("float/special.jl")
+include("float/special2.jl")
 
 include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
