@@ -157,6 +157,10 @@ Float16(1.414)
 - `airyai`, `airyaiprime`
 - `airybi`, `airybiprime`
 
+#### arithmetic-geometric mean
+
+- `agm`, `agm1`
+
 ##### elliptic functions
 
 - `elliptice`, `elliptick`
@@ -170,11 +174,6 @@ Float16(1.414)
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`
 
-##### arithmetic-geometric mean
-
-- `agm`, `agm1`
-
-----
 
 ## Intervals
 
