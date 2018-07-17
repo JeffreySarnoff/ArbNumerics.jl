@@ -1,26 +1,22 @@
-using BinDeps
-using Pkg
-using Libdl
-
 oldwdir = pwd()
 
-@show M4_VERSION = "1.4.17"
-@show YASM_VERSION = "1.3.0"
-@show MPIR_VERSION = "3.0.0"
-@show MPFR_VERSION = "4.0.0"
-@show ANTIC_VERSION = "96b37f6242526f95f68f1f15c925db5a4a19a21c"
-@show FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
-@show ARB_VERSION = "e0c823ab52c7a909acb692597864e748d73cdebe"
+const M4_VERSION = "1.4.17"
+const YASM_VERSION = "1.3.0"
+const MPIR_VERSION = "3.0.0"
+const MPFR_VERSION = "4.0.0"
+const ANTIC_VERSION = "96b37f6242526f95f68f1f15c925db5a4a19a21c"
+const FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
+const ARB_VERSION = "e0c823ab52c7a909acb692597864e748d73cdebe"
 
 pkgdir = dirname(dirname(@__FILE__))
-wdir = joinpath(pkgdir, "deps")
-vdir = joinpath(pkgdir, "local")
+wdir = abspath(normpath(joinpath(pkgdir, "deps")))
+vdir = abspath(normpath(joinpath(pkgdir, "local")))
 
-if "NEMO_MAKE_CLEAN" in keys(ENV) && ENV["NEMO_MAKE_CLEAN"] == "1"
+if "ARB_MAKE_CLEAN" in keys(ENV) && ENV["NEMO_MAKE_CLEAN"] == "1"
   print("
 ===============================================================================
 =
-=  NEMO_MAKE_CLEAN = 1
+=  ARB_MAKE_CLEAN = 1
 =  Removing old sources and builds
 =
 ================================================================================\n")
