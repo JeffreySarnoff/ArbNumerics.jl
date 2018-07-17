@@ -3,7 +3,7 @@
 
     Returns the number of bits needed to represent
     the absolute value of the significand of an
-    ArbFloat{P} value, directly or as an ArbBall{P} midpoint.
+    ArbFloat{P} value, directly or as an ArbReal{P} midpoint.
     This is the minimum precision in bits that
     allows an exact representation of that value.
     Returns 0 if x is a special value.
@@ -16,10 +16,10 @@ function significand_bits(x::ArbFloat{P}) where {P}
     return nbits
 end
 
-function significand_bits(x::ArbBall{P}) where {P}
+function significand_bits(x::ArbReal{P}) where {P}
     # returns the number of bits needed to represent the absolute value of the significand of midpoint(x),
     # i.e. the minimum precision sufficient to represent x exactly. Returns 0 if x is a special value.
-    nbits = ccall(@libarb(arb_bits), Clong, (Ref{ArbBall},), x)
+    nbits = ccall(@libarb(arb_bits), Clong, (Ref{ArbReal},), x)
     return nbits
 end
 
@@ -50,8 +50,8 @@ end
 
 relerror_bits(x::ArbFloat{P}) where {P} = 0
 
-function relerror_bits(x::ArbBall{P}) where {P}
-    nbits = ccall(@libarb(arb_rel_error_bits), Clong, (Ref{ArbBall},), x)
+function relerror_bits(x::ArbReal{P}) where {P}
+    nbits = ccall(@libarb(arb_rel_error_bits), Clong, (Ref{ArbReal},), x)
     return nbits
 end
 
@@ -70,8 +70,8 @@ end
 
 relaccuracy_bits(x::ArbFloat{P}) where {P} = 0
 
-function relaccuracy_bits(x::ArbBall{P}) where {P}
-    nbits = ccall(@libarb(arb_rel_accuracy_bits), Clong, (Ref{ArbBall},), x)
+function relaccuracy_bits(x::ArbReal{P}) where {P}
+    nbits = ccall(@libarb(arb_rel_accuracy_bits), Clong, (Ref{ArbReal},), x)
     return nbits
 end
 
@@ -97,9 +97,9 @@ function trim_bits(x::ArbFloat{P}, roundingmode::RoundingMode=RoundFromZero) whe
     res = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, nbits, rounding)
     return res
 end
-function trim_bits(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_trim), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
+function trim_bits(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_trim), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
     return z
 end
 function trim_bits(x::ArbComplex{P}) where {P}
@@ -146,8 +146,8 @@ function eps(x::ArbFloat{P}, prec::Int) where {P}
     return z
 end
 
-ulp(x::ArbBall{P}) where {P} = ulp(midpoint_byref(x))
-eps(x::ArbBall{P}) where {P} = eps(midpoint_byref(x))
+ulp(x::ArbReal{P}) where {P} = ulp(midpoint_byref(x))
+eps(x::ArbReal{P}) where {P} = eps(midpoint_byref(x))
 
 ulp(x::ArbComplex{P}) where {P} = ulp(midpoint_byref(real(x)))
 eps(x::ArbComplex{P}) where {P} = eps(midpoint_byref(real(x)))
