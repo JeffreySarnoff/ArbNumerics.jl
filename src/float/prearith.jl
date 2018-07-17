@@ -2,7 +2,7 @@ signbit(x::Mag) = false
 
 signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
 
-signbit(x::ArbBall{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
+signbit(x::ArbReal{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
 
 signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
 signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
@@ -22,9 +22,9 @@ end
     The result is [0±1]
        if x contains both zero and nonzero numbers.
 =#
-function sign(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_sgn), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
+function sign(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_sgn), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
     return z
 end
 
@@ -41,8 +41,8 @@ end
        and the sign of the imaginary part when z is on the imaginary axis.
 =#
 function sign(x::ArbComplex{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(acb_csgn), Cvoid, (Ref{ArbBall}, Ref{ArbComplex}), z, x)
+    z = ArbReal{P}()
+    ccall(@libarb(acb_csgn), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}), z, x)
     return z
 end
 
@@ -57,9 +57,9 @@ function (-)(x::ArbFloat{P}) where {P}
     return z
 end
 
-function (-)(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_neg), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
+function (-)(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_neg), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
     return z
 end
 
@@ -75,9 +75,9 @@ function abs(x::ArbFloat{P}) where {P}
     return z
 end
 
-function abs(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_abs), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), z, x)
+function abs(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_abs), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
     return z
 end
 
@@ -88,15 +88,15 @@ function abs(x::ArbComplex{P}) where {P}
 end
 
 abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
-abs2(x::ArbBall{P})    where {P} = square( abs(x) )
+abs2(x::ArbReal{P})    where {P} = square( abs(x) )
 abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
 
 
-inv(x::ArbFloat{P}) where {P} = ArbFloat{P}( inv(ArbBall{P}(x)) )
+inv(x::ArbFloat{P}) where {P} = ArbFloat{P}( inv(ArbReal{P}(x)) )
 
-function inv(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_inv), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, P)
+function inv(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_inv), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, P)
     return z
 end
 

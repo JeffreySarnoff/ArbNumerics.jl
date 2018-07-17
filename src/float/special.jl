@@ -8,12 +8,12 @@ for (A,F) in ((:gamma, :arb_gamma),
               (:shi, :arb_hypgeom_shi), (:chi, :arb_hypgeom_chi),
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, prec::Int=P) where P
-            z = ArbBall{P}()
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, prec)
+        function ($A)(x::ArbReal{P}, prec::Int=P) where P
+            z = ArbReal{P}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, prec)
             return z
          end
-         ($A)(x::ArbBall{P}) where {P} = ($A)(x, P)
+         ($A)(x::ArbReal{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -21,13 +21,13 @@ end
 const Cint0 = zero(Cint)
 const FmpzZero = Fmpz(0)
 
-function lambertw(x::ArbBall{P}) where {P}
-    z = ArbBall{P}()
-    ccall(@libarb(arb_lambertw), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Cint, Clong), z, x, Cint0, P)
+function lambertw(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_lambertw), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Cint, Clong), z, x, Cint0, P)
     return z
 end
 
-lambertw(x::ArbFloat{P}) where {P} = ArbFloat{P}(lambertw(ArbBall{P}(x)))
+lambertw(x::ArbFloat{P}) where {P} = ArbFloat{P}(lambertw(ArbReal{P}(x)))
 
 function lambertw(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
@@ -59,25 +59,25 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi)
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, prec::Int=P) where {P}
+        function ($A)(x::ArbReal{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             xc = ArbComplex{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, xc, prec)
             rea = real(z)
             return rea
          end
-         ($A)(x::ArbBall{P}) where {P} = ($A)(x, P)
+         ($A)(x::ArbReal{P}) where {P} = ($A)(x, P)
     end
 end
 
 for (A,F) in ((:agm, :arb_agm), )
     @eval begin
-        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int=P) where {P}
-            z = ArbBall{P}()
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, y, prec)
+        function ($A)(x::ArbReal{P}, y::ArbReal{P}, prec::Int=P) where {P}
+            z = ArbReal{P}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
-         ($A)(x::ArbBall{P}, y::ArbBall{P}) where {P} = ($A)(x, y, P)
+         ($A)(x::ArbReal{P}, y::ArbReal{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -88,7 +88,7 @@ for (A,F) in ((:ellipticp, :acb_elliptic_p), (:ellipticpi, :acb_elliptic_pi),
     @eval begin
         function ($A)(x::ArbComplex{P}, y::ArbComplex{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, y, prec)
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
          ($A)(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = ($A)(x, y, P)
@@ -99,7 +99,7 @@ for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
               (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int=P) where {P}
+        function ($A)(x::ArbReal{P}, y::ArbReal{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             xc = ArbComplex{P}(x)
             yc = ArbComplex{P}(y)
@@ -107,7 +107,7 @@ for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
             rea = real(z)
             return rea
          end
-         ($A)(x::ArbBall{P}, y::ArbBall{P}) where {P} = ($A)(x, y, P)
+         ($A)(x::ArbReal{P}, y::ArbReal{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -124,9 +124,9 @@ for (A,F) in ((:gamma, :arb_gamma),
              )
     @eval begin
         function ($A)(x::ArbFloat{P}, prec::Int=P) where P
-            z = ArbBall{P}()
-            xb = ArbBall{P}(x)
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, xb, prec)
+            z = ArbReal{P}()
+            xb = ArbReal{P}(x)
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
             return midpoint_byref(z)
          end
          ($A)(x::ArbFloat{P}) where {P} = ($A)(x, P)
@@ -146,7 +146,7 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
     end
 end
 
-function agm1(x::ArbBall{P}) where {P}
+function agm1(x::ArbReal{P}) where {P}
     x1 = ArbComplex{P}(x)
     w  = agm1(x1)
     z = real(w)
@@ -154,15 +154,15 @@ function agm1(x::ArbBall{P}) where {P}
 end
 
 function agm1(x::ArbFloat{P}) where {P}
-    x1 = ArbBall{P}(x)
+    x1 = ArbReal{P}(x)
     w  = agm1(x1)
     z = midpoint_byref(w)
     return z
 end
 
 function agm(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     w  = agm(x1, y1)
     z = midpoint_byref(w)
     return z

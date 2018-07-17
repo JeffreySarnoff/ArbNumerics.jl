@@ -9,16 +9,16 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
               (:asinh, :arb_asinh), (:acosh, :arb_acosh), (:atanh, :arb_atanh),
              )
     @eval begin
-        function ($A)(x::ArbBall{P}, prec::Int=P) where P
-            z = ArbBall{P}()
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, prec)
+        function ($A)(x::ArbReal{P}, prec::Int=P) where P
+            z = ArbReal{P}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, prec)
             return z
          end
-         ($A)(x::ArbBall{P}) where {P} = ($A)(x, P)
+         ($A)(x::ArbReal{P}) where {P} = ($A)(x, P)
     end
 end
 
-atan(y::ArbBall{P}, x::ArbBall{P}) where {P} = atan2(y, x)
+atan(y::ArbReal{P}, x::ArbReal{P}) where {P} = atan2(y, x)
 
 const Cint0 = zero(Cint)
 
@@ -46,10 +46,10 @@ end
 for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2))
     @eval begin
         function ($A)(x::ArbFloat{P}, y::ArbFloat{P}, prec::Int=P) where P
-            z = ArbBall{P}()
-            xb = ArbBall{P}(x)
-            yb = ArbBall{P}(y)
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, xb, prec)
+            z = ArbReal{P}()
+            xb = ArbReal{P}(x)
+            yb = ArbReal{P}(y)
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
             return midpoint_byref(z)
          end
          ($A)(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ($A)(x, y, P)
@@ -58,12 +58,12 @@ end
 
 for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2) )
     @eval begin
-        function ($A)(x::ArbBall{P}, y::ArbBall{P}, prec::Int=P) where {P}
-            z = ArbBall{P}()
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, y, prec)
+        function ($A)(x::ArbReal{P}, y::ArbReal{P}, prec::Int=P) where {P}
+            z = ArbReal{P}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
-         ($A)(x::ArbBall{P}, y::ArbBall{P}) where {P} = ($A)(x, y, P)
+         ($A)(x::ArbReal{P}, y::ArbReal{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -72,7 +72,7 @@ for (A,F) in ((:loghypot, :acb_log_hypot),)
     @eval begin
         function ($A)(x::ArbComplex{P}, y::ArbComplex{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Ref{ArbBall}, Clong), z, x, y, prec)
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
          ($A)(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = ($A)(x, y, P)
@@ -92,9 +92,9 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
              )
     @eval begin
         function ($A)(x::ArbFloat{P}, prec::Int=P) where P
-            z = ArbBall{P}()
-            xb = ArbBall{P}(x)
-            ccall(@libarb($F), Cvoid, (Ref{ArbBall}, Ref{ArbBall}, Clong), z, xb, prec)
+            z = ArbReal{P}()
+            xb = ArbReal{P}(x)
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
             return midpoint_byref(z)
          end
          ($A)(x::ArbFloat{P}) where {P} = ($A)(x, P)
