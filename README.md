@@ -190,7 +190,7 @@ Float16(1.414)
 
 #### retrieval
 
-- `midpooint, radius = getball(x::ArbBall)`
+- `midpoint, radius = getball(x::ArbBall)`
 - `lobound, hibound = getinterval(x::ArbBall)`
 
 ### working with intervals
