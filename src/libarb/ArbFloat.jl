@@ -1,5 +1,5 @@
 """
-from ArbBall docs:
+from ArbReal docs:
 
 A variable of type arf_t holds an arbitrary-precision binary floating-point number:
 that is, a rational number of the form x⋅2y where x,y∈Z and x is odd, or one of

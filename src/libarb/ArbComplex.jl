@@ -1,4 +1,4 @@
-# ArbComplex structs hold complex balls given as ArbBall pairs
+# ArbComplex structs hold complex balls given as ArbReal pairs
 
 mutable struct ArbComplex{P}  <: Number  # P is the precision in bits
                          #      real midpoint
@@ -58,18 +58,18 @@ end
 
 
 function ArbComplex{P}(rea::ArbFloat{P}) where {P}
-    x = ArbBall{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), x, rea)
-    y = ArbBall{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbBall}, Ref{ArbFloat}), y, x)
+    x = ArbReal{P}()
+    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), x, rea)
+    y = ArbReal{P}()
+    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), y, x)
     z = ArbComplex{P}()
-    ccall(@libarb(acb_set_arb), Cvoid, (Ref{ArbComplex}, Ref{ArbBall}), z, y)
+    ccall(@libarb(acb_set_arb), Cvoid, (Ref{ArbComplex}, Ref{ArbReal}), z, y)
     return z
 end
 
-function ArbComplex{P}(rea::ArbBall{P}) where {P}
+function ArbComplex{P}(rea::ArbReal{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_set_arb), Cvoid, (Ref{ArbComplex}, Ref{ArbBall}), z, rea)
+    ccall(@libarb(acb_set_arb), Cvoid, (Ref{ArbComplex}, Ref{ArbReal}), z, rea)
     return z
 end
 
@@ -105,134 +105,134 @@ function ArbComplex{P}(x::ArbComplex{Q}, roundingmode::RoundingMode) where {P,Q}
 end
 
 ArbComplex(x::ArbFloat{P}) where {P} = ArbComplex{P}(x)
-ArbComplex(x::ArbBall{P}) where {P} = ArbComplex{P}(x)
+ArbComplex(x::ArbReal{P}) where {P} = ArbComplex{P}(x)
 ArbComplex(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ArbComplex{P}(x,y)
-ArbComplex(x::ArbBall{P}, y::ArbBall{P}) where {P} = ArbComplex{P}(x,y)
-ArbComplex(x::ArbFloat{P}, y::ArbBall{P}) where {P} = ArbComplex{P}(ArbBall{P}(x),y)
-ArbComplex(x::ArbBall{P}, y::ArbFloat{P}) where {P} = ArbComplex{P}(x,ArbBall{P}(y))
+ArbComplex(x::ArbReal{P}, y::ArbReal{P}) where {P} = ArbComplex{P}(x,y)
+ArbComplex(x::ArbFloat{P}, y::ArbReal{P}) where {P} = ArbComplex{P}(ArbReal{P}(x),y)
+ArbComplex(x::ArbReal{P}, y::ArbFloat{P}) where {P} = ArbComplex{P}(x,ArbReal{P}(y))
 
 
 function ArbComplex{P}(x::T) where {P,T<:Integer}
-    y = ArbBall{P}(x)
+    y = ArbReal{P}(x)
     z = ArbComplex{P}(y)
     return z
 end
 
 
 function ArbComplex{P}(x::T1, y::T2) where {P,T1<:Union{Integer,AbstractFloat},T2<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z  = ArbComplex{P}(x1, y1)
     return z
 end
 
 function ArbComplex{P}(x::Irrational{S}) where {P,S}
-    y = ArbBall{P}(x)
+    y = ArbReal{P}(x)
     z = ArbComplex{P}(y)
     return z
 end
 
 function ArbComplex{P}(x::Irrational{S1}, y::Irrational{S2}) where {P,S1,S2}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z  = ArbComplex{P}(x1, y1)
     return z
 end
 
 function ArbComplex{P}(x::Irrational{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
 
 function ArbComplex{P}(x::T, y::Irrational{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
 
 function ArbComplex{P}(x::T, y::ArbFloat{P}) where {P,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
 function ArbComplex{P}(x::ArbFloat{P}, y::T) where {P,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
 
-function ArbComplex{P}(x::T, y::ArbBall{P}) where {P,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
+function ArbComplex{P}(x::T, y::ArbReal{P}) where {P,T<:Union{Integer,AbstractFloat}}
+    x1 = ArbReal{P}(x)
     z = ArbComplex{P}(x1, y)
     return z
 end
-function ArbComplex{P}(x::ArbBall{P}, y::T) where {P,T<:Union{Integer,AbstractFloat}}
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::ArbReal{P}, y::T) where {P,T<:Union{Integer,AbstractFloat}}
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x, y1)
     return z
 end
 
-function ArbComplex{P}(x::ArbFloat{P}, y::ArbBall{P}) where {P}
-    x1 = ArbBall{P}(x)
+function ArbComplex{P}(x::ArbFloat{P}, y::ArbReal{P}) where {P}
+    x1 = ArbReal{P}(x)
     z = ArbComplex{P}(x1, y)
     return z
 end
-function ArbComplex{P}(x::ArbBall{P}, y::ArbFloat{P}) where {P}
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::ArbReal{P}, y::ArbFloat{P}) where {P}
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x, y1)
     return z
 end
 
 function ArbComplex{P}(x::T, y::ArbFloat{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
 function ArbComplex{P}(x::ArbFloat{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
-function ArbComplex{P}(x::T, y::ArbBall{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::T, y::ArbReal{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
-function ArbComplex{P}(x::ArbBall{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::ArbReal{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
 function ArbComplex{P}(x::ArbFloat{S1}, y::ArbFloat{S2}) where {P,S1,S2}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
-function ArbComplex{P}(x::ArbBall{S1}, y::ArbBall{S2}) where {P,S1,S2}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::ArbReal{S1}, y::ArbReal{S2}) where {P,S1,S2}
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
-function ArbComplex{P}(x::ArbFloat{S1}, y::ArbBall{S2}) where {P,S1,S2}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::ArbFloat{S1}, y::ArbReal{S2}) where {P,S1,S2}
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
-function ArbComplex{P}(x::ArbBall{S1}, y::ArbFloat{S2}) where {P,S1,S2}
-    x1 = ArbBall{P}(x)
-    y1 = ArbBall{P}(y)
+function ArbComplex{P}(x::ArbReal{S1}, y::ArbFloat{S2}) where {P,S1,S2}
+    x1 = ArbReal{P}(x)
+    y1 = ArbReal{P}(y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
@@ -241,19 +241,19 @@ end
 function midpoint(x::ArbComplex{P}) where {P}
     xreal = real(x)
     ximag = imag(x)
-    zreal = ArbBall{P}()
-    zimag = ArbBall{P}()
-    ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), zreal, xreal)
-    ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), zimag, ximag)
+    zreal = ArbReal{P}()
+    zimag = ArbReal{P}()
+    ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), zreal, xreal)
+    ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), zimag, ximag)
     return ArbComplex{P}(zreal, zimag)
 end
 
 function radius(x::ArbComplex{P}) where {P}
     xreal = real(x)
     ximag = imag(x)
-    zreal = ArbBall{P}()
-    zimag = ArbBall{P}()
-    ccall(@libarb(arb_get_rad_arb), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), zreal, xreal)
-    ccall(@libarb(arb_get_rad_arb), Cvoid, (Ref{ArbBall}, Ref{ArbBall}), zimag, ximag)
+    zreal = ArbReal{P}()
+    zimag = ArbReal{P}()
+    ccall(@libarb(arb_get_rad_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), zreal, xreal)
+    ccall(@libarb(arb_get_rad_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), zimag, ximag)
     return ArbComplex{P}(zreal, zimag)
 end

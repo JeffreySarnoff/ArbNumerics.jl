@@ -1,5 +1,5 @@
 """
-From ArbBall docs:
+From ArbReal docs:
 
 The mag_t type holds an unsigned floating-point number with a fixed-precision mantissa (30 bits)
 and an arbitrary-precision exponent (represented as an fmpz_t), suited for representing magnitude bounds.

@@ -9,7 +9,7 @@ function show(io::IO, x::ArbFloat{P}, flags::Culong=NO_RADIUS) where {P}
     print(io, str)
 end
 
-function show(io::IO, x::ArbBall{P}, flags::Culong=NO_RADIUS) where {P}
+function show(io::IO, x::ArbReal{P}, flags::Culong=NO_RADIUS) where {P}
     prec = digit_precision(P)
     str = string(x, prec, flags)
     print(io, str)
