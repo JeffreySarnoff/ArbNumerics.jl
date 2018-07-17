@@ -37,6 +37,8 @@ export ArbFloat, ArbBall, ArbComplex,
        agm1, agm,
        logsinpi, barnesg, logbarnesg,
        ei, si, ci, shi, chi,
+       airyai, airyaiprime, airybi, airybiprime,
+       besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
        elliptick, elliptice, ellipticpi, ellipticp,
        ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
@@ -86,7 +88,8 @@ import Base.Math:  max, min, minmax,
 
 using SpecialFunctions
 import SpecialFunctions: beta, lbeta, gamma, lgamma, lfact,
-     airyai, airyaiprime, airybi, airybiprime
+     airyai, airyaiprime, airybi, airybiprime,
+     besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk
 
   #=
         airyaix, airyaiprimex, airybix, airybiprimex,
@@ -163,6 +166,7 @@ include("float/prearith.jl")
 include("float/arith.jl")
 include("float/morearith.jl")
 include("float/elementary.jl")
+include("float/morespecials.jl")
 
 include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
