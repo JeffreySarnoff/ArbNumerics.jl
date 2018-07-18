@@ -28,6 +28,10 @@ function library_filepath(libsdir::String, filenames::Vector{String}, libname::S
     return joinpath( libsdir, libfile )
 end
 
+println(string("atdir = ",@__DIR__))
+println(string("atdir.. = ",normpath(joinpath(@__DIR__,"..")))
+println(string("atdir../.. = ",normpath(joinpath(@__DIR__,"..","..")))
+    
 const ArbLibsDir = abspath(normpath(joinpath(@__DIR__,"../../local/lib")))
 
 libFiles = readdir(ArbLibsDir)
