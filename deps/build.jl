@@ -4,7 +4,7 @@ const M4_VERSION = "1.4.17"
 const YASM_VERSION = "1.3.0"
 const MPIR_VERSION = "3.0.0"
 const MPFR_VERSION = "4.0.0"
-const ANTIC_VERSION = "96b37f6242526f95f68f1f15c925db5a4a19a21c"
+#const ANTIC_VERSION = "96b37f6242526f95f68f1f15c925db5a4a19a21c"
 const FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
 const ARB_VERSION = "e0c823ab52c7a909acb692597864e748d73cdebe"
 
@@ -23,7 +23,7 @@ if "ARB_MAKE_CLEAN" in keys(ENV) && ENV["NEMO_MAKE_CLEAN"] == "1"
 
   rm(joinpath(wdir, "flint2"), force = true, recursive = true)
   rm(joinpath(wdir, "arb"), force = true, recursive = true)
-  rm(joinpath(wdir, "antic"), force = true, recursive = true)
+  #rm(joinpath(wdir, "antic"), force = true, recursive = true)
   rm(joinpath(wdir, "mpfr-4.0.0"), force = true, recursive = true)
   rm(joinpath(wdir, "mpir-3.0.0"), force = true, recursive = true)
   rm(joinpath(wdir, "yasm-1.3.0"), force = true, recursive = true)
@@ -263,7 +263,7 @@ if !is_windows()
 end
 
  # install ANTIC
-
+#=
 if !is_windows()
   println("Cloning antic ... ")
   try
@@ -283,7 +283,7 @@ if !is_windows()
   #open(`patch --forward -d antic -r -`, "r", open("../deps-PIE-ftbfs.patch"))
   println("DONE")
 end
-
+=#
 cd(wdir)
 
 if is_windows()
@@ -304,7 +304,7 @@ else
    end
    println("DONE")
 end
-
+#=
 if is_windows()
    println("Downloading antic ... ")
    if Int == Int32
@@ -323,7 +323,7 @@ else
    end
    println("DONE")
 end
-
+=#
 cd(wdir)
 
 push!(Libdl.DL_LOAD_PATH, joinpath(vdir, "lib"))
