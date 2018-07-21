@@ -33,7 +33,7 @@ println(string("atdir = ",@__DIR__))
 println(string("atdir.. = ",normpath(joinpath(@__DIR__,".."))))
 println(string("atdir../.. = ",normpath(joinpath(@__DIR__,"..",".."))))
     
-const ArbLibsDir = vdir; #abspath(normpath(joinpath(@__DIR__,"../../local/lib")))
+const ArbLibsDir = ENV["ARBLIBDIR"]; #abspath(normpath(joinpath(@__DIR__,"../../local/lib")))
 
 libFiles = readdir(ArbLibsDir)
 
