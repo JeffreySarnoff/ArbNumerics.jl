@@ -10,7 +10,7 @@ oldwdir = pwd()
 pkgdir = dirname(dirname(@__FILE__))
 wdir = joinpath(pkgdir, "deps")
 vdir = joinpath(pkgdir, "local")
-
+ENV["ARBLIBDIR"] = vdir
 
 if "ARB_MAKE_CLEAN" in keys(ENV) && ENV["ARB_MAKE_CLEAN"] == "1"
   print("
