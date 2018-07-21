@@ -14,7 +14,6 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, prec)
             return z
          end
-         ($A)(x::ArbReal{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -39,7 +38,6 @@ for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1,
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, prec)
             return z
          end
-         ($A)(x::ArbComplex{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -52,7 +50,6 @@ for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2))
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
             return midpoint_byref(z)
          end
-         ($A)(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -63,7 +60,6 @@ for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2) )
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
-         ($A)(x::ArbReal{P}, y::ArbReal{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -75,7 +71,6 @@ for (A,F) in ((:loghypot, :acb_log_hypot),)
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
-         ($A)(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -97,6 +92,5 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
             return midpoint_byref(z)
          end
-         ($A)(x::ArbFloat{P}) where {P} = ($A)(x, P)
     end
 end
