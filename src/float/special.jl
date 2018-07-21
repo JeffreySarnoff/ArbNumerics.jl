@@ -13,7 +13,6 @@ for (A,F) in ((:gamma, :arb_gamma),
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, prec)
             return z
          end
-         ($A)(x::ArbReal{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -51,7 +50,6 @@ for (A,F) in ((:gamma, :acb_gamma),
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, prec)
             return z
          end
-         ($A)(x::ArbComplex{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -66,7 +64,6 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
             rea = real(z)
             return rea
          end
-         ($A)(x::ArbReal{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -77,7 +74,6 @@ for (A,F) in ((:agm, :arb_agm), )
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
-         ($A)(x::ArbReal{P}, y::ArbReal{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -91,7 +87,6 @@ for (A,F) in ((:ellipticp, :acb_elliptic_p), (:ellipticpi, :acb_elliptic_pi),
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, y, prec)
             return z
          end
-         ($A)(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -107,7 +102,6 @@ for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
             rea = real(z)
             return rea
          end
-         ($A)(x::ArbReal{P}, y::ArbReal{P}) where {P} = ($A)(x, y, P)
     end
 end
 
@@ -129,7 +123,6 @@ for (A,F) in ((:gamma, :arb_gamma),
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
             return midpoint_byref(z)
          end
-         ($A)(x::ArbFloat{P}) where {P} = ($A)(x, P)
     end
 end
 
@@ -142,7 +135,6 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, xc, prec)
             return midpoint_byref(real(z))
          end
-         ($A)(x::ArbFloat{P}) where {P} = ($A)(x, P)
     end
 end
 
