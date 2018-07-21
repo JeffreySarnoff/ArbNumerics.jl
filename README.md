@@ -19,7 +19,26 @@ ArbNumerics exports three types: `ArbFloat`, `ArbReal`, `ArbComplex`.  `ArbFloat
 
 While the bounds of an `ArbReal` or `ArbComplex` are available, the default is to show these values as digit sequences which almost assuredly are accurate, in a round to nearest sense, to the precision displayed.  Math with `ArbFloat` does not provide the assurance one gets using `ArbReal`, as an `ArbFloat` is a point value.  While some effort has been taken to provide you with more reliable results from math with `ArbFloat` values than would be the case using the underlying library itself, `ArbReal` or `ArbComplex` are suggested for work that is important to you.  `ArbFloat` is appropriate when exactness is not required during development, or with applications that are approximating something at increasing precisions.
 
+
 ## Installation
+
+
+### currently
+
+Do this (don't be concerned with the messages).  Copy and paste into the REPL:
+```julia
+julia> using Pkg
+julia> Pkg.rm("Nemo"); Pkg.rm("Nemo"); # twice
+julia> Pkg.clone("https://github.com/wbhart/Nemo.jl.git");
+julia> Pkg.build("Nemo");
+julia> Pkg.add("ArbNumerics");
+julia> using ArbNumerics
+julia> exit()
+```
+There will commence much activity (getting source codes over the internet and compiling them takes time).  If you are doing this before Nemo.jl has a v0.7 release, you may see warnings.  _That is OK!_.
+
+
+#### to be implemented
 
 ```julia
 pkg> rm ArbNumerics
