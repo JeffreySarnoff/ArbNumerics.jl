@@ -134,5 +134,7 @@ include("float/special2.jl")
 include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
+include("support/helptext.jl")
+
 
 end # ArbNumerics
