@@ -15,17 +15,17 @@ function (!=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
 end
 
 function (==)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 != ccall(@libarb(arb_eq), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    0 != ccall(@libarb(arb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 function (!=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 != ccall(@libarb(arb_ne), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    0 == ccall(@libarb(arb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 function (==)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 != ccall(@libarb(acb_eq), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    0 != ccall(@libarb(acb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 function (!=)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 != ccall(@libarb(acb_ne), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    0 == ccall(@libarb(acb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 
@@ -69,16 +69,18 @@ function (=>)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
 end
 
 function (<)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    upperbound(x) < lowerbound(y)
 end
 function (>)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    lowerbound(x) > upperbound(y)
 end
 function (<=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 != ccall(@libarb(arb_le), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    upperbound(x) < lowerbound(y) ||  
+    0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), y, x)
 end
 function (>=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 != ccall(@libarb(arb_ge), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    upperbound(y) < lowerbound(x) ||  
+    0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 # ArbComplex comparisons < > <= >=
