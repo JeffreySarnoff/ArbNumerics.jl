@@ -8,7 +8,7 @@ for (A,F) in ((:gamma, :arb_gamma),
               (:shi, :arb_hypgeom_shi), (:chi, :arb_hypgeom_chi),
              )
     @eval begin
-        function ($A)(x::ArbReal{P}, prec::Int=P) where P
+        function ($A)(x::ArbReal{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, prec)
             return z
