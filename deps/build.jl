@@ -1,33 +1,22 @@
 oldwdir = pwd()
 
+
 @show M4_VERSION = "1.4.17"
 @show YASM_VERSION = "1.3.0"
 @show MPIR_VERSION = "3.0.0"
 @show MPFR_VERSION = "4.0.0"
 @show FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
-@show ARB_VERSION = "e0c823ab52c7a909acb692597864e748d73cdebe"
+@show ARB_VERSION = "4ddd6771d94e602462e1fc470ec9d55b248c04d7"
+
+
 
 pkgdir = dirname(dirname(@__FILE__))
 wdir = joinpath(pkgdir, "deps")
 vdir = joinpath(pkgdir, "local")
-ENV["ARBLIBDIR"] = vdir
 
-if "ARB_MAKE_CLEAN" in keys(ENV) && ENV["ARB_MAKE_CLEAN"] == "1"
-  print("
-===============================================================================
-=
-=  ARB_MAKE_CLEAN = 1
-=  Removing old sources and builds
-=
-================================================================================\n")
 
-  rm(joinpath(wdir, "flint2"), force = true, recursive = true)
-  rm(joinpath(wdir, "arb"), force = true, recursive = true)
-  rm(joinpath(wdir, "mpfr-4.0.0"), force = true, recursive = true)
-  rm(joinpath(wdir, "mpir-3.0.0"), force = true, recursive = true)
-  rm(joinpath(wdir, "yasm-1.3.0"), force = true, recursive = true)
-  rm(vdir, force = true, recursive = true)
-end
+println("\n\t$(vdir)\n")
+
 
 if is_apple() && !("CC" in keys(ENV))
    ENV["CC"] = "clang"
@@ -202,14 +191,12 @@ if !is_windows()
     cd(wdir)
   catch
     if ispath(joinpath("$wdir", "flint2"))
-       open(`patch -R --forward -d flint2 -r -`, "r", open("../deps-PIE-ftbfs.patch"))
        cd(joinpath("$wdir", "flint2"))
        run(`git fetch`)
        run(`git checkout $FLINT_VERSION`)
        cd(wdir)
     end
   end
-  open(`patch --forward -d flint2 -r -`, "r", open("../deps-PIE-ftbfs.patch"))
   println("DONE")
 end
 
@@ -250,14 +237,12 @@ if !is_windows()
     cd(wdir)
   catch
     if ispath(joinpath("$wdir", "arb"))
-      #open(`patch -R --forward -d arb -r -`, "r", open("../deps-PIE-ftbfs.patch"))
       cd(joinpath("$wdir", "arb"))
       run(`git fetch`)
       run(`git checkout $ARB_VERSION`)
       cd(wdir)
     end
   end
-  #open(`patch --forward -d arb -r -`, "r", open("../deps-PIE-ftbfs.patch"))
   println("DONE")
 end
 
@@ -282,7 +267,6 @@ else
    end
    println("DONE")
 end
-
 
 cd(wdir)
 
