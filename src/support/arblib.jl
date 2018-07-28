@@ -44,8 +44,8 @@ elseif !(haslibflint)
 end
 
 
-const LibArb = library_filepath( ArbLibsDir, libFiles, "libarb" )
-const LibFlint = library_filepath( ArbLibsDir, libFiles, "libflint" )
+const LibArb   = library_filepath( ArbLibsDir, libnames, "libarb"   )
+const LibFlint = library_filepath( ArbLibsDir, libnames, "libflint" )
 
 
 # @ccall(@libarb(library_function), ReturnType, (arg types), args)
