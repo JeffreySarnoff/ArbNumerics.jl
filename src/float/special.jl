@@ -130,7 +130,7 @@ for (A,F) in ((:gamma, :arb_gamma),
               (:shi, :arb_hypgeom_shi), (:chi, :arb_hypgeom_chi),
              )
     @eval begin
-        function ($A)(x::ArbFloat{P}, prec::Int=P) where P
+        function ($A)(x::ArbFloat{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
             xb = ArbReal{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
@@ -142,7 +142,7 @@ end
 for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi))
     @eval begin
-        function ($A)(x::ArbFloat{P}, prec::Int=P) where P
+        function ($A)(x::ArbFloat{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             xc = ArbComplex{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, xc, prec)
