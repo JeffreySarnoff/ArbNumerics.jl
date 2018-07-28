@@ -9,7 +9,7 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
               (:asinh, :arb_asinh), (:acosh, :arb_acosh), (:atanh, :arb_atanh),
              )
     @eval begin
-        function ($A)(x::ArbReal{P}, prec::Int=P) where P
+        function ($A)(x::ArbReal{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, prec)
             return z
@@ -33,7 +33,7 @@ for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1,
               (:asinh, :acb_asinh), (:acosh, :acb_acosh), (:atanh, :acb_atanh),
              )
     @eval begin
-        function ($A)(x::ArbComplex{P}, prec::Int=P) where P
+        function ($A)(x::ArbComplex{P}, prec::Int=P) where {P}
             z = ArbComplex{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, prec)
             return z
@@ -43,7 +43,7 @@ end
 
 for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2))
     @eval begin
-        function ($A)(x::ArbFloat{P}, y::ArbFloat{P}, prec::Int=P) where P
+        function ($A)(x::ArbFloat{P}, y::ArbFloat{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
             xb = ArbReal{P}(x)
             yb = ArbReal{P}(y)
@@ -86,7 +86,7 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
               (:asinh, :arb_asinh), (:acosh, :arb_acosh), (:atanh, :arb_atanh),
              )
     @eval begin
-        function ($A)(x::ArbFloat{P}, prec::Int=P) where P
+        function ($A)(x::ArbFloat{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
             xb = ArbReal{P}(x)
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, xb, prec)
