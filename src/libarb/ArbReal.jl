@@ -108,18 +108,16 @@ function radius(x::ArbReal{P}) where {P}
 end
 
 function midpoint_byref(x::ArbReal{P}) where {P}
-    z = ArbFloat{P}()
-    z.exp = x.mid_exp
-    z.size = x.mid_size
-    z.d1  = x.mid_d1
-    z.d2  = x.mid_d2
+    w = ArbReal{P}()
+    ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), w, x)
+    z = ArbFloat{P}(w)
     return z
 end
 
 function radius_byref(x::ArbReal{P}) where {P}
-    z = Mag()
-    z.exp = x.rad_exp
-    z.man = x.rad_man
+    w = ArbReal{P}()
+    ccall(@libarb(arb_get_rad_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), w, x)
+    z = ArbFloat{P}(w)
     return z
 end
 
