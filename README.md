@@ -22,24 +22,6 @@ While the bounds of an `ArbReal` or `ArbComplex` are available, the default is t
 
 ## Installation
 
-
-### currently
-
-Do this (don't be concerned with the messages).  Copy and paste into the REPL:
-```julia
-julia> using Pkg
-julia> Pkg.rm("Nemo"); Pkg.rm("Nemo"); # twice
-julia> Pkg.clone("https://github.com/wbhart/Nemo.jl.git");
-julia> Pkg.build("Nemo");
-julia> Pkg.add("ArbNumerics");
-julia> using ArbNumerics
-julia> exit()
-```
-There will commence much activity (getting source codes over the internet and compiling them takes time).  If you are doing this before Nemo.jl has a v0.7 release, you may see warnings.  _That is OK!_.
-
-
-#### to be implemented
-
 ```julia
 pkg> rm ArbNumerics
 pkg> add ArbNumerics
@@ -52,6 +34,8 @@ That should do it.  There should not be any error messages.  If there are, let m
 After the installation is done. `using ArbNumerics` will make this package available.
 
 Reading the sections that follow gives you a good platform from which to develop.
+
+- consider adding `Readables.jl` and `using ArbNumerics, Readables`
 
 ## Constructors
 
