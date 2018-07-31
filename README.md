@@ -77,7 +77,21 @@ julia> ArbFloat(pi, bits4digits(DIGITS))
 julia> DIGITS == length(string(ans)) - 1 # (-1 for the decimal point)
 true
 ```
+### changing precision
 
+```julia
+julia> a = ArbFloat(2, 25)
+2.000000
+julia> a = ArbFloat(a, 50)
+2.00000000000000
+
+julia> precision = 25
+julia> a = ArbFloat(2, precision)
+2.000000
+julia> precision = 50
+julia> a = ArbFloat(a, precision)
+2.00000000000000
+```
 ### interconversion
 
 ```julia
