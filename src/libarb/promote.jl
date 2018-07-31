@@ -35,6 +35,11 @@ promote_rule(::Type{ArbFloat{P}}, x::ArbComplex{Q}) where {P,Q} =
 promote_rule(::Type{ArbReal{P}}, x::ArbComplex{Q}) where {P,Q} =
     P>Q ? ArbComplex{P} : ArbComplex{Q}
 
+promote_rule(::Type{ArbFloat{P}},::Type{ArbFloat{Q}}) where {P,Q} = P<Q ? ArbFloat{P} : ArbFloat{Q}
+promote_rule(::Type{ArbReal{P}},::Type{ArbReal{Q}}) where {P,Q} = P<Q ? ArbReal{P} : ArbReal{Q}
+promote_rule(::Type{ArbReal{P}},::Type{ArbReal{Q}}) where {P,Q} = P<Q ? ArbComplex{P} : ArbComplex{Q}
+
+
 convert(::Type{ArbFloat}, x::ArbFloat{P}) where {P} = x
 convert(::Type{ArbReal}, x::ArbReal{P}) where {P} = x
 convert(::Type{ArbComplex}, x::ArbComplex{P}) where {P} = x
