@@ -6,8 +6,8 @@ const BigFloatFuzz = 32
 const log10of2 = log10(2)
 const log2of10 = log2(10)
 
-@inline maximin_digits(nbits) = floor(Int, log10of2*nbits + 0.125)   # match on round trip
-@inline maximin_bits(ndigits) = floor(Int, log2of10*ndigits + 2.625) # at least enough, at most 3 more on round trip
+@inline maximin_digits(nbits) = floor(Int, log10of2*nbits + 3.125)   # match on round trip
+@inline maximin_bits(ndigits) = floor(Int, log2of10*ndigits + 5.625) # at least enough, at most 3 more on round trip
 
 @inline function digits4bits(nbits)
     bits = log10of2 * nbits
