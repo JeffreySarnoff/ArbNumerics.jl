@@ -116,6 +116,10 @@ Float16(1.414)
 
 ----
 
+Consider using ArbReals instead of ArbFloats if you want your results to be rock solid. That way you can examine the enclosures for your results with `radius(value)` or `bounds(value)`.  This is strongly suggested when working with precisions that you are increasing dynamically.
+
+----
+
 ### Math
 
 #### arithmetic functions
