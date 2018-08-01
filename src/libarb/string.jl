@@ -36,7 +36,11 @@ function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RA
     return str
 end
 
-    
+function string(x::ArbFloat{P}, midpoint::Bool)
+    prec = midpoint ? digits4bits(P) : digit_precision(P)
+    return string(x, prec, flags=ARB_STR_NO_RADIUS)
+end
+
 function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
@@ -48,6 +52,11 @@ function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt =
     return str
 end
 
+function string(x::ArbReal{P}, midpoint::Bool, radius::Bool=false)
+    prec = midpoint ? digits4bits(P) : digit_precision(P)
+    flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
+    return string(x, prec, flags=flags)
+end
 
 function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
@@ -58,6 +67,11 @@ function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = 
     return str
 end
 
+function string(x::ArbComplex{P}, midpoint::Bool, radius::Bool=false)
+    prec = midpoint ? digits4bits(P) : digit_precision(P)
+    flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
+    return string(x, prec, flags=flags)
+end
 
 function string(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     # rea, ima = real(x), imag(x)
