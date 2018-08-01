@@ -1,3 +1,33 @@
+
+@inline function ArbFloat(x)
+    prec = DEFAULT_PRECISION[1]
+    res  = ArbFloat{prec}(x)
+    return res
+end
+@inline function ArbReal(x)
+    prec = DEFAULT_PRECISION[1]
+    res  = ArbReal{prec}(x)
+    return res
+end
+
+@inline function ArbComplex(x)
+    prec = DEFAULT_PRECISION[1]
+    res  = ArbComplex{prec}(x)
+    return res
+end
+
+@inline function ArbComplex(x, y)
+    prec = DEFAULT_PRECISION[1]
+    res  = ArbComplex{prec}(x, y)
+    return res
+end
+
+@inline function ArbComplex(x, y::T) where {T<:AbstractFloat}
+    prec = DEFAULT_PRECISION[1]
+    res  = ArbComplex{prec}(x, y)
+    return res
+end
+
 # IEEEFloat
 
 # rounds up (widens)
@@ -29,8 +59,6 @@ function Float64(x::ArbComplex{P}) where {P}
 end
 Float32(x::ArbComplex{P}) where {P} = Float32(Float64(x))
 Float16(x::ArbComplex{P}) where {P} = Float16(Float64(x))
-
-
 
 function Float64(x::ArbFloat{P}, roundingmode::RoundingMode) where {P}
     rounding = match_rounding_mode(roundingmode)
@@ -99,7 +127,6 @@ ArbComplex{Q}(x::ArbReal{P}) where {P,Q} = ArbComplex{Q}(ArbReal{Q}(x))
 @inline convert(::Type{ArbReal{Q}}, x::ArbComplex{P}) where {P,Q} = ArbReal{Q}(x)
 @inline convert(::Type{ArbComplex{Q}}, x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(x)
 @inline convert(::Type{ArbComplex{Q}}, x::ArbReal{P}) where {P,Q} = ArbComplex{Q}(x)
-
 
 
 # change precision
