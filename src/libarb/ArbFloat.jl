@@ -106,7 +106,7 @@ Int16(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Int16(Int64(x), ro
 BigFloat(x::ArbFloat{P}) where {P} = BigFloat(x, RoundNearest)
 function BigFloat(x::ArbFloat{P}, roundingmode::RoundingMode) where {P}
     rounding = match_rounding_mode(roundingmode)
-    z = BigFloat(0, nominalprecision(x))
+    z = BigFloat(0, workingprecision(x))
     roundingdir = ccall(@libarb(arf_get_mpfr), Cint, (Ref{BigFloat}, Ref{ArbFloat}, Cint), z, x, rounding)
     return z
 end
