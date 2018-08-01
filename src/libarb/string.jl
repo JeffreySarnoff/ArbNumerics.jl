@@ -4,7 +4,7 @@ const ARB_STR_FLAGS                = UInt64(0)
 
 const ARB_STR_MORE                 = UInt64(1)        # extra, maybe incorrect digs
 const ARB_STR_NO_RADIUS            = UInt64(2)        # omit radius
-
+const ARB_STR_RADIUS               = UInt64(4)
 const ARB_STR_CONDENSE             = UInt64(16)
 const ARB_STR_CONDENSE_36_Digits   = UInt64(50*16)
 const ARB_STR_CONDENSE_72_Digits   = UInt64(72*16)
