@@ -38,9 +38,10 @@ function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RA
     return str
 end
 
-function string(x::ArbFloat{P}, midpoint::Bool) where {P}
+function string(x::ArbFloat{P}; midpoint::Bool=true) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
-    return string(x, prec, flags=ARB_STR_NO_RADIUS)
+    flags = ARB_STR_NO_RADIUS
+    return string(x, prec, flags=flags)
 end
 
 function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
@@ -54,7 +55,7 @@ function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt =
     return str
 end
 
-function string(x::ArbReal{P}, midpoint::Bool, radius::Bool=false) where {P}
+function string(x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
     flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
     return string(x, prec, flags=flags)
@@ -69,7 +70,7 @@ function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = 
     return str
 end
 
-function string(x::ArbComplex{P}, midpoint::Bool, radius::Bool=false) where {P}
+function string(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
     flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
     return string(x, prec, flags=flags)
