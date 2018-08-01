@@ -58,7 +58,7 @@ end
 function string(x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
     flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
-    return string(x, prec, flags=flags)
+    return arbstring(x, prec, flags=flags)
 end
 
 function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
