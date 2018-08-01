@@ -18,3 +18,4 @@ test = ["Test"]
 
 [compat]
 SpecialFunctions = ">=0.6.0"
+BinDeps = ">=0.8.8"
