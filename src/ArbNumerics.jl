@@ -130,6 +130,7 @@ include("float/morearith.jl")
 include("float/elementary.jl")
 include("float/special.jl")
 include("float/special2.jl")
+include("float/export_fallbacks.jl")
 
 include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
