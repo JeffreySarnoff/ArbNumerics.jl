@@ -1,8 +1,6 @@
 using ArbNumerics
 using Test
 
-import Base: parse
-
 setprecision(BigFloat, 512)
 
 DIGITS = 78;
