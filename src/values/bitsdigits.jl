@@ -82,7 +82,7 @@ function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbCom
     global DEFAULT_PRECISION
     n <= MINIMUM_PRECISION && throw(DomainError("precision must be >= $MINIMUM_PRECISION"))
     newprecision = workingbits(n)
-    newbfprecision = max(newprecision + BigFloatFuzz, precision(BigFloat))
+    newbfprecision = max(newprecision + BIGFLOAT_FUZZ, precision(BigFloat))
     setprecision(BigFloat, newbfprecision)
     DEFAULT_PRECISION[1] = workingbits(n)
     return n
