@@ -29,6 +29,13 @@ for (A,F) in ((:(+), :arb_add), (:(-), :arb_sub), (:(*), :arb_mul), (:(/), :arb_
     end
 end
 
+function (^)(x::ArbFloat{P}, y::ArbFloat{P})
+    rx = ArbReal{P}(x)
+    ry = ArbReal{P}(y)
+    r = rx^ry
+    return ArbFloat{P}(r)
+end
+
 for (A,F) in ((:(+), :acb_add), (:(-), :acb_sub), (:(*), :acb_mul), (:(/), :acb_div), (:(^), :acb_pow))
     @eval begin
         function ($A)(x::ArbComplex{P}, y::ArbComplex{P}) where {P}
