@@ -32,7 +32,7 @@ ArbFloat(x::Missing) = missing
 
 @inline sign_bit(x::ArbFloat{P}) where {P} = isodd(x.size)
 
-ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision ($prec) is too low"))
+ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
 swap(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ccall(@libarb(arf_swap), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), x, y)
 
