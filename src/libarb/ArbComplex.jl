@@ -35,7 +35,7 @@ ArbComplex(x::ArbComplex{P}) where {P} = x
 ArbComplex{P}(x::Missing) where {P} = missing
 ArbComplex(x::Missing) = missing
 
-ArbComplex(x, y, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{workingbits(prec)}(x, y) : throw(DomainError("bit precision ($prec) is too low"))
+ArbComplex(x, y, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{workingbits(prec)}(x, y) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
 @inline sign_bit(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size)
 @inline sign_bits(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size), isodd(x.imag_mid_size)
