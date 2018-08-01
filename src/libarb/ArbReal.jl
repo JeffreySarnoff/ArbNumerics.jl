@@ -82,7 +82,8 @@ end
 ArbReal{P}(x::BigInt) where {P} = ArbReal{P}(BigFloat(x))
 ArbReal{P}(x::Rational{T}) where {P, T<:Signed} = ArbReal{P}(BigFloat(x))
 
-BigInt(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(x)))
+BigFloat(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(ArbFloat{P}(x))))
+BigInt(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(ArbFloat{P}(x))))
 
 function ArbReal{P}(x::Irrational{S}) where {P,S}
     y = ArbFloat{P}(x)
