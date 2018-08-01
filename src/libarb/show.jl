@@ -19,11 +19,6 @@ function show(io::IO, x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false
 end
 
 
-function show(io::IO, x::Mag)
-    str = string(x)
-    print(Base.stdout, str)
-end
-
 function show(x::ArbFloat{P}; midpoint::Bool=false, radius::Bool=false) where {P}
     str = string(x, midpoint=midpoint, radius=radius)
     print(Base.stdout, str)
