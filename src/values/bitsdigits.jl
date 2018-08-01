@@ -60,9 +60,8 @@ precision_shown(x::ArbReal{P}) where {P} = evincedbits(P)
 precision_shown(x::ArbComplex{P}) where {P} = evincedbits(P)
 
 # default precision
-const MINIMUM_PRECISION = 11
+const MINIMUM_PRECISION = 24
 const DEFAULT_PRECISION = [workingbits(128 - ExtraBits)]
-const BIGFLOAT_FUZZ = 64
 
 function getprecision(::Type{BigFloat})
     prec = DEFAULT_PRECISION[1] + BIGFLOAT_FUZZ
