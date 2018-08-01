@@ -8,9 +8,6 @@ promote_rule(::Type{ArbFloat{P}}, ::Type{Mag}) where {P} = ArbFloat{P}
 promote_type(::Type{ArbFloat{P}}, ::Type{BigInt}) where {P} = ArbFloat{P}
 promote_type(::Type{ArbReal{P}}, ::Type{BigInt}) where {P} = ArbReal{P}
 promote_type(::Type{ArbComplex{P}}, ::Type{BigInt}) where {P} = ArbComplex{P}
-promote_type(::Type{ArbFloat{P}}, ::Type{BigInt}) where {P} = ArbFloat{P}
-promote_type(::Type{ArbReal{P}}, ::Type{BigInt}) where {P} = ArbReal{P}
-promote_type(::Type{ArbComplex{P}}, ::Type{BigInt}) where {P} = ArbComplex{P}
 
 promote_rule(::Type{ArbFloat{P}}, ::Type{BigInt}) where {P} = promote_type(ArbFloat{P}, BigInt)
 promote_rule(::Type{ArbReal{P}}, ::Type{BigInt}) where {P} = promote_type(ArbReal{P}, BigInt)
