@@ -118,6 +118,8 @@ function BigFloat(x::ArbFloat{P}, bitprecision::Int, roundingmode::RoundingMode)
     return z
 end
 
+BigInt(x::ArbFloat{P}) where {P} = BigInt(trunc(BigFloat(x)))
+
 for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
     @eval begin
         function $F(x::ArbFloat{P}) where {P}
