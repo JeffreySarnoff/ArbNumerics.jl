@@ -22,7 +22,7 @@ function trimzeros(str::String)
     while n>1 && str[n] === '0'
         n -= 1
     end
-    m === n ? str : str[1:n]
+    m === n ? str : str[1:n+1]
 end
 
 
