@@ -36,10 +36,8 @@ function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RA
     return str
 end
 
-string(x::ArbFloat{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
-    string(x, maxdigits, flags)
     
-function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
+function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
@@ -50,10 +48,8 @@ function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P), flags::UInt =
     return str
 end
 
-string(x::ArbReal{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
-    string(x, maxdigits, flags)
 
-function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
+function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
                       (Ref{ArbReal}, Clong, Culong), x, maxdigits, flags)
     str = deepcopy( unsafe_string(pointer(unsafestr)) )
@@ -63,10 +59,7 @@ function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P), flags::UInt = 
 end
 
 
-string(x::ArbComplex{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
-    string(x, maxdigits, flags)
-
-function string(x::ArbComplex{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
+function string(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     # rea, ima = real(x), imag(x)
     rea = ArbReal{P}()
     ima = ArbReal{P}()
