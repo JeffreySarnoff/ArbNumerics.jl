@@ -31,8 +31,9 @@ export ArbFloat, ArbReal, ArbComplex,
 
        # other functions
        addmul, submul, mulsub,
-       square, cube, rsqrt, pow, root, loghypot,
+       square, cube, rsqrt, rcbrt, pow, root, loghypot,
        risingfactorial, doublefactorial,
+
        # special functions
        agm1, agm,
        logsinpi, barnesg, logbarnesg,
