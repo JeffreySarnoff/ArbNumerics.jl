@@ -16,6 +16,14 @@ const NO_RADIUS = ARB_STR_NO_RADIUS
     return maximin_digits(bitprecision)
 end
 
+function trimzeros(str::String)
+    n = 0
+    while endswith(str, "0")
+        n += 1
+    end
+    n === 0 ? str : str[1:end-n]
+end
+
 function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RADIUS)
     y = ArbFloat{precision(x)}()
     ccall(@libarb(arf_set_mag), Cvoid, (Ref{ArbFloat}, Ref{Mag}), y, x)
@@ -28,26 +36,35 @@ function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RA
     return str
 end
 
+function string(x::ArbFloat{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
+    string(x, maxdigits, flags)
+    
 function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
                       (Ref{ArbReal}, Clong, Culong), z, maxdigits, flags)
     str = deepcopy( unsafe_string(pointer(unsafestr)) )
+    str = trimzeros(str)
     ccall(@libflint(flint_free), Cvoid, (Cstring,), unsafestr)
     return str
 end
 
+function string(x::ArbReal{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
+    string(x, maxdigits, flags)
 
 function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
                       (Ref{ArbReal}, Clong, Culong), x, maxdigits, flags)
     str = deepcopy( unsafe_string(pointer(unsafestr)) )
+    str = trimzeros(str)
     ccall(@libflint(flint_free), Cvoid, (Cstring,), unsafestr)
     return str
 end
 
 
+function string(x::ArbComplex{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
+    string(x, maxdigits, flags)
 
 function string(x::ArbComplex{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
     # rea, ima = real(x), imag(x)
