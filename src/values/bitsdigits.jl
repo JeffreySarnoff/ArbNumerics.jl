@@ -73,14 +73,14 @@ precision(x::ArbComplex{P}) where {P} = evincedbits(P)
 
 function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
     global DEFAULT_PRECISION
-    n <= MINIMUM_PRECISION && throw(DomainError("bit precision must be >= $MINIMUM_PRECISION"))
+    n < MINIMUM_PRECISION && throw(DomainError("bit precision must be >= $MINIMUM_PRECISION"))
     DEFAULT_PRECISION[1] = workingbits(n)
     return n
 end
 
 function setworkingprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
     global DEFAULT_PRECISION
-    n <= workingbits(MINIMUM_PRECISION) && throw(DomainError("working bit precision must be >= $(workingbits(MINIMUM_PRECISION))"))
+    n < workingbits(MINIMUM_PRECISION) && throw(DomainError("working bit precision must be >= $(workingbits(MINIMUM_PRECISION))"))
     DEFAULT_PRECISION[1] = n
     return n
 end
