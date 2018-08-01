@@ -79,7 +79,7 @@ precision(::Type{ArbComplex}) = evincedbits(DEFAULT_PRECISION[1])
 
 function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
     global DEFAULT_PRECISION
-    n <= MINIMUM_PRECISION && throw(DomainError("precision must be >= $MINIMUM_PRECISION"))
+    n <= MINIMUM_PRECISION && throw(DomainError("bit precision must be >= $MINIMUM_PRECISION"))
     DEFAULT_PRECISION[1] = workingbits(n)
     return n
 end
