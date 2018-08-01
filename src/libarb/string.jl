@@ -36,7 +36,7 @@ function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RA
     return str
 end
 
-function string(x::ArbFloat{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
+string(x::ArbFloat{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
     string(x, maxdigits, flags)
     
 function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
@@ -50,7 +50,7 @@ function string(x::ArbFloat{P}, maxdigits::Int=digit_precision(P), flags::UInt =
     return str
 end
 
-function string(x::ArbReal{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
+string(x::ArbReal{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
     string(x, maxdigits, flags)
 
 function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
@@ -63,7 +63,7 @@ function string(x::ArbReal{P}, maxdigits::Int=digit_precision(P), flags::UInt = 
 end
 
 
-function string(x::ArbComplex{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
+string(x::ArbComplex{P}, flags::UInt = NO_RADIUS, maxdigits::Int=digit_precision(P)) where {P} =
     string(x, maxdigits, flags)
 
 function string(x::ArbComplex{P}, maxdigits::Int=digit_precision(P), flags::UInt = NO_RADIUS) where {P}
