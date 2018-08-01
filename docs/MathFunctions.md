@@ -64,10 +64,10 @@
 
 #### construction
 
-- `setball(midpoint, radius)`
+- `setreal(midpoint, radius)`
 - `setinterval(lobound, hibound)`
 
 #### retrieval
 
-- `midpooint, radius = getball(x::ArbReal)`
+- `midpoint, radius = getreal(x::ArbReal)`
 - `lobound, hibound = getinterval(x::ArbReal)`
