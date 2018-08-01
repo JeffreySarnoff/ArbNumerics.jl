@@ -1,4 +1,3 @@
-using Pkg
 using BinDeps
 using Libdl
 
