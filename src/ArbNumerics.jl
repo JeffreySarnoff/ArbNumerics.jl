@@ -9,7 +9,8 @@ export ArbFloat, ArbReal, ArbComplex,
        lowerbound, upperbound, bounds,
        lowerbound_abs, upperbound_abs, bounds_abs,
        increase_radius, decrease_radius,
-       precision_shown, bits4digits, digits4bits,
+       bits4digits, digits4bits,
+       workingprecision, setworkingprecision,
 
        ispos, isneg, isnonpos, isnonneg,
 
@@ -23,8 +24,7 @@ export ArbFloat, ArbReal, ArbComplex,
        isint,       # integer valued
 
        inf, posinf, neginf, nan,
-       getprecision, resetprecision,
-
+       
        signs, signbits,
        significand_bits, relerror_bits, relaccuracy_bits,
        trim_bits, ulp, ulps, epss,
