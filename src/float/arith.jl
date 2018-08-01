@@ -29,7 +29,7 @@ for (A,F) in ((:(+), :arb_add), (:(-), :arb_sub), (:(*), :arb_mul), (:(/), :arb_
     end
 end
 
-function (^)(x::ArbFloat{P}, y::ArbFloat{P})
+function (^)(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     rx = ArbReal{P}(x)
     ry = ArbReal{P}(y)
     r = rx^ry
