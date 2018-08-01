@@ -10,7 +10,7 @@ for (A,F) in ((:besselj, :arb_hypgeom_bessel_j), (:bessely, :arb_hypgeom_bessel_
         return z
         end
     end
-end     
+end
 
 for (A,F) in ((:besselj, :acb_hypgeom_bessel_j), (:bessely, :acb_hypgeom_bessel_y),
               (:besseli, :acb_hypgeom_bessel_i), (:besselk, :acb_hypgeom_bessel_k))
@@ -92,15 +92,22 @@ function airybiprime(x::ArbReal{P}, prec::Int=P) where {P}
     return z
 end
 
-airyai(x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat{P}(airyai(ArbReal{P}(x)), prec)
-airyaiprime(x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat{P}(airyaiprime(ArbReal{P}(x)), prec)
-airybi(x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat{P}(airybi(ArbReal{P}(x)), prec)
-airybiprime(x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat{P}(airybiprime(ArbReal{P}(x)), prec)
+for F in (:airyai, :airyaiprime, :airybi, :airybiprime)
+    @eval begin
+        function $F(x::ArbFloat{P}, prec::Int=P) where {P}
+            r = ArbReal{P}(x)
+            r = airy(r, prec)
+            z = ArbFloat{P}(r)
+            return r
+        end
+    end
+end
+
 
 function airyai(x::ArbComplex{P}, prec::Int=P) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_hypgeom_airy), Cvoid, 
-              (Ref{ArbReal}, Ref{Cvoid}, Ref{Cvoid}, Ref{Cvoid}, Ref{ArbReal}, Clong),
+              (Ref{ArbComplex}, Ref{Cvoid}, Ref{Cvoid}, Ref{Cvoid}, Ref{ArbComplex}, Clong),
               z, C_NULL, C_NULL, C_NULL, x, prec)
     return z
 end
@@ -108,7 +115,7 @@ end
 function airyaiprime(x::ArbComplex{P}, prec::Int=P) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_hypgeom_airy), Cvoid, 
-              (Ref{Cvoid}, Ref{ArbReal}, Ref{Cvoid}, Ref{Cvoid}, Ref{ArbReal}, Clong),
+              (Ref{Cvoid}, Ref{ArbComplex}, Ref{Cvoid}, Ref{Cvoid}, Ref{ArbComplex}, Clong),
               C_NULL, z, C_NULL, C_NULL, x, prec)
     return z
 end
@@ -116,7 +123,7 @@ end
 function airybi(x::ArbComplex{P}, prec::Int=P) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_hypgeom_airy), Cvoid, 
-              (Ref{Cvoid}, Ref{Cvoid}, Ref{ArbReal}, Ref{Cvoid}, Ref{ArbReal}, Clong),
+              (Ref{Cvoid}, Ref{Cvoid}, Ref{ArbComplex}, Ref{Cvoid}, Ref{ArbComplex}, Clong),
               C_NULL, C_NULL, z, C_NULL, x, prec)
     return z
 end
@@ -124,9 +131,7 @@ end
 function airybiprime(x::ArbComplex{P}, prec::Int=P) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_hypgeom_airy), Cvoid, 
-              (Ref{Cvoid}, Ref{Cvoid}, Ref{Cvoid}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+              (Ref{Cvoid}, Ref{Cvoid}, Ref{Cvoid}, Ref{ArbComplex}, Ref{ArbComplex}, Clong),
               C_NULL, C_NULL, C_NULL, z, x, prec)
     return z
 end
-
-
