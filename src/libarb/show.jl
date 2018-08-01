@@ -3,8 +3,9 @@ function show(io::IO, x::Mag)
     print(io, str)
 end
 
-function show(io::IO, x::ArbFloat{P}; midpoint::Bool=false, radius::Bool=false) where {P}
-    str = string(x, midpoint=midpoint, radius=radius)
+
+function show(io::IO, x::ArbFloat{P}; midpoint::Bool=false) where {P}
+    str = string(x, midpoint=midpoint)
     print(io, str)
 end
 
@@ -19,8 +20,8 @@ function show(io::IO, x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false
 end
 
 
-function show(x::ArbFloat{P}; midpoint::Bool=false, radius::Bool=false) where {P}
-    str = string(x, midpoint=midpoint, radius=radius)
+function show(io::IO, x::ArbFloat{P}; midpoint::Bool=false) where {P}
+    str = string(x, midpoint=midpoint)
     print(Base.stdout, str)
 end
 
