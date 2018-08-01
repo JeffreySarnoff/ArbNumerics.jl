@@ -18,27 +18,27 @@ function getinterval(x::ArbReal{P}) where {P}
    lowerbound(x), upperbound(x)
 end
 
-function setball(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P}
+function setreal(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P}
     signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     lbound = mid - rad
     ubound = mid + rad
     setinterval(lbound, ubound)
 end
 
-function setball(mid::ArbReal{P}, rad::ArbReal{P}) where {P}
+function setreal(mid::ArbReal{P}, rad::ArbReal{P}) where {P}
     signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     setball(ArbFloat{P}(mid), ArbFloat{P}(rad))
 end
 
-function getball(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
+function getreal(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     ArbFloat{P}(midpoint(x)), ArbFloat{P}(radius(x))
 end
 
-function getball(x::ArbReal{P}) where {P}
+function getreal(x::ArbReal{P}) where {P}
     midpoint(x), radius(x)
 end
 
-function getball(x::ArbFloat{P}) where {P}
+function getreal(x::ArbFloat{P}) where {P}
     x, zero(typeof(x))
 end
 
