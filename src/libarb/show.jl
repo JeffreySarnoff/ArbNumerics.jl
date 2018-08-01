@@ -3,30 +3,18 @@ function show(io::IO, x::Mag)
     print(io, str)
 end
 
-
 function show(io::IO, x::ArbFloat{P}; midpoint::Bool=false, radius::Bool=false) where {P}
-    prec = midpoint ? digits4bits(P) : digit_precision(P)
-    flags = !radius ? NO_RADIUS : ARB_STR_RADIUS
-    str = string(x, prec, flags=flags)
+    str = string(x, midpoint=midpoint, radius=radius)
     print(io, str)
 end
-show(x::ArbFloat{P}; midpoint::Bool=false, radius::Bool=false) where {P} =
-    show(Base.stdout, x, midpoint=midpoint, radius=radius)
 
 function show(io::IO, x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {P}
-    prec = midpoint ? digits4bits(P) : digit_precision(P)
-    flags = !radius ? NO_RADIUS : ARB_STR_RADIUS
-    str = string(x, prec, flags=flags)
+    str = string(x, midpoint=midpoint, radius=radius)
     print(io, str)
 end
-show(x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {P} =
-    show(Base.stdout, x, midpoint=midpoint,radius=radius)
 
 function show(io::IO, x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) where {P}
-    prec = midpoint ? digits4bits(P) : digit_precision(P)
-    flags = !radius ? NO_RADIUS : ARB_STR_RADIUS
-    str = string(x, prec, flags=flags)
+    str = string(x, midpoint=midpoint, radius=radius)
     print(io, str)
 end
-show(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) where {P} =
-    show(Base.stdout, x, midpoint=midpoint,radius=radius)
+
