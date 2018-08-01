@@ -12,6 +12,10 @@ julia:
 # Work around a Travis bug
 git:
   depth: 999999
+# get travis some help
+bundler_args: --retry 5
+# get travis some help
+install: travis_wait mvn install
 notifications:
   email: false
 #script: # the default script is equivalent to the following
