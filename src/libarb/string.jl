@@ -17,12 +17,14 @@ const NO_RADIUS = ARB_STR_NO_RADIUS
 end
 
 function trimzeros(str::String)
-    n = 0
-    while endswith(str, "0")
-        n += 1
+    m =  n = length(str)
+    n === 0 && return str
+    while n>1 && str[n] === '0'
+        n -= 1
     end
-    n === 0 ? str : str[1:end-n]
+    m === n ? str : str[1:n]
 end
+
 
 function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RADIUS)
     y = ArbFloat{precision(x)}()
