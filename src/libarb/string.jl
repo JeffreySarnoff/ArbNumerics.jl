@@ -70,6 +70,7 @@ function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt
     return str
 end
 
+
 function string(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
     flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
@@ -86,8 +87,8 @@ function arbstring(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::U
     ima_isneg = signbit(ima)
     ima_abs = ima_isneg ? -ima : ima
     connection = ima_isneg ? " - " : " + "
-    rea_str = string(rea, maxdigits, flags)
-    ima_str = string(abs(ima), maxdigits, flags)
+    rea_str = arbstring(rea, maxdigits, flags=flags)
+    ima_str = arbstring(abs(ima), maxdigits, flags=flags)
     str = string(rea_str, connection, ima_str, imaginary_unit_str)
     return str
 end
