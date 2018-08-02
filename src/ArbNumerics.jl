@@ -42,10 +42,7 @@ export ArbFloat, ArbReal, ArbComplex,
        ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
-       π, ℯ, γ, φ, catalan,
-
-       # augment
-       Readable, readable
+       π, ℯ, γ, φ, catalan
 
 
 import Base: IEEEFloat,
@@ -98,8 +95,6 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
-using Readables
-
 include("support/arblib.jl")
 include("support/abstractions.jl")
 
@@ -131,7 +126,6 @@ include("float/export_fallbacks.jl")
 include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
-include("support/readable.jl")
 include("support/helptext.jl")
 
 
