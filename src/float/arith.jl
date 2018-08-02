@@ -120,7 +120,7 @@ for F in (:(+), :(-), :(*), :(/), :(^))
   end
 end
 
-# fallbacks
+# interact with Bool
 
 @inline ArbFloat{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
 @inline Base.Bool(x::ArbFloat{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
@@ -135,8 +135,8 @@ end
 (+)(x::ArbReal{P}, b::Bool) where {P} = b ? one(ArbReal{P}) + x : zero(ArbReal{P})
 (+)(b::Bool, x::ArbReal{P}) where {P} = b ? x + one(ArbReal){P} : zero(ArbReal{P})
 
-(+)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P} + x : zero(ArbComplex{P})
-(+)(b::Bool, x::ArbComplex{P}) where {P} = b ? x + one(ArbComplex{P}) : zero(ArbComplex{P})
+(+)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P}) + x : zero(ArbComplex{P})
+(+)(b::Bool, x::ArbComplex{P}) where {P} = b ? x + one(ArbComplex){P} : zero(ArbComplex{P})
 
 (-)(x::ArbFloat{P}, b::Bool) where {P} = b ? one(ArbFloat{P}) - x : zero(ArbFloat{P})
 (-)(b::Bool, x::ArbFloat{P}) where {P} = b ? x - one(ArbFloat{P}) : zero(ArbFloat{P})
@@ -144,8 +144,8 @@ end
 (-)(x::ArbReal{P}, b::Bool) where {P} = b ? one(ArbReal{P}) - x : zero(ArbReal{P})
 (-)(b::Bool, x::ArbReal{P}) where {P} = b ? x - one(ArbReal){P} : zero(ArbReal{P})
 
-(-)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P} - x : zero(ArbComplex{P})
-(-)(b::Bool, x::ArbComplex{P}) where {P} = b ? x - one(ArbComplex{P}) : zero(ArbComplex{P})
+(-)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P}) - x : zero(ArbComplex{P})
+(-)(b::Bool, x::ArbComplex{P}) where {P} = b ? x - one(ArbComplex){P} : zero(ArbComplex{P})
 
 (*)(x::ArbFloat{P}, b::Bool) where {P} = b ? x : zero(ArbFloat{P})
 (*)(b::Bool, x::ArbFloat{P}) where {P} = b ? x : zero(ArbFloat{P})
