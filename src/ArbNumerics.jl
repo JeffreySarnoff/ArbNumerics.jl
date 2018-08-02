@@ -42,7 +42,10 @@ export ArbFloat, ArbReal, ArbComplex,
        ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
-       π, ℯ, γ, φ, catalan
+       π, ℯ, γ, φ, catalan,
+
+       # augment
+       Readable, readable
 
 
 import Base: IEEEFloat,
@@ -93,15 +96,9 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
 
-  #=
-       besselhx, besselix, besseljx, besselk
-       dawson,
-       invdigamma, polygamma, trigamma,
-       hankelh1, hankelh1x, hankelh2, hankelh2x,
-       sinint, cosint
-=#
-
 import Base.MathConstants: π, ℯ, γ, φ, catalan
+
+using Readables
 
 include("support/arblib.jl")
 include("support/abstractions.jl")
