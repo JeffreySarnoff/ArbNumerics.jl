@@ -154,3 +154,12 @@ eps(x::ArbComplex{P}) where {P} = eps(midpoint_byref(real(x)))
 
 ulps(x::ArbComplex{P}) where {P} = ulp(midpoint_byref(real(x))), ulp(midpoint_byref(imag(x)))
 epss(x::ArbComplex{P}) where {P} = eps(midpoint_byref(real(x))), eps(midpoint_byref(imag(x)))
+
+ulp(::Type{ArbFloat{P}}) where {P} = ulp(one(ArbFloat{P}))
+eps(::Type{ArbFloat{P}}) where {P} = eps(one(ArbFloat{P}))
+
+ulp(::Type{ArbReal{P}}) where {P} = ulp(one(ArbReal{P}))
+eps(::Type{ArbReal{P}}) where {P} = eps(one(ArbReal{P}))
+
+ulp(::Type{ArbComplex{P}}) where {P} = ulp(one(ArbComplex{P}))
+eps(::Type{ArbComplex{P}}) where {P} = eps(one(ArbComplex{P}))
