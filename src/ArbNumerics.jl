@@ -25,7 +25,7 @@ export ArbFloat, ArbReal, ArbComplex,
        
        signs, signbits,
        significand_bits, relerror_bits, relaccuracy_bits,
-       trim_bits, ulp, ulps, epss,
+       trim_bits, ulp, ulps, eps, epss,
 
        # other functions
        addmul, submul, mulsub,
