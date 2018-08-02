@@ -119,3 +119,48 @@ for F in (:(+), :(-), :(*), :(/), :(^))
     ($F)(x::Complex, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
   end
 end
+
+# fallbacks
+
+@inline ArbFloat{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
+@inline Base.Bool(x::ArbFloat{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
+@inline ArbReal{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
+@inline Base.Bool(x::ArbReal{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
+@inline ArbComplex{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
+@inline Base.Bool(x::ArbComplex{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
+
+(+)(x::ArbFloat{P}, b::Bool) where {P} = b ? one(ArbFloat{P}) + x : zero(ArbFloat{P})
+(+)(b::Bool, x::ArbFloat{P}) where {P} = b ? x + one(ArbFloat{P}) : zero(ArbFloat{P})
+
+(+)(x::ArbReal{P}, b::Bool) where {P} = b ? one(ArbReal{P}) + x : zero(ArbReal{P})
+(+)(b::Bool, x::ArbReal{P}) where {P} = b ? x + one(ArbReal){P} : zero(ArbReal{P})
+
+(+)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P} + x : zero(ArbComplex{P})
+(+)(b::Bool, x::ArbComplex{P}) where {P} = b ? x + one(ArbComplex{P}) : zero(ArbComplex{P})
+
+(-)(x::ArbFloat{P}, b::Bool) where {P} = b ? one(ArbFloat{P}) - x : zero(ArbFloat{P})
+(-)(b::Bool, x::ArbFloat{P}) where {P} = b ? x - one(ArbFloat{P}) : zero(ArbFloat{P})
+
+(-)(x::ArbReal{P}, b::Bool) where {P} = b ? one(ArbReal{P}) - x : zero(ArbReal{P})
+(-)(b::Bool, x::ArbReal{P}) where {P} = b ? x - one(ArbReal){P} : zero(ArbReal{P})
+
+(-)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P} - x : zero(ArbComplex{P})
+(-)(b::Bool, x::ArbComplex{P}) where {P} = b ? x - one(ArbComplex{P}) : zero(ArbComplex{P})
+
+(*)(x::ArbFloat{P}, b::Bool) where {P} = b ? x : zero(ArbFloat{P})
+(*)(b::Bool, x::ArbFloat{P}) where {P} = b ? x : zero(ArbFloat{P})
+
+(*)(x::ArbReal{P}, b::Bool) where {P} = b ? x : zero(ArbReal{P})
+(*)(b::Bool, x::ArbReal{P}) where {P} = b ? x : zero(ArbReal{P})
+
+(*)(x::ArbComplex{P}, b::Bool) where {P} = b ? x : zero(ArbComplex{P})
+(*)(b::Bool, x::ArbComplex{P}) where {P} = b ? x : zero(ArbComplex{P})
+
+(\)(x::ArbFloat{P}, b::Bool) where {P} = b ? x : inf(ArbFloat{P})
+(\)(b::Bool, x::ArbFloat{P}) where {P} = b ? inv(x) : zero(ArbFloat{P})
+
+(\)(x::ArbReal{P}, b::Bool) where {P} = b ? x : inf(ArbReal{P})
+(\)(b::Bool, x::ArbReal{P}) where {P} = b ? inv(x) : zero(ArbReal{P})
+
+(\)(x::ArbComplex{P}, b::Bool) where {P} = b ? x : inf(ArbComplex{P})
+(\)(b::Bool, x::ArbComplex{P}) where {P} = b ? inv(x) : zero(ArbComplex{P})
