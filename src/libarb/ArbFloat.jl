@@ -1,5 +1,5 @@
 """
-from ArbReal docs:
+from LibArb docs:
 
 A variable of type arf_t holds an arbitrary-precision binary floating-point number:
 that is, a rational number of the form x⋅2y where x,y∈Z and x is odd, or one of
@@ -131,7 +131,6 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
 end
 
 trunc(x::ArbFloat{P}) where {P} = signbit(x) ? ceil(x) : floor(x)
-
 
 midpoint(x::ArbFloat{P}) where {P} = x
 radius(x::ArbFloat{P}) where {P} = zero(ArbFloat{P})
