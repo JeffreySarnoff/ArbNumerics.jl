@@ -147,6 +147,8 @@ end
 (-)(x::ArbComplex{P}, b::Bool) where {P} = b ? one(ArbComplex{P}) - x : zero(ArbComplex{P})
 (-)(b::Bool, x::ArbComplex{P}) where {P} = b ? x - one(ArbComplex){P} : zero(ArbComplex{P})
 
+#=  conflict with LinearAlgebra
+
 (*)(x::ArbFloat{P}, b::Bool) where {P} = b ? x : zero(ArbFloat{P})
 (*)(b::Bool, x::ArbFloat{P}) where {P} = b ? x : zero(ArbFloat{P})
 
@@ -156,6 +158,7 @@ end
 (*)(x::ArbComplex{P}, b::Bool) where {P} = b ? x : zero(ArbComplex{P})
 (*)(b::Bool, x::ArbComplex{P}) where {P} = b ? x : zero(ArbComplex{P})
 
+
 (\)(x::ArbFloat{P}, b::Bool) where {P} = b ? x : inf(ArbFloat{P})
 (\)(b::Bool, x::ArbFloat{P}) where {P} = b ? inv(x) : zero(ArbFloat{P})
 
@@ -164,3 +167,4 @@ end
 
 (\)(x::ArbComplex{P}, b::Bool) where {P} = b ? x : inf(ArbComplex{P})
 (\)(b::Bool, x::ArbComplex{P}) where {P} = b ? inv(x) : zero(ArbComplex{P})
+=#
