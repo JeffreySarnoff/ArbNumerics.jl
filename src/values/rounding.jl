@@ -19,12 +19,6 @@ function round(x::ArbComplex{P}, bitprecision::Int, roundingmode::RoundingMode) 
     return z
 end
 
-for A in (:ArbFloat, :ArbReal, :ArbComplex)
-  @eval begin
-    
-    round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) where {P,T} =
-       T(round(x, P, rounding))
-
     
 for A in (:ArbFloat, :ArbReal, :ArbComplex)
   @eval begin
