@@ -120,6 +120,14 @@ end
 
 BigInt(x::ArbFloat{P}) where {P} = BigInt(trunc(BigFloat(x)))
 
+function Integer(x::ArbFloat{P}) where {P}
+    if abs(x) <= typemax(Int64)
+        Int64(x)
+    else
+        BigInt(x)
+    end
+end
+
 for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
     @eval begin
         function $F(x::ArbFloat{P}) where {P}
