@@ -104,7 +104,7 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
             ccall(@libarb($A), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
             return ArbReal{P}(z)
         end
-        $F(::Type{T}, x::ArbReal{P}) where {P,T} = T($F(x))
+        function $F(::Type{T}, x::ArbReal{P}) where {P,T} = T($F(x))
     end
 end
 
@@ -146,4 +146,3 @@ function radius(x::ArbReal{P}, ::Type{ArbFloat{P}}) where {P}
     ccall(@libarb(arf_set_mag), Cvoid, (Ref{ArbFloat}, Ref{Mag}), z, mag)
     return z
 end
-
