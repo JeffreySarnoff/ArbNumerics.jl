@@ -485,7 +485,7 @@ typemax(::Type{ArbFloat{P}}) where {P} = posinf(ArbFloat{P})
 typemin(::Type{ArbFloat{P}}) where {P} = neginf(ArbFloat{P})
 
 floatmax(::Type{ArbFloat{P}}) where {P} = pow(ArbFloat{P}(P), square(ArbFloat{P}(P)))
-floatmin(::Type{ArbFloat{P}}) where {P} = inv(floatmax(x))
+floatmin(::Type{ArbFloat{P}}) where {P} = inv(floatmax(ArbFloat{P}))
 
 typemax(::Type{ArbReal{P}}) where {P} = posinf(ArbReal{P})
 typemin(::Type{ArbReal{P}}) where {P} = neginf(ArbReal{P})
