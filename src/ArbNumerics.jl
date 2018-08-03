@@ -87,7 +87,6 @@ import Base.Math:  max, min, minmax,
        clamp, clamp!
 
 
-using SpecialFunctions
 import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, trigamma,
      beta, lbeta, sinint, cosint,
      erf, erfc, erfcinv, erfcx, erfi, erfinv,
