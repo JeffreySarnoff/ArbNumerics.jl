@@ -97,6 +97,20 @@ function ArbReal{P}(x::ArbFloat{P}) where {P}
     return z
 end
 
+for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
+    @eval begin
+        function $F(x::ArbReal{P}) where {P}
+            z = ArbFloat{P}()
+            ccall(@libarb($A), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
+            return ArbReal{P}(z)
+        end
+        function $F(::Type{T}, x::ArbReal{P}) = T($F(x))
+    end
+end
+
+trunc(x::ArbReal{P}) where {P} = signbit(x) ? lowerbound(x) : upperbound(x)
+trunc(::Type{T}, x::ArbReal{P}) where {P, T} = T(trunc(x))
+
 function midpoint(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
