@@ -21,23 +21,33 @@ end
 
 for A in (:ArbFloat, :ArbReal, :ArbComplex)
   @eval begin
-    round(x::$A{P}, rounding::RoundingMode=RoundNearest) where {P} =
-        round(x, P, roundingmode)
     
     round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) where {P,T} =
        T(round(x, P, rounding))
 
-    round(x::$A{P}, rounding::RoundingMode=RoundNearest; 
-          digits::Integer = 0, base = 10) where {P} =
-        base == 10 ? round(x, digits4bits(sigdigits), rounding) : 
-        base ==  2 ? round(x, sigdigits, rounding) : 
-                     throw(DomainError("base ($base) not supported"))
-        
-    round(x::$A{P}, rounding::RoundingMode=RoundNearest;
-          sigdigits::Integer, base = 10) where {P} =
-        base == 10 ? round(x, digits4bits(sigdigits), rounding) : 
-        base ==  2 ? round(x, sigdigits, rounding) :
-                     throw(DomainError("base ($base) not supported"))
+    
+for A in (:ArbFloat, :ArbReal, :ArbComplex)
+  @eval begin
+    
+    round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) where {P,T} =
+       T(round(x, P, rounding))
+
+    function round(x::$A{P}, rounding::RoundingMode=RoundNearest; 
+                   sigdigits::Integer = 0, digits::Integer = 0, base = 10) where {P} =
+        sigdigits = max(sigdigits, digits) 
+        if base == 10
+            round(x, digits4bits(sigdigits), rounding) 
+        elseif base ==  2
+            round(x, sigdigits, rounding)
+        else
+            throw(DomainError("base ($base) not supported"))
+        end
+     end
+  end
+                
+end
+
+
   end
 end
 
