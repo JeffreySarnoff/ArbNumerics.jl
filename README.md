@@ -238,7 +238,7 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 
 ## Acknowledgements
 
-This work develops parts the Arb C library within Julia.  It is entirely dependent on Fredrik Johansson's work and the libraries required are fetched and made ready by the good work of William Hart and the Nemo.jl team.  The essential libraries (`Arb` and `Flint`) and the build file are their work, used with permission.
+This work develops parts the Arb C library within Julia.  It is entirely dependent on Fredrik Johansson's work and the libraries required are fetched and made ready by the good work of William Hart, Tommy Hofmann and the Nemo.jl team.  The libraries for `Arb` and `Flint` and the build file are their work, used with permission.
 
 ----
 
