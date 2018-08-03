@@ -132,7 +132,7 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
 end
 
 trunc(x::ArbFloat{P}) where {P} = signbit(x) ? ceil(x) : floor(x)
-trunc(::Type{T}, x::ArbFloat{P}) where {P} = T(trunc(x))
+trunc(::Type{T}, x::ArbFloat{P}) where {P, T} = T(trunc(x))
 
 midpoint(x::ArbFloat{P}) where {P} = x
 radius(x::ArbFloat{P}) where {P} = zero(ArbFloat{P})
