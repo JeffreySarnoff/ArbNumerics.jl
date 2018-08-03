@@ -21,18 +21,23 @@ end
 
 for A in (:ArbFloat, :ArbReal, :ArbComplex)
   @eval begin
-    round(x::$A{P}, rounding::RoundingMode=RoundNearest) = round(x, P, roundingmode)
+    round(x::$A{P}, rounding::RoundingMode=RoundNearest) where {P} =
+        round(x, P, roundingmode)
     
-    round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) = T(round(x, P, rounding))
+    round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) where {P,T} =
+       T(round(x, P, rounding))
 
-    round(x::$A, rounding::RoundingMode=RoundNearest; digits::Integer = 0, base = 10) =
+    round(x::$A{P}, rounding::RoundingMode=RoundNearest; 
+          digits::Integer = 0, base = 10) where {P} =
         base == 10 ? round(x, digits4bits(sigdigits), rounding) : 
-        base ==  2 ? round(x, sigdigits, rounding) : throw(DomainError("base ($base) not supported"))
+        base ==  2 ? round(x, sigdigits, rounding) : 
+                     throw(DomainError("base ($base) not supported"))
         
-    round(x::$A, rounding::RoundingMode=RoundNearest; sigdigits::Integer, base = 10) =
+    round(x::$A{P}, rounding::RoundingMode=RoundNearest;
+          sigdigits::Integer, base = 10) where {P} =
         base == 10 ? round(x, digits4bits(sigdigits), rounding) : 
-        base ==  2 ? round(x, sigdigits, rounding) : throw(DomainError("base ($base) not supported"))
+        base ==  2 ? round(x, sigdigits, rounding) :
+                     throw(DomainError("base ($base) not supported"))
   end
 end
-
 
