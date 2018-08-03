@@ -85,11 +85,11 @@ ArbReal{P}(x::Rational{T}) where {P, T<:Signed} = ArbReal{P}(BigFloat(x))
 BigFloat(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(ArbFloat{P}(x))))
 BigInt(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(ArbFloat{P}(x))))
 
-function Integer(x::ArbReal{P}) where {P}
-    if abs(x) <= typemax(Int64)
-        Int64(x)
+function Base.Integer(x::ArbReal{P}) where {P}
+    if isinteger(x)
+       abs(x) <= typemax(Int64) ? Int64(x) : BigInt(x)
     else
-        BigInt(x)
+       throw(InexactError("$x"))
     end
 end
 
