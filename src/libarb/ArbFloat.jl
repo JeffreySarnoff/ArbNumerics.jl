@@ -127,7 +127,7 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
             ccall(@libarb($A), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
             return z
         end
-        function $F(::Type{T}, x::ArbFloat{P}) where {P} = T($F(x))
+        $F(::Type{T}, x::ArbFloat{P}) where {P} = T($F(x))
     end
 end
 
