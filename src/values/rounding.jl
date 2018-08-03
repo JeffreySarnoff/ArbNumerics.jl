@@ -33,7 +33,7 @@ for A in (:ArbFloat, :ArbReal, :ArbComplex)
        T(round(x, P, rounding))
 
     function round(x::$A{P}, rounding::RoundingMode=RoundNearest; 
-                   sigdigits::Integer = 0, digits::Integer = 0, base = 10) where {P} =
+                   sigdigits::Integer = 0, digits::Integer = 0, base = 10) where {P}
         sigdigits = max(sigdigits, digits) 
         if base == 10
             round(x, digits4bits(sigdigits), rounding) 
@@ -47,7 +47,4 @@ for A in (:ArbFloat, :ArbReal, :ArbComplex)
                 
 end
 
-
-  end
-end
 
