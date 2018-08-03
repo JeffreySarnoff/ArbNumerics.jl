@@ -480,3 +480,9 @@ end
 function isnan(x::ArbComplex{P}) where {P}
     isnan(real(x)) || isnan(imag(x))
 end
+
+typemax(::Type{ArbFloat{P}}) where {P} = posinf(ArbFloat{P})
+typemin(::Type{ArbFloat{P}}) where {P} = neginf(ArbFloat{P})
+
+floatmax(::Type{ArbFloat{P}}) where {P} = pow(ArbFloat{P}(P), square(ArbFloat{P}(P)))
+floatmin(::Type{ArbFloat{P}}) where {P} = inv(floatmax(x))
