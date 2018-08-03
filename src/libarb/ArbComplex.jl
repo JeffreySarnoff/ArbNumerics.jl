@@ -258,11 +258,12 @@ function radius(x::ArbComplex{P}) where {P}
 end
 
 
-trunc(x::ArbComplex{P}) where {P} = ArbComplex{P}(trunc(real(x)), trunc(imag(x)))
-trunc(::Type{T}, x::ArbReal{P}) where {P, T} = T(trunc(real(x))), T(trunc(imag(x)))
 
-flooor(x::ArbComplex{P}) where {P} = ArbComplex{P}(florr(real(x)), floor(imag(x)))
-floor(::Type{T}, x::ArbReal{P}) where {P, T} = T(floor(real(x))), T(floor(imag(x)))
+trunc(x::ArbComplex{P}) where {P} = ArbComplex{P}(trunc(real(x)), trunc(imag(x)))
+trunc(::Type{T}, x::ArbComplex{P}) where {P, T} = T(trunc(real(x))), T(trunc(imag(x)))
+
+floor(x::ArbComplex{P}) where {P} = ArbComplex{P}(florr(real(x)), floor(imag(x)))
+floor(::Type{T}, x::ArbComplex{P}) where {P, T} = T(floor(real(x))), T(floor(imag(x)))
 
 ceil(x::ArbComplex{P}) where {P} = ArbComplex{P}(ceil(real(x)), ceil(imag(x)))
-ceil(::Type{T}, x::ArbReal{P}) where {P, T} = T(ceil(real(x))), T(ceil(imag(x)))
+ceil(::Type{T}, x::ArbComplex{P}) where {P, T} = T(ceil(real(x))), T(ceil(imag(x)))
