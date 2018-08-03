@@ -120,11 +120,11 @@ end
 
 BigInt(x::ArbFloat{P}) where {P} = BigInt(trunc(BigFloat(x)))
 
-function Integer(x::ArbFloat{P}) where {P}
-    if abs(x) <= typemax(Int64)
-        Int64(x)
+function Base.Integer(x::ArbFloat{P}) where {P}
+    if isinteger(x)
+       abs(x) <= typemax(Int64) ? Int64(x) : BigInt(x)
     else
-        BigInt(x)
+       throw(InexactError("$x"))
     end
 end
 
