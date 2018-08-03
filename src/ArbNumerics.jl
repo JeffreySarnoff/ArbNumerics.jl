@@ -22,7 +22,8 @@ export ArbFloat, ArbReal, ArbComplex,
        isint,       # integer valued
 
        inf, posinf, neginf, nan,
-       
+       typemax, typemin, floatmax, floatmin,
+
        signs, signbits,
        significand_bits, relerror_bits, relaccuracy_bits,
        trim_bits, ulp, ulps, eps, epss,
@@ -55,6 +56,7 @@ import Base: IEEEFloat,
        UInt8, UInt16, UInt32, UInt64, UInt128,
        Int8, Int16, Int32, Int64, Int128,
        BigInt, BigFloat, Rational, Complex, real, imag,
+       floatmax, floatmin, typemax, typemin,
 
        iszero, isone, isinteger, isfinite, isinf, isnan, issubnormal,
        zero, one,
