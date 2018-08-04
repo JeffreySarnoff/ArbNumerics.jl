@@ -1,10 +1,11 @@
+#
 # ArbNumerics.jl
 
 
 #### Copyright © 2015-2018 by Jeffrey Sarnoff.
 ####  This work is released under The MIT License.
 
-For multiprecision numerical computing using 20..1200 digit values with arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).  If you use these types to calculate with a precision that is at least 2.1875 times the bit precision you want to report, it really is _best-in-show_ for reliable values.  
+For multiprecision numerical computing using 20..1200 digit values with arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).  If you use these types to calculate with a precision that is at least 2.1875 times the bit precision you want to report, it really is _best-in-show_ for reliable values.
 
 
 -----
@@ -39,9 +40,9 @@ Reading the sections that follow gives you a good platform from which to develop
 
 ## Constructors
 
-Initially, the default precision is set to 106 bits.  All ArbReal types use the same default precision. You can change this to e.g. 750 bits: `setprecision(ArbFloat, 750)` or `setprecision(ArbReal, 750)`. While you may use whatever precision you like, the underlying C library is optimized for precisions <= 4_000 bits (roughly).
+Initially, the default precision is set to 106 bits.  All ArbNumeric types use the same default precision. You can change this to e.g. 750 bits: `setprecision(ArbFloat, 750)` or `setprecision(ArbReal, 750)` or `setprecision(ArbComplex, 750)`. Change one default the others follow automatically.  This is done to preserve internal consistency.  Sometimes more than one type is used within a function.  The minimal precision allowed is 24 bits. There is no maximum. The underlying C library calculates more rapidly than BigFloat at any precision.
 
-The precision in use may be set globally, as with BigFloats, or it may be given with the constructor.  For most purposes, you should work at one, two, or three precisions.  It is helps clarity to convert precisions explicitly, however, it is not necessary.
+The precision in use may be set globally, as with BigFloats, or it may be given with the constructor.  For most purposes, you should work with a type at one, two, or three precisions.  It is helps clarity to convert precisions explicitly, however, it is not necessary.
 
 #### Constructors using the default precision
 ```julia
@@ -152,7 +153,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `besselj`, `besselj0`, `besselj1`
 - `bessely`, `bessely0`, `bessely1`
 - `besseli`, `besselk`
-       
+
 #### Airy functions
 
 - `airyai`, `airyaiprime`
@@ -196,7 +197,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 
 ### working with intervals
 
-The radii are kept using an ArbReal C library internal structure that has a 30 bit unsigned significand and a power-of-2 exponent that is, essentially, a BigInt.  All radii are nonnegative.  From the ArbReal documentation:
+The radii are kept using an Arb C library internal structure that has a 30 bit unsigned significand and a power-of-2 exponent that is, essentially, a BigInt.  All radii are nonnegative.  From the Arb documentation:
 
 > The mag_t type holds an unsigned floating-point number with a fixed-precision mantissa (30 bits) and an arbitrary-precision exponent ..., suited for representing magnitude bounds. The special values zero and positive infinity are supported, but not NaN.   Operations that involve rounding will always produce a valid bound, For performance reasons, no attempt is made to compute the best possible bounds: in general, a bound may be several ulps larger/smaller than the optimal bound.
 
@@ -226,7 +227,7 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 ## The Arb C library
 
 - [Arb](https://arblib.org) is a C library for rigorous real and complex arithmetic with arbitrary precision.
-  Fredrik Johansson is ArbReal's designer and primary author., with contributions from others.
+  Fredrik Johansson is Arb's designer and primary author., with contributions from others.
 
 - Arb tracks numerical errors automatically using the midpoint-radius representation of an interval.
 
