@@ -116,6 +116,7 @@ include("values/constructors.jl")
 include("values/specialvals.jl")
 include("values/compare.jl")
 include("values/rounding.jl")
+include("values/random.jl")
 
 include("float/prearith.jl")
 include("float/arith.jl")
