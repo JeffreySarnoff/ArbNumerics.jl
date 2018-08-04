@@ -1,7 +1,6 @@
 module ArbNumerics
 
 export ArbFloat, ArbReal, ArbComplex,
-       LowerBound, UpperBound,
        getinterval, setinterval, getreal, setreal,
        midpoint, radius,
        lowerbound, upperbound, bounds,
@@ -86,6 +85,7 @@ import Base.Math:  max, min, minmax,
 
        clamp, clamp!
 
+import Random.rand
 
 import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, trigamma,
      beta, lbeta, sinint, cosint,
@@ -129,6 +129,5 @@ include("intervals/intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
 include("support/helptext.jl")
-
 
 end # ArbNumerics
