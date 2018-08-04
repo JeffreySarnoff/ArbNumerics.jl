@@ -122,9 +122,9 @@ end
 
 # interact with Bool
 
-@inline ArbFloat{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
+@inline ArbFloat{P}(b::Bool) where {P} = b ? one(ArbFloat{P}) : zero(ArbFloat{P})
 @inline Base.Bool(x::ArbFloat{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
-@inline ArbReal{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
+@inline ArbReal{P}(b::Bool) where {P} = b ? one(ArbReal{P}) : zero(ArbReal{P})
 @inline Base.Bool(x::ArbReal{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
 @inline ArbComplex{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
 @inline Base.Bool(x::ArbComplex{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
