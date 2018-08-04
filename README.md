@@ -223,15 +223,15 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 
 ----
 
-## The ArbReal C library
+## The Arb C library
 
-- [ArbReal](https://arblib.org) is a C library for rigorous real and complex arithmetic with arbitrary precision.
+- [Arb](https://arblib.org) is a C library for rigorous real and complex arithmetic with arbitrary precision.
   Fredrik Johansson is ArbReal's designer and primary author., with contributions from others.
 
-- ArbReal tracks numerical errors automatically using the midpoint-radius representation of an interval.
+- Arb tracks numerical errors automatically using the midpoint-radius representation of an interval.
 
-- ArbReal is designed to provide evaluands that contain the veridical numerical result.
-- ArbReal uses algorithms with provable error bounds foe multiprecision mathematical functions.
+- Arb is designed to provide evaluands that contain the veridical numerical result.
+- Arb uses algorithms with provable error bounds foe multiprecision mathematical functions.
 
 - The code is thread-safe, portable, and extensively tested. The library outperforms others.
 
