@@ -43,6 +43,21 @@ ArbReal(x::Missing) = missing
 
 ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
+function ArbReal(x; digits=0, base=10)   
+    (base === 2 || base === 10) || throw(ErrorException("base ($base) not supported"))
+    
+    prec = base == 10 ? workingbits(bits4digits(digits)) : digits
+    prec >= MINIMUM_PRECISION || throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
+    ArbbReal{prec}(x)
+end
+
+function ArbReal(x; sigdigits=0, base=2)   
+    (base === 2 || base === 10) || throw(ErrorException("base ($base) not supported"))
+    
+    prec = base == 2 ? sigdigits : bits4digits(sigdigits)
+    prec >= MINIMUM_PRECISION || throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
+    ArbbReal{prec}(x)
+end
 
 swap(x::ArbReal{P}, y::ArbReal{P}) where {P} = ccall(@libarb(arb_swap), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 
