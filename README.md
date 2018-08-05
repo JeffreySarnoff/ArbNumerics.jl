@@ -24,7 +24,7 @@ While the bounds of an `ArbReal` or `ArbComplex` are available, the default is t
 
 Until BinDeps.jl is updated, we have to go into the source code and add `catch` twice in this file:
 
-`(whatever `pwd()` says when you start Julia)/.julia/packages/BinDeps/????/src/dependencies.jl`
+`<whatever `pwd()` says when you start Julia>/.julia/packages/BinDeps/<something>/src/dependencies.jl`
 
 first, underneath line 717, add a new line with the word `catch`    
 last,  underneath line 121, add a new line with the word `catch`
