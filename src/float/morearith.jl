@@ -1,10 +1,10 @@
 const Analytic = Cint(1)
 
 
-function square(x::ArbFloat{P}) where {P}
-    x1 = ArbReal{P}(x)
-    w = square(x1)
-    z = midpoint_byref(w)
+function square(x::ArbFloat{P}; roundingmode::RoundingMode=RoundNearest) where {P}
+    z = ArbFloat{P}()
+    rounding = match_rounding_mode(roundingmode)
+    ccall(@libarb(arf_mul), Cvoid, (Ref{ArbFloat}, Ref{ArFloat}, Ref{ArFloat}, Clong, Cint), z, x, x, P, rounding)
     return z
 end
 
@@ -90,9 +90,6 @@ cbrt(x::ArbComplex{P}) where {P} = root(x, 3)
 rcbrt(x::ArbFloat{P}) where {P} = root(1/x, 3)
 rcbrt(x::ArbReal{P}) where {P} = root(1/x, 3)
 rcbrt(x::ArbComplex{P}) where {P} = root(1/x, 3)
-
-
-
 
 function hypot(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     x1 = ArbReal{P}(x)
