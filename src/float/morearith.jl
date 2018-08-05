@@ -4,7 +4,7 @@ const Analytic = Cint(1)
 function square(x::ArbFloat{P}; roundingmode::RoundingMode=RoundNearest) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
-    ccall(@libarb(arf_mul), Cvoid, (Ref{ArbFloat}, Ref{ArFloat}, Ref{ArFloat}, Clong, Cint), z, x, x, P, rounding)
+    ccall(@libarb(arf_mul), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, x, P, rounding)
     return z
 end
 
