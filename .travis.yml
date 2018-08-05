@@ -5,10 +5,10 @@ os:
   #- osx
 julia:
   - 0.7
-  - nightly
-matrix:
-  allow_failures:
-  - julia_version: nightly
+  #- nightly
+#matrix:
+#  allow_failures:
+#  - julia_version: nightly
 # Work around a Travis bug
 git:
   depth: 999999
