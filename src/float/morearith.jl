@@ -1,6 +1,3 @@
-const Analytic = Cint(1)
-
-
 function square(x::ArbFloat{P}; roundingmode::RoundingMode=RoundNearest) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
@@ -58,7 +55,7 @@ end
 
 function sqrt(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_sqrt), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong), z, x, P)
+    ccall(@libarb(acb_sqrt), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
 
@@ -79,7 +76,7 @@ end
 
 function rsqrt(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_rsqrt), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong), z, x, P)
+    ccall(@libarb(acb_rsqrt), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
 
