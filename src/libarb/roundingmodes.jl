@@ -1,7 +1,6 @@
 
 #=
     Specifies the rounding mode for the result of an approximate operation.
-
 ARF_RND_NEAR   (4)
     Round to the nearest representable number, rounding to even if there is a tie.
 ARF_RND_FLOOR  (2)
@@ -14,11 +13,11 @@ ARF_RND_UP     (1)
     Round to the nearest representable number in the direction away from zero.
 =#
 
-const ArbRealRoundNearest  = Cint(4) # RoundingMode{:Nearest}()
-const ArbRealRoundDown     = Cint(2) # RoundingMode{:Down}()
-const ArbRealRoundUp       = Cint(3) # RoundingMode{:Up}()
-const ArbRealRoundToZero   = Cint(0) # RoundingMode{:ToZero}()
-const ArbRealRoundFromZero = Cint(1) # RoundingMode{:FromZero}()
+const ArbRoundNearest  = Cint(4) # RoundingMode{:Nearest}()
+const ArbRoundDown     = Cint(2) # RoundingMode{:Down}()
+const ArbRoundUp       = Cint(3) # RoundingMode{:Up}()
+const ArbRoundToZero   = Cint(0) # RoundingMode{:ToZero}()
+const ArbRoundFromZero = Cint(1) # RoundingMode{:FromZero}()
 
 const MpfrRoundNearest  = Cint(0) # RoundingMode{:Nearest}()
 const MpfrRoundDown     = Cint(3) # RoundingMode{:Down}()
@@ -28,18 +27,18 @@ const MpfrRoundFromZero = Cint(4) # RoundingMode{:FromZero}()
 
 # matched with Julia's terminology
 
-match_rounding_mode(::Type{Val{ArbRealRoundNearest}})      = RoundNearest
-match_rounding_mode(::Type{Val{ArbRealRoundDown}})         = RoundDown
-match_rounding_mode(::Type{Val{ArbRealRoundUp}})           = RoundUp
-match_rounding_mode(::Type{Val{ArbRealRoundToZero}})       = RoundToZero
-match_rounding_mode(::Type{Val{ArbRealRoundFromZero}})     = RoundFromZero
+match_rounding_mode(::Type{Val{ArbRoundNearest}})      = RoundNearest
+match_rounding_mode(::Type{Val{ArbRoundDown}})         = RoundDown
+match_rounding_mode(::Type{Val{ArbRoundUp}})           = RoundUp
+match_rounding_mode(::Type{Val{ArbRoundToZero}})       = RoundToZero
+match_rounding_mode(::Type{Val{ArbRoundFromZero}})     = RoundFromZero
 
-match_rounding_mode(::Type{Val{RoundNearest}})         = ArbRealRoundNearest
-match_rounding_mode(::Type{Val{RoundDown}})            = ArbRealRoundDown
-match_rounding_mode(::Type{Val{RoundUp}})              = ArbRealRoundUp
-match_rounding_mode(::Type{Val{RoundToZero}})          = ArbRealRoundToZero
-match_rounding_mode(::Type{Val{RoundFromZero}})        = ArbRealRoundFromZero
-match_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = ArbRealRoundNearest
+match_rounding_mode(::Type{Val{RoundNearest}})         = ArbRoundNearest
+match_rounding_mode(::Type{Val{RoundDown}})            = ArbRoundDown
+match_rounding_mode(::Type{Val{RoundUp}})              = ArbRoundUp
+match_rounding_mode(::Type{Val{RoundToZero}})          = ArbRoundToZero
+match_rounding_mode(::Type{Val{RoundFromZero}})        = ArbRoundFromZero
+match_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = ArbRoundNearest
 match_rounding_mode(::Type{Val{RoundNearestTiesUp}})   = throw(ErrorException("RoundNearestTiesUp is not supported"))
 
 
@@ -67,4 +66,4 @@ match_mpfr_rounding_mode(::Type{Val{RoundFromZero}})  = MpfrRoundFromZero
     match_mpfr_rounding_mode(Val{mode})
 
 @inline match_mpfr_rounding_mode(mode::RoundingMode{S}) where {S} =
-    match_mpfr_rounding_mode(Val{mode})
+match_mpfr_rounding_mode(Val{mode})
