@@ -20,6 +20,16 @@ ArbNumerics exports three types: `ArbFloat`, `ArbReal`, `ArbComplex`.  `ArbFloat
 
 While the bounds of an `ArbReal` or `ArbComplex` are available, the default is to show these values as digit sequences which almost assuredly are accurate, in a round to nearest sense, to the precision displayed.  Math with `ArbFloat` does not provide the assurance one gets using `ArbReal`, as an `ArbFloat` is a point value.  While some effort has been taken to provide you with more reliable results from math with `ArbFloat` values than would be the case using the underlying library itself, `ArbReal` or `ArbComplex` are suggested for work that is important to you.  `ArbFloat` is appropriate when exactness is not required during development, or with applications that are approximating something at increasing precisions.
 
+## Temporary Installation Note for Julia v0.1-
+
+Until BinDeps.jl is updated, we have to go into the source code and add `catch` twice in this file:
+
+`(whatever `pwd()` says when you start Julia)/.julia/packages/BinDeps/????/src/dependencies.jl`
+`????` is whatever you see as the subdirectory[s] of BinDeps
+
+first, underneath line 717, a new line with the word `catch`
+last,  underneath line 121. a new line with the word `catch`
+
 
 ## Installation
 
