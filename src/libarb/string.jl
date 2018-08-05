@@ -9,6 +9,7 @@ const ARB_STR_CONDENSE             = UInt64(16)
 const ARB_STR_CONDENSE_36_Digits   = UInt64(50*16)
 const ARB_STR_CONDENSE_72_Digits   = UInt64(72*16)
 
+const NO_FLAGS  = UInt64(0)
 const NO_RADIUS = ARB_STR_NO_RADIUS
 
 @inline function digit_precision(bitprecision::Int)
@@ -26,7 +27,7 @@ function trimzeros(str::String)
 end
 
 
-function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_RADIUS)
+function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_FLAGS)
     y = ArbFloat{precision(x)}()
     ccall(@libarb(arf_set_mag), Cvoid, (Ref{ArbFloat}, Ref{Mag}), y, x)
     z = ArbReal{precision(x)}()
@@ -44,7 +45,7 @@ function string(x::ArbFloat{P}; midpoint::Bool=false) where {P}
     return arbstring(x, prec, flags=flags)
 end
 
-function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
+function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
@@ -61,7 +62,7 @@ function string(x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {
     return arbstring(x, prec, flags=flags)
 end
 
-function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
+function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
                       (Ref{ArbReal}, Clong, Culong), x, maxdigits, flags)
     str = deepcopy( unsafe_string(pointer(unsafestr)) )
@@ -77,7 +78,7 @@ function string(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) wher
     return arbstring(x, prec, flags=flags)
 end
 
-function arbstring(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
+function arbstring(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     # rea, ima = real(x), imag(x)
     rea = ArbReal{P}()
     ima = ArbReal{P}()
