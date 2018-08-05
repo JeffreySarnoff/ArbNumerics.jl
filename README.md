@@ -5,7 +5,7 @@
 #### Copyright © 2015-2018 by Jeffrey Sarnoff.
 ####  This work is released under The MIT License.
 
-For multiprecision numerical computing using 20..1200 digit values with arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).  If you use these types to calculate with a precision that is at least 2.1875 times the bit precision you want to report, it really is _best-in-show_ for reliable values.
+For multiprecision numerical computing using values with 25..2,500,000 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([thank you](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).
 
 
 -----
