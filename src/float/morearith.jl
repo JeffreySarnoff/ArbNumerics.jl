@@ -58,7 +58,7 @@ end
 
 function sqrt(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_sqrt_analytic), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong), z, x, Analytic, P)
+    ccall(@libarb(acb_sqrt), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong), z, x, P)
     return z
 end
 
@@ -79,7 +79,7 @@ end
 
 function rsqrt(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_rsqrt_analytic), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong), z, x, Analytic, P)
+    ccall(@libarb(acb_rsqrt), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong), z, x, P)
     return z
 end
 
