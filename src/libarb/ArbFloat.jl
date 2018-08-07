@@ -34,7 +34,7 @@ ArbFloat(x::Missing) = missing
 
 ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
-ArbFloat(x; bits::Int) = ArbFloat(x, prec)
+ArbFloat(x; bits::Int) = ArbFloat(x, bits)
 
 function ArbFloat(x; digits::Int, base::Int=10)
     if base === 10
