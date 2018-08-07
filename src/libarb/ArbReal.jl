@@ -1,5 +1,5 @@
 """
-from ArbReal docs:
+from Arb docs:
 
 An arb_t represents a ball over the real numbers, that is, an interval [m±r]≡[m−r,m+r]
 where the midpoint m and the radius r are (extended) real numbers and r is nonnegative (possibly infinite).
@@ -42,6 +42,17 @@ ArbReal(x::Missing) = missing
 @inline sign_bit(x::ArbReal{P}) where {P} = isodd(x.mid_size)
 
 ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
+
+ArbReal(x; bits::Int) = ArbReal(x, bits)
+
+function ArbReal(x; digits::Int, base::Int=10)
+    if base === 10
+        digits = bits4digits(digits)
+    elseif base !== 2
+        throw(ErrorException("base expects 2 or 10"))
+    end
+    ArbReal(x, digits)
+end
 
 swap(x::ArbReal{P}, y::ArbReal{P}) where {P} = ccall(@libarb(arb_swap), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 
