@@ -8,6 +8,7 @@ export ArbFloat, ArbReal, ArbComplex,
        increase_radius, decrease_radius,
        bits4digits, digits4bits,
        workingprecision, setworkingprecision,
+       ExtraBits,
 
        ispos, isneg, isnonpos, isnonneg,
 
