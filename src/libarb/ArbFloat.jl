@@ -34,6 +34,17 @@ ArbFloat(x::Missing) = missing
 
 ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
+ArbFloat(x; bits::Int) = ArbFloat(x, prec)
+
+function ArbFloat(x; digits::Int, base::Int=10)
+    if base === 10
+        digits = bits4digits(digits)
+    elseif base !== 2
+        throw(ErrorException("base expects 2 or 10"))
+    end
+    ArbFloat(x, digits)
+end
+
 swap(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ccall(@libarb(arf_swap), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), x, y)
 
 function copy(x::ArbFloat{P}) where {P}
