@@ -1,4 +1,4 @@
-square(x::ArbFloat{P}; roundingmode::RoundingMode=RoundNearest) where {P} = x * x
+function square(x::ArbFloat{P}; roundingmode::RoundingMode=RoundNearest) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
     ccall(@libarb(arf_mul_rnd_any), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, x, P, rounding)
