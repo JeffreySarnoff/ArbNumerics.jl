@@ -20,15 +20,11 @@ ArbNumerics exports three types: `ArbFloat`, `ArbReal`, `ArbComplex`.  `ArbFloat
 
 While the bounds of an `ArbReal` or `ArbComplex` are available, the default is to show these values as digit sequences which almost assuredly are accurate, in a round to nearest sense, to the precision displayed.  Math with `ArbFloat` does not provide the assurance one gets using `ArbReal`, as an `ArbFloat` is a point value.  While some effort has been taken to provide you with more reliable results from math with `ArbFloat` values than would be the case using the underlying library itself, `ArbReal` or `ArbComplex` are suggested for work that is important to you.  `ArbFloat` is appropriate when exactness is not required during development, or with applications that are approximating something at increasing precisions.
 
-## Temporary Installation Note for Julia v0.1-
+## Temporary Installation Notes
 
-Until BinDeps.jl is updated, we have to go into the source code and add `catch` twice in this file:
+Until I modify the `deps/build.jl` to take care of this, you should feel free to erase the `deps` subdirectory (e.g. `~/.julia/packages/ArbNumerics/<something>/deps`).  It contains the source files and compilation output for each of the libraries that the Arb C library may utilize.  That is more than 20,000 individual files.  They are of no use after `pkg> build ArbNumerics` completes.  ArbNumerics does not use the `local\share` or `local\include` subdirectories either.  You can remove them.  
 
-`<whatever `pwd()` says when you start Julia>/.julia/packages/BinDeps/<something>/src/dependencies.jl`
-
-first, underneath line 717, add a new line with the word `catch`    
-last,  underneath line 121, add a new line with the word `catch`
-
+Do **not** remove or alter the `local\lib` subdirectory. 
 
 ## Installation
 
