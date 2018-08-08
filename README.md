@@ -149,7 +149,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 
 - `exp`, `expm1`, `log`, `log1p`
 - `sin`, `cos`, `tan`, `csc`, `sec`, `cot`
-- `asin`, `acos`, `atan`
+- `asin`, `acos`, `atan`, `atan(y,x)`
 - `sinh`, `cosh`, `tanh`, `csch`, `sech`, `coth`
 - `asinh`, `acosh`, `atanh`
 
