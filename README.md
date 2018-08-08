@@ -45,7 +45,16 @@ After the installation is done. `using ArbNumerics` will make this package avail
 
 Reading the sections that follow gives you a good platform from which to develop.
 
-- consider adding `Readables.jl` and `using ArbNumerics, Readables`
+- consider `using ArbNumerics, Readables`
+```julia
+julia> ArbFloat(pi, digits=30, base=10)
+3.14159265358979323846264338328
+
+julia> readable(ans)
+3.14159_26535_89793_23846_26433_8328
+```
+
+[using Readables](https://github.com/JeffreySarnoff/Readables.jl/blob/master/README.md)
 
 ## Constructors
 
