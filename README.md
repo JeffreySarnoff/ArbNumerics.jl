@@ -50,7 +50,7 @@ julia> readable(ans)
 3.14159_26535_89793_23846_26433_8328
 ```
 
-[using Readables](https://github.com/JeffreySarnoff/Readables.jl/blob/master/README.md)
+[information about using Readables](https://github.com/JeffreySarnoff/Readables.jl/blob/master/README.md)
 
 ## Constructors
 
