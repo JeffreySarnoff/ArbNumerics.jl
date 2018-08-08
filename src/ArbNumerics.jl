@@ -80,7 +80,7 @@ import Base.Math:  max, min, minmax,
 
        (^), exp, log, expm1, log1p, log2, log10,
        sin, cos, sincos, tan, csc, sec, cot, sinc,
-       asin, acos, atan, acsc, asec, acot, atan2,
+       asin, acos, atan, acsc, asec, acot,
        sinh, cosh, tanh, csch, sech, coth,
        asinh, acosh, atanh, acsch, asech, acoth,
 
