@@ -17,7 +17,17 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
     end
 end
 
-atan(y::ArbReal{P}, x::ArbReal{P}) where {P} = atan2(y, x)
+function atan(y::ArbReal{P}, x::ArbReal{P}, prec::Int=P) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_atan2), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, y, x, prec)
+    return midpoint_byref(z)
+end
+
+@inline function atan(y::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P}
+    xr = ArbReal{P}(x)
+    yr = ArbReal{P}(y)
+    return atan(yr, xr, prec)
+end
 
 const Cint0 = zero(Cint)
 
@@ -41,7 +51,7 @@ for (A,F) in ((:log, :acb_log), (:log1p, :acb_log1p), (:exp, :acb_exp), (:expm1,
     end
 end
 
-for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2))
+for (A,F) in ((:loghypot, :arb_log_hypot),)
     @eval begin
         function ($A)(x::ArbFloat{P}, y::ArbFloat{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
@@ -53,7 +63,7 @@ for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2))
     end
 end
 
-for (A,F) in ((:loghypot, :arb_log_hypot), (:atan2, :arb_atan2) )
+for (A,F) in ((:loghypot, :arb_log_hypot), )
     @eval begin
         function ($A)(x::ArbReal{P}, y::ArbReal{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
