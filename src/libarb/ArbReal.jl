@@ -43,8 +43,6 @@ ArbReal(x::Missing) = missing
 
 ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
-ArbReal(x; bits::Int) = ArbReal(x, bits)
-
 function ArbReal(x; digits::Int, base::Int=10)
     if base === 10
         digits = bits4digits(digits)
