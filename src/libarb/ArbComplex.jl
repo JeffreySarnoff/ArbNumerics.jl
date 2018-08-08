@@ -37,11 +37,13 @@ ArbComplex(x::Missing) = missing
 
 ArbComplex(x, y, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{workingbits(prec)}(x, y) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
-function ArbComplex(x::T1, y::T2; digits::Int, base::Int=10) where {T1<:Number, T2<:Number}
+function ArbComplex(x::T1, y::T2; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T1<:Number, T2<:Number}
     x, y = promote(x, y)
     if base === 10
         digits = bits4digits(digits)
-    elseif base !== 2
+    elseif base === 2
+        digits = bits
+    else
         throw(ErrorException("base expects 2 or 10"))
     end
     ArbComplex(x, y, digits)
