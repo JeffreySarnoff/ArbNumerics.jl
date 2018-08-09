@@ -18,7 +18,7 @@ vdir = joinpath(pkgdir, "local")
 println("\n\t$(vdir)\n")
 
 
-if is_apple() && !("CC" in keys(ENV))
+if Sys.isapple() && !("CC" in keys(ENV))
    ENV["CC"] = "clang"
    ENV["CXX"] = "clang++"
 end
@@ -53,7 +53,7 @@ end
 #install libpthreads
 
 
-if is_windows()
+if Sys.iswindows()
    println("Downloading libpthread ... ")
    if Int == Int32
       download_dll("http://nemocas.org/binaries/w32-libwinpthread-1.dll", joinpath(vdir, "lib", "libwinpthread-1.dll"))
@@ -67,7 +67,7 @@ cd(wdir)
 
 # install M4
 
-if !is_windows()
+if !Sys.iswindows()
    try
       run(`m4 --version`)
    catch
@@ -88,7 +88,7 @@ cd(wdir)
 
 # install yasm
 
-if !is_windows()
+if !Sys.iswindows()
    if !ispath(joinpath(wdir, "yasm-$YASM_VERSION"))
       println("Building yasm ... ")
       YASM_FILE = "yasm-" * YASM_VERSION * ".tar.gz"
@@ -114,7 +114,7 @@ if !ispath(joinpath(wdir, "mpir-$MPIR_VERSION"))
    println("DONE")
 end
 
-if is_windows()
+if Sys.iswindows()
    println("Downloading MPIR ... ")
    if Int == Int32
       download_dll("http://nemocas.org/binaries/w32-libgmp-16.dll", joinpath(vdir, "lib", "libgmp-16.dll"))
@@ -155,7 +155,7 @@ if !ispath(joinpath(wdir, "mpfr-$MPFR_VERSION"))
    println("DONE")
 end
 
-if is_windows()
+if Sys.iswindows()
    println("Downloading MPFR ... ")
    if Int == Int32
       download_dll("http://nemocas.org/binaries/w32-libmpfr-4.dll", joinpath(vdir, "lib", "libmpfr-4.dll"))
@@ -182,7 +182,7 @@ end
 cd(wdir)
 
 # install FLINT
-if !is_windows()
+if !Sys.iswindows()
   try
     println("Cloning flint2 ... ")
     run(`git clone https://github.com/wbhart/flint2.git`)
@@ -200,7 +200,7 @@ if !is_windows()
   println("DONE")
 end
 
-if is_windows()
+if Sys.iswindows()
    println("Downloading flint ... ")
    if Int == Int32
       download_dll("http://nemocas.org/binaries/w32-libflint.dll", joinpath(vdir, "lib", "libflint.dll"))
@@ -228,7 +228,7 @@ cd(wdir)
 
 # INSTALL ARB 
 
-if !is_windows()
+if !Sys.iswindows()
   println("Cloning arb ... ")
   try
     run(`git clone https://github.com/fredrik-johansson/arb.git`)
@@ -249,7 +249,7 @@ end
 
 cd(wdir)
 
-if is_windows()
+if Sys.iswindows()
    println("Downloading arb ... ")
    if Int == Int32
       download_dll("http://nemocas.org/binaries/w32-libarb.dll", joinpath(vdir, "lib", "libarb.dll"))
