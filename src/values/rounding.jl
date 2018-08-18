@@ -24,15 +24,15 @@ for A in (:ArbFloat, :ArbReal, :ArbComplex)
   @eval begin
     
     round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) where {P,T} =
-       T(round(x, P, rounding))
+       T(round(x, digits=P, base=rounding))
 
     function round(x::$A{P}, rounding::RoundingMode=RoundNearest; 
                    sigdigits::Integer = 0, digits::Integer = 0, base = 10) where {P}
         sigdigits = max(sigdigits, digits) 
         if base == 10
-            round(x, digits4bits(sigdigits), rounding) 
+            round(x, digits=digits4bits(sigdigits), base=rounding) 
         elseif base ==  2
-            round(x, sigdigits, rounding)
+            round(x, digits=sigdigits, base=rounding)
         else
             throw(DomainError("base ($base) not supported"))
         end
