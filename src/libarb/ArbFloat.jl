@@ -36,9 +36,9 @@ ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x
 
 function ArbFloat(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
     if base === 10
-        digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION[1])
+        digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
     elseif base === 2
-        digits = bits > 0 ? bits : (digits > 0 ? digits : DEFAULT_PRECISION[1])
+        digits = bits > 0 ? bits : (digits > 0 ? digits : DEFAULT_PRECISION.x)
     else
         throw(ErrorException("base expects 2 or 10"))
     end

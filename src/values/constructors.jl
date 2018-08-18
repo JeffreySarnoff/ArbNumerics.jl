@@ -1,29 +1,29 @@
 
 @inline function ArbFloat(x)
-    prec = DEFAULT_PRECISION[1]
+    prec = DEFAULT_PRECISION.x
     res  = ArbFloat{prec}(x)
     return res
 end
 @inline function ArbReal(x)
-    prec = DEFAULT_PRECISION[1]
+    prec = DEFAULT_PRECISION.x
     res  = ArbReal{prec}(x)
     return res
 end
 
 @inline function ArbComplex(x)
-    prec = DEFAULT_PRECISION[1]
+    prec = DEFAULT_PRECISION.x
     res  = ArbComplex{prec}(x)
     return res
 end
 
 @inline function ArbComplex(x, y)
-    prec = DEFAULT_PRECISION[1]
+    prec = DEFAULT_PRECISION.x
     res  = ArbComplex{prec}(x, y)
     return res
 end
 
 @inline function ArbComplex(x, y::T) where {T<:AbstractFloat}
-    prec = DEFAULT_PRECISION[1]
+    prec = DEFAULT_PRECISION.x
     res  = ArbComplex{prec}(x, y)
     return res
 end
