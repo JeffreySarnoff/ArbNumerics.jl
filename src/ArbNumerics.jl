@@ -29,6 +29,7 @@ export ArbFloat, ArbReal, ArbComplex,
        trim_bits, ulp, ulps, eps, epss,
 
        # other functions
+       add2!, sub2!, mul2!, div2!,
        addmul, submul, mulsub,
        square, cube, rsqrt, rcbrt, pow, root, loghypot,
        risingfactorial, doublefactorial,
@@ -123,6 +124,7 @@ include("values/random.jl")
 
 include("float/prearith.jl")
 include("float/arith.jl")
+include("float/arith_inplace.jl")
 include("float/morearith.jl")
 include("float/elementary.jl")
 include("float/special.jl")
