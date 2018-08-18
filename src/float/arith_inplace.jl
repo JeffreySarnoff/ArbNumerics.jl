@@ -1,24 +1,22 @@
-function add2!(x::ArbFloat{P}, y::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where P
-    rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(arf_add), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, rounding)
+const RNEAREST = Int32(4)
+
+function add2!(x::ArbFloat{P}, y::ArbFloat{P}) where P
+    rounddir = ccall(@libarb(arf_add), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, RNEAREST)
     return x
 end
 
-function sub2!(x::ArbFloat{P}, y::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where P
-    rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(arf_sub), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, rounding)
+function sub2!(x::ArbFloat{P}, y::ArbFloat{P}) where P
+    rounddir = ccall(@libarb(arf_sub), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, RNEAREST)
     return x
 end
 
-function mul2!(x::ArbFloat{P}, y::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where P
-    rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(arf_mul_rnd_any), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, rounding)
+function mul2!(x::ArbFloat{P}, y::ArbFloat{P}) where P
+    rounddir = ccall(@libarb(arf_mul_rnd_any), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, RNEAREST)
     return x
 end
 
-function div2!(x::ArbFloat{P}, y::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where P
-    rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(arf_div), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, rounding)
+function div2!(x::ArbFloat{P}, y::ArbFloat{P}) where P
+    rounddir = ccall(@libarb(arf_div), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), x, x, y, P, RNEAREST)
     return x
 end
 
