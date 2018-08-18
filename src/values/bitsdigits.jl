@@ -38,15 +38,15 @@ const ExtraBits = BitsOfStability + BitsOfAbsorbtion
 
 # default precision
 const MINIMUM_PRECISION = 24
-const DEFAULT_PRECISION = [workingbits(128 - ExtraBits)]
+const DEFAULT_PRECISION = Ref(workingbits(128 - ExtraBits))
 
 # these typed significands have this many signficant bits
 
 workingprecision(::Type{Mag}) = 30 # bits of significand
 
-workingprecision(::Type{ArbFloat}) = DEFAULT_PRECISION[1]
-workingprecision(::Type{ArbReal}) = DEFAULT_PRECISION[1]
-workingprecision(::Type{ArbComplex}) = DEFAULT_PRECISION[1]
+workingprecision(::Type{ArbFloat}) = DEFAULT_PRECISION.x
+workingprecision(::Type{ArbReal}) = DEFAULT_PRECISION.x
+workingprecision(::Type{ArbComplex}) = DEFAULT_PRECISION.x
 
 workingprecision(::Type{ArbFloat{P}}) where {P} = P
 workingprecision(::Type{ArbReal{P}}) where {P} = P
@@ -59,9 +59,9 @@ workingprecision(x::ArbComplex{P}) where {P} = P
 # these typed significands have this many signficant bits shown
 
 precision(::Type{Mag}) = 30 # bits of significand
-precision(::Type{ArbFloat}) = evincedbits(DEFAULT_PRECISION[1])
-precision(::Type{ArbReal}) = evincedbits(DEFAULT_PRECISION[1])
-precision(::Type{ArbComplex}) = evincedbits(DEFAULT_PRECISION[1])
+precision(::Type{ArbFloat}) = evincedbits(DEFAULT_PRECISION.x)
+precision(::Type{ArbReal}) = evincedbits(DEFAULT_PRECISION.x)
+precision(::Type{ArbComplex}) = evincedbits(DEFAULT_PRECISION.x)
 
 precision(::Type{ArbFloat{P}}) where {P} = evincedbits(P)
 precision(::Type{ArbReal{P}}) where {P} = evincedbits(P)
@@ -74,13 +74,13 @@ precision(x::ArbComplex{P}) where {P} = evincedbits(P)
 function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
     global DEFAULT_PRECISION
     n < MINIMUM_PRECISION && throw(DomainError("bit precision must be >= $MINIMUM_PRECISION"))
-    DEFAULT_PRECISION[1] = workingbits(n)
+    DEFAULT_PRECISION.x = workingbits(n)
     return n
 end
 
 function setworkingprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
     global DEFAULT_PRECISION
     n < workingbits(MINIMUM_PRECISION) && throw(DomainError("working bit precision must be >= $(workingbits(MINIMUM_PRECISION))"))
-    DEFAULT_PRECISION[1] = n
+    DEFAULT_PRECISION.x = n
     return n
 end
