@@ -29,6 +29,29 @@ end
     return atan(yr, xr, prec)
 end
 
+function sincos(x::ArbReal{P}, prec::Int=P) where {P}
+    zs = ArbReal{P}()
+    zc = ArbReal{P}()
+    ccall(@libarb(arb_sin_cos), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), zs, zc, x, prec)
+    return zs, zc
+end
+
+@inline function sincos(x::ArbFloat{P}, prec::Int=P) where {P}
+    xr = ArbReal{P}(x)
+    sx, cx = sincos(xr, prec)
+    s = midpoint_byref(sx)
+    c = midpoint_byref(cx)
+    return s, c
+end
+
+function sincos(x::ArbComplex{P}, prec::Int=P) where {P}
+    zs = ArbComplex{P}()
+    zc = ArbComplex{P}()
+    ccall(@libarb(acb_sin_cos), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), zs, zc, x, prec)
+    return zs, zc
+end
+
+
 const Cint0 = zero(Cint)
 
 
