@@ -9,6 +9,8 @@ export ArbFloat, ArbReal, ArbComplex,
        workingprecision, setworkingprecision,
        ExtraBits,
 
+       stringall, showall,
+
        ispos, isneg, isnonpos, isnonneg,
 
        isspecial,   # zero, infinite or NaN
