@@ -1,10 +1,9 @@
 module ArbNumerics
 
 export ArbFloat, ArbReal, ArbComplex,
-       getinterval, setinterval, getreal, setreal,
-       midpoint, radius,
-       lowerbound, upperbound, bounds,
-       lowerbound_abs, upperbound_abs, bounds_abs,
+       interval, setinterval, lowerbound, upperbound,
+       ball, setball, midpoint, radius,
+       bounds_abs, lowerbound_abs, upperbound_abs,
        increase_radius, decrease_radius,
        bits4digits, digits4bits,
        workingprecision, setworkingprecision,
