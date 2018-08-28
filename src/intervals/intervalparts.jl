@@ -10,35 +10,35 @@ function setinterval(lo::ArbReal{P}, hi::ArbReal{P}) where {P}
     setinterval(lowerbound(lo, ArbFloat), upperbound(hi, ArbFloat))
 end
 
-function getinterval(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
+function interval(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     ArbFloat{P}(lowerbound(x)), ArbFloat{P}(upperbound(x))
 end
 
-function getinterval(x::ArbReal{P}) where {P}
+function interval(x::ArbReal{P}) where {P}
    lowerbound(x), upperbound(x)
 end
 
-function setreal(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P}
+function setball(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P}
     signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     lbound = mid - rad
     ubound = mid + rad
     setinterval(lbound, ubound)
 end
 
-function setreal(mid::ArbReal{P}, rad::ArbReal{P}) where {P}
+function setball(mid::ArbReal{P}, rad::ArbReal{P}) where {P}
     signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     setball(ArbFloat{P}(mid), ArbFloat{P}(rad))
 end
 
-function getreal(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
+function ball(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     ArbFloat{P}(midpoint(x)), ArbFloat{P}(radius(x))
 end
 
-function getreal(x::ArbReal{P}) where {P}
+function ball(x::ArbReal{P}) where {P}
     midpoint(x), radius(x)
 end
 
-function getreal(x::ArbFloat{P}) where {P}
+function ball(x::ArbFloat{P}) where {P}
     x, zero(typeof(x))
 end
 
@@ -69,14 +69,6 @@ function lowerbound(x::ArbReal{P}) where {P}
     return z
 end
 
-function bounds(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
-    lowerbound(x, ArbFloat), upperbound(x, ArbFloat)
-end
-
-function bounds(x::ArbReal{P}) where {P}
-    lowerbound(x), upperbound(x)
-end
-
 
 @inline function upperbound_abs(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     w = ArbFloat{P}()
@@ -103,15 +95,6 @@ function lowerbound_abs(x::ArbReal{P}) where {P}
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, w)
     return z
 end
-
-function bounds_abs(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
-    lowerbound_abs(x, ArbFloat), upperbound_abs(x, ArbFloat)
-end
-
-function bounds_abs(x::ArbReal{P}) where {P}
-    lowerbound_abs(x), upperbound_abs(x)
-end
-
 
 function increase_radius(x::ArbReal{P}, err::ArbFloat{P}) where {P}
     err >= 0 || throw(ErrorException("nonnegative err required ($err)"))
