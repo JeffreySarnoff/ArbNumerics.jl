@@ -206,8 +206,8 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 
 #### retrieval
 
-- `midpoint, radius = getball(x::ArbReal)`
-- `lobound, hibound = getinterval(x::ArbReal)`
+- `midpoint, radius = ball(x::ArbReal)`
+- `lobound, hibound = interval(x::ArbReal)`
 
 ### working with intervals
 
@@ -222,7 +222,7 @@ When constructing intervals , you should scale the radius to be as small as poss
 ### a caution for BigFloat
 
 ```julia
-ulia> p=64;setprecision(BigFloat,p);
+julia> p=64;setprecision(BigFloat,p);
 
 julia> ArbFloat(pi,p+8)
 3.14159265358979323846
