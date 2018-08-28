@@ -53,7 +53,7 @@ for (A,F) in ((:gamma, :acb_gamma),
     end
 end
 
-for (A,F) in ((:elliptic_k, :acb_elliptic_k), (:elliptic_e, :acb_elliptic_e),
+for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
               (:eta, :acb_dirichlet_eta), (:xi, :acb_dirichlet_xi)
              )
     @eval begin
@@ -87,8 +87,8 @@ for (A,F) in ((:agm, :arb_agm), )
 end
 
 
-for (A,F) in ((:elliptic_p, :acb_elliptic_p), (:elliptic_pi, :acb_elliptic_pi),
-              (:elliptic_zeta, :acb_elliptic_zeta), (:elliptic_sigma, :acb_elliptic_sigma),
+for (A,F) in ((:ellipticp, :acb_elliptic_p), (:ellipticpi, :acb_elliptic_pi),
+              (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
              )
     @eval begin
         function ($A)(x::ArbComplex{P}, y::ArbComplex{P}, prec::Int=P) where {P}
@@ -99,8 +99,8 @@ for (A,F) in ((:elliptic_p, :acb_elliptic_p), (:elliptic_pi, :acb_elliptic_pi),
     end
 end
 
-for (A,F) in ((:elliptic_pi, :acb_elliptic_pi), (:elliptic_p, :acb_elliptic_p),
-              (:elliptic_zeta, :acb_elliptic_zeta), (:elliptic_sigma, :acb_elliptic_sigma),
+for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
+              (:ellipticzeta, :acb_elliptic_zeta), (:ellipticsigma, :acb_elliptic_sigma),
              )
     @eval begin
         function ($A)(x::ArbReal{P}, y::ArbReal{P}, prec::Int=P) where {P}
