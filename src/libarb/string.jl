@@ -74,7 +74,7 @@ end
 
 function string(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
-    flags = radius ? ARB_STR_RADIUS : ARB_STR_NO_RADIUS
+    flags = radius ? ARB_STR_RADIUS : NO_FLAGS
     return arbstring(x, prec, flags=flags)
 end
 
