@@ -32,13 +32,13 @@ const BitsOfAbsorption = 15
 
 const ExtraBits = Ref(BitsOfStability + BitsOfAbsorption)
 
-@inline workingbits(evincedbits) = evincedbits + ExtraBits
-@inline evincedbits(workingbits) = workingbits - ExtraBits
+@inline workingbits(evincedbits) = evincedbits + ExtraBits.x
+@inline evincedbits(workingbits) = workingbits - ExtraBits.x
 
 
 # default precision
 const MINIMUM_PRECISION = 24
-const DEFAULT_PRECISION = Ref(workingbits(128 - ExtraBits))
+const DEFAULT_PRECISION = Ref(workingbits(128 - ExtraBits.x))
 
 # these typed significands have this many signficant bits
 
@@ -90,6 +90,6 @@ extrabits() = ExtraBits.x
 function setextrabits(n::Int)
     global ExtraBits, DEFAULT_PRECISION
     ExtraBits.x = max(0,n)
-    DEFAULT_PRECISION.x = workingbits(128 - ExtraBits)
+    DEFAULT_PRECISION.x = workingbits(128 - ExtraBits.x)
     return workingprecision(ArbFloat)
 end
