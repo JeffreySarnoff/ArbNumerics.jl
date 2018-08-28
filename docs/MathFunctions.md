@@ -59,8 +59,8 @@
 #### parts
 
 - `midpoint`, `radius`
-- `upperbound`, `lowerbound`, `bounds`
-- `upperbound_abs`, `lowerbound_abs`, `bounds_abs`
+- `upperbound`, `lowerbound`
+- `upperbound_abs`, `lowerbound_abs`
 
 #### construction
 
@@ -69,5 +69,5 @@
 
 #### retrieval
 
-- `midpoint, radius = getreal(x::ArbReal)`
-- `lobound, hibound = getinterval(x::ArbReal)`
+- `midpoint, radius = ball(x::ArbReal)`
+- `lobound, hibound = interval(x::ArbReal)`
