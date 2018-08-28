@@ -41,7 +41,7 @@ end
 
 function string(x::ArbFloat{P}; midpoint::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
-    flags = ARB_STR_NO_RADIUS
+    flags = NO_FLAGS
     return arbstring(x, prec, flags=flags)
 end
 
