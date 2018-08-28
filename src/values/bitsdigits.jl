@@ -24,13 +24,13 @@ end
 # additional precision (more of the significant bits)
 #    absorbs some kinds of numerical jitter
 #    before any undesired resonance occurs
-const BitsOfStability  = 9
+const BitsOfStability  = 12
 
 # additional accuracy (more bits of the significand)
-#    may compensate for 1,2, or 3 ulp enclosure widenings
-const BitsOfAbsorbtion = 15
+#    may compensate for 1,2,3 or 4 ulp enclosure widenings
+const BitsOfAbsorption = 20
 
-const ExtraBits = BitsOfStability + BitsOfAbsorbtion
+const ExtraBits = BitsOfStability + BitsOfAbsorption
 
 @inline workingbits(evincedbits) = evincedbits + ExtraBits
 @inline evincedbits(workingbits) = workingbits - ExtraBits
