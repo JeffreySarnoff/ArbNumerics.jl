@@ -10,3 +10,5 @@ arpi = ArbReal(pi, bits4digits(DIGITS))
 
 a = 2*log(ArbFloat(2))
 @test exp(lambertw(a)) == 2
+
+include("arithmetic.jl")
