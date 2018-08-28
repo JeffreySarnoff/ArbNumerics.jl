@@ -24,13 +24,13 @@ end
 # additional precision (more of the significant bits)
 #    absorbs some kinds of numerical jitter
 #    before any undesired resonance occurs
-const BitsOfStability  = 12
+const BitsOfStability  =  9
 
 # additional accuracy (more bits of the significand)
-#    may compensate for 1,2,3 or 4 ulp enclosure widenings
-const BitsOfAbsorption = 20
+#    may compensate for 1,2,3 ulp enclosure widenings
+const BitsOfAbsorption = 15
 
-const ExtraBits = BitsOfStability + BitsOfAbsorption
+const ExtraBits = Ref(BitsOfStability + BitsOfAbsorption)
 
 @inline workingbits(evincedbits) = evincedbits + ExtraBits
 @inline evincedbits(workingbits) = workingbits - ExtraBits
@@ -83,4 +83,13 @@ function setworkingprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal
     n < workingbits(MINIMUM_PRECISION) && throw(DomainError("working bit precision must be >= $(workingbits(MINIMUM_PRECISION))"))
     DEFAULT_PRECISION.x = n
     return n
+end
+
+extrabits() = ExtraBits.x
+
+function setextrabits(n::Int)
+    global ExtraBits, DEFAULT_PRECISION
+    ExtraBits.x = max(0,n)
+    DEFAULT_PRECISION.x = workingbits(128 - ExtraBits)
+    return workingprecision(ArbFloat)
 end
