@@ -66,7 +66,7 @@ for (A,F) in ((:elliptick, :acb_elliptic_k), (:elliptice, :acb_elliptic_e),
          end
     end
 end
-
+#=
 for (A,F) in ((:elliptick, :elliptic_k), (:elliptice, :elliptic_e))
     @eval begin
         function ($A)(k::ArbReal{P}, prec::Int=P) where {P}
@@ -75,7 +75,7 @@ for (A,F) in ((:elliptick, :elliptic_k), (:elliptice, :elliptic_e))
         end
     end
 end
-
+=#
 for (A,F) in ((:agm, :arb_agm), )
     @eval begin
         function ($A)(x::ArbReal{P}, y::ArbReal{P}, prec::Int=P) where {P}
@@ -113,12 +113,12 @@ for (A,F) in ((:ellipticpi, :acb_elliptic_pi), (:ellipticp, :acb_elliptic_p),
          end
     end
 end
-
+#=
 function ellipticpi(n::ArbComplex{P}, k::ArbComplex{P}, prec::Int=P) where {P}
     m = square(k)
     return elliptic_pi(n, m, prec)
 end
-
+=#
 
 
 for (A,F) in ((:gamma, :arb_gamma),
