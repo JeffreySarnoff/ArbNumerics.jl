@@ -44,6 +44,7 @@ function string(x::ArbFloat{P}; midpoint::Bool=false) where {P}
     flags = NO_FLAGS
     return arbstring(x, prec, flags=flags)
 end
+stringall(x::ArbFloat{P}) where {P} = string(x, midpoint=true)
 
 function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     z = ArbReal{P}()
@@ -61,6 +62,7 @@ function string(x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {
     flags = radius ? ARB_STR_RADIUS : NO_FLAGS
     return arbstring(x, prec, flags=flags)
 end
+stringall(x::ArbReal{P}) where {P} = string(x, midpoint=true, radius=false)
 
 function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
@@ -77,6 +79,7 @@ function string(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) wher
     flags = radius ? ARB_STR_RADIUS : NO_FLAGS
     return arbstring(x, prec, flags=flags)
 end
+stringall(x::ArbComplex{P}) where {P} = string(x, midpoint=true, radius=false)
 
 function arbstring(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     # rea, ima = real(x), imag(x)
