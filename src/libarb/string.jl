@@ -41,13 +41,13 @@ end
 
 function string(x::ArbFloat{P}; midpoint::Bool=false) where {P}
     prec = midpoint ? digits4bits(P) : digit_precision(P)
-    flags = NO_FLAGS
+    flags = ARB_STR_NO_RADIUS
     return arbstring(x, prec, flags=flags)
 end
 
 stringall(x::ArbFloat{P}) where {P} = string(x, midpoint=true)
 
-function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
+function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = ARB_STR_NO_RADIUS) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
