@@ -45,7 +45,7 @@ function string(x::ArbFloat{P}; midpoint::Bool=false) where {P}
     return arbstring(x, prec, flags=flags)
 end
 
-stringall(x::ArbFloat{P}) where {P} = return arbstring(x, floor(Int,log10(2)*precision(c))+10; flags=NO_FLAGS)
+stringall(x::ArbFloat{P}) where {P} = return arbstring(x, floor(Int,log10(2)*precision(c))+10; flags=NO_RADIUS)
     
 function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_RADIUS) where {P}
     z = ArbReal{P}()
