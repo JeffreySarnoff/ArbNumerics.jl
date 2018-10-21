@@ -32,6 +32,8 @@ clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{Ar
 ArbComplex{P}(x::ArbComplex{P}) where {P} = x
 ArbComplex(x::ArbComplex{P}) where {P} = x
 
+float(x::ArbComplex{P}) where {P} = real(x)
+
 ArbComplex{P}(x::Missing) where {P} = missing
 ArbComplex(x::Missing) = missing
 
