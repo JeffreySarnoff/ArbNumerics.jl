@@ -26,6 +26,11 @@ arf_clear(x::ArbFloat{P}) where {P} = ccall(@libarb(arf_clear), Cvoid, (Ref{ArbF
 ArbFloat{P}(x::ArbFloat{P}) where {P} = x
 ArbFloat(x::ArbFloat{P}) where {P} = x
 
+float(x::ArbFloat{P}) where {P} = x
+
+BaseArbFloat{P}(x::ArbFloat{P}) where {P} = x
+ArbFloat(x::ArbFloat{P}) where {P} = x
+
 ArbFloat{P}(x::Missing) where {P} = missing
 ArbFloat(x::Missing) = missing
 
