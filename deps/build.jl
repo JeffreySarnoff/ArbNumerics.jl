@@ -1,3 +1,5 @@
+using Libdl
+
 oldwdir = pwd()
 
 
@@ -171,7 +173,7 @@ else
    end
    cd("$wdir/mpfr-$MPFR_VERSION")
    withenv("LD_LIBRARY_PATH"=>"$vdir/lib", "LDFLAGS"=>LDFLAGS) do
-      run(`./configure --prefix=$vdir --with-gmp=$vdir --disable-static --enable-shared`) 
+      run(`./configure --prefix=$vdir --with-gmp=$vdir --disable-static --enable-shared`)
       run(`make -j4`)
       run(`make install`)
    end
@@ -217,7 +219,7 @@ else
    println("Building flint ... ")
    cd(joinpath("$wdir", "flint2"))
    withenv("LD_LIBRARY_PATH"=>"$vdir/lib", "LDFLAGS"=>LDFLAGS) do
-      run(`./configure --prefix=$vdir --disable-static --enable-shared --with-mpir=$vdir --with-mpfr=$vdir`) 
+      run(`./configure --prefix=$vdir --disable-static --enable-shared --with-mpir=$vdir --with-mpfr=$vdir`)
       run(`make -j4`)
       run(`make install`)
    end
@@ -226,7 +228,7 @@ end
 
 cd(wdir)
 
-# INSTALL ARB 
+# INSTALL ARB
 
 if !Sys.iswindows()
   println("Cloning arb ... ")
