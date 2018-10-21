@@ -54,6 +54,8 @@ function ArbComplex(x::T1, y::T2; bits::Int=0, digits::Int=0, base::Int=iszero(b
     ArbComplex(promote(x, y)...,)
 end
 
+ArbComplex(re::T, im::T) where T<:AbstractFloat = ArbComplex(ArbFloat(re), ArbFloat(im))
+
 const Analytic = Cint(0) # prefer the non-analytic versions
 
 @inline sign_bit(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size)
