@@ -163,3 +163,25 @@ eps(::Type{ArbReal{P}}) where {P} = eps(one(ArbReal{P}))
 
 ulp(::Type{ArbComplex{P}}) where {P} = ulp(one(ArbComplex{P}))
 eps(::Type{ArbComplex{P}}) where {P} = eps(one(ArbComplex{P}))
+
+nextfloat(::Type{ArbFloat{P}}) where {P} = one(ArbFloat{P}) + ulp(one(ArbFloat{P}))
+nextfloat(::Type{ArbReal{P}}) where {P} = ArbReal{P}(nextfloat(ArbFloat{P}))
+prevfloat(::Type{ArbFloat{P}}) where {P} = one(ArbFloat{P}) - ulp(one(ArbFloat{P}))
+prevfloat(::Type{ArbReal{P}}) where {P} = ArbReal{P}(prevfloat(ArbFloat{P}))
+
+nextfloat(x::ArbFloat{P}) where {P} = x + ulp(x)
+nextfloat(x::ArbReal{P}) where {P} = x + ulp(x)
+prevfloat(x::ArbFloat{P}) where {P} = x - ulp(x)
+prevfloat(x::ArbReal{P}) where {P} = x - ulp(x)
+
+nextfloat(::Type{ArbFloat{P}}, n::Int) where {P} = one(ArbFloat{P}) + n*ulp(one(ArbFloat{P}))
+nextfloat(::Type{ArbReal{P}}, n::Int) where {P} = ArbReal{P}(nextfloat(ArbFloat{P}, n))
+prevfloat(::Type{ArbFloat{P}}, n::Int) where {P} = one(ArbFloat{P}) - n*ulp(one(ArbFloat{P}))
+prevfloat(::Type{ArbReal{P}}, n::Int) where {P} = ArbReal{P}(prevfloat(ArbFloat{P}, n))
+
+nextfloat(x::ArbFloat{P}, n::Int) where {P} = x + n*ulp(x)
+nextfloat(x::ArbReal{P}, n::Int) where {P} = x + n*ulp(x)
+prevfloat(x::ArbFloat{P}, n::Int) where {P} = x - n*ulp(x)
+prevfloat(x::ArbReal{P}, n::Int) where {P} = x - n*ulp(x)
+
+
