@@ -131,6 +131,21 @@ ArbComplex(x::ArbReal{P}, y::ArbReal{P}) where {P} = ArbComplex{P}(x,y)
 ArbComplex(x::ArbFloat{P}, y::ArbReal{P}) where {P} = ArbComplex{P}(ArbReal{P}(x),y)
 ArbComplex(x::ArbReal{P}, y::ArbFloat{P}) where {P} = ArbComplex{P}(x,ArbReal{P}(y))
 
+Base.Complex(x::ArbFloat{P}) where {P} = ArbComplex(x)
+Base.Complex(x::ArbReal{P}) where {P} = ArbComplex(x)
+Base.Complex(re::ArbFloat{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, im)
+Base.Complex(re::ArbReal{P}, im::ArbReal{P}) where {P} = ArbComplex(re, im)
+
+Base.complex(x::ArbFloat{P}) where {P} = ArbComplex(x)
+Base.complex(x::ArbReal{P}) where {P} = ArbComplex(x)
+Base.complex(re::ArbFloat{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, im)
+Base.complex(re::ArbReal{P}, im::ArbReal{P}) where {P} = ArbComplex(re, im)
+
+Base.Complex(re::ArbFloat{P}, im::ArbReal{P}) where {P} = ArbComplex(ArbReal{P}(re), im)
+Base.Complex(re::ArbReal{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, ArbReal{P}(im))
+Base.complex(re::ArbFloat{P}, im::ArbReal{P}) where {P} = ArbComplex(ArbReal{P}(re), im)
+Base.complex(re::ArbReal{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, ArbReal{P}(im))
+
 
 function ArbComplex{P}(x::T) where {P,T<:Integer}
     y = ArbReal{P}(x)
