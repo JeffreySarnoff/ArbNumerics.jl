@@ -109,40 +109,56 @@ function trim_bits(x::ArbComplex{P}) where {P}
 end
 
 
+#=
+
+void arf_mag_set_ulp(mag_t res, const arf_t x, slong prec)
+
+    Sets res to the magnitude of the unit in the last place (ulp) of x at precision prec.
+=#
+    
 
 function ulp(x::ArbFloat{P}) where {P}
-    w = Mag()
-    #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision P.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, P)
-    z = ArbFloat{P}(w)
+    if isnan(x) || isinf(x)
+        return ArbFloat{P}(NaN)
+    end    
+    if !iszero(x)
+        w = Mag()
+        #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision P.
+        ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, P)
+        z = ArbFloat{P}(w)
+    else
+        z = ArbFloat{P}(2.0)^(-workingprecision(x))
+    end
     return z
 end
 
 function eps(x::ArbFloat{P}) where {P}
-    w = Mag()
-    #   Sets z to twice the magnitude of the unit in the last place (ulp) of x at precision P.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, P)
-    z = ArbFloat{P}(w)
-    z += z
+    if isnan(x) || isinf(x)
+        return ArbFloat{P}(NaN)
+    end    
+    if !iszero(x)
+        w = Mag()
+        #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision P.
+        ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, P)
+        z = ArbFloat{P}(w)
+        z += z
+    else
+        z = ArbFloat{P}(2.0)^(-workingprecision(x))
+    end
     return z
 end
 
 function ulp(x::ArbFloat{P}, prec::Int) where {P}
     prec < MINIMUM_PRECISION && throw(DomainError("bit precision ($prec) is too low"))
-    w = Mag()
-    #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision prec.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, prec)
-    z = ArbFloat{P}(w)
+    y = ArbFloat(x, prec)
+    z = ulp(y)
     return z
 end
 
 function eps(x::ArbFloat{P}, prec::Int) where {P}
     prec < MINIMUM_PRECISION && throw(DomainError("bit precision ($prec) is too low"))
-    w = Mag()
-    #   Sets z to twice the magnitude of the unit in the last place (ulp) of x at precision prec.
-    ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, prec)
-    z = ArbFloat{P}(w)
-    z += z
+    y = ArbFloat(x, prec)
+    z = epsp(y)
     return z
 end
 
