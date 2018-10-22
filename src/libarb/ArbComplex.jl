@@ -146,6 +146,8 @@ Base.Complex(re::ArbReal{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, ArbReal
 Base.complex(re::ArbFloat{P}, im::ArbReal{P}) where {P} = ArbComplex(ArbReal{P}(re), im)
 Base.complex(re::ArbReal{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, ArbReal{P}(im))
 
+Base.Complex{ArbFloat{P}}(x::ArbComplex{P}) where {P} = x
+Base.Complex{ArbReal{P}}(x::ArbComplex{P}) where {P} = x
 
 function ArbComplex{P}(x::T) where {P,T<:Integer}
     y = ArbReal{P}(x)
