@@ -57,7 +57,7 @@ import Base: IEEEFloat,
        Float16, Float32, Float64, float,
        UInt8, UInt16, UInt32, UInt64, UInt128,
        Int8, Int16, Int32, Int64, Int128,
-       BigInt, BigFloat, Rational, Complex, real, imag,
+       BigInt, BigFloat, Rational, Complex, real, imag, complex,
        floatmax, floatmin, typemax, typemin,
 
        iszero, isone, isinteger, isfinite, isinf, isnan, issubnormal,
