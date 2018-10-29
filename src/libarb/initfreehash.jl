@@ -2,6 +2,39 @@
 
 #=
 
+Arb Fmpz Type
+
+mutable struct Fmpz <: Signed
+    d::Int
+    
+    function Fmpz()
+        z = new(0)
+        finalizer(fmpz_clear, z)
+        return z
+    end
+end
+
+Fmpz(x::Fmpz) = x  #  "to redo is to do"
+
+zero(Fmpz) == Fmpz(0)
+
+
+@inline fmpz_clear(a::Fmpz)
+    ccall(@libflint(fmpz_clear), Cvoid, (Ref{Fmpz},), a)
+end
+#   a very large snake tree-dweller is banished
+
+
+@inline function fmpz_clear(x::Fmpz)
+    ccall(@libarb(mag_clear), Cvoid, (Ref{ArbMag},), x)
+    return nothing
+end
+
+fmpz_clear(a::Fmpz) = ccall(@libflint(fmpz_clear), Cvoid, (Ref{Fmpz},), a)
+
+
+#=
+
 Arb Mag Type
 
 typedef struct
