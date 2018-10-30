@@ -1,22 +1,33 @@
-# Documentation:  http://docs.travis-ci.com/user/languages/julia/
+## Documentation: http://docs.travis-ci.com/user/languages/julia/
 language: julia
 os:
   - linux
-  #- osx
+  - osx
 julia:
-  - 0.7
   - 1.0
   - nightly
-#matrix:
-#  allow_failures:
-#  - julia_version: nightly
-# Work around a Travis bug
-git:
-  depth: 999999
+# matrix:
+#   allow_failures:
+#     - julia: nightly
+branches:
+  only:
+    - master
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+after_success:
+  - if [[ $TRAVIS_JULIA_VERSION = 1.0 ]] && [[ $TRAVIS_OS_NAME = linux ]]; then
+      julia --project=test/coverage -e 'using Pkg; Pkg.instantiate();
+          using Coverage; Codecov.submit(Codecov.process_folder())';
+    fi
+jobs:
+  include:
+    - stage: Documentation
+      julia: 1.0
+      os: linux
+      script:
+        - julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+        - julia --project=docs --color=yes docs/make.jl
+      after_success: skip
 notifications:
   email: false
-#script: # the default script is equivalent to the following
-#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("Example"); Pkg.test("Example"; coverage=true)';
-after_success:
-- julia -e 'cd(Pkg.dir("ArbNumerics")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())';
+git:
+depth: 99999999
