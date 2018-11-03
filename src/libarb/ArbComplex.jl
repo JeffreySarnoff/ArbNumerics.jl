@@ -307,3 +307,14 @@ floor(::Type{T}, x::ArbComplex{P}) where {P, T} = T(floor(real(x))), T(floor(ima
 
 ceil(x::ArbComplex{P}) where {P} = ArbComplex{P}(ceil(real(x)), ceil(imag(x)))
 ceil(::Type{T}, x::ArbComplex{P}) where {P, T} = T(ceil(real(x))), T(ceil(imag(x)))
+
+
+
+# a type specific hash function helps the type to 'just work'
+const hash_arbcomplex_lo = (UInt === UInt64) ? 0x76143ad985246e79 : 0x5b6a64dc
+const hash_0_arbcomplex_lo = hash(zero(UInt), hash_arbcomplex_lo)
+Base.hash(z::ArbComplex{P}, h::UInt) where {P} =
+    hash(z.real_mid_d1 ⊻ z.real_rad_exp ⊻ z.imag_mid_d1 ⊻ z.imag_rad_exp,     
+           h ⊻ hash(z.real_mid_d2 ⊻ (~reinterpret(UInt,P)), hash_arbcomplex_lo)
+               ⊻ hash_0_arbcomplex_lo)
+    
