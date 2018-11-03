@@ -14,7 +14,7 @@ mutable struct ArbFloat{P} <: AbstractFloat    # P is the precision in bits
     d2::UInt        #   (d1, d2)   the final part indicating the significand, or 0
 
     function ArbFloat{P}() where {P}
-        z = new{P}()
+        z = new{P}(0,0,0,0)
         ccall(@libarb(arf_init), Cvoid, (Ref{ArbFloat},), z)
         finalizer(arf_clear, z)
         return z
