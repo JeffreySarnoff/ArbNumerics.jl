@@ -20,7 +20,7 @@ mutable struct ArbComplex{P}  <: Number  # P is the precision in bits
 
 
     function ArbComplex{P}() where {P}
-        z = new{P}()
+        z = new{P}(0,0,0,0,0,0,0,0,0,0,0,0)
         ccall(@libarb(acb_init), Cvoid, (Ref{ArbComplex},), z)
         finalizer(clear_acb, z)
         return z
