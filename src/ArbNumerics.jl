@@ -99,6 +99,7 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
+using Libdl
 using Random
 
 include("support/arblib.jl")
