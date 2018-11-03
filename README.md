@@ -20,24 +20,42 @@ ArbNumerics exports three types: `ArbFloat`, `ArbReal`, `ArbComplex`.  `ArbFloat
 
 While the bounds of an `ArbReal` or `ArbComplex` are available, the default is to show these values as digit sequences which almost assuredly are accurate, in a round to nearest sense, to the precision displayed.  Math with `ArbFloat` does not provide the assurance one gets using `ArbReal`, as an `ArbFloat` is a point value.  While some effort has been taken to provide you with more reliable results from math with `ArbFloat` values than would be the case using the underlying library itself, `ArbReal` or `ArbComplex` are suggested for work that is important to you.  `ArbFloat` is appropriate when exactness is not required during development, or with applications that are approximating something at increasing precisions.
 
-## Temporary Installation Notes
-
-Until I modify the `deps/build.jl` to take care of this, you should feel free to erase the `deps` subdirectory (e.g. `~/.julia/packages/ArbNumerics/<something>/deps`).  It contains the source files and compilation output for each of the libraries that the Arb C library may utilize.  That is more than 20,000 individual files.  They are of no use after `pkg> build ArbNumerics` completes.  ArbNumerics does not use the `local\share` or `local\include` subdirectories either.  You can remove them.  
-
-Do **not** remove or alter the `local\lib` subdirectory. 
 
 ## Installation
 
 ```julia
-pkg> rm ArbNumerics
+pkg> add Readables
 pkg> add ArbNumerics
-pkg> build ArbNumerics  # takes a while
 pkg> precompile
 ```
 
-That should do it.  There should not be any error messages.  If there are, let me know.
+## StartUp
 
-After the installation is done. `using ArbNumerics` will make this package available.
+`using ArbNumerics`
+or, if you installed Readables, 
+`using ArbNumerics, Readables`
+
+## Precision
+
+If you want to work with bit-level precision, first do `setextrabits(0)`.
+
+Otherwise, some extra bits are used to assist with printing values rounded to the last digit displayed.  You can find out how many extra bits are used with `extrabits()`.  If you want to change the number of extra bits used, call `setextrabits` with the desired number of extra bits.
+
+You can set the internal working precision (which is the same as the displayed precision with `setextrabits(0)`) to a given number of bits or a given number of decimal digits:
+
+`setworkingprecision(ArbFloat, bits=250)`, `setworkingprecision(ArbReal, digits=100)` 
+
+The type can be any of `ArbFloat`, `ArbReal`, `ArbComplex`.  All types share the same precision so interconversion makes sense.
+
+You can set the external displayed precision (which is the the same as the internal precision with `setextrabits(0)`) to a given
+number of bits or a given number of decimal digits:
+
+`setprecision(ArbFloat, bits=250)`, `setworkingprecision(ArbReal, digits=100)` 
+
+The type can be any of `ArbFloat`, `ArbReal`, `ArbComplex`.  All types share the same precision so interconversion makes sense.
+
+
+## Using ArbFloat 
 
 Reading the sections that follow gives you a good platform from which to develop.
 
