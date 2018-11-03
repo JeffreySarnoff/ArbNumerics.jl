@@ -67,7 +67,7 @@ Mag(x::Base.IEEEFloat) = Mag(x, RoundingMode{:FromZero})
 function Mag(x::Int64)
     unsd = UInt64(x)
     z = Mag()
-    ccall(@libarb(mag_set_si), Cvoid, (Ref{Mag}, Clong), z, x)
+    ccall(@libarb(mag_set_ui), Cvoid, (Ref{Mag}, Culong), z, unsd)
     return z
 end
 
@@ -102,3 +102,5 @@ Mag(x::Signed) = Mag(Unsigned(x), RoundingMode{:FromZero})
 
 Float32(x::Mag) = Float32(Float64(x))
 Float16(x::Mag) = Float16(Float64(x))
+
+Base.show(io::IO, x::Mag) = show(io, Float64(x))
