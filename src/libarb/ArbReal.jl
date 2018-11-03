@@ -175,6 +175,6 @@ const hash_0_arbreal_lo = hash(zero(UInt), hash_arbreal_lo)
 #    with identical midpoint significands and identical radus_exponentOf2s hash equal
 # they are the same value, one is less accurate yet centered about the other
 Base.hash(z::ArbReal{P}, h::UInt) where {P} =
-    hash(z.d1$z.exp,
-         (h $ hash(z.d2$(~reinterpret(UInt,P)), hash_arbreal_lo)
-            $ hash_0_arbreal_lo))
+    hash(z.d1 ⊻ z.exp,
+         (h ⊻ hash(z.d2 ⊻ (~reinterpret(UInt,P)), hash_arbreal_lo)
+            ⊻ hash_0_arbreal_lo))
