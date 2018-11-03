@@ -19,7 +19,7 @@ mutable struct Mag
     man::UInt       # mp_limb_t  radius, unsigned by definition
 
     function Mag()
-        z = new()
+        z = new(0,0)
         ccall(@libarb(mag_init), Cvoid, (Ref{Mag},), z)
         finalizer(mag_clear, z)
         return z
