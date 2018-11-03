@@ -1,5 +1,5 @@
 function show(io::IO, x::Mag)
-    str = string(x)
+    str = string(Float64(x))
     print(io, str)
 end
 
