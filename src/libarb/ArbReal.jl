@@ -24,7 +24,7 @@ mutable struct ArbReal{P} <: Real     # P is the precision in bits
     rad_man::UInt   # mp_limb_t  radius, unsigned by definition
 
     function ArbReal{P}() where {P}
-        z = new{P}()
+        z = new{P}(0,0,0,0,0,0)
         ccall(@libarb(arb_init), Cvoid, (Ref{ArbReal},), z)
         finalizer(arb_clear, z)
         return z
