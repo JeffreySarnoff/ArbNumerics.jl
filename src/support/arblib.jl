@@ -46,6 +46,8 @@ end
 const LibArb   = library_filepath( ArbLibsDir, libnames, "libarb"   )
 const LibFlint = library_filepath( ArbLibsDir, libnames, "libflint" )
 
+const LibArbHandle   = dlopen(LibArb)
+const LibFlintHandle = dlopen(LibFlint)
 
 # @ccall(@libarb(library_function), ReturnType, (arg types), args)
 
@@ -57,3 +59,10 @@ macro libflint(libraryfunction)
     (:($libraryfunction), LibFlint)
 end
 
+macro arblib(libraryfunction)
+    :(dlsym(LibArbHandle, $libraryfunction))
+end
+
+macro flintlib(libraryfunction)
+    :(dlsym(LibFlintHandle, $libraryfunction))
+end
