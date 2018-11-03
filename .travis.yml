@@ -2,7 +2,7 @@
 language: julia
 os:
   - linux
-  - osx
+  #- osx
 julia:
   - 1.0
   - nightly
@@ -31,4 +31,4 @@ notifications:
   email: false
 git:
   depth: 99999999
-install: travis_wait mvn install
+
