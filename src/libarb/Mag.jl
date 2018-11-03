@@ -104,3 +104,7 @@ Float32(x::Mag) = Float32(Float64(x))
 Float16(x::Mag) = Float16(Float64(x))
 
 Base.show(io::IO, x::Mag) = show(io, Float64(x))
+
+const hash_arbmag = (UInt === UInt64) ? 0x29f934c433d9a758 : 0x2578e2ce
+Base.hash(z::Mag) = xor(hash(z.exp, z.man), hash_arbmag)
+Base.hash(z::Mag, u::UInt) = hash(hash(z), u)
