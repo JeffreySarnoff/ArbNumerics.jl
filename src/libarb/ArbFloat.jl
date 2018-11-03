@@ -157,3 +157,15 @@ trunc(::Type{T}, x::ArbFloat{P}) where {P, T} = T(trunc(x))
 
 midpoint(x::ArbFloat{P}) where {P} = x
 radius(x::ArbFloat{P}) where {P} = zero(ArbFloat{P})
+
+
+# a type specific hash function helps the type to 'just work'
+const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
+const hash_0_arbfloat_lo = hash(zero(UInt), hash_arbfloat_lo)
+# two values of the same precision
+#    with identical midpoint significands and identical radus_exponentOf2s hash equal
+# they are the same value, one is less accurate yet centered about the other
+Base.hash(z::ArbFloat{P}, h::UInt) where {P} =
+    hash(z.d1$z.exp,
+         (h $ hash(z.d2$(~reinterpret(UInt,P)), hash_arbfloat_lo)
+            $ hash_0_arbfloat_lo))
