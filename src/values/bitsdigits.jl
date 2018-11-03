@@ -91,5 +91,5 @@ function setextrabits(n::Int)
     global ExtraBits, DEFAULT_PRECISION
     ExtraBits.x = max(0,n)
     DEFAULT_PRECISION.x = workingbits(128 - ExtraBits.x)
-    return workingprecision(ArbFloat)
+    return ExtraBits.x
 end
