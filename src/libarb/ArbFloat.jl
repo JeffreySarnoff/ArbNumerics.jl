@@ -161,7 +161,7 @@ radius(x::ArbFloat{P}) where {P} = zero(ArbFloat{P})
 
 # a type specific hash function helps the type to 'just work'
 const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
-const hash_0_arbfloat_lo = hash(zero(UInt), hash_arffloat_lo)
+const hash_0_arbfloat_lo = hash(zero(UInt), hash_arbfloat_lo)
 hash(z::ArbFloat{P}, h::UInt) where {P} =
     hash(reinterpret(UInt,z.d1) ⊻ z.exp,
          (h ⊻ hash(z.d2 ⊻ (~reinterpret(UInt,P)), hash_arbfloat_lo) ⊻ hash_0_arbfloat_lo))
