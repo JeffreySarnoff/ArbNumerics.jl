@@ -48,6 +48,8 @@ match_rounding_mode(::Type{Val{RoundNearestTiesUp}})   = throw(ErrorException("R
 @inline match_rounding_mode(mode::RoundingMode{S}) where {S} =
     match_rounding_mode(Val{mode})
 
+#=
+fix below for Cint != Int
 
 match_mpfr_rounding_mode(::Type{Val{MpfrRoundNearest}})   = RoundNearest
 match_mpfr_rounding_mode(::Type{Val{MpfrRoundDown}})      = RoundDown
@@ -67,3 +69,4 @@ match_mpfr_rounding_mode(::Type{Val{RoundFromZero}})  = MpfrRoundFromZero
 
 @inline match_mpfr_rounding_mode(mode::RoundingMode{S}) where {S} =
 match_mpfr_rounding_mode(Val{mode})
+=#
