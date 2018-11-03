@@ -166,3 +166,15 @@ function radius(x::ArbReal{P}, ::Type{ArbFloat{P}}) where {P}
     ccall(@libarb(arf_set_mag), Cvoid, (Ref{ArbFloat}, Ref{Mag}), z, mag)
     return z
 end
+
+
+# a type specific hash function helps the type to 'just work'
+const hash_arbreal_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
+const hash_0_arbreal_lo = hash(zero(UInt), hash_arbreal_lo)
+# two values of the same precision
+#    with identical midpoint significands and identical radus_exponentOf2s hash equal
+# they are the same value, one is less accurate yet centered about the other
+Base.hash(z::ArbReal{P}, h::UInt) where {P} =
+    hash(z.d1$z.exp,
+         (h $ hash(z.d2$(~reinterpret(UInt,P)), hash_arbreal_lo)
+            $ hash_0_arbreal_lo))
