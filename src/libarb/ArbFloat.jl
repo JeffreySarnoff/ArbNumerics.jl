@@ -21,6 +21,9 @@ mutable struct ArbFloat{P} <: AbstractFloat    # P is the precision in bits
     end
 end
 
+const PtrToArbFloat = Ref{ArbFloat} # arf_ptr
+const PtrToPtrToArbFloat = Ref{Ref{ArbFloat}} # arf_ptr*
+
 arf_clear(x::ArbFloat{P}) where {P} = ccall(@libarb(arf_clear), Cvoid, (Ref{ArbFloat},), x)
 
 ArbFloat{P}(x::ArbFloat{P}) where {P} = x
