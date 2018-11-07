@@ -27,8 +27,9 @@ mutable struct ArbComplex{P}  <: Number  # P is the precision in bits
     end
 end
 
-const PtrToArbComplex = Ref{ArbComplex} # acb_ptr
-const PtrToPtrToArbComplex = Ptr{Ref{ArbComplex}} # acb_ptr*
+# for use within a struct, eg. ArbComplexMatrix
+const PtrToArbComplex = Ptr{ArbComplex} # acb_ptr
+const PtrToPtrToArbComplex = Ptr{Ptr{ArbComplex}} # acb_ptr*
 
 
 clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{ArbComplex},), x)
