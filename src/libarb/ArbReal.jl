@@ -31,8 +31,9 @@ mutable struct ArbReal{P} <: Real     # P is the precision in bits
     end
 end
 
-const PtrToArbReal = Ref{ArbReal} # arb_ptr
-const PtrToPtrToArbReal = Ptr{Ref{ArbReal}} # arb_ptr*
+# for use within structs, e.g. ArbRealMatrix
+const PtrToArbReal = Ptr{ArbReal} # arb_ptr
+const PtrToPtrToArbReal = Ptr{Ptr{ArbReal}} # arb_ptr*
 
 
 arb_clear(x::ArbReal{P}) where {P} = ccall(@libarb(arb_clear), Cvoid, (Ref{ArbReal},), x)
