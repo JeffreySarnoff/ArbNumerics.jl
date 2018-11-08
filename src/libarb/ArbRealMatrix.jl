@@ -22,9 +22,6 @@ mutable struct ArbRealMatrix{P} <: AbstractMatrix
    rows::Ptr{Ptr{ArbReal{P}}}
    
    function ArbRealMatrix{P}(nrows::Int, ncols::Int)
-       a = zero(ArbReal{P})
-       ptrto_zero = Ref(a)
-       ptrto_ptrto_zero = Ref(ptrto_a)
        z = new{P}(PtrToArbReal, 0, 0, PtrToPtrToArbReal)
        arb_mat_init(z)
        finalizer(arb_mat_clear, z)
