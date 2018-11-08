@@ -12,7 +12,7 @@ typedef struct
 arb_mat_struct;
 =#
 
-mutable struct ArbRealMatrix{P} <: AbstractMatrix
+mutable struct ArbRealMatrix{P} <: AbstractMatrix{ArbReal{P}}
    entries::Ptr{ArbReal{P}}
    nrows::Int
    ncols::Int
@@ -20,8 +20,8 @@ mutable struct ArbRealMatrix{P} <: AbstractMatrix
    
     
    function ArbRealMatrix{P}(nrows::Int, ncols::Int) where {P}
-       z = new{P}(Ptr{ArbReal{P}}(0), 0, 0, Ptr{Ptr{ArbReal{P}}}(0))
-       arb_mat_init(z)
+       z = new{P}() # z = new{P}(Ptr{ArbReal{P}}(0), 0, 0, Ptr{Ptr{ArbReal{P}}}(0))
+       arb_mat_init(z, nrows, ncols)
        finalizer(arb_mat_clear, z)
        return z
    end
@@ -32,9 +32,11 @@ function arb_mat_clear(x::ArbRealMatrix) where {P}
     return nothing
 end
 
-function arb_mat_init(x::ArbRealMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_init), Cvoid, (Ref{ArbRealMatrix}, Cint, Cint), x, x.nrows, x.ncols)
+function arb_mat_init(x::ArbRealMatrix{P}, nrows::Int, ncols::Int) where {P}
+    ccall(@libarb(arb_mat_init), Cvoid, (Ref{ArbRealMatrix}, Cint, Cint), x, nrows, ncols)
     return nothing
 end
+
+Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
 
 
