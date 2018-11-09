@@ -1,8 +1,23 @@
 # heavily influenced by and mostly of the Arb C interface used in Nemo.jl
 
 linearindex_from_rowcol(nrows::Int, row::Int, col::Int) = row + (col-1)*nrows
-linearindex_from_rowcol(m::M, row::Int, col::Int) where {T,M<:AbstractMatrix{T}} = row + (col-1)*size(m)[1]
 
+linearindex_from_rowcol(m::M, row::Int, col::Int) where {T,M<:AbstractMatrix{T}} =
+    row + (col-1)*size(m)[1]
+
+rowcol_from_linearindex(m::M, linearidx::Int) where {T,M<:AbstractMatrix{T}} =
+    rowcol_from_linearindex(size(m)[1], linearidx)
+
+function rowcol_from_linearindex(nrows::Int, linearidx::Int)
+    row = rem(linearidx, nrows)
+    row = ifelse(row === 0, nrows, row)
+    col = div(linearidx-row, nrows) + 1
+    return row,col
+end
+
+        
+        
+        
 #=
 typedef struct
 {
