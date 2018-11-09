@@ -55,13 +55,14 @@ function arb_mat_init(x::ArbRealMatrix{P}, nrows::Int, ncols::Int) where {P}
 end
 
 
-function arb_mat_entry_ptr(x::ArbRealMatrix{P}, rowidx::Int, colidx::Int)
+function arb_mat_entry_ptr(x::ArbRealMatrix{P}, rowidx::Int, colidx::Int) where {P}
     ptrtoArbReal = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal}, (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx, colidx)
     return ptrtoArbReal
 end
     
 Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
 
+#=
 function getindex!(z::arb, x::arb_mat, r::Int, c::Int)
   GC.@preserve x begin
      v = ccall((:arb_mat_entry_ptr, :libarb), Ptr{arb},
@@ -70,6 +71,7 @@ function getindex!(z::arb, x::arb_mat, r::Int, c::Int)
   end
   return z
 end
+=#
 
 function Base.getindex(x::ArbRealMatrix{P}, rowidx::Int, colidx::Int) where {P}
     (0 < rowidx <= x.nrows && 0 < colidx <= x.ncols) ||
