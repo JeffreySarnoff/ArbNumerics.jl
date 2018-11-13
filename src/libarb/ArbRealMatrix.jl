@@ -36,6 +36,7 @@ mutable struct ArbRealMatrix{P} <: AbstractMatrix{ArbReal{P}}
     rows::Ptr{Ptr{ArbReal{P}}}
 
    function ArbRealMatrix{P}(nrows::Int, ncols::Int) where {P}
+       nrows, ncols = ncols, nrows
        z = new{P}() # z = new{P}(Ptr{ArbReal{P}}(0), 0, 0, Ptr{Ptr{ArbReal{P}}}(0))
        arb_mat_init(z, nrows, ncols)
        finalizer(arb_mat_clear, z)
@@ -43,6 +44,7 @@ mutable struct ArbRealMatrix{P} <: AbstractMatrix{ArbReal{P}}
    end
 
    function ArbRealMatrix(nrows::Int, ncols::Int)
+        nrows, ncols = ncols, nrows
         P = workingprecision(ArbReal)
         return ArbRealMatrix{P}(nrows, ncols)
    end
@@ -74,25 +76,27 @@ end
     return nothing
 end
 
-@inline function Base.getindex(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
-   checkbounds(x, r, c)
+@inline function Base.getindex(x::ArbRealMatrix{P}, rowidx::Int, colidx::Int) where {P}
+    rowidx, colidx = colidx, rowidx
+    checkbounds(x, rowidx, colidx)
 
-  z = ArbReal{P}()
-  GC.@preserve x begin
-     v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
-                 (Ref{ArbRealMatrix}, Int, Int), x, r - 1, c - 1)
-     ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
-  end
-  return z
+   z = ArbReal{P}()
+   GC.@preserve x begin
+       v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
+                 (Ref{ArbRealMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
+       ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
+   end
+   return z
 end
 
 Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
 
 
 function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) where {P}
-    checkbounds(x, linearindex)
     rowidx, colidx = rowcol_from_linearindex(x.nrows, linearidx)
-    z = ArbReal{P}()
+    rowidx, colidx = colidx, rowidx
+    checkbounds(x, rowidx, colidx)
+   
     GC.@preserve x begin
         ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal}, (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
         ccall(@libarb(arb_set), Cvoid, (Ptr{ArbReal}, Ref{ArbReal}), ptr, z)
@@ -100,6 +104,16 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) wher
     return z
 end
 
+function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx::Int)
+    rowidx, colidx = colidx, rowidx
+    checkbounds(x, rowidx, colidx)
+    
+    GC.@preserve x begin
+        ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal}, (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
+        ccall(@libarb(arb_set), Cvoid, (Ptr{ArbReal}, Ref{ArbReal}), ptr, z)
+        end
+    return z
+end
 
 #=
 julia> a
