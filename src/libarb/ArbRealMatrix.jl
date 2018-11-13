@@ -62,6 +62,14 @@ end
     return nothing
 end
 
+@inline function checkbounds(x::ArbRealMatrix{P}, rc::Int) where {P}
+    ok = 0 < rc <= x.nrows * x.cols
+    if !ok
+        throw(BoundsError("($rc) not in 1:$(x.nrows * x.ncols)"))
+    end
+    return nothing
+end
+
 @inline function getindex(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
    checkbounds(x, r, c)
 
