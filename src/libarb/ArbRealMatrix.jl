@@ -59,7 +59,7 @@ function arb_mat_init(x::ArbRealMatrix{P}, nrows::Int, ncols::Int) where {P}
 end
 
 @inline function checkbounds(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
-    ok = 0 < r <= x.nrows && 0 < c <= x.cols
+    ok = 0 < r <= x.nrows && 0 < c <= x.ncols
     if !ok
         throw(BoundsError("($r, $c) not in 1:$(x.nrows), 1:$(x.ncols)"))
     end
@@ -67,14 +67,14 @@ end
 end
 
 @inline function checkbounds(x::ArbRealMatrix{P}, rc::Int) where {P}
-    ok = 0 < rc <= x.nrows * x.cols
+    ok = 0 < rc <= x.nrows * x.ncols
     if !ok
         throw(BoundsError("($rc) not in 1:$(x.nrows * x.ncols)"))
     end
     return nothing
 end
 
-@inline function getindex(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
+@inline function Base.getindex(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
    checkbounds(x, r, c)
 
   z = ArbReal()
