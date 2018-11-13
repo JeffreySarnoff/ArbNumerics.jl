@@ -115,6 +115,23 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx:
     return z
 end
 
+ function Base.show(io::IO, a::ArbRealMatrix{P}) where {P}
+    c = a.nrows
+    r = a.ncols
+    println(io, string(r,"x",c," Array{ArbReal{",P,"},2}"))
+    for i = 1:r
+        for j = 1:c
+           print(io, a[i, j])
+           if j != c
+               print(io, " ")
+           end
+        end
+        if i != r
+           println(io, "")
+        end
+    end
+ end
+
 #=
 julia> a
 5×5 ArbNumerics.ArbRealMatrix{100}:
