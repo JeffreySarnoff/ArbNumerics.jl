@@ -114,6 +114,13 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx:
     return z
 end
 
+function Base.setindex!(x::ArbRealMatrix{P}, z::Array{ArbReal{P},1}, linearidx::Array{Int,1})
+    for (az, alinearidx) in (z, linearidx)
+        setindex!(x, ax, alinearidx)
+    end
+    return x
+end
+
 
 # void arb_mat_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
 function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
