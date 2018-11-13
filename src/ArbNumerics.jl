@@ -13,7 +13,6 @@ export ArbFloat, ArbReal, ArbComplex,
        stringall, showall,
 
        ispositive, isnegative, isnonpositive, isnonnegative,
-       is
 
        isspecial,     # zero, infinite or NaN
        isnonfinite,
