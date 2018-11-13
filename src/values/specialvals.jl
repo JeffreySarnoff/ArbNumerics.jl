@@ -381,6 +381,30 @@ function isnan(x::ArbFloat{P}) where {P}
     0 != ccall(@libarb(arf_is_nan), Cint, (Ref{ArbFloat},), x)
 end
 
+function ispositive(x::ArbFloat{P}) where {P}
+    0 != ccall(@libarb(arf_is_positive), Cint, (Ref{ArbFloat},), x)
+end
+
+function isnonpositive(x::ArbFloat{P}) where {P}
+    0 != ccall(@libarb(arf_is_nonpositive), Cint, (Ref{ArbFloat},), x)
+end
+
+function isnegative(x::ArbFloat{P}) where {P}
+    0 != ccall(@libarb(arf_is_negative), Cint, (Ref{ArbFloat},), x)
+end
+
+function isnonnegative(x::ArbFloatl{P}) where {P}
+    0 != ccall(@libarb(arf_is_nonnegative), Cint, (Ref{ArbFloat},), x)
+end
+
+function isinteger(x::ArbFloat{P}) where {P}
+    0 != ccall(@libarb(arf_is_int), Cint, (Ref{ArbFloat},), x)
+end
+
+function isnoninteger(x::ArbFloat{P}) where {P}
+    0 == ccall(@libarb(arf_is_int), Cint, (Ref{ArbFloat},), x)
+end
+
 
 function isspecial(x::ArbReal{P}) where {P}
     0 != ccall(@libarb(arb_is_special), Cint, (Ref{ArbReal},), x)
@@ -434,6 +458,29 @@ function isnan(x::ArbReal{P}) where {P}
     isnan(ArbFloat{P}(x))
 end
 
+function ispositive(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_positive), Cint, (Ref{ArbReal},), x)
+end
+
+function isnonpositive(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_nonpositive), Cint, (Ref{ArbReal},), x)
+end
+
+function isnegative(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_negative), Cint, (Ref{ArbReal},), x)
+end
+
+function isnonnegative(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_nonnegative), Cint, (Ref{ArbReal},), x)
+end
+
+function isinteger(x::ArbReal{P}) where {P}
+    0 != ccall(@libarb(arb_is_int), Cint, (Ref{ArbReal},), x)
+end
+
+function isnoninteger(x::ArbReal{P}) where {P}
+    0 == ccall(@libarb(arb_is_int), Cint, (Ref{ArbReal},), x)
+end
 
 
 
@@ -480,6 +527,32 @@ end
 function isnan(x::ArbComplex{P}) where {P}
     isnan(real(x)) || isnan(imag(x))
 end
+
+function ispositive(x::ArbComplex{P}) where {P}
+    0 != ccall(@libarb(arb_is_positive), Cint, (Ref{ArbComplex},), x)
+end
+
+function isnonpositive(x::ArbComplex{P}) where {P}
+    0 != ccall(@libarb(arb_is_nonpositive), Cint, (Ref{ArbComplex},), x)
+end
+
+function isnegative(x::ArbComplex{P}) where {P}
+    0 != ccall(@libarb(arb_is_negative), Cint, (Ref{ArbComplex},), x)
+end
+
+function isnonnegative(x::ArbComplex{P}) where {P}
+    0 != ccall(@libarb(arb_is_nonnegative), Cint, (Ref{ArbComplex},), x)
+end
+
+function isinteger(x::ArbComplex{P}) where {P}
+    0 != ccall(@libarb(arb_is_int), Cint, (Ref{ArbComplex},), x)
+end
+
+function isnoninteger(x::ArbComplex{P}) where {P}
+    0 == ccall(@libarb(arb_is_int), Cint, (Ref{ArbComplex},), x)
+end
+
+
 
 typemax(::Type{ArbFloat{P}}) where {P} = posinf(ArbFloat{P})
 typemin(::Type{ArbFloat{P}}) where {P} = neginf(ArbFloat{P})
