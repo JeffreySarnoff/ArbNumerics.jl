@@ -29,6 +29,10 @@ pkg> add ArbNumerics
 pkg> precompile
 ```
 
+### Important
+
+When updating ArbNumerics, do `pkg> gc` to prevent accruing a great deal of unused diskspace.
+
 ## StartUp
 
 `using ArbNumerics`
