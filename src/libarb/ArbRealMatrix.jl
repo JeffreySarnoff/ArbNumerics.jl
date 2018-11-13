@@ -104,7 +104,7 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) wher
     return z
 end
 
-function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx::Int)
+function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx::Int) where {P}
     rowidx, colidx = colidx, rowidx
     checkbounds(x, rowidx, colidx)
     
