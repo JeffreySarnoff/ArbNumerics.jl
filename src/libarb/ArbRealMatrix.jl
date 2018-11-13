@@ -115,7 +115,7 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx:
     return z
 end
 
- function Base.show(io::IO, a::ArbRealMatrix{P}) where {P}
+ function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
     c = a.nrows
     r = a.ncols
     println(io, string(r,"x",c," Array{ArbReal{",P,"},2}"))
