@@ -114,7 +114,19 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx:
     return z
 end
 
- function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
+
+# void arb_mat_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
+function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    if x.ncols !== y.nrows
+        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
+    end
+    z = ArbRealMatrix{P}(x.nrows, y.ncols)
+    ccall(@libarb(arb_mat_mul, Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
+end
+
+    
+function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
     c = a.nrows
     r = a.ncols
     println(io, string(r,"x",c," Array{ArbReal{",P,"},2}"))
