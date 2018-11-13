@@ -59,6 +59,8 @@ function arb_mat_init(x::ArbRealMatrix{P}, nrows::Int, ncols::Int) where {P}
     return nothing
 end
 
+Base.size(x::ArbRealMatrix{P}) where {P} = (x.ncols, x.rows)
+
 @inline function checkbounds(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
     ok = 0 < r <= x.nrows && 0 < c <= x.ncols
     if !ok
@@ -88,7 +90,21 @@ end
    return z
 end
 
-Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
+@inline function Base.getindex(x::ArbRealMatrix{P}, linearidx::Int) where {P}
+    rowidx, colidx = rowcol_from_linearindex(linearidx)
+    return getindex(x, rowidx, colidx)
+end
+
+function Base.getindex(x::ArbRealMatrix{P}, linearidxs::Array{Int,1}) where {P}
+    values = Vector{ArbReal{P}}(undef, length(linearidxs))
+    valueidx = 1
+    for idx in linearidx
+        rowidx, colidx = rowcol_from_linearindex(idx)
+        values[valueidx] = getindex(x, rowidx, colidx)
+        valueidx += 1
+    end
+    return values
+end
 
 
 function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) where {P}
