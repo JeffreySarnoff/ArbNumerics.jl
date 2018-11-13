@@ -121,7 +121,7 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
         throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
     end
     z = ArbRealMatrix{P}(x.nrows, y.ncols)
-    ccall(@libarb(arb_mat_mul, Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return z
 end
 
