@@ -77,7 +77,7 @@ end
 @inline function Base.getindex(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
    checkbounds(x, r, c)
 
-  z = ArbReal()
+  z = ArbReal{P}()
   GC.@preserve x begin
      v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
                  (Ref{ArbRealMatrix}, Int, Int), x, r - 1, c - 1)
