@@ -54,36 +54,28 @@ function arb_mat_init(x::ArbRealMatrix{P}, nrows::Int, ncols::Int) where {P}
     return nothing
 end
 
-
-function arb_mat_entry_ptr(x::ArbRealMatrix{P}, rowidx::Int, colidx::Int) where {P}
-    ptrtoArbReal = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal}, (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx, colidx)
-    return ptrtoArbReal
+@inline function checkbounds(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
+    ok = 0 < r <= x.nrows && 0 < c <= x.cols
+    if !ok
+        throw(BoundsError("($r, $c) not in 1:$(x.nrows), 1:$(x.ncols)"))
+    end
+    return nothing
 end
-    
-Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
 
-#=
-function getindex!(z::arb, x::arb_mat, r::Int, c::Int)
+@inline function getindex(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
+   checkbounds(x, r, c)
+
+  z = ArbReal()
   GC.@preserve x begin
-     v = ccall((:arb_mat_entry_ptr, :libarb), Ptr{arb},
-                 (Ref{arb_mat}, Int, Int), x, r - 1, c - 1)
-     ccall((:arb_set, :libarb), Nothing, (Ref{arb}, Ptr{arb}), z, v)
+     v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
+                 (Ref{ArbRealMatrix}, Int, Int), x, r - 1, c - 1)
+     ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
   end
   return z
 end
-=#
 
-function Base.getindex(x::ArbRealMatrix{P}, rowidx::Int, colidx::Int) where {P}
-    (0 < rowidx <= x.nrows && 0 < colidx <= x.ncols) ||
-    throw(DomainError("rowidx $rowidx (1:$(x.nrows)), colidx $colidx (1:$(x.ncols))"))
-    
-    z = ArbReal{P}()
-    GC.@preserve x begin
-        ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal}, (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
-        ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, ptr)
-    end
-    return z
-end
+Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
+
 
 function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) where {P}
     (0 < linearidx <= x.nrows * x.ncols) ||
