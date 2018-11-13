@@ -44,7 +44,6 @@ mutable struct ArbRealMatrix{P} <: AbstractMatrix{ArbReal{P}}
    end
 
    function ArbRealMatrix(nrows::Int, ncols::Int)
-        nrows, ncols = ncols, nrows
         P = workingprecision(ArbReal)
         return ArbRealMatrix{P}(nrows, ncols)
    end
@@ -131,29 +130,3 @@ end
         end
     end
  end
-
-#=
-julia> a
-5×5 ArbNumerics.ArbRealMatrix{100}:
- 0  0  0  0  0
- 0  0  0  0  0
- 0  0  0  0  0
- 0  0  0  0  0
- 0  0  0  0  0
-
-julia> a.rows
-Ptr{Ptr{ArbReal{100}}} @0x0000000002d264d0
-
-julia> a.rows[2]
-ERROR: MethodError: no method matching getindex(::Ptr{Ptr{ArbReal{100}}}, ::Int64)
-Stacktrace:
- [1] top-level scope at none:0
-
-julia> a.entries[2]
-ERROR: MethodError: no method matching getindex(::Ptr{ArbReal{100}}, ::Int64)
-Stacktrace:
- [1] top-level scope at none:0
-
-julia> a.entries
-Ptr{ArbReal{100}} @0x00000000021da190
-=#
