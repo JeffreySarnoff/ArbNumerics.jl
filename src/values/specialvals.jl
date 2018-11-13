@@ -393,7 +393,7 @@ function isnegative(x::ArbFloat{P}) where {P}
     0 != ccall(@libarb(arf_is_negative), Cint, (Ref{ArbFloat},), x)
 end
 
-function isnonnegative(x::ArbFloatl{P}) where {P}
+function isnonnegative(x::ArbFloat{P}) where {P}
     0 != ccall(@libarb(arf_is_nonnegative), Cint, (Ref{ArbFloat},), x)
 end
 
