@@ -130,7 +130,7 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, rowidx::Int, colidx:
     return z
 end
 
-function Base.setindex!(x::ArbRealMatrix{P}, z::Array{ArbReal{P},1}, linearidx::Array{Int,1})
+function Base.setindex!(x::ArbRealMatrix{P}, z::Array{ArbReal{P},1}, linearidx::Array{Int,1}) where {P}
     for (az, alinearidx) in (z, linearidx)
         setindex!(x, ax, alinearidx)
     end
