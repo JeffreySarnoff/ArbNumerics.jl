@@ -12,16 +12,18 @@ export ArbFloat, ArbReal, ArbComplex,
 
        stringall, showall,
 
-       ispos, isneg, isnonpos, isnonneg,
+       ispositive, isnegative, isnonpositive, isnonnegative,
+       is
 
-       isspecial,   # zero, infinite or NaN
+       isspecial,     # zero, infinite or NaN
        isnonfinite,
        isinf, isposinf, isneginf,
        isnonzero,
-       isnormal,    # nonzero finite
-       isexact,     # zero radius
-       isinexact,   # nonzero radius
-       isint,       # integer valued
+       isnormal,      # nonzero finite
+       isexact,       # zero radius
+       isinexact,     # nonzero radius
+       isinteger,     # integer valued
+       isnoninteger,  # has nonzero fractional portion
 
        inf, posinf, neginf, nan,
        typemax, typemin, floatmax, floatmin,
