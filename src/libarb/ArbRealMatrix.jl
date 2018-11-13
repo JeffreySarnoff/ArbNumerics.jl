@@ -86,8 +86,7 @@ Base.size(x::ArbRealMatrix{P}) where {P} = (x.nrows, x.ncols)
 
 
 function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) where {P}
-    (0 < linearidx <= x.nrows * x.ncols) ||
-    throw(DomainError("linearidx $linearidx (1:$(x.nrows * x.ncols))"))
+    checkbounds(x, linearindex)
     rowidx, colidx = rowcol_from_linearindex(x.nrows, linearidx)
     z = ArbReal{P}()
     GC.@preserve x begin
