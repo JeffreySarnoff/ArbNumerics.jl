@@ -30,17 +30,21 @@ arb_mat_struct;
 =#
 
 mutable struct ArbRealMatrix{P} <: AbstractMatrix{ArbReal{P}}
-   entries::Ptr{ArbReal{P}}
-   nrows::Int
-   ncols::Int
-   rows::Ptr{Ptr{ArbReal{P}}}
-   
-    
+    entries::Ptr{ArbReal{P}}
+    nrows::Int
+    ncols::Int
+    rows::Ptr{Ptr{ArbReal{P}}}
+
    function ArbRealMatrix{P}(nrows::Int, ncols::Int) where {P}
        z = new{P}() # z = new{P}(Ptr{ArbReal{P}}(0), 0, 0, Ptr{Ptr{ArbReal{P}}}(0))
        arb_mat_init(z, nrows, ncols)
        finalizer(arb_mat_clear, z)
        return z
+   end
+
+   function ArbRealMatrix(nrows::Int, ncols::Int)
+        P = workingprecision(ArbReal)
+        return ArbRealMatrix{P}(nrows, ncols)
    end
 end
 
