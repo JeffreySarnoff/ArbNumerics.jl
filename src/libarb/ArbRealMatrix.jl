@@ -123,6 +123,21 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::Array{ArbReal{P},1}, linearidx::
     return x
 end
 
+# constructors
+
+function ArbRealMatrix{P}(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
+   nrows, ncols = size(x)
+   arm = ArbRealMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           afloat = x[row,col]
+           arm[row,col]  = ArbReal{P}(afloat)
+       end
+    end
+    return arm
+end
+        
+
 
 # void arb_mat_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
 function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
