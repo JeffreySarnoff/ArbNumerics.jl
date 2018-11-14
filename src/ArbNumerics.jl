@@ -106,6 +106,7 @@ using Random
 
 include("support/arblib.jl")
 include("support/abstractions.jl")
+include("support/matricies.jl")
 
 include("libarb/roundingmodes.jl")
 include("libarb/Flint2.jl")
