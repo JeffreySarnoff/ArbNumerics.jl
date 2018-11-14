@@ -76,15 +76,16 @@ end
 end
 
 @inline function Base.getindex(x::ArbRealMatrix{P}, linearidx::Int) where {P}
-    rowidx, colidx = rowcol_from_linearindex(linearidx)
+    rowidx, colidx = linear_to_cartesian(x.nrows, linearidx)
     return getindex(x, rowidx, colidx)
 end
 
 function Base.getindex(x::ArbRealMatrix{P}, linearidxs::Array{Int,1}) where {P}
+    nrows = x.nrows
     values = Vector{ArbReal{P}}(undef, length(linearidxs))
     valueidx = 1
     for idx in linearidx
-        rowidx, colidx = rowcol_from_linearindex(idx)
+        rowidx, colidx = linear_to_cartesian(nrows, idx)
         values[valueidx] = getindex(x, rowidx, colidx)
         valueidx += 1
     end
@@ -93,7 +94,7 @@ end
 
 
 function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) where {P}
-    rowidx, colidx = rowcol_from_linearindex(x.nrows, linearidx)
+    rowidx, colidx = linear_to_cartesian(x.nrows, linearidx)
     rowidx, colidx = colidx, rowidx
     checkbounds(x, rowidx, colidx)
    
