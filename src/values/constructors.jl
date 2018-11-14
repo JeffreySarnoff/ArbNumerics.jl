@@ -1,4 +1,3 @@
-
 @inline function ArbFloat(x)
     prec = DEFAULT_PRECISION.x
     res  = ArbFloat{prec}(x)
