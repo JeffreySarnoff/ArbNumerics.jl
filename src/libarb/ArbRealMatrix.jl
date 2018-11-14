@@ -125,7 +125,7 @@ end
 
 # constructors
 
-function ArbRealMatrix{P}(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
+function ArbRealMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
    nrows, ncols = size(x)
    arm = ArbRealMatrix{P}(nrows, ncols)
    for row in 1:nrows
@@ -136,7 +136,43 @@ function ArbRealMatrix{P}(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
     end
     return arm
 end
-        
+
+function Matrix{T}(x::A) where {P, T<:AbstractFloat, A<:ArbRealMatrix{P}}
+   nrows, ncols = x.ncols, x.nrows
+   fpm = reshape(zeros(nrows*ncols), (nrows, ncols))
+   for row in 1:nrows
+       for col in 1:ncols
+           aarb = x[row,col]
+           fpm[row,col]  = T(aarb)
+       end
+    end
+    return fpm
+end
+
+
+function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
+   nrows, ncols = size(x)
+   arm = ArbRealMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           anint = x[row,col]
+           arm[row,col]  = ArbReal{P}(anint)
+       end
+    end
+    return arm
+end
+
+function Matrix{T}(x::A) where {P, T<:Integer, A<:ArbRealMatrix{P}}
+   nrows, ncols = x.ncols, x.nrows
+   intm = reshape(zeros(nrows*ncols), (nrows, ncols))
+   for row in 1:nrows
+       for col in 1:ncols
+           aarb = x[row,col]
+           intm[row,col]  = T(aarb)
+       end
+    end
+    return intm
+end
 
 
 # void arb_mat_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
