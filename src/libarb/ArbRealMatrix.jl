@@ -175,16 +175,25 @@ function Matrix{T}(x::A) where {P, T<:Integer, A<:ArbRealMatrix{P}}
 end
 
 
-# void arb_mat_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
-function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    if x.ncols !== y.nrows
-        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
-    end
-    z = ArbRealMatrix{P}(x.nrows, y.ncols)
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+function det(x::ArbRealMatrix{P}) where {P}
+    x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
+    z = ArbReal{P}()
+    ccall(@libarb(arb_mat_det), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P)
     return z
 end
 
+function tr(x::ArbRealMatrix{P}) where {P}
+    x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
+    z = ArbReal{P}()
+    ccall(@libarb(arb_mat_trace), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P)
+    return z
+end
+
+
+
+# void arb_mat_trace(arb_t trace, const arb_mat_t mat, slong prec)
+#    Sets trace to the trace of the matrix, i.e. the sum of entries on the main diagonal of mat. 
+#    The matrix is required to be square.
 
 # tr, det, norm, lu, ldlt, cholesky, tril, triu
 
@@ -237,6 +246,21 @@ int arb_mat_approx_solve(arb_mat_t X, const arb_mat_t A, const arb_mat_t B, slon
     Some users may also find these methods useful for doing ordinary numerical linear algebra
         in applications where error bounds are not needed.
 =#
+
+# void arb_mat_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
+function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    if x.ncols !== y.nrows
+        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
+    end
+    z = ArbRealMatrix{P}(x.nrows, y.ncols)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
+end
+
+
+
+
+
 function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
     c = a.nrows
     r = a.ncols
