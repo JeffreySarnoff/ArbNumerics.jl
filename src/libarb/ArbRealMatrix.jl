@@ -185,7 +185,58 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return z
 end
 
-    
+
+# tr, det, norm, lu, ldlt, cholesky, tril, triu
+
+# void arb_mat_transpose(arb_mat_t dest, const arb_mat_t src)
+# Sets dest to the exact transpose src. The operands must have compatible dimensions. Aliasing is allowed
+
+# int arb_mat_lu(slong * perm, arb_mat_t LU, const arb_mat_t A, slong prec)
+#   Given an n×n matrix A, computes an LU decomposition PLU=A
+# using Gaussian elimination with partial pivoting. The input and output matrices can be the same, performing the decomposition in-place.
+
+# void arb_mat_solve_triu(arb_mat_t X, const arb_mat_t U, const arb_mat_t B, int unit, slong prec)
+# Solves the lower triangular system LX=B or the upper triangular system UX=B, respectively.
+
+# void arb_mat_det(arb_t det, const arb_mat_t A, slong prec)
+#   Sets det to the determinant of the matrix A.
+
+# int arb_mat_cho(arb_mat_t L, const arb_mat_t A, slong prec)
+#   Computes the Cholesky decomposition of A, returning nonzero iff the symmetric matrix defined by the lower triangular part of A is certainly positive definite.
+#   If a nonzero value is returned, then L is set to the lower triangular matrix such that A=L∗LT
+
+# int arb_mat_ldl(arb_mat_t res, const arb_mat_t A, slong prec)
+#   Computes the LDLT decomposition of A, returning nonzero iff the symmetric matrix defined by the lower triangular part of A is certainly positive definite.
+
+#=
+
+void arb_mat_approx_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
+
+    Approximate matrix multiplication. 
+    The input radii are ignored and the output matrix is set to an approximate floating-point result. 
+    The radii in the output matrix will not necessarily be zeroed.
+
+void arb_mat_approx_solve_triu(arb_mat_t X, const arb_mat_t U, const arb_mat_t B, int unit, slong prec)
+
+void arb_mat_approx_solve_tril(arb_mat_t X, const arb_mat_t L, const arb_mat_t B, int unit, slong prec)
+
+int arb_mat_approx_lu(slong * P, arb_mat_t LU, const arb_mat_t A, slong prec)
+
+void arb_mat_approx_solve_lu_precomp(arb_mat_t X, const slong * perm, const arb_mat_t A, const arb_mat_t B, slong prec)
+
+int arb_mat_approx_solve(arb_mat_t X, const arb_mat_t A, const arb_mat_t B, slong prec)
+
+    These methods perform approximate solving without any error control.
+    The radii in the input matrices are ignored, 
+        the computations are done numerically with floating-point arithmetic
+         (using ordinary Gaussian elimination and triangular solving,
+          accelerated through the use of block recursive strategies for large matrices),
+        and the output matrices are set to the approximate floating-point results with zeroed error bounds.
+
+    Approximate solutions are useful for computing preconditioning matrices for certified solutions. 
+    Some users may also find these methods useful for doing ordinary numerical linear algebra
+        in applications where error bounds are not needed.
+=#
 function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
     c = a.nrows
     r = a.ncols
