@@ -6,7 +6,7 @@
 
 @inline nrows(a::A) where {T, N, A<:AbstractArray{T,N}} = size(m)[1]
 @inline ncols(a::A) where {T, N, A<:AbstractArray{T,N}} = N > 1 ? size(m)[2] : throw(BoundsError("$(size(a))[2]"))
-@inline ndepths(a::A) where {T, N, A<:AbstractArray{T,N}} = N > 2 ? size(m)[3] : throw(BoundsError("$(size(a))[3]"))
+@inline nstrata(a::A) where {T, N, A<:AbstractArray{T,N}} = N > 2 ? size(m)[3] : throw(BoundsError("$(size(a))[3]"))
 
 
 
