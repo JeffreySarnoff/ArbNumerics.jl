@@ -84,6 +84,37 @@ end
 Float32(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
 Float16(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
 
+
+# integers
+
+for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
+  @eval begin
+        
+    function $I(x::ArbFloat{P}) where {P}
+        !isinteger(x) && throw(InexactError("$(x) is not an integer"))
+        bi = BigInt(BigFloat(x))
+        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
+        return $I(bi)
+    end
+
+    function $I(x::ArbReal{P}) where {P}   
+        (!isexact(x) | !isinteger(x)) && throw(InexactError("$(x) is not an integer"))
+        bi = BigInt(BigFloat(x))
+        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
+        return $I(bi)
+    end
+
+    function $I(x::ArbComplex{P}) where {P}   
+        (!isexact(x) | !isinteger(x) | !iszero(imag(x))) && throw(InexactError("$(x) is not an integer"))
+        bi = BigInt(BigFloat(x))
+        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
+        return $I(bi)
+    end        
+        
+  end
+end
+
+
 # parts
 
 function real(x::ArbComplex{P}) where {P}
