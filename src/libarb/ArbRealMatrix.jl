@@ -190,15 +190,28 @@ function tr(x::ArbRealMatrix{P}) where {P}
 end
 
 
+function transpose!(dest::ArbRealMatrix{P}, src::ArbRealMatrix{P}) where {P}
+    (src.nrows === dest.ncols && src.ncols === dest.nrows) ||
+    throw(DimensionMismatch("src($(src.ncols), $(src.nrows)) and dest($(dest.nrows), $(dest.ncols))"))
+    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), dest, src)
+    return dest
+end
 
-# void arb_mat_trace(arb_t trace, const arb_mat_t mat, slong prec)
-#    Sets trace to the trace of the matrix, i.e. the sum of entries on the main diagonal of mat. 
-#    The matrix is required to be square.
+function transpose!(m::ArbRealMatrix{P}) where {P}
+    m.nrows === m.ncols ||
+    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
+    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}),m ,m)
+    return m
+end
 
-# tr, det, norm, lu, ldlt, cholesky, tril, triu
+function norm(m::ArbRealMatrix{P}) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_mat_frobenius_norm), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, P)
+    return z
+end
 
-# void arb_mat_transpose(arb_mat_t dest, const arb_mat_t src)
-# Sets dest to the exact transpose src. The operands must have compatible dimensions. Aliasing is allowed
+#  lu, ldlt, cholesky, tril, triu
+
 
 # int arb_mat_lu(slong * perm, arb_mat_t LU, const arb_mat_t A, slong prec)
 #   Given an n×n matrix A, computes an LU decomposition PLU=A
