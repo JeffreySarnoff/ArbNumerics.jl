@@ -11,8 +11,20 @@ typedef struct
 arb_mat_struct;
 =#
 
-abstract type AbstractArbMatrix{T} <: AbstractMatrix{T} end
-abstract type AnyArbMatrix{P, T} <: AbstractArbMatrix{T} end
+
+"""
+     AbstractMatrix{T}
+             Matrix{T}
+                       AbstractArbMatrix{T}
+                                  AbstractArbComplexMatrix{T}
+                                  AbstractArbRealMatrix{T}
+                                                 AbstractArbFloatMatrix{T}
+"""
+
+abstract type AbstractArbMatrix{T}             <: AbstractMatrix{T}        end
+abstract type AbstractArbComplexMatrix{P, T}   <: AbstractArbMatrix{T}     end
+abstract type AbstractArbRealMatrix{P, T}      <: AbstractArbMatrix{T}     end
+abstract type AbstractArbFloatMatrix{P, T}     <: AbstractArbRealMatrix{T} end
             
 mutable struct ArbRealMatrix{P} <: AnyArbMatrix{P, ArbReal}
     entries::Ptr{ArbReal{P}}
