@@ -4,9 +4,9 @@
 @inline nrows(m::M) where {T, M<:AbstractMatrix{T}} = size(m)[1]
 @inline ncols(m::M) where {T, M<:AbstractMatrix{T}} = size(m)[2]
 
-@inline nrows(a::A) where {T, A<:AbstractArray{T,N}} = size(m)[1]
-@inline ncols(a::A) where {T, A<:AbstractArray{T,N}} = N > 1 ? size(m)[2] : throw(BoundsError("$(size(a))[2]"))
-@inline nskeins(a::A) where {T, A<:AbstractArray{T,N}} = N > 2 ? size(m)[3] : throw(BoundsError("$(size(a))[]"))
+@inline nrows(a::A) where {T, N, A<:AbstractArray{T,N}} = size(m)[1]
+@inline ncols(a::A) where {T, N, A<:AbstractArray{T,N}} = N > 1 ? size(m)[2] : throw(BoundsError("$(size(a))[2]"))
+@inline nskeins(a::A) where {T, N, A<:AbstractArray{T,N}} = N > 2 ? size(m)[3] : throw(BoundsError("$(size(a))[]"))
 
 
 
