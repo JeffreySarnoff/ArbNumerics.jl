@@ -220,8 +220,6 @@ end
 # void arb_mat_solve_triu(arb_mat_t X, const arb_mat_t U, const arb_mat_t B, int unit, slong prec)
 # Solves the lower triangular system LX=B or the upper triangular system UX=B, respectively.
 
-# void arb_mat_det(arb_t det, const arb_mat_t A, slong prec)
-#   Sets det to the determinant of the matrix A.
 
 # int arb_mat_cho(arb_mat_t L, const arb_mat_t A, slong prec)
 #   Computes the Cholesky decomposition of A, returning nonzero iff the symmetric matrix defined by the lower triangular part of A is certainly positive definite.
