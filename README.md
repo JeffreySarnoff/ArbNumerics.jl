@@ -5,7 +5,7 @@
 #### Copyright © 2015-2018 by Jeffrey Sarnoff.
 ####  This work is released under The MIT License.
 
-For multiprecision numerical computing using values with 25..2,500,000 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy ([acknowledgements](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).
+For multiprecision numerical computing using values with 25..2,500,000 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy. This package uses the Arb C Library [aknowledgements](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).
 
 
 -----
