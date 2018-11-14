@@ -100,7 +100,7 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      eta, zeta
 
 
-import LinearAlgebra: tr, det, norm, lu, ldlt, cholesky, tril, triu
+import LinearAlgebra: tr, det, transpose!, norm, lu, ldlt, cholesky, tril, triu
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
