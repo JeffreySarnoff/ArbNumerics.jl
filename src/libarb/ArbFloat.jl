@@ -35,8 +35,11 @@ float(x::ArbFloat{P}) where {P} = x
 ArbFloat{P}(x::Missing) where {P} = missing
 ArbFloat(x::Missing) = missing
 
-
 @inline sign_bit(x::ArbFloat{P}) where {P} = isodd(x.size)
+
+# fallback constructor
+ArbFloat{P}(x::T) where {P,T} = ArbFloat{P}(BigFloat(x))
+ArbFloat(x::T) where {T} = ArbFloat{workingprecision(ArbFloat}}(BigFloat(x))
 
 ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
