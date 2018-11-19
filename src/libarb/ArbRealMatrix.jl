@@ -228,7 +228,7 @@ end
 function inv(m::ArbRealMatrix{P}) where {P}
     m.nrows === m.ncols ||
     throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))       
-    z = ArbReal{P}(m.nrow, m.ncols)
+    z = ArbReal{P}(m.nrows, m.ncols)
     ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z,m, P)
     ok == 0 && throw(ErrorException("cannot invert $(m)"))
     return z
