@@ -8,13 +8,12 @@ oldwdir = pwd()
 @show YASM_VERSION = "1.3.0"
 @show MPIR_VERSION = "3.0.0-90740d8fdf03b941b55723b449831c52fd7f51ca"
 @show MPFR_VERSION = "4.0.0"
-@show FLINT_VERSION = "8b34a0156dd3f92d658360db60aa7815bf15c68e"
+@show FLINT_VERSION = "b44e31c4b456653a54d046b094491039d0cde612"
 @show ARB_VERSION = "987e7a1395d7dd608139b6ac07ba889cc4fadbd9"
 
 pkgdir = dirname(dirname(@__FILE__))
 wdir = joinpath(pkgdir, "deps")
 vdir = joinpath(pkgdir, "local")
-
 
 if Sys.isapple() && !("CC" in keys(ENV))
    ENV["CC"] = "clang"
@@ -35,7 +34,7 @@ else
     mkdir(joinpath(vdir, "lib"))
 end
 
-LDFLAGS = "-Wl,-rpath,$vdir/lib -Wl,-rpath,\$\$ORIGIN/../share/julia/site/v$(VERSION.major).$(VERSION.minor)/ArbNumerics/local/lib"
+LDFLAGS = "-Wl,-rpath,$vdir/lib -Wl,-rpath,\$\$ORIGIN/../share/julia/site/v$(VERSION.major).$(VERSION.minor)/Nemo/local/lib"
 DLCFLAGS = "-fPIC -fno-common"
 
 cd(wdir)
@@ -179,7 +178,6 @@ end
 
 cd(wdir)
 
-
 # install FLINT
 if !Sys.iswindows()
   try
@@ -269,7 +267,6 @@ else
    end
    println("DONE")
 end
-
 
 cd(wdir)
 
