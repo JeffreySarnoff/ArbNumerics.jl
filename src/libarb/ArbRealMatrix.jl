@@ -285,7 +285,7 @@ end
 
 
 
-
+#=
 function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
     c = a.nrows
     r = a.ncols
@@ -303,7 +303,7 @@ function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
         end
     end
 end
-
+=#
 
 function (==)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
     result = ccall(@libarb(arb_mat_eq), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
