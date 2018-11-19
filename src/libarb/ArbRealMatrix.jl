@@ -148,12 +148,12 @@ function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
     return arm
 end
 
-function ArbRealMatrix(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
+function ArbRealMatrix(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
     P = workingprecision(ArbReal)
     return ArbRealMatrix{P}(x)
 end
 
-function ArbRealMatrix(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
+function ArbRealMatrix(x::M) where {T<:Integer, M<:AbstractMatrix{T}}
     P = workingprecision(ArbReal)
     return ArbRealMatrix{P}(x)
 end
