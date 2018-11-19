@@ -203,6 +203,12 @@ function transpose!(m::ArbRealMatrix{P}) where {P}
     return m
 end
 
+function transpose(m::ArbRealMatrix{P}) where {P}
+    dest = ArbRealMatrix{P}(m.ncols, m.nrows)
+    transpose!(dest, m)
+    return dest
+end
+        
 function norm(m::ArbRealMatrix{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_mat_frobenius_norm), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, P)
