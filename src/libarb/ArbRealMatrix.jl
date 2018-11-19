@@ -44,7 +44,7 @@ function arb_mat_init(x::ArbRealMatrix{P}, nrows::Int, ncols::Int) where {P}
     return nothing
 end
 
-Base.size(x::ArbRealMatrix{P}) where {P} = (x.ncols, x.rows)
+Base.size(x::ArbRealMatrix{P}) where {P} = (x.ncols, x.nrows)
 
 @inline function checkbounds(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
     ok = 0 < r <= x.nrows && 0 < c <= x.ncols
