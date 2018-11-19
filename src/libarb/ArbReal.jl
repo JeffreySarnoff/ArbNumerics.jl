@@ -50,9 +50,9 @@ ArbReal(x::Missing) = missing
 
 # fallback constructor
 ArbReal{P}(x::T) where {P,T<:Real} = ArbReal{P}(BigFloat(x))
-ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal}}(BigFloat(real(x)))
+ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
 ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x))
-ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal}}(BigFloat(real(x)))
+ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
 
 ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
