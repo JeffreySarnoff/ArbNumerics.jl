@@ -39,9 +39,9 @@ ArbFloat(x::Missing) = missing
 
 # fallback constructor
 ArbFloat{P}(x::T) where {P,T<:Real} = ArbFloat{P}(BigFloat(x))
-ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat}}(BigFloat(x))
+ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(x))
 ArbFloat{P}(x::T) where {P,T<:Complex} = ArbFloat{P}(BigFloat(real(x)))
-ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat}}(BigFloat(real(x)))
+ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(real(x)))
 
 ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
