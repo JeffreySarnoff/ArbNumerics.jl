@@ -191,6 +191,16 @@ function det(x::ArbRealMatrix{P}) where {P}
     return z
 end
 
+function determinant(x::ArbRealMatrix{P}) where {P}
+    x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
+    Q = 2*P
+    z = ArbReal{Q}()
+    m = ArbRealMatrix{2*P}(x)
+    ccall(@libarb(arb_mat_det_precond), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, Q)    
+    return z
+end
+
+
 function tr(x::ArbRealMatrix{P}) where {P}
     x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
     z = ArbReal{P}()
