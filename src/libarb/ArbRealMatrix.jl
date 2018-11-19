@@ -284,27 +284,6 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
 end
 
 
-
-#=
-function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
-    c = a.nrows
-    r = a.ncols
-    println(io, string(r,"x",c," Array{ArbReal{",P,"},2}"))
-    for i = 1:r
-        print("\t")
-        for j = 1:c
-           print(io, a[i, j])
-           if j != c
-               print(io, "\t")
-           end
-        end
-        if i != r
-           println(io, "")
-        end
-    end
-end
-=#
-
 function (==)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
     result = ccall(@libarb(arb_mat_eq), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
     return !iszero(result)
