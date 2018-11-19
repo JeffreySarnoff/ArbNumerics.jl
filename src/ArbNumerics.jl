@@ -47,8 +47,10 @@ export ArbFloat, ArbReal, ArbComplex,
        ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
-       π, ℯ, γ, φ, catalan
+       π, ℯ, γ, φ, catalan,
 
+       # special linear algebra
+       determinant, inverse
 
 import Base: IEEEFloat,
        hash, promote_rule, promote_type, convert,
