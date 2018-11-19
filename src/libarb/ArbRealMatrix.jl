@@ -11,7 +11,6 @@ typedef struct
 arb_mat_struct;
 =#
 
-
             
 mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{P, ArbReal}
     entries::Ptr{ArbReal{P}}
@@ -33,7 +32,9 @@ mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{P, ArbReal}
    end
 end
 
-function arb_mat_clear(x::ArbRealMatrix) where {P}
+Base.isempty(x::ArbRealMatrix{P}) where {P} = x.nrows == 0 || x.ncols == 0
+
+function arb_mat_clear(x::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMatrix}, ), x)
     return nothing
 end
