@@ -112,6 +112,7 @@ include("support/abstractions.jl")
 include("support/matrices.jl")
 
 include("libarb/roundingmodes.jl")
+include("libarb/ArbMatrix.jl")
 include("libarb/Flint2.jl")
 include("libarb/Mag.jl")
 include("libarb/ArbFloat.jl")
