@@ -109,15 +109,12 @@ function ArbFloat{P}(x::Irrational{S}) where {P,S}
     return z
 end
 
-Int64(x::ArbFloat{P}) where {P} = Int64(x, RoundNearest)
 function Int64(x::ArbFloat{P}, roundingmode::RoundingMode) where {P}
     rounding = match_rounding_mode(roundingmode)
     z = ccall(@libarb(arf_get_si), Clong, (Ref{ArbFloat}, Cint), x, rounding)
     return z
 end
-Int32(x::ArbFloat{P}) where {P} = Int32(Int64(x))
 Int32(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Int32(Int64(x), roundingmode)
-Int16(x::ArbFloat{P}) where {P} = Int16(Int64(x))
 Int16(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Int16(Int64(x), roundingmode)
 
 BigFloat(x::ArbFloat{P}) where {P} = BigFloat(x, RoundNearest)
