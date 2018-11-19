@@ -1,3 +1,5 @@
+# copied from Nemo.jl
+
 using Libdl
 
 oldwdir = pwd()
