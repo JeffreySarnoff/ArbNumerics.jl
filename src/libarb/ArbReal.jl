@@ -48,6 +48,10 @@ ArbReal(x::Missing) = missing
 
 @inline sign_bit(x::ArbReal{P}) where {P} = isodd(x.mid_size)
 
+# fallback constructor
+ArbReal{P}(x::T) where {P,T} = ArbReal{P}(BigFloat(x))
+ArbReal(x::T) where {T} = ArbReal{workingprecision(ArbReal}}(BigFloat(x))
+
 ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
 function ArbReal(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
