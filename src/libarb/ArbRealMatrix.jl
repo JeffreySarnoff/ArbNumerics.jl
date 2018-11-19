@@ -136,19 +136,6 @@ function ArbRealMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}
     return arm
 end
 
-function Matrix{T}(x::A) where {P, T<:AbstractFloat, A<:ArbRealMatrix{P}}
-   nrows, ncols = x.ncols, x.nrows
-   fpm = reshape(zeros(nrows*ncols), (nrows, ncols))
-   for row in 1:nrows
-       for col in 1:ncols
-           aarb = x[row,col]
-           fpm[row,col]  = T(aarb)
-       end
-    end
-    return fpm
-end
-
-
 function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
    nrows, ncols = size(x)
    arm = ArbRealMatrix{P}(nrows, ncols)
@@ -159,6 +146,28 @@ function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
        end
     end
     return arm
+end
+
+function ArbRealMatrix(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
+    P = workingprecision(ArbReal)
+    return ArbRealMatrix{P}(x)
+end
+
+function ArbRealMatrix(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
+    P = workingprecision(ArbReal)
+    return ArbRealMatrix{P}(x)
+end
+
+function Matrix{T}(x::A) where {P, T<:AbstractFloat, A<:ArbRealMatrix{P}}
+   nrows, ncols = x.ncols, x.nrows
+   fpm = reshape(zeros(nrows*ncols), (nrows, ncols))
+   for row in 1:nrows
+       for col in 1:ncols
+           aarb = x[row,col]
+           fpm[row,col]  = T(aarb)
+       end
+    end
+    return fpm
 end
 
 function Matrix{T}(x::A) where {P, T<:Integer, A<:ArbRealMatrix{P}}
@@ -276,16 +285,16 @@ end
 
 
 
-
 function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
     c = a.nrows
     r = a.ncols
     println(io, string(r,"x",c," Array{ArbReal{",P,"},2}"))
     for i = 1:r
+        print("\t")
         for j = 1:c
            print(io, a[i, j])
            if j != c
-               print(io, " ")
+               print(io, "\t")
            end
         end
         if i != r
@@ -293,7 +302,6 @@ function Base.show(io::IO, ::MIME"text/plain", a::ArbRealMatrix{P}) where {P}
         end
     end
 end
-
 
 
 function (==)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
