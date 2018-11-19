@@ -244,6 +244,16 @@ function inv(m::ArbRealMatrix{P}) where {P}
     return z
 end
 
+function inverse(m::ArbRealMatrix{P}) where {P}
+    m.nrows === m.ncols ||
+    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
+    Q = 2*P
+    z = ArbRealMatrix{Q}(m.nrows, m.ncols)
+    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, m, Q)
+    ok == 0 && throw(ErrorException("cannot invert $(m)"))
+    return z
+end
+
 #  lu, ldlt, cholesky, tril, triu
 
 
