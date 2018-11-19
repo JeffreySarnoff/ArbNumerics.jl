@@ -44,11 +44,11 @@ ArbComplex(x::Missing) = missing
 
 # fallback constructor
 ArbComplex{P}(x::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x))
-ArbComplex(x::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex}}(BigFloat(x))
+ArbComplex(x::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x))
 ArbComplex{P}(x::T, y::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x), BigFloat(y))
-ArbComplex(x::T, y::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex}}(BigFloat(x), BigFloat(y))
+ArbComplex(x::T, y::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x), BigFloat(y))
 ArbComplex{P}(x::T) where {P,T<:Complex} = ArbComplex{P}(BigFloat(real(x)), BigFloat(imag(x)))
-ArbComplex(x::T) where {T<:Complex} = ArbComplex{workingprecision(ArbComplex}}(BigFloat(real(x)), BigFloat(imag(x)))
+ArbComplex(x::T) where {T<:Complex} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(real(x)), BigFloat(imag(x)))
 
 ArbComplex(x, y, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{workingbits(prec)}(x, y) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
