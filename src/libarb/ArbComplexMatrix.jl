@@ -35,12 +35,12 @@ end
 Base.isempty(x::ArbComplexMatrix{P}) where {P} = x.nrows == 0 || x.ncols == 0
 
 function acb_mat_clear(x::ArbComplexMatrix{P}) where {P}
-    ccall(@libacb(acb_mat_clear), Cvoid, (Ref{ArbComplexMatrix}, ), x)
+    ccall(@libarb(acb_mat_clear), Cvoid, (Ref{ArbComplexMatrix}, ), x)
     return nothing
 end
 
 function acb_mat_init(x::ArbComplexMatrix{P}, nrows::Int, ncols::Int) where {P}
-    ccall(@libacb(acb_mat_init), Cvoid, (Ref{ArbComplexMatrix}, Cint, Cint), x, nrows, ncols)
+    ccall(@libarb(acb_mat_init), Cvoid, (Ref{ArbComplexMatrix}, Cint, Cint), x, nrows, ncols)
     return nothing
 end
 
@@ -68,9 +68,9 @@ end
 
    z = ArbComplex{P}()
    GC.@preserve x begin
-       v = ccall(@libacb(acb_mat_entry_ptr), Ptr{ArbComplex},
+       v = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex},
                  (Ref{ArbComplexMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
-       ccall(@libacb(acb_set), Cvoid, (Ref{ArbComplex}, Ptr{ArbComplex}), z, v)
+       ccall(@libarb(acb_set), Cvoid, (Ref{ArbComplex}, Ptr{ArbComplex}), z, v)
    end
    return z
 end
@@ -99,8 +99,8 @@ function Base.setindex!(x::ArbComplexMatrix{P}, z::ArbComplex{P}, linearidx::Int
     checkbounds(x, rowidx, colidx)
    
     GC.@preserve x begin
-        ptr = ccall(@libacb(acb_mat_entry_ptr), Ptr{ArbComplex}, (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
-        ccall(@libacb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
+        ptr = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex}, (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
+        ccall(@libarb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
         end
     return z
 end
@@ -110,8 +110,8 @@ function Base.setindex!(x::ArbComplexMatrix{P}, z::ArbComplex{P}, rowidx::Int, c
     checkbounds(x, rowidx, colidx)
     
     GC.@preserve x begin
-        ptr = ccall(@libacb(acb_mat_entry_ptr), Ptr{ArbComplex}, (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
-        ccall(@libacb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
+        ptr = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex}, (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
+        ccall(@libarb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
         end
     return z
 end
@@ -200,7 +200,7 @@ end
 function det(x::ArbComplexMatrix{P}) where {P}
     x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
     z = ArbComplex{P}()
-    ccall(@libacb(acb_mat_det), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
+    ccall(@libarb(acb_mat_det), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
     return z
 end
 
@@ -209,7 +209,7 @@ function determinant(x::ArbComplexMatrix{P}) where {P}
     Q = 2*P
     z = ArbComplex{Q}()
     m = ArbComplexMatrix{2*P}(x)
-    ccall(@libacb(acb_mat_det_precond), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, Q)    
+    ccall(@libarb(acb_mat_det_precond), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, Q)    
     return z
 end
 
@@ -217,7 +217,7 @@ end
 function tr(x::ArbComplexMatrix{P}) where {P}
     x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
     z = ArbComplex{P}()
-    ccall(@libacb(acb_mat_trace), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
+    ccall(@libarb(acb_mat_trace), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
     return z
 end
 
@@ -225,14 +225,14 @@ end
 function transpose!(dest::ArbComplexMatrix{P}, src::ArbComplexMatrix{P}) where {P}
     (src.nrows === dest.ncols && src.ncols === dest.nrows) ||
     throw(DimensionMismatch("src($(src.ncols), $(src.nrows)) and dest($(dest.nrows), $(dest.ncols))"))
-    ccall(@libacb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
+    ccall(@libarb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
     return dest
 end
 
 function transpose!(m::ArbComplexMatrix{P}) where {P}
     m.nrows === m.ncols ||
     throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
-    ccall(@libacb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}),m ,m)
+    ccall(@libarb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}),m ,m)
     return m
 end
 
@@ -244,7 +244,7 @@ end
         
 function norm(m::ArbComplexMatrix{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libacb(acb_mat_frobenius_norm), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, P)
+    ccall(@libarb(acb_mat_frobenius_norm), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, P)
     return z
 end
 
@@ -252,7 +252,7 @@ function inv(m::ArbComplexMatrix{P}) where {P}
     m.nrows === m.ncols ||
     throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))       
     z = ArbComplexMatrix{P}(m.nrows, m.ncols)
-    ok = ccall(@libacb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z,m, P)
+    ok = ccall(@libarb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z,m, P)
     ok == 0 && throw(ErrorException("cannot invert $(m)"))
     return z
 end
@@ -262,7 +262,7 @@ function inverse(m::ArbComplexMatrix{P}) where {P}
     throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
     Q = 2*P
     z = ArbComplexMatrix{Q}(m.nrows, m.ncols)
-    ok = ccall(@libacb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, m, Q)
+    ok = ccall(@libarb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, m, Q)
     ok == 0 && throw(ErrorException("cannot invert $(m)"))
     return z
 end
@@ -321,17 +321,17 @@ function Base.:(*)(x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
         throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
     end
     z = ArbComplexMatrix{P}(x.nrows, y.ncols)
-    ccall(@libacb(acb_mat_mul), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, y, P)
+    ccall(@libarb(acb_mat_mul), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, y, P)
     return z
 end
 
 
 function (==)(a::ArbComplexMatrix{P}, b::ArbComplexMatrix{P}) where {P}
-    result = ccall(@libacb(acb_mat_eq), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), a, b)
+    result = ccall(@libarb(acb_mat_eq), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), a, b)
     return !iszero(result)
 end
 
 function (!=)(a::ArbComplexMatrix{P}, b::ArbComplexMatrix{P}) where {P}
-    result = ccall(@libacb(acb_mat_ne), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), a, b)
+    result = ccall(@libarb(acb_mat_ne), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), a, b)
     return !iszero(result)
 end
