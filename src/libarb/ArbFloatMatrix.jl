@@ -131,6 +131,9 @@ end
 
 ArbFloatMatrix(x::ArbRealMatrix{Q}) where {Q} = ArbFloatMatrix{workingprecision(ArbReal)}(x)
 
+ArbFloatMatrix{P}(x::ArbRealMatrix{Q}) where {P,Q} = ArbFloatMatrix{P}(ArbRealMatrix{P}(x))
+ArbRealMatrix{P}(x::ArbFloatMatrix{Q}) where {P,Q} = ArbRealMatrix{P}(ArbFloatMatrix{P}(x))
+
 function ArbFloatMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
    nrows, ncols = size(x)
    arm = ArbFloatMatrix{P}(nrows, ncols)
