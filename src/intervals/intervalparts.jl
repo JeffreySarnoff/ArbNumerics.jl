@@ -15,7 +15,7 @@ function interval(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
 end
 
 function interval(x::ArbReal{P}) where {P}
-   lowerbound(x), upperbound(x)
+    lowerbound(x), upperbound(x)
 end
 
 function setball(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P}
@@ -69,11 +69,6 @@ function lowerbound(x::ArbReal{P}) where {P}
     return z
 end
 
-function bounds(x::ArbReal{P}) where {P}
-    lo = lowerbound(x)
-    hi = upperbound(x)
-    return lo, hi
-end
 
 @inline function upperbound_abs(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     w = ArbFloat{P}()
@@ -101,7 +96,7 @@ function lowerbound_abs(x::ArbReal{P}) where {P}
     return z
 end
 
-function bounds_abs(x::ArbReal{P}) where {P}
+function interval_abs(x::ArbReal{P}) where {P}
     lo = lowerbound_abs(x)
     hi = upperbound_abs(x)
     return lo, hi
