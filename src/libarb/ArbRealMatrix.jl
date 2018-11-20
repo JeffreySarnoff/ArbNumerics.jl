@@ -336,26 +336,4 @@ function (!=)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
     return !iszero(result)
 end
 
-#=
-function ArbFloatMatrix{P}(x::ArbRealMatrix{P}) where {P}
-     w = ArbRealMatrix{P}(x.nrows, x.ncols)
-     ccall(@libarb(arb_mat_get_mid), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), w, x)
-     z = ArbFloatMatrix{P}(x.nrows, x.ncols)
-     for col in 1:z.ncols
-         for row in 1:z.nrows
-             z[row,col] = ArbFloat{P}(w[row,col])
-         end
-     end
-     return z
-end
 
-function ArbRealMatrix{P}(x::ArbFloatMatrix{P}) where {P}
-     z = ArbRealMatrix{P}(x.nrows, x.ncols)
-     for col in 1:z.ncols
-         for row in 1:z.nrows
-             z[row,col] = ArbReal{P}(x[row,col])
-         end
-     end
-     return z
-end
-=#
