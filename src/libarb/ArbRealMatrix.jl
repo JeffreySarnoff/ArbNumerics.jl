@@ -335,5 +335,45 @@ function (!=)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
     result = ccall(@libarb(arb_mat_ne), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
     return !iszero(result)
 end
+# ============= Linear Algebra
+
+function eigvals(a::ArbRealMatrix{P}) where {P}
+    armid  = Array{ArbFloat{P},2}(midpoint.(a))m
+    arrad  = Array{ArbFloat{P},2}(radius.(a))
+    eigmid = LinearAlgebra.eigvals(armid)
+    eigrad = LinearAlgebra.eigvals(arrad)
+    vals   = ArbReal{P}.(eigmid, eigrad)
+    return vals
+end
+
+function svdvals(a::ArbRealMatrix{P}) where {P}
+    armid  = Array{ArbFloat{P},2}(midpoint.(a))m
+    arrad  = Array{ArbFloat{P},2}(radius.(a))
+    svdmid = LinearAlgebra.svdvals(armid)
+    svdrad = LinearAlgebra.svdvals(arrad)
+    vals   = ArbReal{P}.(svdmid, svdrad)
+    return vals
+end
 
 
+
+
+# ============= Linear Algebra
+
+function eigvals(a::ArbRealMatrix{P}) where {P}
+    armid  = Array{ArbFloat{P},2}(midpoint.(a))m
+    arrad  = Array{ArbFloat{P},2}(radius.(a))
+    eigmid = LinearAlgebra.eigvals(armid)
+    eigrad = LinearAlgebra.eigvals(arrad)
+    vals   = ArbReal{P}.(eigmid, eigrad)
+    return vals
+end
+
+function eigvals(a::ArbRealMatrix{P}) where {P}
+    armid  = Array{ArbFloat{P},2}(midpoint.(a))m
+    arrad  = Array{ArbFloat{P},2}(radius.(a))
+    svdmid = LinearAlgebra.svdvals(armid)
+    svdrad = LinearAlgebra.svdvals(arrad)
+    vals   = ArbReal{P}.(svdmid, svdrad)
+    return vals
+end
