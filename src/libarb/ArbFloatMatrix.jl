@@ -311,6 +311,25 @@ function Base.:(*)(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     return z
 end
 
+function Base.:(*)(x::ArbFloatMatrix{P}, y::ArbRealMatrix{P}) where {P}
+   if x.ncols !== y.nrows
+        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
+    end
+    z = ArbRealMatrix{P}(x.nrows, y.ncols)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
+end
+
+function Base.:(*)(x::ArbRealMatrix{P}, y::ArbFloatMatrix{P}) where {P}
+   if x.ncols !== y.nrows
+        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
+    end
+    z = ArbRealMatrix{P}(x.nrows, y.ncols)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
+end
+
+
 
 function (==)(a::ArbFloatMatrix{P}, b::ArbFloatMatrix{P}) where {P}
     result = ccall(@libarb(arb_mat_eq), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
