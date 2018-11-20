@@ -149,6 +149,7 @@ include("float/special2.jl")
 include("float/export_fallbacks.jl")
 
 include("intervals/intervalparts.jl")
+include("intervals/complex_intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
 include("support/helptext.jl")
