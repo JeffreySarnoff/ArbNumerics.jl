@@ -119,9 +119,10 @@ include("libarb/Flint2.jl")
 include("libarb/Mag.jl")
 include("libarb/ArbFloat.jl")
 include("libarb/ArbReal.jl")
-include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
-include("libarb/ArbFloatMatrix.jl")
 include("libarb/ArbComplex.jl")
+include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
+include("libarb/ArbFloatMatrix.jl") # must preceed ArbComplexMatrix
+include("libarb/ArbComplexMatrix.jl")
 include("libarb/promote.jl")
 include("libarb/string.jl")
 include("libarb/show.jl")
