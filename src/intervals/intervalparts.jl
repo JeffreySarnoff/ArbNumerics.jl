@@ -69,6 +69,11 @@ function lowerbound(x::ArbReal{P}) where {P}
     return z
 end
 
+function bounds(x::ArbReal{P}) where {P}
+    lo = lowerbound(x)
+    hi = upperbound(x)
+    return lo, hi
+end
 
 @inline function upperbound_abs(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     w = ArbFloat{P}()
@@ -95,6 +100,14 @@ function lowerbound_abs(x::ArbReal{P}) where {P}
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, w)
     return z
 end
+
+function bounds_abs(x::ArbReal{P}) where {P}
+    lo = lowerbound_abs(x)
+    hi = upperbound_abs(x)
+    return lo, hi
+end
+
+
 
 function increase_radius(x::ArbReal{P}, err::ArbFloat{P}) where {P}
     err >= 0 || throw(ErrorException("nonnegative err required ($err)"))
