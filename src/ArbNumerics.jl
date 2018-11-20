@@ -101,8 +101,8 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
 
-
-import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt, cholesky, tril, triu
+using  LinearAlgebra
+import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt, cholesky, tril, triu, eigvals
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
