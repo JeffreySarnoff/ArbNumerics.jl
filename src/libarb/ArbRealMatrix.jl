@@ -138,7 +138,7 @@ function ArbRealMatrix{P}(x::ArbRealMatrix{Q}) where {P, Q}
     return arm
 end
 
-ArbRealMatrix(x::ArbRealMatrix{Q}) where {Q} = ArbRealMatrix{workingprecision(ArbReal}}(x)
+ArbRealMatrix(x::ArbRealMatrix{Q}) where {Q} = ArbRealMatrix{workingprecision(ArbReal)}(x)
 
 function ArbRealMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
    nrows, ncols = size(x)
