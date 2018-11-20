@@ -125,13 +125,27 @@ end
 
 # constructors
 
+ArbRealMatrix{P}(x::ArbRealMatrix{P}) where {P} = x
+
+function ArbRealMatrix{P}(x::ArbRealMatrix{Q}) where {P, Q}
+   nrows, ncols = size(x)
+   arm = ArbRealMatrix{P}(nrows, ncols)
+   for col in 1:ncols
+       for row in 1:nrows
+           arm[row,col]  = ArbReal{P}(x[row,col])
+       end
+    end
+    return arm
+end
+
+ArbRealMatrix(x::ArbRealMatrix{Q}) where {Q} = ArbRealMatrix{workingprecision(ArbReal}}(x)
+
 function ArbRealMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
    nrows, ncols = size(x)
    arm = ArbRealMatrix{P}(nrows, ncols)
    for row in 1:nrows
        for col in 1:ncols
-           afloat = x[row,col]
-           arm[row,col]  = ArbReal{P}(afloat)
+           arm[row,col]  = ArbReal{P}(x[row,col])
        end
     end
     return arm
@@ -142,8 +156,7 @@ function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
    arm = ArbRealMatrix{P}(nrows, ncols)
    for row in 1:nrows
        for col in 1:ncols
-           anint = x[row,col]
-           arm[row,col]  = ArbReal{P}(anint)
+           arm[row,col]  = ArbReal{P}(x[row,col])
        end
     end
     return arm
