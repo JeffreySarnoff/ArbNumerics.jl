@@ -140,6 +140,56 @@ end
 
 ArbComplexMatrix(x::ArbComplexMatrix{Q}) where {Q} = ArbComplexMatrix{workingprecision(ArbComplex)}(x)
 
+function ArbComplexMatrix{P}(x::ArbRealMatrix{P}) where {P}
+   nrows, ncols = size(x)
+   arm = ArbComplexMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           arm[row,col]  = ArbComplex{P}(x[row,col])
+       end
+    end
+    return arm
+end
+
+function ArbComplexMatrix{P}(x::ArbFloatMatrix{P}) where {P}
+   nrows, ncols = size(x)
+   arm = ArbComplexMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           arm[row,col]  = ArbComplex{P}(x[row,col])
+       end
+    end
+    return arm
+end
+
+function ArbRealMatrix{P}(x::ArbComplexMatrix{P}) where {P}
+   nrows, ncols = size(x)
+   arm = ArbFloatMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           arm[row,col]  = ArbReal{P}(x[row,col])
+       end
+    end
+    return arm
+end
+
+function ArbFloatMatrix{P}(x::ArbComplexMatrix{P}) where {P}
+   nrows, ncols = size(x)
+   arm = ArbFloatMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           arm[row,col]  = ArbFloat{P}(x[row,col])
+       end
+    end
+    return arm
+end
+
+ArbComplexMatrix{P}(x::ArbRealMatrix{Q}) where {P,Q} = ArbComplexMatrix{P}(ArbRealMatrix{P}(x))
+ArbComplexMatrix{P}(x::ArbFloatMatrix{Q}) where {P,Q} = ArbComplexMatrix{P}(ArbFloatMatrix{P}(x))
+
+ArbRealMatrix{P}(x::ArbComplexMatrix{Q}) where {P,Q} = ArbRealMatrix{P}(ArbComplexMatrix{P}(x))
+ArbFloatMatrix{P}(x::ArbComplexMatrix{Q}) where {P,Q} = ArbFloatMatrix{P}(ArbComplexMatrix{P}(x))
+
 function ArbComplexMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
    nrows, ncols = size(x)
    arm = ArbComplexMatrix{P}(nrows, ncols)
