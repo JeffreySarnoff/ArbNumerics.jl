@@ -196,6 +196,19 @@ function Matrix{T}(x::A) where {P, T<:Integer, A<:ArbRealMatrix{P}}
     return intm
 end
 
+# comparisons
+
+function (==)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
+    result = ccall(@libarb(arb_mat_eq), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
+    return !iszero(result)
+end
+
+function (!=)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
+    result = ccall(@libarb(arb_mat_ne), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
+    return !iszero(result)
+end
+
+# ops
 
 function det(x::ArbRealMatrix{P}) where {P}
     x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
@@ -257,6 +270,11 @@ function inv(m::ArbRealMatrix{P}) where {P}
     return z
 end
 
+"""
+    inverse(ArbMatrix)
+
+A version of `inv` with greater accuracy.
+"""
 function inverse(m::ArbRealMatrix{P}) where {P}
     m.nrows === m.ncols ||
     throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
@@ -325,16 +343,24 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return z
 end
 
+#void arb_mat_approx_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
+#
+#    Approximate matrix multiplication. 
+#    The input radii are ignored and the output matrix is set to an approximate floating-point result. 
+#    The radii in the output matrix will not necessarily be zeroed.
 
-function (==)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
-    result = ccall(@libarb(arb_mat_eq), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
-    return !iszero(result)
+function fastmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    if x.ncols !== y.nrows
+        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
+    end
+    z = ArbRealMatrix{P}(x.nrows, y.ncols)
+    ccall(@libarb(arb_mat_approx_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
 end
 
-function (!=)(a::ArbRealMatrix{P}, b::ArbRealMatrix{P}) where {P}
-    result = ccall(@libarb(arb_mat_ne), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), a, b)
-    return !iszero(result)
-end
+⨱(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P} = fastmul(x, y)
+
+
 # ============= Linear Algebra
 
 function eigvals(a::ArbRealMatrix{P}) where {P}
