@@ -168,7 +168,7 @@ function ArbRealMatrix(x::M) where {P, T<:ArbReal{P}, M<:AbstractMatrix{T}}
    arm = ArbRealMatrix{P}(nrows, ncols)
    for row in 1:nrows
        for col in 1:ncols
-           arm[row,col]  = x[col,row]
+           arm[row,col]  = x[row,col]
        end
     end
     return arm
