@@ -162,6 +162,19 @@ function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
     return arm
 end
 
+
+function ArbRealMatrix(x::M) where {P, T<:ArbReal{P}, M<:AbstractMatrix{T}}
+   nrows, ncols = size(x)
+   arm = ArbRealMatrix{P}(nrows, ncols)
+   for row in 1:nrows
+       for col in 1:ncols
+           arm[row,col]  = x[row,col]
+       end
+    end
+    return arm
+end
+
+
 function ArbRealMatrix(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
     P = workingprecision(ArbReal)
     return ArbRealMatrix{P}(x)
@@ -172,6 +185,7 @@ function ArbRealMatrix(x::M) where {T<:Integer, M<:AbstractMatrix{T}}
     return ArbRealMatrix{P}(x)
 end
 
+        
 function Matrix{T}(x::A) where {P, T<:AbstractFloat, A<:ArbRealMatrix{P}}
    nrows, ncols = x.ncols, x.nrows
    fpm = reshape(zeros(nrows*ncols), (nrows, ncols))
