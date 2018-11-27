@@ -174,6 +174,11 @@ function ArbRealMatrix(x::M) where {P, T<:ArbReal{P}, M<:AbstractMatrix{T}}
     return arm
 end
 
+function ArbRealMatrix{P}(x::M) where {P,Q, T<:ArbReal{Q}, M<:AbstractMatrix{T}}
+    m = ArbReal{P}.(x)
+    return ArbRealMatrix{P}(m)
+end
+   
 
 function ArbRealMatrix(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
     P = workingprecision(ArbReal)
