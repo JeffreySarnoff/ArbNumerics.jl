@@ -145,7 +145,7 @@ function ArbRealMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}
    arm = ArbRealMatrix{P}(nrows, ncols)
    for row in 1:nrows
        for col in 1:ncols
-           arm[row,col]  = ArbReal{P}(x[col,row])
+           arm[row,col]  = ArbReal{P}(x[row,col])
        end
     end
     return arm
@@ -156,7 +156,7 @@ function ArbRealMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
    arm = ArbRealMatrix{P}(nrows, ncols)
    for row in 1:nrows
        for col in 1:ncols
-           arm[row,col]  = ArbReal{P}(x[col,row])
+           arm[row,col]  = ArbReal{P}(x[row,col])
        end
     end
     return arm
