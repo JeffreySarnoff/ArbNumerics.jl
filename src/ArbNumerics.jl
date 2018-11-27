@@ -53,7 +53,7 @@ export ArbFloat, ArbReal, ArbComplex,
        π, ℯ, γ, φ, catalan,
 
        # special linear algebra
-       determinant, inverse
+       determinant, inverse, fastmul, ⨱
 
 import Base: IEEEFloat,
        hash, promote_rule, promote_type, convert,
