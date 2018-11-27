@@ -338,7 +338,7 @@ end
 # ============= Linear Algebra
 
 function eigvals(a::ArbRealMatrix{P}) where {P}
-    armid  = Array{ArbFloat{P},2}(midpoint.(a))m
+    armid  = Array{ArbFloat{P},2}(midpoint.(a))
     arrad  = Array{ArbFloat{P},2}(radius.(a))
     eigmid = LinearAlgebra.eigvals(armid)
     eigrad = LinearAlgebra.eigvals(arrad)
@@ -347,7 +347,7 @@ function eigvals(a::ArbRealMatrix{P}) where {P}
 end
 
 function svdvals(a::ArbRealMatrix{P}) where {P}
-    armid  = Array{ArbFloat{P},2}(midpoint.(a))m
+    armid  = Array{ArbFloat{P},2}(midpoint.(a))
     arrad  = Array{ArbFloat{P},2}(radius.(a))
     svdmid = LinearAlgebra.svdvals(armid)
     svdrad = LinearAlgebra.svdvals(arrad)
