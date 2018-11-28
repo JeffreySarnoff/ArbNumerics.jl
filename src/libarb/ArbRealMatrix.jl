@@ -389,7 +389,7 @@ function eigvals(a::ArbRealMatrix{P}) where {P}
     arrad  = Array{ArbFloat{P},2}(radius.(a))
     eigmid = LinearAlgebra.eigvals(armid)
     eigrad = LinearAlgebra.eigvals(arrad)
-    vals   = ArbReal{P}.(eigmid, eigrad)
+    vals   = setball.(eigmid, eigrad)
     return vals
 end
 
@@ -398,7 +398,7 @@ function svdvals(a::ArbRealMatrix{P}) where {P}
     arrad  = Array{ArbFloat{P},2}(radius.(a))
     svdmid = LinearAlgebra.svdvals(armid)
     svdrad = LinearAlgebra.svdvals(arrad)
-    vals   = ArbReal{P}.(svdmid, svdrad)
+    vals   = setball.(svdmid, svdrad)
     return vals
 end
 
