@@ -183,3 +183,9 @@ function ArbComplex{P}(x::ArbComplex{Q}) where {P,Q}
           (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
+
+# widen
+
+widen(::Type{ArbFloat{P}}) where {P} = ArbFloat{P+P+4}
+widen(::Type{ArbReal{P}}) where {P} = ArbReal{P+P+4}
+widen(::Type{ArbComplex{P}}) where {P} = ArbComplex{P+P+4}
