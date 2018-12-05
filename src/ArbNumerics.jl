@@ -69,7 +69,7 @@ import Base: IEEEFloat,
 
        iszero, isone, isinteger, isfinite, isinf, isnan, issubnormal,
        zero, one,
-       precision, setprecision, eps, nextfloat, prevfloat,
+       precision, setprecision, eps, nextfloat, prevfloat, widen,
 
        abs, abs2, signbit, sign, copysign, flipsign,
 
