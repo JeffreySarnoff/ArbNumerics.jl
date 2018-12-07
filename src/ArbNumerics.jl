@@ -1,6 +1,9 @@
 module ArbNumerics
 
-export ArbFloat, ArbReal, ArbComplex,
+abstract type ArbNumber <: Number end
+
+export ArbNumber,
+       ArbFloat, ArbReal, ArbComplex,
        ArbRealMatrix,
        interval, setinterval, 
        lowerbound, upperbound,
