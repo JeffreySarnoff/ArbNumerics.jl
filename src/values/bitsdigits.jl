@@ -71,7 +71,7 @@ precision(x::ArbFloat{P}) where {P} = evincedbits(P)
 precision(x::ArbReal{P}) where {P} = evincedbits(P)
 precision(x::ArbComplex{P}) where {P} = evincedbits(P)
 
-function setprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
+function setprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:ArbNumber}
     if base === 10
         digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
     elseif base === 2
@@ -82,13 +82,13 @@ function setprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bi
     setprecision(T, digits)
 end
 
-function setprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
+function setprecision(::Type{T}, n::Int) where {T<:ArbNumber}
     n < MINIMUM_PRECISION && throw(DomainError("bit precision must be >= $MINIMUM_PRECISION"))
     DEFAULT_PRECISION.x = workingbits(n)
     return n
 end
 
-function setworkingprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
+function setworkingprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:ArbNumber}}
     if base === 10
         digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
     elseif base === 2
@@ -99,7 +99,7 @@ function setworkingprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=is
     setworkingprecision(T, digits)
 end
 
-function setworkingprecision(::Type{T}, n::Int) where {T<:Union{ArbFloat,ArbReal,ArbComplex}}
+function setworkingprecision(::Type{T}, n::Int) where {T<:ArbNumber}
     n < workingbits(MINIMUM_PRECISION) && throw(DomainError("working bit precision must be >= $(workingbits(MINIMUM_PRECISION))"))
     DEFAULT_PRECISION.x = n
     return n
