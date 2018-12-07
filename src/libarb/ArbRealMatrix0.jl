@@ -5,14 +5,14 @@ typedef struct
 {
     arb_ptr entries;
     slong r;
-    slong c;
+    slong c; 
     arb_ptr * rows;
 }
 arb_mat_struct;
 =#
 
             
-mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{P, ArbReal}
+mutable struct ArbRealMatrix{P} <: LibArbMatrix{P}
     entries::Ptr{ArbReal{P}}
     nrows::Int
     ncols::Int
