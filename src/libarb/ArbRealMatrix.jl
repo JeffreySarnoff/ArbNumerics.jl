@@ -273,7 +273,7 @@ end
     throw(DomainError("incompatible matrices: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
 end
 
-@inline function checkmulable((x::ArbRealMat{P}, y::ArbRealMat{P}) where {P}
+@inline function checkmulable(x::ArbRealMat{P}, y::ArbRealMat{P}) where {P}
     mulable = colcount(x) === rowcount(y)
     mulable && return nothing
     throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
