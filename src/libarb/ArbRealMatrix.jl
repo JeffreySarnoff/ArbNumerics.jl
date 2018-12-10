@@ -55,10 +55,13 @@ ArbRealMat{P}(x::ArbRealMat{P}) where {P} = x
 
 
 @inline cellvalue(x::ArbRealMat{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
-rowcount::I, colcount::I) where {I<:Signed}
 
-function Base.Matrix{T}(rowcount::SI, colcount::SI) where {T<:ArbNumber, SI<:Signed}
-    ArbRealMat{
+Base.zeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+    ArbRealMat{P}(rowcount, colcount)
+
+Base.zeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+    ArbRealMat(rowcount, colcount)
+
 
 @inline Base.isempty(x::ArbRealMat{P}) where {P} =
     rowcount(x) === ArbMatIdx0 || colcount(x) === ArbMatIdx0
