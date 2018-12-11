@@ -1,3 +1,4 @@
 # ArbNumerics
-ArbNumerics.jl is a Julian perspective on Frederik Johannson's LibArb, a C library offering state of the art computation with multiprecision floating point values and corresponding enclosure intervals.
+ArbNumerics.jl is a Julian perspective on Frederik Johansson's [Arb C library](http://arblib.org/), offering state of the art computation with multiprecision floating point values and assured interval enclosures.
+
 
