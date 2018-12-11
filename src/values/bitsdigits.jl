@@ -88,7 +88,7 @@ function setprecision(::Type{T}, n::Int) where {T<:ArbNumber}
     return n
 end
 
-function setworkingprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:ArbNumber}}
+function setworkingprecision(::Type{T}; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:ArbNumber}
     if base === 10
         digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
     elseif base === 2
