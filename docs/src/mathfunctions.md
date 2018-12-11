@@ -1,6 +1,4 @@
-## functions
-
-### arithmetic functions
+## arithmetic functions
 
 - `+`,`-`, `*`, `/`
 - `square`, `cube`, `sqrt`, `cbrt`, `hypot`
@@ -8,7 +6,7 @@
 - `factorial`, `doublefactorial`, `risingfactorial`
 - `binomial`
 
-### elementary functions
+## elementary functions
 
 - `exp`, `expm1`
 - `log`, `log1p`, `log2`, `log10`
@@ -17,58 +15,39 @@
 - `sinh`, `cosh`, `tanh`, `csch`, `sech`, `coth`
 - `asinh`, `acosh`, `atanh`
 
-### gamma functions
+## gamma functions
 
 - `gamma`, `lgamma`
 - `rgamma`, `digamma`
 
-### error functions
+## error functions
 
 - `erf`, `erfc`, `erfi`
 
-### Bessel functions
+## Bessel functions
 
 - `besselj`, `besselj0`, `besselj1`
 - `bessely`, `bessely0`, `bessely1`
 - `besseli`, `besselk`
        
-### Airy functions
+## Airy functions
 
 - `airyai`, `airyaiprime`
 - `airybi`, `airybiprime`
 
-### arithmetic-geometric mean
+## arithmetic-geometric mean
 
 - `agm`, `agm1`
 
-### elliptic functions
+## elliptic functions
 
 - `elliptice`, `elliptick`
 - `ellipticp`, `ellipticpi`
 - `ellipticzeta`, `ellipticsigma`
 
-### other special functions
+## other special functions
 
 - `ei`, `si`, `ci`
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`
-
-
-## interval support
-
-### parts
-
-- `midpoint`, `radius`
-- `upperbound`, `lowerbound`
-- `upperbound_abs`, `lowerbound_abs`
-
-### construction
-
-- `setball(midpoint, radius)`
-- `setinterval(lobound, hibound)`
-
-### retrieval
-
-- `midpoint, radius = ball(x::ArbReal)`
-- `lobound, hibound = interval(x::ArbReal)`
