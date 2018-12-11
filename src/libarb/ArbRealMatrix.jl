@@ -57,6 +57,16 @@ Base.zeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} 
 Base.zeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
     ArbRealMat(rowcount, colcount)
 
+function Base.reshape(x::Vector{ArbReal{P}}, rc::Tuple{Int, Int}) where {P}
+   n = length(x)
+   nrows, ncols = rc
+   n === nrows*ncols || throw(ErrorException("length($n) != rows*cols($rc[1] * $rc[2])"))
+
+    m = ArbRealMat{P}(nrows, ncols)
+    m[:] = x
+
+    return m
+end
 
 @inline Base.isempty(x::ArbRealMat{P}) where {P} =
     rowcount(x) === ArbMatIdx0 || colcount(x) === ArbMatIdx0
