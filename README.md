@@ -12,7 +12,7 @@ This package uses the Arb C Library, and adapts some work from Nemo.jl: [_acknow
 
 -----
 
-[![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;[![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](http://ArbNumerics.github.io/ArbNumerics.jl/latest/)
+[![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;[![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/latest/)
 
 ----
 
