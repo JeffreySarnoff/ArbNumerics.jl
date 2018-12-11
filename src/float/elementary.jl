@@ -17,6 +17,28 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
     end
 end
 
+
+function log_2(x::ArbReal{P}) where {P}
+    return log(ArbReal{P}(2.0))
+end
+function log_10(x::ArbReal{P}) where {P}
+    return log(ArbReal{P}(10.0))
+end
+
+function log2(x::ArbReal{P}, logof2::ArbReal{P}=zero(ArbReal{P})) where {P}
+    logof2 = iszero(logof2) ? log_2(ArbReal{P}) : logof2
+    result = log(x, P)
+    result = result / logof2
+    return result
+end
+
+function log10(x::ArbReal{P}, logof10::ArbReal{P}=zero(ArbReal{P})) where {P}
+    logof10 = iszero(logof10) ? log_10(ArbReal{P}) : logof10
+    result = log(x)
+    result = result / logof10
+    return result
+end
+
 function atan(y::ArbReal{P}, x::ArbReal{P}, prec::Int=P) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_atan2), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, y, x, prec)
@@ -126,4 +148,27 @@ for (A,F) in ((:log, :arb_log), (:log1p, :arb_log1p), (:exp, :arb_exp), (:expm1,
             return midpoint_byref(z)
          end
     end
+end
+
+
+
+function log_2(x::ArbFloat{P}) where {P}
+    return midpoint_byref(log(ArbReal{P}(2.0)))
+end
+function log_10(x::ArbFloat{P}) where {P}
+    return midpoint_byref(log(ArbReal{P}(10.0)))
+end
+
+function log2(x::ArbFloat{P}, logof2::ArbFloat{P}=zero(ArbFloat{P})) where {P}
+   logof2 = iszero(logof2) ? log_2(ArbFloat{P}) : logof2
+   z = log(ArbReal{P}(x))
+   z = z / logof2
+   return midpoint_byref(z)
+end
+
+function log10(x::ArbFloat{P}, logof10::ArbFloat{P}=zero(ArbFloat{P})) where {P}
+   logof10 = iszero(logof2) ? log_10(ArbFloat{P}) : logof10
+   z = log(ArbReal{P}(x))
+   z = z / logof10
+   return midpoint_byref(z)
 end
