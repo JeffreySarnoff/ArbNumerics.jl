@@ -1,4 +1,4 @@
-## ArbNumerics: mathematical functions
+## mathematical functions
 
 #### arithmetic functions
 
@@ -10,7 +10,8 @@
 
 #### elementary functions
 
-- `exp`, `expm1`, `log`, `log1p`
+- `exp`, `expm1`
+- `log`, `log1p`, `log2`, `log10`
 - `sin`, `cos`, `tan`, `csc`, `sec`, `cot`
 - `asin`, `acos`, `atan`, `atan(y,x)`
 - `sinh`, `cosh`, `tanh`, `csch`, `sech`, `coth`
@@ -54,7 +55,7 @@
 - `lambertw`
 
 
-## ArbNumerics: interval support
+## interval support
 
 #### parts
 
@@ -64,7 +65,7 @@
 
 #### construction
 
-- `setreal(midpoint, radius)`
+- `setball(midpoint, radius)`
 - `setinterval(lobound, hibound)`
 
 #### retrieval
