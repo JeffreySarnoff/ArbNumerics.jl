@@ -128,8 +128,8 @@ include("libarb/ArbComplex.jl")
 const ArbNumber = Union{ArbFloat, ArbReal, ArbComplex}
 
 include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
-include("libarb/ArbFloatMatrix.jl") # must preceed ArbComplexMatrix
-include("libarb/ArbComplexMatrix.jl")
+#include("libarb/ArbFloatMatrix.jl") # must preceed ArbComplexMatrix
+#include("libarb/ArbComplexMatrix.jl")
 include("libarb/promote.jl")
 include("libarb/string.jl")
 include("libarb/show.jl")
