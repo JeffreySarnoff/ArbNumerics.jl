@@ -7,6 +7,7 @@ makedocs(
         "Overview"                 => "index.md",
         "Setting Values"           => "settingvalues.md",
         "Math Functions"           => "mathfunctions.md",
+        "Interval Functions"       => "intervalfunctions.md",
         "LibArb Differences"       => "libarb_differences.md",
         "References"               => "references.md",
         "Index"                    => "documentindex.md"
