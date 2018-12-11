@@ -14,11 +14,11 @@ const ArbMatIdx0 = zero(Int32)
 
 mutable struct ArbRealMat{P} <: AbstractMatrix{ArbReal{P}}
     eachcell::Ptr{ArbReal{P}}
-    rowcount::Int32
-    colcount::Int32
+    rowcount::Int
+    colcount::Int
     eachrow::Ptr{Ptr{ArbReal{P}}}
 
-    function ArbRealMat{P}(rowcount::Int32, colcount::Int32) where {P}
+    function ArbRealMat{P}(rowcount::Int, colcount::Int) where {P}
         z = new{P}() # z = new{P}(Ptr{ArbReal{P}}(0), 0, 0, Ptr{Ptr{ArbReal{P}}}(0))
         arb_mat_init(z, rowcount, colcount)
         finalizer(arb_mat_clear, z)
@@ -31,20 +31,15 @@ end
     ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMat}, ), x)
 end
 
-@inline function arb_mat_init(x::ArbRealMat{P}, rowcount::Int, colcount::Int) where {P}
+@inline function arb_mat_init(x::ArbRealMat{P}, rowcount::I, colcount::I) where {P, I<:Signed}
     ccall(@libarb(arb_mat_init), Cvoid, (Ref{ArbRealMat}, Cint, Cint),
                                          x, rowcount, colcount)
 end
-
-
-ArbRealMat{P}(rowcount::Int64, colcount::Int64) where {P} =
-    ArbRealMat{P}(Int32(rowcount), Int32(colcount))
 
 @inline function ArbRealMat(rowcount::I, colcount::I) where {I<:Signed}
 	P = workingprecision(ArbReal)
 	return ArbRealMat{P}(rowcount, colcount)
 end
-
 
 ArbRealMat{P}(x::ArbRealMat{P}) where {P} = x
 
