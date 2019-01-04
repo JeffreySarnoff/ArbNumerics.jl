@@ -48,13 +48,13 @@ it is `nbits`.  After `show_enclosed_precision`, it is `missing`.
 ```julia
 function precision_modality()
     nbits = bits_rounded()
-    if nbits === missing
-       :enclosed
-    elseif iszero(nbits)
-       :working
-    else
-       :rounded
-    end
+    return if nbits === missing
+               :enclosed
+           elseif iszero(nbits)
+               :working
+           else
+               :rounded
+           end
 end
 ```
 
