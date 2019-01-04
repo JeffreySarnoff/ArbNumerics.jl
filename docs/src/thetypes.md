@@ -11,7 +11,7 @@ An `ArbReal` value is implemented in the underlying C library as an `ArbFloat` _
 
 placeholder only
 
-![alt text](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/assets/midpoint_radius.png "midpoint-radius")
+![alt text](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/assets/midrad.png "midpoint-radius")
 
 replace above with new graphics
 
