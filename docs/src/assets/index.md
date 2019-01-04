@@ -1,0 +1,1 @@
+midpointradius.jpg
