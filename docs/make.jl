@@ -5,7 +5,9 @@ makedocs(
     sitename = "ArbNumerics",
     pages  = Any[
         "Overview"                 => "index.md",
+        "The Types"                => "thetypes.md",
         "Setting Values"           => "settingvalues.md",
+        "Precisions"               => "precisions.md"
         "Math Functions"           => "mathfunctions.md",
         "Interval Functions"       => "intervalfunctions.md",
         "LibArb Differences"       => "libarb_differences.md",
