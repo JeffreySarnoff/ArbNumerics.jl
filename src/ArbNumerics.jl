@@ -107,6 +107,7 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
 
 using  LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt, cholesky, tril, triu, eigvals, svdvals
+using  GenericLinearAlgebra
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
