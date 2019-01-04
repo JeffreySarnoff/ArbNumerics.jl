@@ -50,7 +50,7 @@ function precision_modality()
     nbits = bits_rounded()
     return if nbits === missing
                :enclosed
-           elseif iszerp(nbits)
+           elseif iszero(nbits)
                :working
            else
                :rounded
