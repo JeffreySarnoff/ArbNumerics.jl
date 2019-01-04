@@ -10,7 +10,7 @@ There are three core types: `ArbFloat`, `ArbReal`, `ArbComplex`.  Vectors of ele
 An `ArbReal` value is implemented in the underlying C library as an `ArbFloat` _midpoint_ and a value enclosing _radius_.
 
 
-![midpoint radius](https://jeffreysarnoff.github.io/ArbNumerics.jl/latest/assets/midpointradius.jpg "midpoint radius")
+![midpoint radius](https://jeffreysarnoff.github.io/ArbNumerics.jl/latest/assets/midpointradius.jpg)
 
 
 
