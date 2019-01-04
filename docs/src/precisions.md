@@ -8,10 +8,10 @@ prefer, start using the package this way:
 
 ```julia
 using ArbNumerics
-show_working_precision()
+show_working_values()
 ```
 
-## enclosure precision
+## enclosed precision
 
 The alternative is to use some of the least significant bits as a "cushion"
 that protects against showing greater precision than is warranted by the
@@ -23,12 +23,12 @@ trailing bits, start using the package this way:
 
 ```julia
 using ArbNumerics
-show_enclosure_precision()
+show_enclosed_values()
 ```
 
 ## rounded precision
 
-If you specify neither `show_working_precision()` nor `show_enclosure_precision()`,
+If you specify neither `show_working_precision()` nor `show_enclosed_precision()`,
 then the working precision will exceed the displayed precision by a fixed number
 of bits.  By default, 24 extra bits are used for the working precision.  This
 is a settable quantity. If you prefer a different bit differential, you should
@@ -36,21 +36,21 @@ establish that at the start and you should __not__ alter it midstream:
 
 ```julia
 using ArbNumerics
-show_rounded_precision(32)
+show_rounded_values(32)
 ```
 
 ## precision modality
 
 The operative modality is obtainable using `bits_rounded()`.
-After `show_working_precision()`, it is `0`. After `show_rounded_precision(nbits)`,
-it is `nbits`.  After `show_enclosed_precision`, it is `missing`.
+After `show_working_values()`, it is `0`. After `show_rounded_values(nbits)`,
+it is `nbits`.  After `show_enclosed_values`, it is `missing`.
 
 ```julia
 function precision_modality()
     nbits = bits_rounded()
     return if nbits === missing
                :enclosed
-           elseif iszero(nbits)
+           elseif iszerp(nbits)
                :working
            else
                :rounded
