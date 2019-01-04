@@ -41,6 +41,20 @@ show_rounded_precision(32)
 
 ## precision modality
 
-The operative modality is obtainable using `bitsof_precision_rounded()`.
+The operative modality is obtainable using `bits_rounded()`.
 After `show_working_precision()`, it is `0`. After `show_rounded_precision(nbits)`,
 it is `nbits`.  After `show_enclosed_precision`, it is `missing`.
+
+```julia
+function precision_modality()
+    nbits = bits_rounded()
+    if nbits === missing
+       :enclosed
+    elseif iszero(nbits)
+       :working
+    else
+       :rounded
+    end
+end
+```
+
