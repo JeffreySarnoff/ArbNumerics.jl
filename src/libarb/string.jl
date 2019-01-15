@@ -113,3 +113,21 @@ function show(io::IO, x::arb)
   ccall((:flint_free, :libflint), Void, (Ptr{UInt8},), cstr)
 end
 =#
+
+function ArbFloat{P}(s::AbstractString) where {P}
+    return ArbFloat{P}(BigFloat(s))
+end
+
+function ArbReal{P}(s::AbstractString) where {P}
+    return ArbReal{P}(BigFloat(s))
+end
+
+function ArbFloat(s::AbstractString)
+    P = DEFAULT_PRECISION[]
+    return ArbFloat{P}(s)
+end
+
+function ArbReal(s::AbstractString)
+    P = DEFAULT_PRECISION[]
+    return ArbReal{P}(s)
+end
