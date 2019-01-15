@@ -4,7 +4,7 @@ There are three core types: `ArbFloat`, `ArbReal`, `ArbComplex`.  Vectors of ele
 
 # ArbFloat
 
-An `ArbFloat` value is an extended precision floating point value.
+An `ArbFloat` value is an extended precision floating point value where the precision is fixed at construction.
 
 # ArbReal
 
