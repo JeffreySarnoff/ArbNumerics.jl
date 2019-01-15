@@ -16,6 +16,9 @@ end
 @inline muladd(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     muladd(x, y, z, RoundNearest)
 
+@inline fma(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    muladd(x, y, z, RoundNearest)
+
 #=
 void arb_addmul(arb_t z, const arb_t x, const arb_t y, slong prec)
 void arb_addmul_arf(arb_t z, const arb_t x, const arf_t y, slong prec)
@@ -32,6 +35,23 @@ void arb_submul_fmpz(arb_t z, const arb_t x, const fmpz_t y, slong prec)
 Sets z=z−x⋅y, rounded to prec bits. The precision can be ARF_PREC_EXACT provided that the result fits in memory.
 =#
 
+function muladd(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
+    res = ccall(@libarb(arb_addmul), Cint, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+                 z, x, y, P)
+    return z
+end
+
+function fma(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
+    xx = ArbFloat{P}(x)
+    yy = ArbFloat{P}(y)
+    zz = ArbFloat{P}(z)
+    zz = fma(xx, yy, zz)
+    
+    res = ccall(@libarb(arb_addmul), Cint, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+                 z, x, y, P)
+    return setball(zz, radius(z))
+end
+
 #=
 void acb_addmul(acb_t z, const acb_t x, const acb_t y, slong prec)
 void acb_addmul_ui(acb_t z, const acb_t x, ulong y, slong prec)
@@ -47,3 +67,9 @@ void acb_submul_fmpz(acb_t z, const acb_t x, const fmpz_t y, slong prec)
 void acb_submul_arb(acb_t z, const acb_t x, const arb_t y, slong prec)
 Sets z to z minus the product of x and y.
 =#
+
+function muladd(x::ArbComplex{P}, y::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    res = ccall(@libarb(acb_addmul), Cint, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Clong),
+                 z, x, y, P)
+    return z
+end
