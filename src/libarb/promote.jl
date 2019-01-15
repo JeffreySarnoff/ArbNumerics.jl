@@ -9,9 +9,17 @@ promote_type(::Type{ArbFloat{P}}, ::Type{BigInt}) where {P} = ArbFloat{P}
 promote_type(::Type{ArbReal{P}}, ::Type{BigInt}) where {P} = ArbReal{P}
 promote_type(::Type{ArbComplex{P}}, ::Type{BigInt}) where {P} = ArbComplex{P}
 
+promote_type(::Type{ArbFloat{P}}, ::Type{Rational{I}}) where {P,I} = ArbFloat{P}
+promote_type(::Type{ArbReal{P}}, ::Type{Rational{I}}) where {P,I} = ArbReal{P}
+promote_type(::Type{ArbComplex{P}}, ::Type{Rational{I}}) where {P,I} = ArbComplex{P}
+
 promote_rule(::Type{ArbFloat{P}}, ::Type{BigInt}) where {P} = promote_type(ArbFloat{P}, BigInt)
 promote_rule(::Type{ArbReal{P}}, ::Type{BigInt}) where {P} = promote_type(ArbReal{P}, BigInt)
 promote_rule(::Type{ArbComplex{P}}, ::Type{BigInt}) where {P} = promote_type(ArbComplex{P}, BigInt)
+
+promote_rule(::Type{ArbFloat{P}}, ::Type{Rational{I}}) where {P,I} = promote_type(ArbFloat{P}, Rational{I}}
+promote_rule(::Type{ArbReal{P}}, ::Type{Rational{I}}) where {P,I} = promote_type(ArbReal{P}, Rational{I}}
+promote_rule(::Type{ArbComplex{P}}, ::Type{Rational{I}}) where {P,I} = promote_type(ArbComplex{P}, Rational{I}}
 
 promote_type(::Type{BigFloat},::Type{ArbFloat{P}}) where {P} = ArbFloat{P}
 promote_type(::Type{BigFloat},::Type{ArbReal{P}}) where {P} = ArbReal{P}
@@ -91,6 +99,10 @@ convert(::Type{ArbComplex{P}}, x::BigInt) where {P} = ArbComplex{P}(x)
 convert(::Type{ArbFloat{P}}, x::I) where {P, I<:Integer} = ArbFloat{P}(x)
 convert(::Type{ArbReal{P}}, x::I) where {P, I<:Integer} = ArbReal{P}(x)
 convert(::Type{ArbComplex{P}}, x::I) where {P, I<:Integer} = ArbComplex{P}(x)
+
+convert(::Type{ArbFloat{P}}, x::Rational{I}) where {P, I} = ArbFloat{P}(x.num) / ArbFloat{P}(x.den)
+convert(::Type{ArbReal{P}}, x::Rational{I}) where {P, I} = ArbReal{P}(x.num) / ArbReal{P}(x.den)
+convert(::Type{ArbComplex{P}}, x::Rational{I}) where {P, I} = ArbComplex{P}(ArbReal{P}(x))
 
 convert(::Type{ArbFloat{P}}, x::AbstractFloat) where {P} = ArbFloat{P}(x)
 convert(::Type{ArbReal{P}}, x::AbstractFloat) where {P} = ArbReal{P}(x)
