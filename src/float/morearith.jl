@@ -107,48 +107,6 @@ function hypot(x::ArbComplex{P}, y::ArbComplex{P}) where {P}
     ccall(@libarb(acb_hypot), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, y, P)
     return z
 end
-
-
-"""
-    addmul(x, y, z)
-
-x + (y * z)
-"""
-function addmul(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P}
-   x1 = copy(x)
-   ccall(@libarb(arb_addmul), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong), x1, y, z, P)
-   return x1
-end
-
-"""
-    submul(x, y, z)
-
-x - (y * z)
-"""
-function submul(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P}
-   x1 = copy(x)
-   ccall(@libarb(arb_submul), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong), x1, y, z, P)
-   return x1
-end
-    
-
-"""
-    muladd(x, y, z)
-
-(x * y) + z
-"""
-muladd(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = addmul(z, x, y)
-
-"""
-    mulsub(x, y, z)
-
-(x * y) - z
-"""
-mulsub(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = -submul(z, x, y)
-
-fma(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} = muladd(x, y, z)
-
-
         
 function pow(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     x1 = ArbReal{P}(x)
@@ -305,11 +263,4 @@ function binomial(n::ArbReal{P}, k::ArbReal{P}) where {P}
     uk = Culong(Clong(k))
     ccall(@libarb(arb_bin_uiui), Cvoid, (Ref{ArbReal}, Culong, Culong, Clong), z, ux, un, P)
     return z
-end 
-
-
-    
-       
-           
-            
-    
+end
