@@ -104,6 +104,10 @@ convert(::Type{ArbFloat{P}}, x::Rational{I}) where {P, I} = ArbFloat{P}(x.num) /
 convert(::Type{ArbReal{P}}, x::Rational{I}) where {P, I} = ArbReal{P}(x.num) / ArbReal{P}(x.den)
 convert(::Type{ArbComplex{P}}, x::Rational{I}) where {P, I} = ArbComplex{P}(ArbReal{P}(x))
 
+convert(::Type{Rational{I}}, x::ArbFloat{P}) where {P, I} = convert(Rational{I}, BigFloat(x))
+convert(::Type{Rational{I}}, x::ArbReal{P}) where {P, I} = convert(Rational{I}, BigFloat(midpoint(x)))
+convert(::Type{Rational{I}}, x::ArbComplex{P}) where {P, I} = convert(Rational{I}, BigFloat(x.re))
+
 convert(::Type{ArbFloat{P}}, x::AbstractFloat) where {P} = ArbFloat{P}(x)
 convert(::Type{ArbReal{P}}, x::AbstractFloat) where {P} = ArbReal{P}(x)
 convert(::Type{ArbComplex{P}}, x::AbstractFloat) where {P} = ArbComplex{P}(x)
