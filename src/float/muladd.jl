@@ -8,7 +8,7 @@ Performs a fused multiply-subtract z=z−x⋅y, updating z in-place.
 
 function muladd(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}, roundingmode::RoundingMode) where {P}
     rounding = match_rounding_mode(roundingmode)
-    res = @ccall(@libarb(arf_addmul), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint),
+    res = ccall(@libarb(arf_addmul), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint),
                  z, x, y, P, rounding)
     return z
 end
