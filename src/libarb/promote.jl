@@ -104,9 +104,25 @@ convert(::Type{ArbFloat{P}}, x::Rational{I}) where {P, I} = ArbFloat{P}(x.num) /
 convert(::Type{ArbReal{P}}, x::Rational{I}) where {P, I} = ArbReal{P}(x.num) / ArbReal{P}(x.den)
 convert(::Type{ArbComplex{P}}, x::Rational{I}) where {P, I} = ArbComplex{P}(ArbReal{P}(x))
 
-convert(::Type{Rational{I}}, x::ArbFloat{P}) where {P, I} = convert(Rational{I}, BigFloat(x))
-convert(::Type{Rational{I}}, x::ArbReal{P}) where {P, I} = convert(Rational{I}, BigFloat(midpoint(x)))
-convert(::Type{Rational{I}}, x::ArbComplex{P}) where {P, I} = convert(Rational{I}, BigFloat(x.re))
+rationalize(::Type{I}, x::ArbFloat{P}) where {P,I<:Integer}
+    oldprec = precision(BigFloat)
+    setprecision(BigFloat, P)
+    y = BigFloat(x)
+    z = rationalize(I, y)
+    setprecision(BigFloat, oldprec)
+    return z
+end
+
+rationalize(::Type{I}, x::ArbReal{P}) where {P, I<:Integer} = rationalize(I, ArbFloat{P}(x))
+rationalize(::Type{I}, x::ArbComplex{P}) where {P, I<:Integer} = Complex{I}(rationalize(I, ArbFloat{P}(real(x))), rationalize(I, ArbFloat{P}(imag(x))))
+
+rationalize(x::ArbFloat{P}) where {P} = rationalize(Int64, x)
+rationalize(x::ArbReal{P}) where {P} = rationalize(Int64, ArbFloat{P}(x))
+rationalize(x::ArbComplex{P}) where {P} = Complex{Int64}(rationalize(Int64, ArbFloat{P}(real(x))), rationalize(Int64, ArbFloat{P}(imag(x))))
+
+convert(::Type{Rational{I}}, x::ArbFloat{P}) where {P, I} = rationalize(I, x)
+convert(::Type{Rational{I}}, x::ArbReal{P}) where {P, I} = rationalize(I, x)
+convert(::Type{Rational{I}}, x::ArbComplex{P}) where {P, I} = rationalize(I, x)
 
 convert(::Type{ArbFloat{P}}, x::AbstractFloat) where {P} = ArbFloat{P}(x)
 convert(::Type{ArbReal{P}}, x::AbstractFloat) where {P} = ArbReal{P}(x)
