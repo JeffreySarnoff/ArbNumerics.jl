@@ -1,3 +1,10 @@
+"""
+    ArbNumerics
+
+A performant package for numerics with settable extended precision.
+
+see `ArbFloat`, `ArbReal`, `ArbComplex`
+"""
 module ArbNumerics
 
 export ArbNumber,
