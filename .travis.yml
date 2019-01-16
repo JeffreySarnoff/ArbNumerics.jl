@@ -15,10 +15,6 @@ matrix:
   #allow_failures:
   #  - julia: nightly
   fast_finish: true
-# uncomment the following lines to override the default test script
-script:
-  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-  - julia -e 'Pkg.clone(pwd()); Pkg.build("ArbNumerics"); Pkg.test("ArbNumerics"; coverage=true)'
 after_success:
   # push coverage results to Codecov
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
