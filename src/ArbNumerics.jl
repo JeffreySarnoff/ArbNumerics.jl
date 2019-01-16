@@ -3,7 +3,7 @@
 
 A performant package for numerics with settable extended precision.
 
-see `ArbFloat`, `ArbReal`, `ArbComplex`
+primary exported types: `ArbFloat`, `ArbReal`, `ArbComplex`
 """
 module ArbNumerics
 
