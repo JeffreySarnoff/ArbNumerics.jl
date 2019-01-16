@@ -65,8 +65,8 @@ function string(x::ArbReal{P}; midpoint::Bool=false, radius::Bool=false) where {
 end
 
 stringall(x::ArbReal{P}; radius::Bool=false) where {P} =
-    radius ? arbstring(x, floor(Int,log10(2)*precision(c))+10; flags=ARB_STR_RADIUS) :
-             arbstring(x, floor(Int,log10(2)*precision(c))+10; flags=ARB_STR_NO_RADIUS)
+    radius ? arbstring(x, floor(Int,log10(2)*precision(x))+10; flags=ARB_STR_RADIUS) :
+             arbstring(x, floor(Int,log10(2)*precision(x))+10; flags=ARB_STR_NO_RADIUS)
 
 function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
@@ -85,8 +85,8 @@ function string(x::ArbComplex{P}; midpoint::Bool=false, radius::Bool=false) wher
 end
 
 stringall(x::ArbComplex{P}; radius::Bool=false) where {P} =
-    radius ? arbstring(x, floor(Int,log10(2)*precision(c))+10; flags=ARB_STR_RADIUS) :
-             arbstring(x, floor(Int,log10(2)*precision(c))+10; flags=ARB_STR_NO_RADIUS)
+    radius ? arbstring(x, floor(Int,log10(2)*precision(x))+10; flags=ARB_STR_RADIUS) :
+             arbstring(x, floor(Int,log10(2)*precision(x))+10; flags=ARB_STR_NO_RADIUS)
 
 function arbstring(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     # rea, ima = real(x), imag(x)
