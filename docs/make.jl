@@ -1,4 +1,4 @@
-using Documenter, ArbNumerics
+using Documenter # , ArbNumerics
 
 makedocs(
     modules = [ArbNumerics],
