@@ -11,7 +11,7 @@ An `ArbFloat` value is an extended precision floating point value where the prec
 An `ArbReal` value is implemented in the underlying C library as an `ArbFloat` _midpoint_ and a value enclosing _radius_.
 
 
-![midpoint radius](https://jeffreysarnoff.github.io/ArbNumerics.jl/dev/assets/midpoint_radius.jpg)
+![midrad](https://jeffreysarnoff.github.io/ArbNumerics.jl/dev/assets/midrad.jpg)
 
 
 
