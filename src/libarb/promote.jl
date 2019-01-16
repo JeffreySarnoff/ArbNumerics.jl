@@ -104,7 +104,7 @@ convert(::Type{ArbFloat{P}}, x::Rational{I}) where {P, I} = ArbFloat{P}(x.num) /
 convert(::Type{ArbReal{P}}, x::Rational{I}) where {P, I} = ArbReal{P}(x.num) / ArbReal{P}(x.den)
 convert(::Type{ArbComplex{P}}, x::Rational{I}) where {P, I} = ArbComplex{P}(ArbReal{P}(x))
 
-rationalize(::Type{I}, x::ArbFloat{P}) where {P,I<:Integer}
+function rationalize(::Type{I}, x::ArbFloat{P}) where {P,I<:Integer}
     oldprec = precision(BigFloat)
     setprecision(BigFloat, P)
     y = BigFloat(x)
