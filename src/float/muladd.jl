@@ -8,9 +8,10 @@ Performs a fused multiply-subtract z=z−x⋅y, updating z in-place.
 
 function muladd(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}, roundingmode::RoundingMode) where {P}
     rounding = match_rounding_mode(roundingmode)
+    zz = copy(z)
     res = ccall(@libarb(arf_addmul), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint),
-                 z, x, y, P, rounding)
-    return z
+                 zz, x, y, P, rounding)
+    return zz
 end
 
 @inline muladd(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P} =
@@ -36,9 +37,10 @@ Sets z=z−x⋅y, rounded to prec bits. The precision can be ARF_PREC_EXACT prov
 =#
 
 function muladd(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
+    zz = copy(z)
     res = ccall(@libarb(arb_addmul), Cint, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
-                 z, x, y, P)
-    return z
+                 zz, x, y, P)
+    return zz
 end
 
 function fma(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
@@ -46,10 +48,10 @@ function fma(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
     yy = ArbFloat{P}(y)
     zz = ArbFloat{P}(z)
     zz = fma(xx, yy, zz)
-    
+    zzz = copy(z)
     res = ccall(@libarb(arb_addmul), Cint, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
-                 z, x, y, P)
-    return setball(zz, radius(z))
+                 zzz, x, y, P)
+    return setball(zzz, radius(z))
 end
 
 #=
@@ -69,7 +71,8 @@ Sets z to z minus the product of x and y.
 =#
 
 function muladd(x::ArbComplex{P}, y::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    zz = copy(z)
     res = ccall(@libarb(acb_addmul), Cint, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Clong),
-                 z, x, y, P)
-    return z
+                 zz, x, y, P)
+    return zz
 end
