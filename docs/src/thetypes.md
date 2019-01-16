@@ -13,7 +13,13 @@ An `ArbReal` value is implemented in the underlying C library as an `ArbFloat` _
 
 ![midrad](assets/midrad.jpg)
 
+---
 
+![midrad](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/assets/midrad.jpg)
+
+---
+
+![midrad](https://jeffreysarnoff.github.io/ArbNumerics.jl/dev/assets/midrad.jpg)
 
 # ArbComplex
 
