@@ -1,7 +1,7 @@
 using Documenter # , ArbNumerics
 
 makedocs(
-    modules = [ArbNumerics],
+    modules = [], # [ArbNumerics],
     sitename = "ArbNumerics",
     pages  = Any[
         "Overview"                 => "index.md",
