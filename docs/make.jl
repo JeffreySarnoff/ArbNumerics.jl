@@ -7,6 +7,7 @@ makedocs(
         "Overview"                 => "index.md",
         "The Types"                => "thetypes.md",
         "Setting Values"           => "settingvalues.md",
+        "Seeing Values"            => "seeingvalues.md",
         "Precisions"               => "precisions.md",
         "Math Functions"           => "mathfunctions.md",
         "Interval Functions"       => "intervalfunctions.md",
