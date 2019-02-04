@@ -90,6 +90,14 @@ Float32(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float32(Float6
 Float16(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
 
 
+function Complex{T}(x::ArbComplex{P}, roundingmode::RoundingMode) where {P, T<:IEEEFloat}
+   re = T(real(x), roundingmode)
+   im = T(imag(x), roundingmode)
+   return Complex{T}(re, im)
+end
+
+Complex{T}(x::ArbComplex{P}) where {P, T<:IEEEFloat} = Complex{T}(x, RoundNearest)
+
 # integers
 
 for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
