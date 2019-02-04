@@ -97,6 +97,7 @@ function Complex{T}(x::ArbComplex{P}, roundingmode::RoundingMode) where {P, T<:I
 end
 
 Complex{T}(x::ArbComplex{P}) where {P, T<:IEEEFloat} = Complex{T}(x, RoundNearest)
+Complex(x::ArbComplex{P}) where {P} = Complex{Float64}(x, RoundNearest)
 
 # integers
 
