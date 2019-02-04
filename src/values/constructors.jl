@@ -21,9 +21,15 @@ end
     return res
 end
 
-@inline function ArbComplex(x, y::T) where {T<:AbstractFloat}
+@inline function ArbComplex(x::I, y::T) where {I<:Integer, T<:AbstractFloat}
     prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x, y)
+    res  = ArbComplex{prec}(T(x), y)
+    return res
+end
+
+@inline function ArbComplex(x::T, y::I) where {I<:Integer, T<:AbstractFloat}
+    prec = DEFAULT_PRECISION.x
+    res  = ArbComplex{prec}(x, T(y))
     return res
 end
 
