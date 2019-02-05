@@ -4,9 +4,9 @@
     There is no direct support for matricies of ArbFloats.
     We partially overload ArbRealMatrix to zero the radii.
     And provide conversion from Array{ArbFloat{P},2}.
-=#        
+=#
 
-            
+
 mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
     entries::Ptr{ArbReal{P}}
     nrows::Int
@@ -50,7 +50,7 @@ end
 @inline function Base.getindex(x::ArbFloatMatrix{P}, rowidx::Int, colidx::Int) where {P}
     rowidx, colidx = colidx, rowidx
     checkbounds(x, rowidx, colidx)
-    
+
     w = ArbFloat{P}()
     z = ArbReal{P}()
     GC.@preserve x begin
@@ -84,10 +84,10 @@ function Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P}, linearidx::Int) wh
     rowidx, colidx = linear_to_cartesian(x.nrows, linearidx)
     rowidx, colidx = colidx, rowidx
     checkbounds(x, rowidx, colidx)
-    
+
     w = ArbReal{P}(z)
     GC.@preserve x begin
-        ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal}, 
+        ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
                         (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
         ccall(@libarb(arb_set), Cvoid, (Ptr{ArbReal}, Ref{ArbReal}), ptr, w)
         end
@@ -97,7 +97,7 @@ end
 function Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P}, rowidx::Int, colidx::Int) where {P}
     rowidx, colidx = colidx, rowidx
     checkbounds(x, rowidx, colidx)
-    
+
     w = ArbReal{P}(z)
     GC.@preserve x begin
         ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
@@ -204,7 +204,7 @@ function determinant(x::ArbFloatMatrix{P}) where {P}
     Q = 2*P
     z = ArbReal{Q}()
     m = ArbFloatMatrix{2*P}(x)
-    ccall(@libarb(arb_mat_det_precond), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, Q)    
+    ccall(@libarb(arb_mat_det_precond), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, Q)
     w = ArbFloat{P}(z)
     return w
 end
@@ -238,7 +238,7 @@ function transpose(m::ArbFloatMatrix{P}) where {P}
     transpose!(dest, m)
     return dest
 end
-        
+
 function norm(m::ArbFloatMatrix{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_mat_frobenius_norm), Cvoid, (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, P)
@@ -248,7 +248,7 @@ end
 
 function inv(m::ArbFloatMatrix{P}) where {P}
     m.nrows === m.ncols ||
-    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))       
+    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
     z = ArbFloatMatrix{P}(m.nrows, m.ncols)
     ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z,m, P)
     ok == 0 && throw(ErrorException("cannot invert $(m)"))
@@ -285,8 +285,8 @@ end
 
 #=
 void arb_mat_approx_mul(arb_mat_t res, const arb_mat_t mat1, const arb_mat_t mat2, slong prec)
-    Approximate matrix multiplication. 
-    The input radii are ignored and the output matrix is set to an approximate floating-point result. 
+    Approximate matrix multiplication.
+    The input radii are ignored and the output matrix is set to an approximate floating-point result.
     The radii in the output matrix will not necessarily be zeroed.
 void arb_mat_approx_solve_triu(arb_mat_t X, const arb_mat_t U, const arb_mat_t B, int unit, slong prec)
 void arb_mat_approx_solve_tril(arb_mat_t X, const arb_mat_t L, const arb_mat_t B, int unit, slong prec)
@@ -294,12 +294,12 @@ int arb_mat_approx_lu(slong * P, arb_mat_t LU, const arb_mat_t A, slong prec)
 void arb_mat_approx_solve_lu_precomp(arb_mat_t X, const slong * perm, const arb_mat_t A, const arb_mat_t B, slong prec)
 int arb_mat_approx_solve(arb_mat_t X, const arb_mat_t A, const arb_mat_t B, slong prec)
     These methods perform approximate solving without any error control.
-    The radii in the input matrices are ignored, 
+    The radii in the input matrices are ignored,
         the computations are done numerically with floating-point arithmetic
          (using ordinary Gaussian elimination and triangular solving,
           accelerated through the use of block recursive strategies for large matrices),
         and the output matrices are set to the approximate floating-point results with zeroed error bounds.
-    Approximate solutions are useful for computing preconditioning matrices for certified solutions. 
+    Approximate solutions are useful for computing preconditioning matrices for certified solutions.
     Some users may also find these methods useful for doing ordinary numerical linear algebra
         in applications where error bounds are not needed.
 =#
@@ -313,6 +313,10 @@ function Base.:(*)(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return z
 end
+
+Base.:(*)(x::Array{ArbFloat{P},2}, y::Arrray{ArbFloat{P},2}) where {P} =
+    ArbFloatMatrix{P}(x) * ArbFloatMatrix{P}(y)
+
 
 function Base.:(*)(x::ArbFloatMatrix{P}, y::ArbRealMatrix{P}) where {P}
    if x.ncols !== y.nrows
