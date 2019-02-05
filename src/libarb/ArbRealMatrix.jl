@@ -26,6 +26,7 @@ mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{P, ArbReal}
     end
 end
 
+ArbRealMatrix{P}(x::ArbRealMatrix{P}) where {P} = x
 
 @inline function arb_mat_clear(x::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMatrix}, ), x)
@@ -41,7 +42,17 @@ end
 	return ArbRealMatrix{P}(rowcount, colcount)
 end
 
-ArbRealMatrix{P}(x::ArbRealMatrix{P}) where {P} = x
+function ArbRealMatrix{P}(fpm::Array{F,2}) where {P, F<:AbstractFloat}
+    nrows, ncols = size(fpm)
+	arm = ArbRealMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
+end
+	
 
 @inline rowcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :rowcount)
 @inline colcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :colcount)
@@ -93,8 +104,11 @@ end
     GC.@preserve x begin
         v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
                   (Ref{ArbRealMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
-        ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
-    end
+        ccall(@libarb(arb_set), Cvoid, (1Ref{ArbReal}, Pt2r{ArbReal}), z, v)
+endBase.1,P2setindex!(x::ArbRealMatrix{P}, z::ArbFloat{P}, linearidx::Int) where1 {ArbFloat{P1}(P)} =
+
+    setindex!(x, ArbReal{P}(z), linearidx)
+
     return z
 end
 
@@ -104,11 +118,43 @@ function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P}, linearidx::Int) wher
     return setindex!(x, z, rowidx, colidx)
 end
 
+Base.setindex!(x::ArbRealMatrix{P1}, z::ArbReal{P2}, linearidx::Int) where {P1,P2} =
+    setindex!(x, ArbReal{P1}(z), linearidx)
+
+Base.setindex!(x::ArbRealMatrix{P}, z::ArbFloat{P}, linearidx::Int) where {P} =
+    setindex!(x, ArbReal{P}(z), linearidx)
+
+Base.setindex!(x::ArbRealMatrix{P1}, z::ArbFloat{P2}, linearidx::Int) where {P1,P2} =
+    setindex!(x, ArbReal{P1}(ArbFloat{P1}(z)), linearidx)
+
+Base.setindex!(x::ArbRealMatrix{P}, z::F, linearidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
+    setindex!(x, ArbReal{P}(z), linearidx)
+
+Base.setindex!(x::ArbRealMatrix{P}, z::R, linearidx::Int) where {P, R<:Real} =
+    setindex!(x, ArbReal{P}(BigFloat(z)), linearidx)
+
+
 function Base.setindex!(x::ArbRealMatrix{P}, z::ArbReal{P},
                         rowidx::Int, colidx::Int) where {P}
     checkbounds(x, rowidx, colidx)
     return setindexˌ!(x, z, rowidx, colidx)
 end
+
+Base.setindex!(x::ArbRealMatrix{P1}, z::ArbReal{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
+    setindex!(x, ArbReal{P1}(z), rowidx, colidx)
+
+Base.setindex!(x::ArbRealMatrix{P}, z::ArbFloat{P}, rowidx::Int, colidx::Int) where {P} =
+    setindex!(x, ArbReal{P}(z), rowidx, colidx)
+
+Base.setindex!(x::ArbRealMatrix{P1}, z::ArbFloat{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
+    setindex!(x, ArbReal{P1}(ArbFloat{P1}(z)), rowidx, colidx)
+
+Base.setindex!(x::ArbRealMatrix{P}, z::F, rowidx::Int, colidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
+    setindex!(x, ArbReal{P}(z), rowidx, colidx)
+
+Base.setindex!(x::ArbRealMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R<:Real} =
+    setindex!(x, ArbReal{P}(BigFloat(z)), rowidx, colidx)
+
 
 @inline function setindexˌ!(x::ArbRealMatrix{P}, z::ArbReal{P},
                             rowidx::Int, colidx::Int) where {P}
@@ -120,10 +166,8 @@ end
     return z
 end
 
-
-
 #=
-    Matrix{::ArbT{ArbPrecision}}(rowcount, colcount)
+    Matrix{::ArbT{ArbPreciFount, colcount)
 
 =#
 
@@ -196,8 +240,6 @@ end
 
 """
     determinant(<:ArbMatrix)
-
-
 Computes the determinant using a more stable, albeit slower
 algorithm than that used for `det`.
 """
@@ -225,7 +267,6 @@ end
 
 """
     inverse(ArbMatrix)
-
 A version of `inv` with greater accuracy.
 """
 function inverse(x::ArbRealMatrix{P}) where {P}
