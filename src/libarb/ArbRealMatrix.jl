@@ -52,7 +52,7 @@ function ArbRealMatrix{P}(fpm::Array{F,2}) where {P, F<:AbstractFloat}
 	end
 	return arm
 end
-	
+
 
 @inline rowcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :rowcount)
 @inline colcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :colcount)
@@ -88,7 +88,6 @@ end
 	return rowcount(x) === colcount(x)
 end
 
-
 @inline function Base.getindex(x::ArbRealMatrix{P}, linearidx::Int) where {P}
     rowidx, colidx = linear_to_cartesian(rowcount(x), linearidx)
     return getindex(x, rowidx, colidx)
@@ -104,11 +103,8 @@ end
     GC.@preserve x begin
         v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
                   (Ref{ArbRealMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
-        ccall(@libarb(arb_set), Cvoid, (1Ref{ArbReal}, Pt2r{ArbReal}), z, v)
-endBase.1,P2setindex!(x::ArbRealMatrix{P}, z::ArbFloat{P}, linearidx::Int) where1 {ArbFloat{P1}(P)} =
-
-    setindex!(x, ArbReal{P}(z), linearidx)
-
+        ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
+    end
     return z
 end
 
