@@ -7,7 +7,7 @@
 =#
 
 
-mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
+mutable struct ArbFloatMatrix{P} <: AbstractMatrix{ArbFloat{P}}
     entries::Ptr{ArbReal{P}}
     nrows::Int
     ncols::Int
