@@ -1,2 +1,1 @@
-abstract type LibArbMatrix{P, T}  <: AbstractMatrix{T} end
-
+abstract type AbstractArbMatrix{P, T}  <: AbstractMatrix{T} end
