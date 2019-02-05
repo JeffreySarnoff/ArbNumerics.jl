@@ -50,6 +50,7 @@ end
     return x
 end
 
+#=
 function arf_mat_init(m::ArbFloatMatrix{P}, nrows::Int, ncols::Int) where {P}
     if nrows != 0 && ncols != 0
 
@@ -72,6 +73,8 @@ function arf_mat_init(m::ArbFloatMatrix{P}, nrows::Int, ncols::Int) where {P}
         mat->r = r;
         mat->c = c;
     }
+=#
+    
 Base.isempty(x::ArbFloatMatrix{P}) where {P} = x.nrows == 0 || x.ncols == 0
 
 Base.size(x::ArbFloatMatrix{P}) where {P} = (x.ncols, x.nrows)
