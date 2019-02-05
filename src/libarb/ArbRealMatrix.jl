@@ -28,6 +28,9 @@ end
 
 ArbRealMatrix{P}(x::ArbRealMatrix{P}) where {P} = x
 
+(::Type{Array{ArbReal{P},2}})(::UndefInitializer, nrows::Int, ncols::Int) where {P} =
+ArbRealMatrix{P}(nrows, ncols)
+
 @inline function arb_mat_clear(x::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMatrix}, ), x)
 end
