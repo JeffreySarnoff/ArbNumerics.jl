@@ -37,9 +37,20 @@ end
                                          x, rowcount, colcount)
 end
 
-@inline function ArbRealMatrix(rowcount::I, colcount::I) where {I<:Signed}
+@inline function ArbRealMatrix(nrows::Int, ncols::Int)
 	P = workingprecision(ArbReal)
-	return ArbRealMatrix{P}(rowcount, colcount)
+	return ArbRealMatrix{P}(nrows, ncols)
+end
+
+function ArbRealMatrix(fpm::Array{F,2}) where {F<:AbstractFloat}
+    nrows, ncols = size(fpm)
+	arm = ArbRealMatrix(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
 end
 
 function ArbRealMatrix{P}(fpm::Array{F,2}) where {P, F<:AbstractFloat}
