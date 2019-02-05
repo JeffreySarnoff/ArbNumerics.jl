@@ -15,10 +15,10 @@ mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
 
    function ArbFloatMatrix{P}(nrows::Int, ncols::Int) where {P}
        nrows, ncols = ncols, nrows
-       z = new{P}()
-       arf_mat_init(z, nrows, ncols)
+       z = ArbRealMatrix{P}()
+       arb_mat_init(z, nrows, ncols)
        finalizer(arb_mat_clear, z)
-       return z
+       return new{P}(z.entries, nrows, ncols, z.rows)
    end
 
    function ArbFloatMatrix(nrows::Int, ncols::Int)
@@ -74,7 +74,7 @@ function arf_mat_init(m::ArbFloatMatrix{P}, nrows::Int, ncols::Int) where {P}
         mat->c = c;
     }
 =#
-    
+
 Base.isempty(x::ArbFloatMatrix{P}) where {P} = x.nrows == 0 || x.ncols == 0
 
 Base.size(x::ArbFloatMatrix{P}) where {P} = (x.ncols, x.nrows)
