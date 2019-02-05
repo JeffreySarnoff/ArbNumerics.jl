@@ -566,4 +566,5 @@ floatmin(::Type{ArbFloat{P}}) where {P} = inv(floatmax(ArbFloat{P}))
 floatmax(::Type{ArbReal{P}}) where {P} = ArbReal{P}(floatmax(ArbFloat{P}))
 floatmin(::Type{ArbReal{P}}) where {P} = ArbReal{P}(inv(floatmax(ArbFloat{P})))
 
-floatmin2(::Type{T}) where {T} = (twopar = 2one(T); T(twopar^trunc(BigInt,log(floatmin(T)/eps(T))/log(twopar)/twopar)))
+floatmin2(::Type{T}) where {P,T<:ArbFloat{P}} = (twopar = 2one(T); T(twopar^trunc(BigInt,log(floatmin(T)/eps(T))/log(twopar)/twopar)))
+floatmin2(::Type{T}) where {P,T<:ArbReal{P}} = T(floatmin2(ArbFloat{P}))
