@@ -12,7 +12,7 @@
 
 const ArbMatIdx0 = zero(Int32)
 
-mutable struct ArbRealMatrix{P} <: AbstractMatrix{ArbReal{P}}
+mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{ArbReal,P}
     eachcell::Ptr{ArbReal{P}}
     rowcount::Int
     colcount::Int
