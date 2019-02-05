@@ -16,7 +16,7 @@ mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
    function ArbFloatMatrix{P}(nrows::Int, ncols::Int) where {P}
        nrows, ncols = ncols, nrows
        z = new{P}()
-       arb_mat_init(z, nrows, ncols)
+       arf_mat_init(z, nrows, ncols)
        finalizer(arb_mat_clear, z)
        return z
    end
@@ -27,6 +27,51 @@ mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
    end
 end
 
+@inline function ArbRealMatrix{P}(x::ArbFloatMatrix{P}) where {P}
+    ArbRealMatrix{P}(x.entries, x.nrows, x.ncols. x.rows)
+end
+
+@inline function ArbFloatMatrix{P}(x::ArbRealMatrix{P}) where {P}
+    ArbRealMatrix{P}(x.entries, x.nrows, x.ncols. x.rows)
+end
+
+@inline function arf_mat_clear(x::ArbFloatMatrix{P}) where {P}
+    arm = ArbRealMatrix{P}(x)
+    ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMatrix}, ), arm)
+    x = ArbFloatMatrix{P}(arm)
+    return x
+end
+
+@inline function arf_mat_init(x::ArbFloatMatrix{P}, rowcount::I, colcount::I) where {P, I<:Signed}
+    arm = ArbRealMatrix{P}(x)
+    ccall(@libarb(arb_mat_init), Cvoid, (Ref{ArbRealMatrix}, Cint, Cint),
+                                         arm, rowcount, colcount)
+    x = ArbFloatMatrix{P}(x)
+    return x
+end
+
+function arf_mat_init(m::ArbFloatMatrix{P}, nrows::Int, ncols::Int) where {P}
+    if nrows != 0 && ncols != 0
+
+    void
+    arb_mat_init(arb_mat_t mat, slong r, slong c)
+    {
+        if (r != 0 && c != 0)
+        {
+            slong i;
+
+            mat->entries = _arb_vec_init(r * c);
+            mat->rows = (arb_ptr *) flint_malloc(r * sizeof(arb_ptr));
+
+            for (i = 0; i < r; i++)
+                mat->rows[i] = mat->entries + i * c;
+        }
+        else
+            mat->entries = NULL;
+
+        mat->r = r;
+        mat->c = c;
+    }
 Base.isempty(x::ArbFloatMatrix{P}) where {P} = x.nrows == 0 || x.ncols == 0
 
 Base.size(x::ArbFloatMatrix{P}) where {P} = (x.ncols, x.nrows)
