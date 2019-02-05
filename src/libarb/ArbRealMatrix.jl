@@ -245,7 +245,7 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return matmulˌ(x, y)
 end
 
-Base.:(*)(x::Array{ArbReal{P},2}, y::Arrray{ArbFReal{P},2}) where {P} =
+Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P} =
     ArbRealMatrix{P}(x) * ArbRealMatrix{P}(y)
 
 

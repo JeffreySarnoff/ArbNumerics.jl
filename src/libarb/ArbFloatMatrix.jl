@@ -314,7 +314,7 @@ function Base.:(*)(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     return z
 end
 
-Base.:(*)(x::Array{ArbFloat{P},2}, y::Arrray{ArbFloat{P},2}) where {P} =
+Base.:(*)(x::Array{ArbFloat{P},2}, y::Array{ArbFloat{P},2}) where {P} =
     ArbFloatMatrix{P}(x) * ArbFloatMatrix{P}(y)
 
 
