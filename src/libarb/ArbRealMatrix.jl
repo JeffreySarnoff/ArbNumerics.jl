@@ -28,11 +28,11 @@ end
 
 
 @inline function arb_mat_clear(x::ArbRealMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMat}, ), x)
+    ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMatrix}, ), x)
 end
 
 @inline function arb_mat_init(x::ArbRealMatrix{P}, rowcount::I, colcount::I) where {P, I<:Signed}
-    ccall(@libarb(arb_mat_init), Cvoid, (Ref{ArbRealMat}, Cint, Cint),
+    ccall(@libarb(arb_mat_init), Cvoid, (Ref{ArbRealMatrix}, Cint, Cint),
                                          x, rowcount, colcount)
 end
 
@@ -92,7 +92,7 @@ end
     z = ArbReal{P}()
     GC.@preserve x begin
         v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
-                  (Ref{ArbRealMat}, Int, Int), x, rowidx - 1, colidx - 1)
+                  (Ref{ArbRealMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
         ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
     end
     return z
@@ -114,7 +114,7 @@ end
                             rowidx::Int, colidx::Int) where {P}
     GC.@preserve x begin
         ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
-        	        (Ref{ArbRealMat}, Cint, Cint), x, rowidx-1, colidx-1)
+        	        (Ref{ArbRealMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
         ccall(@libarb(arb_set), Cvoid, (Ptr{ArbReal}, Ref{ArbReal}), ptr, z)
     end
     return z
@@ -143,19 +143,19 @@ function transpose(src::ArbRealMatrix{P}) where {P}
     end
 
     ccall(@libarb(arb_mat_transpose), Cvoid,
-          (Ref{ArbRealMat}, Ref{ArbRealMat}), dest, src)
+          (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), dest, src)
     return dest
 end
 
 function transpose!(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
-    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMat}, Ref{ArbRealMat}), x, x)
+    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), x, x)
     return x
 end
 
 function transpose!(dest::ArbRealMatrix{P}, src::ArbRealMatrix{P}) where {P}
     checkcompat(dest, src)
-    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMat}, Ref{ArbRealMat}), dest, src)
+    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), dest, src)
     return dest
 end
 
@@ -164,7 +164,7 @@ end
 function norm(m::ArbRealMatrix{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_mat_frobenius_norm), Cvoid,
-    	  (Ref{ArbReal}, Ref{ArbRealMat}, Cint), z, m, P)
+    	  (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, m, P)
     return z
 end
 
@@ -177,7 +177,7 @@ end
 function trˌ(x::ArbRealMatrix{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_mat_trace), Cvoid,
-    	  (Ref{ArbReal}, Ref{ArbRealMat}, Cint), z, x, P)
+    	  (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P)
     return z
 end
 
@@ -190,7 +190,7 @@ end
 function detˌ(x::ArbRealMatrix{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_mat_det), Cvoid,
-          (Ref{ArbReal}, Ref{ArbRealMat}, Cint), z, x, P)
+          (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P)
     return z
 end
 
@@ -206,7 +206,7 @@ function determinant(x::ArbRealMatrix{P}) where {P}
     P2 = P + P>>1
     z = ArbReal{P2}()
     ccall(@libarb(arb_mat_det_precond), Cvoid,
-          (Ref{ArbReal}, Ref{ArbRealMat}, Cint), z, x, P2)
+          (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P2)
     return z
 end
 
@@ -218,7 +218,7 @@ end
 
 function invˌ(x::ArbRealMatrix{P}) where {P}
     z = ArbRealMatrix{P}(rowcount(x), colcount(x))
-    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMat}, Ref{ArbRealMat}, Cint), z, x, P)
+    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, P)
     ok !== Cint(0) && return z
     throw(ErrorException("cannot invert $(x)"))
 end
@@ -232,7 +232,7 @@ function inverse(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
     P2 = P + P>>1
     z = ArbRealMatrix{P2}(rowcount(x), colcount(x))
-    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMat}, Ref{ArbRealMat}, Cint), z, x, P)
+    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, P)
     ok !== Cint(0) && return z
     throw(ErrorException("cannot invert $(x)"))
 end
@@ -251,7 +251,7 @@ Base.:(*)(x::Array{ArbReal{P},2}, y::Arrray{ArbFReal{P},2}) where {P} =
 
 function matmulˌ(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     z = ArbRealMatrix{P}(rowcount(x), colcount(y))
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMat}, Ref{ArbRealMat}, Ref{ArbRealMat}, Cint), z, x, y, P)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return z
 end
 
