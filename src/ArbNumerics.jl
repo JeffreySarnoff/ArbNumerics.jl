@@ -10,7 +10,7 @@ module ArbNumerics
 export ArbNumber,
        ArbFloat, ArbReal, ArbComplex,
        ArbRealMatrix,
-       interval, setinterval, 
+       interval, setinterval,
        lowerbound, upperbound,
        ball, setball,
        midpoint, radius,
@@ -114,8 +114,12 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      eta, zeta
 
 using  LinearAlgebra
-import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt, cholesky, tril, triu, eigvals, svdvals
+import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
+                      cholesky, tril, triu, eigvals, svdvals, floatmin2
 using  GenericLinearAlgebra
+
+export tr, det, transpose, transpose!, norm, lu, ldlt,
+       cholesky, tril, tiru, eigvals, svdvals
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
@@ -138,7 +142,7 @@ include("support/random.jl")
 
 const ArbNumber = Union{ArbFloat, ArbReal, ArbComplex}
 
-include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
+#include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
 #include("libarb/ArbFloatMatrix.jl") # must preceed ArbComplexMatrix
 #include("libarb/ArbComplexMatrix.jl")
 include("libarb/promote.jl")
