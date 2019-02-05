@@ -36,7 +36,7 @@ end
                                          x, rowcount, colcount)
 end
 
-@inline function ArbRealMat(rowcount::I, colcount::I) where {I<:Signed}
+@inline function ArbRealMatrix(rowcount::I, colcount::I) where {I<:Signed}
 	P = workingprecision(ArbReal)
 	return ArbRealMatrix{P}(rowcount, colcount)
 end
@@ -55,7 +55,7 @@ Base.zeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} 
     ArbRealMatrix{P}(rowcount, colcount)
 
 Base.zeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
-    ArbRealMat(rowcount, colcount)
+    ArbRealMatrix(rowcount, colcount)
 
 function Base.reshape(x::Vector{ArbReal{P}}, rc::Tuple{Int, Int}) where {P}
    n = length(x)
