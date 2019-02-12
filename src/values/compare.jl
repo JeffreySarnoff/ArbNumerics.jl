@@ -178,3 +178,23 @@ function max(x::ArbComplex{P}, y::ArbComplex{P}; noNaNs::Bool=true) where {P}
 end
 
 minmax(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = min(x, y), max(x, y)
+
+isapprox(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = isapprox(x, y, atol=0, rtol=atol>0 ? 0 : √eps(min(abs(x),abs(y))))
+isapprox(x::ArbReal{P}, y::ArbReal{P}) where {P} = isapprox(midpoint(x), midpoint(y))
+isapprox(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = isapprox(midpoint(real(x)), midpoint(real(y))) && isapprox(midpoint(imag(x)), midpoint(imag(y)))
+
+isapprox(x::ArbFloat{P}, y::ArbReal{P})  where {P} = isapprox(x, midpoint(y))
+isapprox(x::ArbReal{P}, y::ArbFloat{P})  where {P} = isapprox(midpoint(x), y)
+isapprox(x::ArbFloat{P}, y::ArbComplex{P}) where {P} = isapprox(x, midpoint(real(y))) && isapprox(zero(ArbFloat{P}), midpoint(imag(y)))
+isapprox(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = isapprox(midpoint(real(x)), y) && isapprox(zero(ArbFloat{P}), midpoint(imag(x)))
+isapprox(x::ArbReal{P}, y::ArbComplex{P}) where {P} = isapprox(midpoint(x), midpoint(real(y))) && isapprox(zero(ArbFloat{P}), midpoint(imag(y)))
+isapprox(x::ArbComplex{P}, y::ArbReal{P}) where {P} = isapprox(midpoint(real(x)), midpoint(y)) && isapprox(zero(ArbFloat{P}), midpoint(imag(x)))
+
+isapprox(x::ArbFloat{P}, y::F) where {P, F} = isapprox(x, ArbFloat{P}(y))
+isapprox(x::F, y::ArbFloat{P}) where {P, F} = isapprox(ArbFloat{P}(x), y)
+isapprox(x::ArbReal{P}, y::F) where {P, F} = isapprox(x, ArbReal{P}(y))
+isapprox(x::F, y::ArbReal{P}) where {P, F} = isapprox(ArbReal{P}(x), y)
+isapprox(x::ArbComplex{P}, y::F) where {P, F} = isapprox(x, ArbComplex{P}(y))
+isapprox(x::F, y::ArbComplex{P}) where {P, F} = isapprox(ArbComplex{P}(x), y)
+
+
