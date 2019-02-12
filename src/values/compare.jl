@@ -179,7 +179,7 @@ end
 
 minmax(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = min(x, y), max(x, y)
 
-isapprox(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = isapprox(x, y, rtol=√eps(min(abs(x),abs(y))))
+isapprox(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = isapprox(x, y, rtol=√eps(max(abs(x),abs(y))))
 isapprox(x::ArbReal{P}, y::ArbReal{P}) where {P} = isapprox(midpoint(x), midpoint(y))
 isapprox(x::ArbComplex{P}, y::ArbComplex{P}) where {P} = isapprox(midpoint(real(x)), midpoint(real(y))) && isapprox(midpoint(imag(x)), midpoint(imag(y)))
 
