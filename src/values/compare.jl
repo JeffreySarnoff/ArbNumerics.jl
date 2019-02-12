@@ -190,6 +190,13 @@ isapprox(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = isapprox(midpoint(real(x)
 isapprox(x::ArbReal{P}, y::ArbComplex{P}) where {P} = isapprox(midpoint(x), midpoint(real(y))) && isapprox(zero(ArbFloat{P}), midpoint(imag(y)))
 isapprox(x::ArbComplex{P}, y::ArbReal{P}) where {P} = isapprox(midpoint(real(x)), midpoint(y)) && isapprox(zero(ArbFloat{P}), midpoint(imag(x)))
 
+isapprox(x::ArbFloat{P}, y::F) where {P, F<:IEEEFloat} = isapprox(F(x), y)
+isapprox(x::F, y::ArbFloat{P}) where {P, F<:IEEEFloat} = isapprox(x, F(y))
+isapprox(x::ArbReal{P}, y::F) where {P, F<:IEEEFloat} = isapprox(F(x), y)
+isapprox(x::F, y::ArbReal{P}) where {P, F<:IEEEFloat} = isapprox(x, F(y))
+isapprox(x::ArbComplex{P}, y::F) where {P, F<:IEEEFloat} = isapprox(F(real(x)), y)
+isapprox(x::F, y::ArbComplex{P}) where {P, F<:IEEEFloat} = isapprox(x, F(real(y)))
+
 isapprox(x::ArbFloat{P}, y::N) where {P, N<:Number} = isapprox(x, ArbFloat{P}(y))
 isapprox(x::N, y::ArbFloat{P}) where {P, N<:Number} = isapprox(ArbFloat{P}(x), y)
 isapprox(x::ArbReal{P}, y::N) where {P, N<:Number} = isapprox(x, ArbReal{P}(y))
