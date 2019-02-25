@@ -118,7 +118,7 @@ import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
                       cholesky, tril, triu, eigvals, svdvals, floatmin2
 using  GenericLinearAlgebra
 
-export tr, det, transpose, transpose!, norm, lu, ldlt,
+export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
        cholesky, tril, tiru, eigvals, svdvals
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
