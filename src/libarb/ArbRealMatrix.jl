@@ -291,7 +291,7 @@ end
 
 # matrix multiply
 
-function Base.mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P})
+function LinearAlgebra.mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P})
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return nothing
 end
