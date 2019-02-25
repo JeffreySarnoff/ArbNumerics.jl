@@ -75,19 +75,21 @@ copy(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = copy(x, P, rounding
 copy(x::ArbFloat{P}, bitprecision::Int) where {P} = copy(x, bitprecision, RoundNearest)
 
 
-function ArbFloat{P}(x::Int64) where {P}
+function ArbFloat{P}(x::Int32) where {P}
     z = ArbFloat{P}()
     ccall(@libarb(arf_set_si), Cvoid, (Ref{ArbFloat}, Clong), z, x)
     return z
 end
-ArbFloat{P}(x::T) where {P, T<:Union{Int8, Int16, Int32}} = ArbFloat{P}(Int64(x))
+ArbFloat{P}(x::T) where {P, T<:Union{Int8, Int16}} = ArbFloat{P}(Int32(x))
+ArbFloat{P}(x::T) where {P, T<:Union{Int64, Int128}} = ArbFloat{P}(BigInt(x))
 
-function ArbFloat{P}(x::UInt64) where {P}
+function ArbFloat{P}(x::UInt32) where {P}
     z = ArbFloat{P}()
     ccall(@libarb(arf_set_ui), Cvoid, (Ref{ArbFloat}, Culong), z, x)
     return z
 end
-ArbFloat{P}(x::T) where {P, T<:Union{UInt8, UInt16, UInt32}} = ArbFloat{P}(UInt64(x))
+ArbFloat{P}(x::T) where {P, T<:Union{UInt8, UInt16}} = ArbFloat{P}(UInt32(x))
+ArbFloat{P}(x::T) where {P, T<:Union{UInt64, UInt128}} = ArbFloat{P}(BigInt(x))
 
 function ArbFloat{P}(x::Float64) where {P}
     z = ArbFloat{P}()
