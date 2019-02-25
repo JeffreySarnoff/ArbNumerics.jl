@@ -17,7 +17,7 @@ mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
        nrows, ncols = ncols, nrows
        arm = ArbRealMatrix{P}(nrows, ncols)
        afm = new{P}()
-       finalizer(afm, arf_mat_clear)
+       finalizer(arf_mat_clear, afm)
        afm.entries = arm.eachcell
        afm.nrows = nrows
        afm.ncols = ncols
