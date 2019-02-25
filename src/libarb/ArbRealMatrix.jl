@@ -238,7 +238,7 @@ end
 
 function det(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
-    return detˌ
+    return detˌ(x)
 end
 
 function detˌ(x::ArbRealMatrix{P}) where {P}
@@ -259,7 +259,7 @@ function determinant(x::ArbRealMatrix{P}) where {P}
     z = ArbReal{P2}()
     ccall(@libarb(arb_mat_det_precond), Cvoid,
           (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P2)
-    return z
+    return ArbReal{P}(z)
 end
 
 
@@ -283,7 +283,7 @@ function inverse(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
     P2 = P + P>>1
     z = ArbRealMatrix{P2}(rowcount(x), colcount(x))
-    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, P)
+    ok = ccall(@libarb(arb_mat_inv), Cint, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, P2)
     ok !== Cint(0) && return z
     throw(ErrorException("cannot invert $(x)"))
 end
@@ -291,21 +291,24 @@ end
 
 # matrix multiply
 
+function Base.mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P})
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return nothing
+end
+
+function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    z = ArbRealMatrix{P}(rowcount(x), colcount(y))
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
+end	
+
 function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     checkmulable(x, y)
-    return matmulˌ(x, y)
+    return matmul(x, y)
 end
 
 Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P} =
     ArbRealMatrix{P}(x) * ArbRealMatrix{P}(y)
-
-
-function matmulˌ(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    z = ArbRealMatrix{P}(rowcount(x), colcount(y))
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
-    return z
-end
-
 
 
 # checks for validity
