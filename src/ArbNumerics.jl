@@ -113,10 +113,12 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
 
+using  GenericLinearAlgebra
+
 using  LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
-                      cholesky, tril, triu, eigvals, svdvals, floatmin2
-using  GenericLinearAlgebra
+                      cholesky, tril, triu, eigvals, svdvals, floatmin2,
+                      mul!, rmul!, lmul!
 
 export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
        cholesky, tril, tiru, eigvals, svdvals
