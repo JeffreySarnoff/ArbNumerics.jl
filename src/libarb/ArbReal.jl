@@ -75,20 +75,21 @@ function copy(x::ArbReal{P}) where {P}
     return z
 end
 
-
-function ArbReal{P}(x::Int64) where {P}
+function ArbReal{P}(x::Int32) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_si), Cvoid, (Ref{ArbReal}, Clong), z, x)
     return z
 end
-ArbReal{P}(x::T) where {P, T<:Union{Int8, Int16, Int32}} = ArbReal{P}(Int64(x))
+ArbReal{P}(x::T) where {P, T<:Union{Int8, Int16}} = ArbReal{P}(Int32(x))
+ArbReal{P}(x::T) where {P, T<:Union{Int64, Int128}} = ArbReal{P}(BigInt(x))
 
-function ArbReal{P}(x::UInt64) where {P}
+function ArbReal{P}(x::UInt32) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_ui), Cvoid, (Ref{ArbReal}, Culong), z, x)
     return z
 end
-ArbReal{P}(x::T) where {P, T<:Union{UInt8, UInt16, UInt32}} = ArbReal{P}(UInt64(x))
+ArbReal{P}(x::T) where {P, T<:Union{UInt8, UInt16}} = ArbReal{P}(UInt32(x))
+ArbReal{P}(x::T) where {P, T<:Union{UInt64, UInt128}} = ArbReal{P}(BigInt(x))
 
 function ArbReal{P}(x::Float64) where {P}
     z = ArbReal{P}()
