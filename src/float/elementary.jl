@@ -160,14 +160,14 @@ function log_10(x::ArbFloat{P}) where {P}
 end
 
 function log2(x::ArbFloat{P}, logof2::ArbFloat{P}=zero(ArbFloat{P})) where {P}
-   logof2 = iszero(logof2) ? log_2(ArbFloat{P}) : logof2
+   logof2 = iszero(logof2) ? log_2(x) : logof2
    z = log(ArbReal{P}(x))
    z = z / logof2
    return midpoint_byref(z)
 end
 
 function log10(x::ArbFloat{P}, logof10::ArbFloat{P}=zero(ArbFloat{P})) where {P}
-   logof10 = iszero(logof10) ? log_10(ArbFloat{P}) : logof10
+   logof10 = iszero(logof10) ? log_10(x) : logof10
    z = log(ArbReal{P}(x))
    z = z / logof10
    return midpoint_byref(z)
