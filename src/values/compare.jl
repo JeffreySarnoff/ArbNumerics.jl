@@ -95,13 +95,22 @@ end
 
 for F in (:(==), :(!=), :(<), :(<=), :(>=), :(>), :isequal, :isless)
     @eval begin
-        $F(x::ArbFloat{P}, y::T) where {P, T<:Union{Integer, Rational, AbstractFloat}} =
+        $F(x::ArbFloat{P}, y::T) where {P, T<:Union{Integer, AbstractFloat}} =
             $F(promote(x, y)...,)
-        $F(x::T, y::ArbFloat{P}) where {P, T<:Union{Integer, Rational, AbstractFloat}} =
+        $F(x::T, y::ArbFloat{P}) where {P, T<:Union{Integer, AbstractFloat}} =
             $F(promote(x, y)...,)
-        $F(x::ArbReal{P}, y::T) where {P, T<:Union{Integer, Rational, AbstractFloat}} =
+        $F(x::ArbReal{P}, y::T) where {P, T<:Union{Integer, AbstractFloat}} =
             $F(promote(x, y)...,)
-        $F(x::T, y::ArbReal{P}) where {P, T<:Union{Integer, Rational, AbstractFloat}} =
+        $F(x::T, y::ArbReal{P}) where {P, T<:Union{Integer, AbstractFloat}} =
+            $F(promote(x, y)...,)
+
+        $F(x::ArbFloat{P}, y::Rational) where {P} =
+            $F(promote(x, y)...,)
+        $F(x::Rational, y::ArbFloat{P}) where {P} =
+            $F(promote(x, y)...,)
+        $F(x::ArbReal{P}, y::Rational) where {P} =
+            $F(promote(x, y)...,)
+        $F(x::Rational, y::ArbReal{P}) where {P} =
             $F(promote(x, y)...,)
     end
 end
