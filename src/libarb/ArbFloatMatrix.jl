@@ -99,6 +99,7 @@ end
     return nothing
 end
 
+#=
 @inline function Base.getindex(x::ArbFloatMatrix{P}, rowidx::Int, colidx::Int) where {P}
     rowidx, colidx = colidx, rowidx
     checkbounds(x, rowidx, colidx)
@@ -110,6 +111,19 @@ end
                   (Ref{ArbRealMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
         ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
     end
+    w = ArbFloat{P}(z)
+    return w
+end
+=#
+@inline function Base.getindex(x::ArbFloatMatrix{P}, rowidx::Int, colidx::Int) where {P}
+    rowidx, colidx = colidx, rowidx
+    checkbounds(x, rowidx, colidx)
+
+    w = ArbFloat{P}()
+    z = ArbReal{P}()
+    v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbReal},
+               (Ref{ArbRealMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
+    ccall(@libarb(arb_set), Cvoid, (Ref{ArbReal}, Ptr{ArbReal}), z, v)
     w = ArbFloat{P}(z)
     return w
 end
