@@ -95,13 +95,13 @@ end
 
 for F in (:(==), :(!=), :(<), :(<=), :(>=), :(>), :isequal, :isless)
     @eval begin
-        $F(x::ArbFloat{P}, y::T) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+        $F(x::ArbFloat{P}, y::T) where {P, T<:Real} =
             $F(promote(x, y)...,)
-        $F(x::T, y::ArbFloat{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+        $F(x::T, y::ArbFloat{P}) where {P, T<:Real} =
             $F(promote(x, y)...,)
-        $F(x::ArbReal{P}, y::T) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+        $F(x::ArbReal{P}, y::T) where {P, T<:Real} =
             $F(promote(x, y)...,)
-        $F(x::T, y::ArbReal{P}) where {P, T<:Union{Integer, Base.IEEEFloat}} =
+        $F(x::T, y::ArbReal{P}) where {P, T<:Real} =
             $F(promote(x, y)...,)
     end
 end
