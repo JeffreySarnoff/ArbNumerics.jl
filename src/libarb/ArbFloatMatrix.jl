@@ -16,9 +16,9 @@ mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
    function ArbFloatMatrix{P}(nrows::Int, ncols::Int) where {P}
        nrows, ncols = ncols, nrows
        arm = ArbRealMatrix{P}(nrows, ncols)
-       afm = new{P}(arm.entries, nrows, ncols. arm.rows)
+       afm = new{P}(arm.eachcell, nrows, ncols. arm.eachrow)
        finalizer(arb_mat_clear, ArbRealMatrix{P})
-       return new{P}(z.entries, nrows, ncols, z.rows)
+       return new{P}(afm.entries, nrows, ncols, afm.rows)
    end
 
    function ArbFloatMatrix(nrows::Int, ncols::Int)
@@ -32,7 +32,7 @@ end
 end
 
 @inline function ArbFloatMatrix{P}(x::ArbRealMatrix{P}) where {P}
-    ArbRealMatrix{P}(x.entries, x.nrows, x.ncols. x.rows)
+    ArbFloatMatrix{P}(x.eachcell, x.rowcount, x.colcount. x.eachrow)
 end
 
 @inline function arf_mat_clear(x::ArbFloatMatrix{P}) where {P}
