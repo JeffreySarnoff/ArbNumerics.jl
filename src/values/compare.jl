@@ -71,13 +71,13 @@ end
 function (<)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     x = upperbound(x)
     y = lowerbound(y)
-    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), y, x)
+    0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 function (>)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     x = lowerbound(x)
     y = upperbound(y)
-    0 != ccall(@libarb(arb_gt), Cint, (Ref{ArbReal}, Ref{ArbReal}), y, x)
+    0 != ccall(@libarb(arb_gt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 function (<=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
@@ -87,7 +87,7 @@ end
 
 function (>=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     x > y ||  
-    0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), y, x)
+    0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 # ArbComplex comparisons < > <= >=
