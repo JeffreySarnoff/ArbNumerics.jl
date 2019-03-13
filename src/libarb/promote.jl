@@ -1,10 +1,34 @@
+for T in (:Int8, :Int16, :Int32, :Int64, :Int128, :Float16, :Float32, :Float6)
+    @eval begin
+        promote_type(::Type{ArbComplex}, ::Type{$T}) = ArbComplex
+        promote_type(::Type{ArbReal}, ::Type{$T}) = ArbReal
+        promote_type(::Type{ArbFloat}, ::Type{$T}) = ArbFloat
+        
+        promote_type(::Type{ArbComplex{P}}, ::Type{$T}) where {P} = ArbComplex{P}
+        promote_type(::Type{ArbReal{P}}, ::Type{$T}) where {P} = ArbReal{P}
+        promote_type(::Type{ArbFloat{P}}, ::Type{$T}) where {P} = ArbFloat{P}
+
+        promote_rule(::Type{ArbComplex}, ::Type{$T}) = ArbComplex
+        promote_rule(::Type{ArbReal}, ::Type{$T}) = ArbReal
+        promote_rule(::Type{ArbFloat}, ::Type{$T}) = ArbFloat
+        
+        promote_rule(::Type{ArbComplex{P}}, ::Type{$T}) where {P} = ArbComplex{P}
+        promote_rule(::Type{ArbReal{P}}, ::Type{$T}) where {P} = ArbReal{P}
+        promote_rule(::Type{ArbFloat{P}}, ::Type{$T}) where {P} = ArbFloat{P}        
+    end
+end
+        
 promote_type(::Type{ArbComplex}, ::Type{ArbReal}) where {P} = ArbComplex{P}
 promote_type(::Type{ArbComplex}, ::Type{ArbFloat}) where {P} = ArbComplex{P}
 promote_type(::Type{ArbReal}, ::Type{ArbFloat}) where {P} = ArbReal{P}
 
-promote_rule(::Type{ArbComplex}, ::Type{ArbReal}) where {P} = ArbComplex{P}
-promote_rule(::Type{ArbComplex}, ::Type{ArbFloat}) where {P} = ArbComplex{P}
-promote_rule(::Type{ArbReal}, ::Type{ArbFloat}) where {P} = ArbReal{P}
+promote_type(::Type{ArbComplex}, ::Type{ArbReal}) = ArbComplex
+promote_type(::Type{ArbComplex}, ::Type{ArbFloat}) = ArbComplex
+promote_type(::Type{ArbReal}, ::Type{ArbFloat}) = ArbReal
+
+promote_rule(::Type{ArbComplex}, ::Type{ArbReal}) = ArbComplex
+promote_rule(::Type{ArbComplex}, ::Type{ArbFloat}) = ArbComplex
+promote_rule(::Type{ArbReal}, ::Type{ArbFloat}) = ArbReal
 
 promote_type(::Type{ArbComplex{P}}, ::Type{ArbReal{P}}) where {P} = ArbComplex{P}
 promote_type(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
