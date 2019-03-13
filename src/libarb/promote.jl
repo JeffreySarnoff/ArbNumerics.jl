@@ -34,10 +34,6 @@ promote_rule(::Type{ArbComplex{P}}, ::Type{ArbReal{P}}) where {P} = ArbComplex{P
 promote_rule(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
 promote_rule(::Type{ArbReal{P}}, ::Type{ArbFloat{P}}) where {P} = ArbReal{P}
 
-promote_rule(::Type{ArbComplex{P}}, ::Type{ArbReal{P}}) where {P} = ArbComplex{P}
-promote_rule(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
-promote_rule(::Type{ArbReal{P}}, ::Type{ArbFloat{P}}) where {P} = ArbReal{P}
-
 promote_rule(::Type{ArbComplex{P}}, ::Type{Mag}) where {P} = ArbComplex{P}
 promote_rule(::Type{ArbReal{P}}, ::Type{Mag}) where {P} = ArbReal{P}
 promote_rule(::Type{ArbFloat{P}}, ::Type{Mag}) where {P} = ArbFloat{P}
