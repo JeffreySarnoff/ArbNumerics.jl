@@ -18,10 +18,6 @@ for T in (:Int8, :Int16, :Int32, :Int64, :Int128, :Float16, :Float32, :Float64)
     end
 end
         
-promote_type(::Type{ArbComplex}, ::Type{ArbReal}) where {P} = ArbComplex{P}
-promote_type(::Type{ArbComplex}, ::Type{ArbFloat}) where {P} = ArbComplex{P}
-promote_type(::Type{ArbReal}, ::Type{ArbFloat}) where {P} = ArbReal{P}
-
 promote_type(::Type{ArbComplex}, ::Type{ArbReal}) = ArbComplex
 promote_type(::Type{ArbComplex}, ::Type{ArbFloat}) = ArbComplex
 promote_type(::Type{ArbReal}, ::Type{ArbFloat}) = ArbReal
