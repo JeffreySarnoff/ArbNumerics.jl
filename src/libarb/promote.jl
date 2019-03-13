@@ -1,6 +1,23 @@
+promote_type(::Type{ArbComplex}, ::Type{ArbReal}) where {P} = ArbComplex{P}
+promote_type(::Type{ArbComplex}, ::Type{ArbFloat}) where {P} = ArbComplex{P}
+promote_type(::Type{ArbReal}, ::Type{ArbFloat}) where {P} = ArbReal{P}
+
+promote_rule(::Type{ArbComplex}, ::Type{ArbReal}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbComplex}, ::Type{ArbFloat}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbReal}, ::Type{ArbFloat}) where {P} = ArbReal{P}
+
+promote_type(::Type{ArbComplex{P}}, ::Type{ArbReal{P}}) where {P} = ArbComplex{P}
+promote_type(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
+promote_type(::Type{ArbReal{P}}, ::Type{ArbFloat{P}}) where {P} = ArbReal{P}
+
 promote_rule(::Type{ArbComplex{P}}, ::Type{ArbReal{P}}) where {P} = ArbComplex{P}
 promote_rule(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
 promote_rule(::Type{ArbReal{P}}, ::Type{ArbFloat{P}}) where {P} = ArbReal{P}
+
+promote_rule(::Type{ArbComplex{P}}, ::Type{ArbReal{P}}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbComplex{P}}, ::Type{ArbFloat{P}}) where {P} = ArbComplex{P}
+promote_rule(::Type{ArbReal{P}}, ::Type{ArbFloat{P}}) where {P} = ArbReal{P}
+
 promote_rule(::Type{ArbComplex{P}}, ::Type{Mag}) where {P} = ArbComplex{P}
 promote_rule(::Type{ArbReal{P}}, ::Type{Mag}) where {P} = ArbReal{P}
 promote_rule(::Type{ArbFloat{P}}, ::Type{Mag}) where {P} = ArbFloat{P}
