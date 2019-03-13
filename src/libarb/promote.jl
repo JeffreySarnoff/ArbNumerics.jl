@@ -1,4 +1,4 @@
-for T in (:Int8, :Int16, :Int32, :Int64, :Int128, :Float16, :Float32, :Float6)
+for T in (:Int8, :Int16, :Int32, :Int64, :Int128, :Float16, :Float32, :Float64)
     @eval begin
         promote_type(::Type{ArbComplex}, ::Type{$T}) = ArbComplex
         promote_type(::Type{ArbReal}, ::Type{$T}) = ArbReal
