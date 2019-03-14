@@ -45,17 +45,6 @@ end
 	return ArbRealMatrix{P}(nrows, ncols)
 end
 
-function ArbRealMatrix(fpm::Array{F,2}) where {F<:AbstractFloat}
-    nrows, ncols = size(fpm)
-    arm = ArbRealMatrix(nrows, ncols)
-    for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
-end
-
 function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix(nrows, ncols)
@@ -67,6 +56,40 @@ function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
 	return arm
 end
 
+function ArbRealMatrix(fpm::Array{ArbFloat{P},2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbRealMatrix(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = ArbReal{P}(fpm[r,c])
+	    end
+	end
+	return arm
+end
+
+function ArbRealMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
+    P = workingprecision(ArbReal)
+    nrows, ncols = size(fpm)
+    arm = ArbRealMatrix(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = ArbReal{P}(fpm[r,c])
+	    end
+	end
+	return arm
+end
+
+function Matrix(arm::ArbRealMatrix{P}) where {P}
+    nrows, ncols = arm.rowcount, arm.colcount
+    m = zeros(ArbReal{P}, nrows, ncols)
+    for r = 1:nrows
+        for c = 1:ncols
+            m[r,c] = arm[r,c]
+        end
+    end
+    return m
+end
+
 @inline rowcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :rowcount)
 @inline colcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :colcount)
 @inline eachcell(x::ArbRealMatrix{P}) where {P} = getfield(x, :eachcell)
@@ -75,11 +98,11 @@ end
 
 @inline cellvalue(x::ArbRealMatrix{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
 
-Base.zeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+arbzeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
     ArbRealMatrix{P}(rowcount, colcount)
 
-# Base.zeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
-#    ArbRealMatrix(rowcount, colcount)
+arbzeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+    ArbRealMatrix(rowcount, colcount)
 
 function Base.reshape(x::Vector{ArbReal{P}}, rc::Tuple{Int, Int}) where {P}
    n = length(x)
