@@ -64,7 +64,7 @@ end
 function (<=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     (x < y) || (x == y)
 end
-function (=>)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
+function (>=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     (x > y) || (x == y)
 end
 
