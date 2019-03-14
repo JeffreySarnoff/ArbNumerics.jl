@@ -1,5 +1,12 @@
 @testset "compare" begin
-
+    
+    @test ArbNumerics.Mag(2.0) == ArbNumerics.Mag(2.0)
+    @test ArbNumerics.Mag(1.0) != ArbNumerics.Mag(2.0)
+    @test ArbNumerics.Mag(2.0) > ArbNumerics.Mag(1.0)
+    @test ArbNumerics.Mag(1.0) < ArbNumerics.Mag(2.0)
+    @test ArbNumerics.Mag(2.0) >= ArbNumerics.Mag(1.0)
+    @test ArbNumerics.Mag(1.0) <= ArbNumerics.Mag(2.0)
+    
     @test ArbFloat(2.0) > 1
     @test ArbFloat(2.0) >= 1
     @test 1 < ArbFloat(2.0)
