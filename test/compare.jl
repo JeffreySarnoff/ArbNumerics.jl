@@ -13,23 +13,23 @@
     @test ArbFloat(2.0) == ArbFloat(2.0)
     @test ArbFloat(1.0) != ArbFloat(2.0)
     @test ArbFloat(2.0) > ArbFloat(1.0)
-    @test ArbFloat(1.0) < ArbFloat(1.0)
+    @test ArbFloat(1.0) < ArbFloat(2.0)
     @test ArbFloat(2.0) >= ArbFloat(1.0)
-    @test ArbFloat(1.0) <= ArbFloat(1.0)
+    @test ArbFloat(1.0) <= ArbFloat(2.0)
 
     @test ArbFloat(2.0) == ArbReal(2.0)
     @test ArbFloat(1.0) != ArbReal(2.0)
     @test ArbFloat(2.0) > ArbReal(1.0)
-    @test ArbFloat(1.0) < ArbReal(1.0)
+    @test ArbFloat(1.0) < ArbReal(2.0)
     @test ArbFloat(2.0) >= ArbReal(1.0)
-    @test ArbFloat(1.0) <= ArbReal(1.0)
+    @test ArbFloat(1.0) <= ArbReal(2.0)
 
     @test ArbReal(2.0) == ArbFloat(2.0)
     @test ArbReal(1.0) != ArbFloat(2.0)
     @test ArbReal(2.0) > ArbFloat(1.0)
-    @test ArbReal(1.0) < ArbFloat(1.0)
+    @test ArbReal(1.0) < ArbFloat(2.0)
     @test ArbReal(2.0) >= ArbFloat(1.0)
-    @test ArbReal(1.0) <= ArbFloat(1.0)
+    @test ArbReal(1.0) <= ArbFloat(2.0)
 
     @test ArbReal(2.0) > 1
     @test ArbReal(2.0) >= 1
@@ -46,6 +46,6 @@
     @test ArbReal(2.0) > ArbReal(1.0)
     @test ArbReal(1.0) < ArbReal(1.0)
     @test ArbReal(2.0) >= ArbReal(1.0)
-    @test ArbReal(1.0) <= ArbReal(1.0)
+    @test ArbReal(1.0) <= ArbReal(2.0)
 
 end
