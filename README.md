@@ -12,7 +12,8 @@ This package uses the Arb C Library, and adapts some work from Nemo.jl: [_acknow
 
 -----
 
-[![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/latest/)
+[![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/latest/)&nbsp;&nbsp;&nbsp;[![codecov](https://codecov.io/gh/JeffreySarnoff/ArbNumerics.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/JeffreySarnoff/ArbNumerics.jl)
+
 
 ----
 
