@@ -44,7 +44,7 @@
     @test ArbReal(2.0) == ArbReal(2.0)
     @test ArbReal(1.0) != ArbReal(2.0)
     @test ArbReal(2.0) > ArbReal(1.0)
-    @test ArbReal(1.0) < ArbReal(1.0)
+    @test ArbReal(1.0) < ArbReal(2.0)
     @test ArbReal(2.0) >= ArbReal(1.0)
     @test ArbReal(1.0) <= ArbReal(2.0)
 
