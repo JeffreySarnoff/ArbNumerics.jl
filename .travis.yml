@@ -11,10 +11,10 @@ notifications:
   email: false
 git:
   depth: 99999999
-matrix:
+#matrix:
   #allow_failures:
   #  - julia: nightly
-  fast_finish: true
+  # fast_finish: true
 after_success:
   # push coverage results to Codecov
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
