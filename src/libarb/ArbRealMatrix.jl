@@ -47,7 +47,7 @@ end
 
 function ArbRealMatrix(fpm::Array{F,2}) where {F<:AbstractFloat}
     nrows, ncols = size(fpm)
-	arm = ArbRealMatrix(nrows, ncols)
+    arm = ArbRealMatrix(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
 			arm[r,c] = fpm[r,c]
@@ -56,9 +56,9 @@ function ArbRealMatrix(fpm::Array{F,2}) where {F<:AbstractFloat}
 	return arm
 end
 
-function ArbRealMatrix{P}(fpm::Array{F,2}) where {P, F<:AbstractFloat}
+function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
     nrows, ncols = size(fpm)
-	arm = ArbRealMatrix{P}(nrows, ncols)
+    arm = ArbRealMatrix(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
 			arm[r,c] = fpm[r,c]
@@ -66,7 +66,6 @@ function ArbRealMatrix{P}(fpm::Array{F,2}) where {P, F<:AbstractFloat}
 	end
 	return arm
 end
-
 
 @inline rowcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :rowcount)
 @inline colcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :colcount)
@@ -79,8 +78,8 @@ end
 Base.zeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
     ArbRealMatrix{P}(rowcount, colcount)
 
-Base.zeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
-    ArbRealMatrix(rowcount, colcount)
+# Base.zeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+#    ArbRealMatrix(rowcount, colcount)
 
 function Base.reshape(x::Vector{ArbReal{P}}, rc::Tuple{Int, Int}) where {P}
    n = length(x)
