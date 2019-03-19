@@ -31,7 +31,7 @@ function Base.tryparse(::Type{ArbFloat}, s::S; base::Int=10) where {S<:AbstractS
     bf = tryparse(BigFloat, s, base=base)
     P = DEFAULT_PRECISION[]
     return ArbFloat{P}(bf)
-endS<:AbstractString
+end
 
 function Base.tryparse(::Type{ArbFloat{P}}, s::S; base::Int=10) where {P, S<:AbstractString}
     bf = tryparse(BigFloat, s, base=base)
