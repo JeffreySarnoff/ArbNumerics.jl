@@ -27,24 +27,24 @@ function ArbReal(s::AbstractString)
     return ArbReal{P}(s)
 end
 
-function Base.tryparse(::Type{ArbFloat}, s::S; base::Int=10)
+function Base.tryparse(::Type{ArbFloat}, s::S; base::Int=10) where {S<:AbstractString}
     bf = tryparse(BigFloat, s, base=base)
     P = DEFAULT_PRECISION[]
     return ArbFloat{P}(bf)
-end
+endS<:AbstractString
 
-function Base.tryparse(::Type{ArbFloat{P}}, s::S; base::Int=10) where {P}
+function Base.tryparse(::Type{ArbFloat{P}}, s::S; base::Int=10) where {P, S<:AbstractString}
     bf = tryparse(BigFloat, s, base=base)
     return ArbFloat{P}(bf)
 end
 
-function Base.tryparse(::Type{ArbReal}, s::S; base::Int=10)
+function Base.tryparse(::Type{ArbReal}, s::S; base::Int=10) where {S<:AbstractString}
     bf = tryparse(BigFloat, s, base=base)
     P = DEFAULT_PRECISION[]
     return ArbReal{P}(bf)
 end
 
-function Base.tryparse(::Type{ArbReal{P}}, s::S; base::Int=10) where {P}
+function Base.tryparse(::Type{ArbReal{P}}, s::S; base::Int=10) where {P, S<:AbstractString}
     bf = tryparse(BigFloat, s, base=base)
     return ArbReal{P}(bf)
 end
