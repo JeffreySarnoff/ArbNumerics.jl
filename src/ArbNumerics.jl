@@ -149,6 +149,7 @@ include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
 #include("libarb/ArbComplexMatrix.jl")
 include("libarb/promote.jl")
 include("libarb/string.jl")
+include("libarb/parse.jl")
 include("libarb/show.jl")
 
 include("values/bitsdigits.jl")
