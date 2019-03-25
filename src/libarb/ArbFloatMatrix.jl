@@ -115,9 +115,6 @@ end
 @inline eachcell(x::ArbFloatMatrix{P}) where {P} = getfield(x, :eachcell)
 @inline eachrow(x::ArbFloatMatrix{P}) where {P} = getfield(x, :eachrow)
 
-@inline rowcount(x::Array{T,2}) where {T} = size(x)[1]
-@inline colcount(x::Array{T,2}) where {T} = size(x)[2]
-
 @inline cellvalue(x::ArbFloatMatrix{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
 
 arbzeros(::Type{ArbFloat{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
@@ -289,12 +286,6 @@ end
 end
 
 @inline function checkmulable(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
-    mulable = colcount(x) === rowcount(y)
-    mulable && return nothing
-    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
-end
-
-@inline function checkmulable(x::Array{T,2}, y::Array{T,2}) where {T}
     mulable = colcount(x) === rowcount(y)
     mulable && return nothing
     throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
