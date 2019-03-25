@@ -108,6 +108,8 @@ end
 @inline eachcell(x::ArbRealMatrix{P}) where {P} = getfield(x, :eachcell)
 @inline eachrow(x::ArbRealMatrix{P}) where {P} = getfield(x, :eachrow)
 
+@inline rowcount(x::Array{T,2}) where {T} = size(x)[1]
+@inline colcount(x::Array{T,2}) where {T} = size(x)[2]
 
 @inline cellvalue(x::ArbRealMatrix{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
 
@@ -346,6 +348,20 @@ function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return z
 end	
+
+function matmul(x::Array{ArbReal, 2}, y::Array{ArbReal, 2})
+    xx = ArbRealMatrix(x)
+    yy = ArbRealMatrix(x)
+    xy = *(xx, yy)
+    return Matrix(xy)
+end
+
+function matmul(x::Array{ArbReal{P}, 2}, y::Array{ArbReal{P},2}) where {P}
+    xx = ArbRealMatrix{P}(x)
+    yy = ArbRealMatrix{P}(x)
+    xy = *(xx, yy)
+    return Matrix(xy)
+end
 
 function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     checkmulable(x, y)
