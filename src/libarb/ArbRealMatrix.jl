@@ -368,8 +368,8 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return matmul(x, y)
 end
 
-Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P} =
-    ArbRealMatrix{P}(x) * ArbRealMatrix{P}(y)
+@inline Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P} =
+    matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
 
 
 # checks for validity
