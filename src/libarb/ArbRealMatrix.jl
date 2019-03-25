@@ -27,7 +27,7 @@ mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{P, ArbReal}
 end
 
 
-ArbRealMatrix(x::ArbRealMatrix) = x
+#ArbRealMatrix(x::ArbRealMatrix) = x
 ArbRealMatrix(x::ArbRealMatrix{P}) where {P} = x
 ArbRealMatrix{P}(x::ArbRealMatrix{P}) where {P} = x
 
@@ -42,14 +42,25 @@ end
 end
 
 @inline function ArbRealMatrix(nrows::Int, ncols::Int)
-	P = workingprecision(ArbReal)
+    P = workingprecision(ArbReal)
 	return ArbRealMatrix{P}(nrows, ncols)
 end
 
+function ArbRealMatrix(fpm::Array{ArbReal, 2})
+    P = workingprecision(ArbReal)
+    nrows, ncols = size(fpm)
+    arm = ArbRealMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
+end
 
 function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
     nrows, ncols = size(fpm)
-    arm = ArbRealMatrix(nrows, ncols)
+    arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
 			arm[r,c] = fpm[r,c]
