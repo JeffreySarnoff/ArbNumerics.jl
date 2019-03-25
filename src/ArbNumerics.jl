@@ -175,6 +175,7 @@ include("intervals/intervalparts.jl")
 include("intervals/complex_intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
+include("support/printf.jl")
 include("support/helptext.jl")
 
 end # ArbNumerics
