@@ -81,6 +81,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "seeingvalues/#show,-showall,-string,-stringall-1",
+    "page": "Seeing Values",
+    "title": "show, showall, string, stringall",
+    "category": "section",
+    "text": "using ArbNumerics\n\njulia> string(ArbFloat(pi)^12)\n\"924269.1815233741862225791703585\"\n\njulia> stringall(ArbFloat(pi)^12)\n\"924269.18152337418622257917035847560717530\"\n\njulia> setprecision(ArbReal, 168)\n168\n\njulia> show(ArbFloat(pi)^12)\n924269.18152337418622257917035847560717292226894005\n\njulia> showall(ArbFloat(pi)^12)\n924269.181523374186222579170358475607172922268940049306206"
+},
+
+{
     "location": "seeingvalues/#@sprintf,-@printf-1",
     "page": "Seeing Values",
     "title": "@sprintf, @printf",
