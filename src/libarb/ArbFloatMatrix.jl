@@ -14,10 +14,8 @@ mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
     eachrow::Ptr{Ptr{ArbReal{P}}}
 
     function ArbFloatMatrix{P}(rowcount::Int, colcount::Int) where {P}
-        z = new{P}() # z = new{P}(Ptr{ArbReal{P}}(0), 0, 0, Ptr{Ptr{ArbReal{P}}}(0))
-        arb_mat_init(z, rowcount, colcount)
-        finalizer(arb_mat_clear, z)
-        return z
+        z = ArbRealMatrix{P}(rowcount, colcount)
+        return new{P}(z.eachcell, rowcount, colcount, z.eachrow)
     end
 end
 
@@ -67,18 +65,6 @@ end
 function ArbFloatMatrix{P}(fpm::Array{ArbFloat,2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
-    for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbFloat{P}(fpm[r,c])
-	    end
-	end
-	return arm
-end
-
-
-function ArbFloatMatrix(fpm::Array{ArbFloat{P},2}) where {P}
-    nrows, ncols = size(fpm)
-    arm = ArbFloatMatrix(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
 			arm[r,c] = ArbFloat{P}(fpm[r,c])
@@ -165,12 +151,6 @@ end
 Base.setindex!(x::ArbFloatMatrix{P1}, z::ArbFloat{P2}, linearidx::Int) where {P1,P2} =
     setindex!(x, ArbFloat{P1}(z), linearidx)
 
-Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P}, linearidx::Int) where {P} =
-    setindex!(x, ArbFloat{P}(z), linearidx)
-
-Base.setindex!(x::ArbFloatMatrix{P1}, z::ArbFloat{P2}, linearidx::Int) where {P1,P2} =
-    setindex!(x, ArbFloat{P1}(ArbFloat{P1}(z)), linearidx)
-
 Base.setindex!(x::ArbFloatMatrix{P}, z::F, linearidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
     setindex!(x, ArbFloat{P}(z), linearidx)
 
@@ -186,12 +166,6 @@ end
 
 Base.setindex!(x::ArbFloatMatrix{P1}, z::ArbFloat{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
     setindex!(x, ArbFloat{P1}(z), rowidx, colidx)
-
-Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P}, rowidx::Int, colidx::Int) where {P} =
-    setindex!(x, ArbFloat{P}(z), rowidx, colidx)
-
-Base.setindex!(x::ArbFloatMatrix{P1}, z::ArbFloat{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
-    setindex!(x, ArbFloat{P1}(ArbFloat{P1}(z)), rowidx, colidx)
 
 Base.setindex!(x::ArbFloatMatrix{P}, z::F, rowidx::Int, colidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
     setindex!(x, ArbFloat{P}(z), rowidx, colidx)
