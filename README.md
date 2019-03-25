@@ -2,7 +2,7 @@
 # ArbNumerics.jl
 
 
-#### Copyright © 2015-2018 by Jeffrey Sarnoff.
+#### Copyright © 2015-2019 by Jeffrey Sarnoff.
 ####  This work is released under The MIT License.
 
 For multiprecision numerical computing using values with 25..2,500,000 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy.
