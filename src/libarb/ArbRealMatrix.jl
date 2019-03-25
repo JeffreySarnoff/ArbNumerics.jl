@@ -69,6 +69,29 @@ function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
 	return arm
 end
 
+function ArbRealMatrix{P}(fpm::Array{ArbReal{P},2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbRealMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
+end
+
+function ArbRealMatrix{P}(fpm::Array{ArbReal,2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbRealMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = ArbReal{P}(fpm[r,c])
+	    end
+	end
+	return arm
+end
+
+
 function ArbRealMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix(nrows, ncols)
@@ -258,6 +281,12 @@ end
 
 @inline function Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P}
     checkmulable(x, y)
+    return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
+end
+
+@inline function Base.:(*)(x::Array{ArbReal,2}, y::Array{ArbReal,2})
+    checkmulable(x, y)
+    P = workingprecision(ArbReal)	
     return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
 end
 
