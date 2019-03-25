@@ -110,6 +110,10 @@ function Matrix(arm::ArbFloatMatrix{P}) where {P}
     return m
 end
 
+Matrix(x::Array{ArbFloat, 2}) = x
+Matrix(x::Array{ArbFloat{P}, 2}) where {P} = x
+
+
 @inline rowcount(x::ArbFloatMatrix{P}) where {P} = getfield(x, :rowcount)
 @inline colcount(x::ArbFloatMatrix{P}) where {P} = getfield(x, :colcount)
 @inline eachcell(x::ArbFloatMatrix{P}) where {P} = getfield(x, :eachcell)
