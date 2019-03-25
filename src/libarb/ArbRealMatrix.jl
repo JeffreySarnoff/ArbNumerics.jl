@@ -368,9 +368,10 @@ function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return matmul(x, y)
 end
 
-@inline Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P} =
-    matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
-
+@inline function Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P}
+    checkmulable(x, y)
+    return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
+end
 
 # checks for validity
 
@@ -398,6 +399,12 @@ end
 end
 
 @inline function checkmulable(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    mulable = colcount(x) === rowcount(y)
+    mulable && return nothing
+    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
+@inline function checkmulable(x::Array{T,2}, y::Array{T,2}) where {T}
     mulable = colcount(x) === rowcount(y)
     mulable && return nothing
     throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
