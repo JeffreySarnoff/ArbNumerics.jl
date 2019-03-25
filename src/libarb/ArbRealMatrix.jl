@@ -287,7 +287,7 @@ end
 @inline function Base.:(*)(x::Array{ArbReal,2}, y::Array{ArbReal,2})
     checkmulable(x, y)
     P = workingprecision(ArbReal)	
-    return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
+    return matmul(ArbRealMatrix{P}(x), ArbRealMatrix{P}(y))
 end
 
 # checks for validity
