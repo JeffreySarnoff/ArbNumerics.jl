@@ -126,6 +126,10 @@ function Matrix(arm::ArbRealMatrix{P}) where {P}
     return m
 end
 
+Matrix(x::Array{ArbReal, 2}) = x
+Matrix(x::Array{ArbReal{P}, 2}) where {P} = x
+
+
 @inline rowcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :rowcount)
 @inline colcount(x::ArbRealMatrix{P}) where {P} = getfield(x, :colcount)
 @inline eachcell(x::ArbRealMatrix{P}) where {P} = getfield(x, :eachcell)
