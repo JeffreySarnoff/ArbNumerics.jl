@@ -270,7 +270,7 @@ end
 
 @inline function Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P}
     checkmulable(x, y)
-    return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
+    return matmul(ArbRealMatrix{P}(x), ArbRealMatrix{P}(y))
 end
 
 @inline function Base.:(*)(x::Array{ArbReal,2}, y::Array{ArbReal,2})
