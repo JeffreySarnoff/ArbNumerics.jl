@@ -26,10 +26,11 @@ mutable struct ArbRealMatrix{P} <: AbstractArbMatrix{P, ArbReal}
     end
 end
 
+
+ArbRealMatrix(x::ArbRealMatrix) = x
+ArbRealMatrix(x::ArbRealMatrix{P}) where {P} = x
 ArbRealMatrix{P}(x::ArbRealMatrix{P}) where {P} = x
 
-(::Type{Array{ArbReal{P},2}})(::UndefInitializer, nrows::Int, ncols::Int) where {P} =
-ArbRealMatrix{P}(nrows, ncols)
 
 @inline function arb_mat_clear(x::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_clear), Cvoid, (Ref{ArbRealMatrix}, ), x)
@@ -44,6 +45,7 @@ end
 	P = workingprecision(ArbReal)
 	return ArbRealMatrix{P}(nrows, ncols)
 end
+
 
 function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
     nrows, ncols = size(fpm)
@@ -70,7 +72,7 @@ end
 function ArbRealMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
     P = workingprecision(ArbReal)
     nrows, ncols = size(fpm)
-    arm = ArbRealMatrix(nrows, ncols)
+    arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
 			arm[r,c] = ArbReal{P}(fpm[r,c])
@@ -198,14 +200,14 @@ Base.setindex!(x::ArbRealMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R<
     return z
 end
 
-#=
-    Matrix{::ArbT{ArbPreciFount, colcount)
 
-=#
+#=
+(::Type{Array{ArbReal{P},2}})(::UndefInitializer, nrows::Int, ncols::Int) where {P} =
+ArbRealMatrix{P}(nrows, ncols)
 
 Base.Matrix{ArbReal{P}}(undef::UndefInitializer, r::I, c::I) where {P, I<:Integer} = ArbRealMatrix{P}(m, n)
 Base.zeros(::Type{ArbReal{P}}, r::I, c::I) where {P, I<:Integer} = ArbRealMatrix{P}(m,n)
-
+=#
 
 
 # operators over a matrix
