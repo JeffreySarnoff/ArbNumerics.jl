@@ -257,7 +257,7 @@ end
 function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     z = ArbRealMatrix{P}(rowcount(x), colcount(y))
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
-    return z
+    return Matrix(z)
 end	
 
 function matmul(x::Array{ArbReal, 2}, y::Array{ArbReal, 2})
