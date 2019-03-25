@@ -251,7 +251,7 @@ end
 
 @inline function Base.:(*)(x::Array{ArbFloat{P},2}, y::Array{ArbFloat{P},2}) where {P}
     checkmulable(x, y)
-    return matmul(ArbFloatMatrix{P}(x). ArbFloatMatrix{P}(y))
+    return matmul(ArbFloatMatrix{P}(x), ArbFloatMatrix{P}(y))
 end
 
 @inline function Base.:(*)(x::Array{ArbFloat,2}, y::Array{ArbFloat,2})
