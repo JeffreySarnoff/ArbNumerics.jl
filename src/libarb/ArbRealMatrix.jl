@@ -214,6 +214,90 @@ Base.setindex!(x::ArbRealMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R<
 end
 
 
+# matrix multiply
+
+function mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return nothing
+end
+
+function rmul!(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), x, x, y, P)
+    return nothing
+end
+
+function lmul!(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), y, x, y, P)
+    return nothing
+end
+
+function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    z = ArbRealMatrix{P}(rowcount(x), colcount(y))
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return z
+end	
+
+function matmul(x::Array{ArbReal, 2}, y::Array{ArbReal, 2})
+    xx = ArbRealMatrix(x)
+    yy = ArbRealMatrix(x)
+    xy = *(xx, yy)
+    return Matrix(xy)
+end
+
+function matmul(x::Array{ArbReal{P}, 2}, y::Array{ArbReal{P},2}) where {P}
+    xx = ArbRealMatrix{P}(x)
+    yy = ArbRealMatrix{P}(x)
+    xy = *(xx, yy)
+    return Matrix(xy)
+end
+
+function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    checkmulable(x, y)
+    return matmul(x, y)
+end
+
+@inline function Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P}
+    checkmulable(x, y)
+    return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
+end
+
+# checks for validity
+
+@inline function checkbounds(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
+    withinbounds = 0 < r <= rowcount(x) && 0 < c <= colcount(x)
+    withinbounds && return nothing
+    throw(BoundsError("($r, $c) not in 1:$(rowcount(x)), 1:$(colcount(x))"))
+end
+
+@inline function checkbounds(x::ArbRealMatrix{P}, linear_rc::Int) where {P}
+    withinbounds = 0 < linear_rc <= rowcount(x) * colcount(x)
+    withinbounds && return nothing
+    throw(BoundsError("($rc) not in 1:$(rowcount(x) * colcount(x))"))
+end
+
+@inline function checksquare(x::ArbRealMatrix{P}) where {P}
+    issquare(x) && return nothing
+    throw(DomainError("matrix is not square ($rowcount(x), $colcount(x))"))
+end
+
+@inline function checkcompat(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    compat = (rowcount(x) === colcount(y) && rowcount(y) === colcount(x))
+    compat && return nothing
+    throw(DomainError("incompatible matrices: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
+@inline function checkmulable(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    mulable = colcount(x) === rowcount(y)
+    mulable && return nothing
+    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
+@inline function checkmulable(x::Array{T,2}, y::Array{T,2}) where {T}
+    mulable = colcount(x) === rowcount(y)
+    mulable && return nothing
+    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
 #=
 (::Type{Array{ArbReal{P},2}})(::UndefInitializer, nrows::Int, ncols::Int) where {P} =
 ArbRealMatrix{P}(nrows, ncols)
@@ -325,87 +409,3 @@ function inverse(x::ArbRealMatrix{P}) where {P}
     throw(ErrorException("cannot invert $(x)"))
 end
 
-
-# matrix multiply
-
-function mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
-    return nothing
-end
-
-function rmul!(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), x, x, y, P)
-    return nothing
-end
-
-function lmul!(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), y, x, y, P)
-    return nothing
-end
-
-function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    z = ArbRealMatrix{P}(rowcount(x), colcount(y))
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
-    return z
-end	
-
-function matmul(x::Array{ArbReal, 2}, y::Array{ArbReal, 2})
-    xx = ArbRealMatrix(x)
-    yy = ArbRealMatrix(x)
-    xy = *(xx, yy)
-    return Matrix(xy)
-end
-
-function matmul(x::Array{ArbReal{P}, 2}, y::Array{ArbReal{P},2}) where {P}
-    xx = ArbRealMatrix{P}(x)
-    yy = ArbRealMatrix{P}(x)
-    xy = *(xx, yy)
-    return Matrix(xy)
-end
-
-function Base.:(*)(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    checkmulable(x, y)
-    return matmul(x, y)
-end
-
-@inline function Base.:(*)(x::Array{ArbReal{P},2}, y::Array{ArbReal{P},2}) where {P}
-    checkmulable(x, y)
-    return matmul(ArbRealMatrix{P}(x). ArbRealMatrix{P}(y))
-end
-
-# checks for validity
-
-@inline function checkbounds(x::ArbRealMatrix{P}, r::Int, c::Int) where {P}
-    withinbounds = 0 < r <= rowcount(x) && 0 < c <= colcount(x)
-    withinbounds && return nothing
-    throw(BoundsError("($r, $c) not in 1:$(rowcount(x)), 1:$(colcount(x))"))
-end
-
-@inline function checkbounds(x::ArbRealMatrix{P}, linear_rc::Int) where {P}
-    withinbounds = 0 < linear_rc <= rowcount(x) * colcount(x)
-    withinbounds && return nothing
-    throw(BoundsError("($rc) not in 1:$(rowcount(x) * colcount(x))"))
-end
-
-@inline function checksquare(x::ArbRealMatrix{P}) where {P}
-    issquare(x) && return nothing
-    throw(DomainError("matrix is not square ($rowcount(x), $colcount(x))"))
-end
-
-@inline function checkcompat(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    compat = (rowcount(x) === colcount(y) && rowcount(y) === colcount(x))
-    compat && return nothing
-    throw(DomainError("incompatible matrices: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
-end
-
-@inline function checkmulable(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    mulable = colcount(x) === rowcount(y)
-    mulable && return nothing
-    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
-end
-
-@inline function checkmulable(x::Array{T,2}, y::Array{T,2}) where {T}
-    mulable = colcount(x) === rowcount(y)
-    mulable && return nothing
-    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
-end
