@@ -81,6 +81,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "seeingvalues/#@sprintf,-@printf-1",
+    "page": "Seeing Values",
+    "title": "@sprintf, @printf",
+    "category": "section",
+    "text": "using ArbNumerics, Printf\n\njulia> @printf \"%3.7f\" ArbFloat(pi)^12\n924269.1815234\njulia> @sprintf \"%3.12e\" ArbReal(pi)^12\n\"9.242691815234e+05\""
+},
+
+{
     "location": "precisions/#",
     "page": "Precisions",
     "title": "Precisions",
