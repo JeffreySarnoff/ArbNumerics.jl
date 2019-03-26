@@ -83,7 +83,7 @@ function ArbFloatMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
 end
 
 function Matrix(arm::ArbFloatMatrix{P}) where {P}
-    nrows, ncols = arm.rowcount, arm.colcount
+    nrows, ncols = rowcount(arm), colcount(arm)
     m = zeros(ArbFloat{P}, nrows, ncols)
     for r = 1:nrows
         for c = 1:ncols
