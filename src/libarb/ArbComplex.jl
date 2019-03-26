@@ -293,7 +293,7 @@ end
 
 function conj(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_conj, Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
+    ccall(@libarb(acb_conj), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
     return z
 end
 
