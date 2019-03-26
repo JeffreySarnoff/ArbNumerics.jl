@@ -10,6 +10,7 @@ makedocs(
         "Seeing Values"            => "seeingvalues.md",
         "Precisions"               => "precisions.md",
         "Math Functions"           => "mathfunctions.md",
+        "Elliptic Functions"       => "ellipticfunctions.md",
         "Matrix Functions"         => "matrixfunctions.md",
         "Interval Functions"       => "intervalfunctions.md",
         "LibArb Differences"       => "libarb_differences.md",
