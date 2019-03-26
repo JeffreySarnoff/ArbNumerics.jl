@@ -239,10 +239,18 @@ end
 
 function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     z = ArbRealMatrix{P}(rowcount(x), colcount(y))
+    ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), Sys.CPU_THREADS)
+    ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return Matrix(z)
+end
+
+#=
+function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    z = ArbRealMatrix{P}(rowcount(x), colcount(y))
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return Matrix(z)
-end	
-
+end
+=#
 function matmul(x::Array{ArbReal, 2}, y::Array{ArbReal, 2})
     xx = ArbRealMatrix(x)
     yy = ArbRealMatrix(x)
