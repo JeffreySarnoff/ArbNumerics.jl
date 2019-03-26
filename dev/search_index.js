@@ -146,15 +146,15 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#",
-    "page": "Math Functions",
-    "title": "Math Functions",
+    "page": "Elementary Functions",
+    "title": "Elementary Functions",
     "category": "page",
     "text": ""
 },
 
 {
     "location": "mathfunctions/#arithmetic-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "arithmetic functions",
     "category": "section",
     "text": "+,-, *, /\nsquare, cube, sqrt, cbrt, hypot\npow(x,i), root(x,i) where i is an integer > 0\nfactorial, doublefactorial, risingfactorial\nbinomial"
@@ -162,7 +162,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#elementary-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "elementary functions",
     "category": "section",
     "text": "exp, expm1\nlog, log1p, log2, log10\nsin, cos, tan, csc, sec, cot\nasin, acos, atan, atan(y,x)\nsinh, cosh, tanh, csch, sech, coth\nasinh, acosh, atanh"
@@ -170,7 +170,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#gamma-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "gamma functions",
     "category": "section",
     "text": "gamma, lgamma\nrgamma, digamma"
@@ -178,7 +178,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#error-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "error functions",
     "category": "section",
     "text": "erf, erfc, erfi"
@@ -186,7 +186,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#Bessel-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "Bessel functions",
     "category": "section",
     "text": "besselj, besselj0, besselj1\nbessely, bessely0, bessely1\nbesseli, besselk"
@@ -194,7 +194,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#Airy-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "Airy functions",
     "category": "section",
     "text": "airyai, airyaiprime\nairybi, airybiprime"
@@ -202,7 +202,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#arithmetic-geometric-mean-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "arithmetic-geometric mean",
     "category": "section",
     "text": "agm, agm1"
@@ -210,7 +210,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#elliptic-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "elliptic functions",
     "category": "section",
     "text": "elliptice, elliptick\nellipticp, ellipticpi\nellipticzeta, ellipticsigma"
@@ -218,7 +218,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#other-special-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "other special functions",
     "category": "section",
     "text": "ei, si, ci\nshi, chi\nzeta, eta, xi    # Reimann\nlambertw"
@@ -226,10 +226,58 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "mathfunctions/#complex-functions-1",
-    "page": "Math Functions",
+    "page": "Elementary Functions",
     "title": "complex functions",
     "category": "section",
     "text": "conj # applies to a value and applies to a matrix"
+},
+
+{
+    "location": "ellipticfunctions/#",
+    "page": "Elliptic Functions",
+    "title": "Elliptic Functions",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions/#Complete-Elliptic-Functions-1",
+    "page": "Elliptic Functions",
+    "title": "Complete Elliptic Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions/#Incomplete-Elliptic-Functions-1",
+    "page": "Elliptic Functions",
+    "title": "Incomplete Elliptic Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions/#Carlson\'s-Elliptic-Functions-1",
+    "page": "Elliptic Functions",
+    "title": "Carlson\'s Elliptic Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions/#Jacobi\'s-Theta-Functions-1",
+    "page": "Elliptic Functions",
+    "title": "Jacobi\'s Theta Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions/#Weierstrass\'s-elliptic-functions-1",
+    "page": "Elliptic Functions",
+    "title": "Weierstrass\'s elliptic functions",
+    "category": "section",
+    "text": ""
 },
 
 {
