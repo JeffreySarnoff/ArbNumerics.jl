@@ -171,6 +171,7 @@ include("float/muladd.jl")
 include("float/elementary.jl")
 include("float/special.jl")
 include("float/special2.jl")
+include("float/elliptic.jl")
 include("float/export_fallbacks.jl")
 
 include("intervals/intervalparts.jl")
