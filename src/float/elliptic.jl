@@ -76,6 +76,7 @@ function ellipticpi(nu::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
 end
 
 
+#=
 # Legendre incomplete elliptic integral of the first kind F(phi, m)
 
 function ellipticf(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
@@ -167,3 +168,4 @@ function ellipticpi(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) whe
     result   = ArbFloat{P}(real(cresult))
     return result
 end
+=#
