@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Matrix Functions · ArbNumerics</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link href="../assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><h1>ArbNumerics</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="../search/"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="../">Overview</a></li><li><a class="toctext" href="../thetypes/">The Types</a></li><li><a class="toctext" href="../settingvalues/">Setting Values</a></li><li><a class="toctext" href="../seeingvalues/">Seeing Values</a></li><li><a class="toctext" href="../precisions/">Precisions</a></li><li><a class="toctext" href="../mathfunctions/">Math Functions</a></li><li class="current"><a class="toctext" href>Matrix Functions</a><ul class="internal"><li><a class="toctext" href="#Performance-1">Performance</a></li></ul></li><li><a class="toctext" href="../intervalfunctions/">Interval Functions</a></li><li><a class="toctext" href="../libarb_differences/">LibArb Differences</a></li><li><a class="toctext" href="../references/">References</a></li><li><a class="toctext" href="../documentindex/">Index</a></li></ul></nav><article id="docs"><header><nav><ul><li><a href>Matrix Functions</a></li></ul><a class="edit-page" href="https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/src/matrixfunctions.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Matrix Functions</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Matrix-Functions-1" href="#Matrix-Functions-1">Matrix Functions</a></h1><h2><a class="nav-anchor" id="Performance-1" href="#Performance-1">Performance</a></h2><p>Keeping the working precision at 128 bits, with 100x100 element matrices, 10.8x</p><pre><code class="language-julia">using BenchmarkTools
+
+setprecision(BigFloat, workingprecision(ArbFloat))
+128
+
+n = 100;
+
+bf = rand(BigFloat, n, n);
+af = rand(ArbFloat, n, n);
+
+@btime bf * bf;
+  129.716 ms (4080002 allocations: 186.84 MiB)
+
+@btime af * af;
+  12.027 ms (40011 allocations: 2.44 MiB)</code></pre><p>Keeping the working precision at 128 bits, increasing n from 100 to 250, 16.4x</p><pre><code class="language-julia">@btime bf * bf;
+  2.573 s (63000002 allocations: 2.82 GiB)
+
+@btime af * af;
+  156.604 ms (250011 allocations: 15.26 MiB)</code></pre><p>as the working precision increases, they narrow – e.g. with precision of 512 bits and n=100, 2.8x</p><pre><code class="language-julia">@btime bf * bf;
+  125.851 ms (4080002 allocations: 186.84 MiB)
+
+@btime af * af;
+  75.515 ms (40013 allocations: 2.44 MiB)</code></pre><p>as n increases they widen – e.g. with precision of 512 bits and n=250, 3.5x</p><pre><code class="language-julia">@btime bf * bf;
+  2.168 s (63000002 allocations: 2.82 GiB)
+
+@btime af * af;
+  606.713 ms (250013 allocations: 15.26 MiB)</code></pre><footer><hr/><a class="previous" href="../mathfunctions/"><span class="direction">Previous</span><span class="title">Math Functions</span></a><a class="next" href="../intervalfunctions/"><span class="direction">Next</span><span class="title">Interval Functions</span></a></footer></article></body></html>
