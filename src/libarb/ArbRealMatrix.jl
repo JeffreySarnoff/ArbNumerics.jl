@@ -334,19 +334,6 @@ function transpose(src::ArbRealMatrix{P}) where {P}
     return dest
 end
 
-function transpose(src::ArbRealMatrix)
-    if issquare(src)
-    	dest = copy(src)
-    else
-        P = workingprecision(ArbReal)
-   	dest = ArbRealMatrix{P}(colcount(src), rowcount(src))
-    end
-
-    ccall(@libarb(arb_mat_transpose), Cvoid,
-          (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), dest, src)
-    return dest
-end
-
 function transpose(src::Array{ArbReal{P}, 2}) where {P}
     result = transpose(ArbRealMatrix{P}(src))
     return Matrix(result)
