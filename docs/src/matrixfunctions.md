@@ -2,8 +2,8 @@
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
-- `.+`, `.-`, `.*`, `./`           # element op element
-- `+`, `-`, `*`, `/`, `\`               # matrix op matrix
+- `.+`, `.-`, `.*`, `./`           ( matrixelement op matrixelement )
+- `+`, `-`, `*`, `/`, `\`          ( matrix op matrix  )
 
 ## using LinearAlgebra 
 
