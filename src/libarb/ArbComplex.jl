@@ -342,7 +342,7 @@ function Base.angle(x::ArbComplex{P}) where {P}
 end
 
 magnitude(x::ArbComplex{P}) where {P} = hypot(reim(x)...)
-magnitude(x:T) where {T<:Complex} where {P} = hypot(reim(x)...)
+magnitude(x::T) where {T<:Complex} where {P} = hypot(reim(x)...)
 
 # needed for GenericSVD
 
