@@ -2,6 +2,9 @@
 
 ## Performance
 
+
+Keeping the working precision at 128 bits, with 100x100 element matrices, 7.2x
+
 ```julia
 using BenchmarkTools
 
@@ -20,7 +23,7 @@ af = rand(ArbFloat, n, n);
  21.161 ms (40011 allocations: 2.44 MiB)
 ```
 
-Keeping the working precision at 128 bits, increasing n from 100 to 250:
+Keeping the working precision at 128 bits, increasing n from 100 to 250, 14.8x
 
 ```julia
 @btime bf * bf;
@@ -30,7 +33,7 @@ Keeping the working precision at 128 bits, increasing n from 100 to 250:
   176.600 ms (250011 allocations: 15.26 MiB)
 ```
 
-as the working precision increases, they narrow -- e.g. with precision of 512 bits and n=100
+as the working precision increases, they narrow -- e.g. with precision of 512 bits and n=100, 2.8x
 
 ```julia
 @btime bf * bf;
@@ -40,7 +43,7 @@ as the working precision increases, they narrow -- e.g. with precision of 512 bi
   79.719 ms (40013 allocations: 2.44 MiB)
 ```
 
-as n increases they widen -- e.g. with precision of 512 bits and n=250
+as n increases they widen -- e.g. with precision of 512 bits and n=250, 6.3x
 
 ```julia
 @btime bf * bf;
