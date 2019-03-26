@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "The Types",
     "title": "ArbComplex",
     "category": "section",
-    "text": "An ArbComplex value is implemented in the underlying C library as two ArbReal values being the real part and the imaginary part. With ArbNumerics, you can form an ArbComplex using ArbReals or ArbFloats or one of each.  The real and imaginary parts are recovered using real(z) and imag(z) where z is an ArbComplex.##TODO The extent and the phase angle of an ArbComplex are recovered using length(z) and angle(z)."
+    "text": "An ArbComplex value is implemented in as two ArbReal one for the real part and one for the imaginary part.You can form an ArbComplex using two ArbReals or two ArbFloats or one of each.The real and imaginary parts are recovered using real(z) and imag(z) where z is an ArbComplex.\nangle(z) and magnitude(z) recover the phase angle and the lineal extent of an ArbComplex number.\nconj(z) obtains the complex conjugate of an ArbComplex number."
 },
 
 {
@@ -233,11 +233,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "matrixfunctions/#Matrix-Functions-1",
+    "location": "matrixfunctions/#functions-1",
     "page": "Matrix Functions",
-    "title": "Matrix Functions",
+    "title": "functions",
     "category": "section",
-    "text": ""
+    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )"
+},
+
+{
+    "location": "matrixfunctions/#using-LinearAlgebra-1",
+    "page": "Matrix Functions",
+    "title": "using LinearAlgebra",
+    "category": "section",
+    "text": "using GenericLinearAlgebra, LinearAlgebralu\neigvals\nsvdvals # except matrices of ArbComplex"
 },
 
 {
