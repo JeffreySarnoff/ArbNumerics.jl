@@ -245,7 +245,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Matrix Functions",
     "title": "using LinearAlgebra",
     "category": "section",
-    "text": "using GenericLinearAlgebra, LinearAlgebralu\neigvals\nsvdvals # except matrices of ArbComplex"
+    "text": "using GenericSVD, LinearAlgebralu\neigvals\nsvdvals # except matrices of ArbComplex"
 },
 
 {
