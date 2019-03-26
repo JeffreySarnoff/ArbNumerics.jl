@@ -178,4 +178,9 @@ include("intervals/eps_ulp.jl")
 include("support/printf.jl")
 include("support/helptext.jl")
 
+function __init__()
+    ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), Sys.CPU_THREADS)
+    return nothing
+end
+
 end # ArbNumerics
