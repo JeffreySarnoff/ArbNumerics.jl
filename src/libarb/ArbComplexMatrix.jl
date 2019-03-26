@@ -300,6 +300,16 @@ Base.zeros(::Type{ArbComplex{P}}, r::I, c::I) where {P, I<:Integer} = ArbComplex
 
 # operators over a matrix
 
+function conj(src::ArbComplexMatrix{P}) where {P}
+    dest = ArbComplexMatrix(rowcount(src), colcount(src))
+    ccall(@libarb(acb_mat_conjugate), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
+	return dest
+end
+
+function conj(src::Array{ArbComplex{P},2}) where {P}
+    return conj(ArbComplexMatrix{P}(src))
+end
+
 
 function transpose(src::ArbComplexMatrix{P}) where {P}
     if issquare(src)
