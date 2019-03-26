@@ -233,19 +233,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "matrixfunctions/#functions-1",
-    "page": "Matrix Functions",
-    "title": "functions",
-    "category": "section",
-    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )"
-},
-
-{
     "location": "matrixfunctions/#using-LinearAlgebra-1",
     "page": "Matrix Functions",
     "title": "using LinearAlgebra",
     "category": "section",
-    "text": "using GenericSVD, LinearAlgebralu\neigvals\nsvdvals # except matrices of ArbComplex"
+    "text": "using GenericSVD, LinearAlgebradet, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize\neigvals\nsvdvals"
 },
 
 {
