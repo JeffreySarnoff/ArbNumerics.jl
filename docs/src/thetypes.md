@@ -1,5 +1,3 @@
-# The Types
-
 There are three core types: `ArbFloat`, `ArbReal`, `ArbComplex`.  Vectors of elements of these types are formed and used in the usual ways. Some matrix operations are supported through the underlying C library, which requires data be given in row-dominant order, we have Matrix types: `ArbFloatMatrix`, `ArbRealMatrix`, `ArbComplexMatrix`.  Their use is described in the section on Matrices.
 
 ----
