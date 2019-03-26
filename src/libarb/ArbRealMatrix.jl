@@ -233,13 +233,12 @@ end
 # matrix multiply
 
 function mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return nothing
 end
 
 function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     z = ArbRealMatrix{P}(rowcount(x), colcount(y))
-    ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), Sys.CPU_THREADS)
     ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return Matrix(z)
 end
