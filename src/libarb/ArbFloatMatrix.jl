@@ -171,17 +171,6 @@ function mul!(z::ArbFloatMatrix{P}, x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) 
     return nothing
 end
 
-function rmul!(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Cint), x, x, y, P)
-    return nothing
-end
-
-function lmul!(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Cint), y, x, y, P)
-    return nothing
-end
-
-
 function matmul(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     z = ArbFloatMatrix{P}(rowcount(x), colcount(y))
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
