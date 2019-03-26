@@ -291,6 +291,11 @@ function ArbComplex{P}(x::ArbReal{S1}, y::ArbFloat{S2}) where {P,S1,S2}
     return z
 end
 
+function conj(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_conj, Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
+    return z
+end
 
 function midpoint(x::ArbComplex{P}) where {P}
     xreal = real(x)
