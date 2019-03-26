@@ -8,7 +8,7 @@ prefer, start using the package this way:
 
 ```julia
 using ArbNumerics
-show_working_values()
+setextrabits(0)
 ```
 
 ## enclosed precision
@@ -23,38 +23,29 @@ trailing bits, start using the package this way:
 
 ```julia
 using ArbNumerics
-show_enclosed_values()
+setextrabits(32)
 ```
 
 ## rounded precision
 
-If you specify neither `show_working_precision()` nor `show_enclosed_precision()`,
-then the working precision will exceed the displayed precision by a fixed number
-of bits.  By default, 24 extra bits are used for the working precision.  This
-is a settable quantity. If you prefer a different bit differential, you should
-establish that at the start and you should __not__ alter it midstream:
+If you do specify the number of `extrabits` to use, then the working precision
+will exceed the displayed precision by a fixed number of bits (24, the default).
 
-```julia
-using ArbNumerics
-show_rounded_values(32)
-```
+`setextrabits` should be used __only__ at the start of work.
+Reliabile computations presume you __not__ alter it midstream.
+
 
 ## precision modality
 
-The operative modality is obtainable using `bits_rounded()`.
-After `show_working_values()`, it is `0`. After `show_rounded_values(nbits)`,
-it is `nbits`.  After `show_enclosed_values`, it is `missing`.
+The number of displayed bits is given by any of:   
+`precision(ArbFloat), precision(ArbReal), precision(ArbComplex)`    
+All of these are kept in sync.
 
-```julia
-function precision_modality()
-    nbits = bits_rounded()
-    return if nbits === missing
-               :enclosed
-           elseif iszero(nbits)
-               :working
-           else
-               :rounded
-           end
-end
+The number of working bits is given by any of:
+`workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)`    
+All of these are kept in sync.
+
+The number of `extrabits` is given by `extrabits()`.
+
 ```
 
