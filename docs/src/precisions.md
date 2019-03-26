@@ -46,6 +46,3 @@ The number of working bits is given by any of:
 All of these are kept in sync.
 
 The number of `extrabits` is given by `extrabits()`.
-
-```
-
