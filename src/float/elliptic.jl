@@ -24,7 +24,7 @@ function elliptick(modulus::ArbFloat{P}) where {P}
     return result
 end
 
-s the complete elliptic integral of the second kind  E(m)
+# the complete elliptic integral of the second kind  E(m)
 
 function elliptice(modulus::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
