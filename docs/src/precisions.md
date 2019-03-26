@@ -35,7 +35,7 @@ will exceed the displayed precision by a fixed number of bits (24, the default).
 Reliabile computations presume you __not__ alter it midstream.
 
 
-## precision modality
+## finding precisions 
 
 The number of displayed bits is given by any of:   
 `precision(ArbFloat), precision(ArbReal), precision(ArbComplex)`    
