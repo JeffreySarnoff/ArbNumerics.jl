@@ -115,8 +115,9 @@ elliptick(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = ellipticf(phi, mod
 function elliptice(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     modulus = modulus * modulus
-    ccall(@libarb(acb_elliptic_e_inc), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint), 
-          result, phi, modulus, P)
+    flag = Int32(1)
+    ccall(@libarb(acb_elliptic_e_inc), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
+          result, phi, modulus, flag, P)
     return result
 end
 
@@ -143,8 +144,9 @@ end
 function ellipticpi(nu::ArbComplex{P}, phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     modulus = modulus * modulus
-    ccall(@libarb(acb_elliptic_pi_inc), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint), 
-          result, nu, phi, modulus, P)
+    flag = Int32(1)
+    ccall(@libarb(acb_elliptic_pi_inc), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
+          result, nu, phi, modulus, flag, P)
     return result
 end
 
