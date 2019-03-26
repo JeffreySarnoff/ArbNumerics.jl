@@ -16,7 +16,7 @@ julia> sqrt2 = sqrt(two)
 1.41421356237309504880168872421
 ```
 
-## Setting a Real, interval bounded, value
+## Setting a Real, interval enclosed value
 
 To set a real valued interval with 100 bits of precision
 ```julia
