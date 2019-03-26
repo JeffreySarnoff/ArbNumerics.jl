@@ -164,6 +164,7 @@ Base.setindex!(x::ArbFloatMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R
 
 # matrix multiply
 
+
 function mul!(z::ArbFloatMatrix{P}, x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
            z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
@@ -179,6 +180,7 @@ function lmul!(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Cint), y, x, y, P)
     return nothing
 end
+
 
 function matmul(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     z = ArbFloatMatrix{P}(rowcount(x), colcount(y))
