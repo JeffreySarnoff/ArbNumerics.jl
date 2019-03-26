@@ -9,7 +9,7 @@ makedocs(
         "Setting Values"           => "settingvalues.md",
         "Seeing Values"            => "seeingvalues.md",
         "Precisions"               => "precisions.md",
-        "Math Functions"           => "mathfunctions.md",
+        "Elementary Functions"     => "mathfunctions.md",
         "Elliptic Functions"       => "ellipticfunctions.md",
         "Matrix Functions"         => "matrixfunctions.md",
         "Interval Functions"       => "intervalfunctions.md",
