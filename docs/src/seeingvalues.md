@@ -1,9 +1,4 @@
-## Seeing Values
-
-`show` works, `showall` shows the digits closer to `workingprecision`.
-`string` and `stringall` correspond.
-
-### show, showall, string, stringall
+## show, showall, string, stringall
 ```julia
 using ArbNumerics
 
@@ -23,7 +18,7 @@ julia> showall(ArbFloat(pi)^12)
 924269.181523374186222579170358475607172922268940049306206
 ```
 
-### @sprintf, @printf
+## @sprintf, @printf
 ```julia
 using ArbNumerics, Printf
 
