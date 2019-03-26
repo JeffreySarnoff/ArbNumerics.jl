@@ -15,12 +15,12 @@ An `ArbReal` value is implemented in the underlying C library as an `ArbFloat` _
 
 ## ArbComplex
 
-An `ArbComplex` value is implemented in the underlying C library as two `ArbReal` values being the real part and the imaginary part.
-With `ArbNumerics`, you can form an `ArbComplex` using `ArbReals` or `ArbFloats` or one of each.  The real and imaginary parts are recovered using `real(z)` and `imag(z)` where `z` is an `ArbComplex`.
+An `ArbComplex` value is implemented in as two `ArbReal` one for the real part and one for the imaginary part.
 
-`angle` and `magnitude` recover the phase angle and the lineal extent of an `ArbComplex` number.
+You can form an `ArbComplex` using two `ArbReals` or two `ArbFloats` or one of each.
 
-`conj` obtains the complex conjugate of an `ArbComplex` number.
+- The real and imaginary parts are recovered using `real(z)` and `imag(z)` where `z` is an `ArbComplex`.
 
-##TODO
-The extent and the phase angle of an `ArbComplex` are recovered using `length(z)` and `angle(z)`.
+- `angle` and `magnitude` recover the phase angle and the lineal extent of an `ArbComplex` number.
+
+- `conj` obtains the complex conjugate of an `ArbComplex` number.
