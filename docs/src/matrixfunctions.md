@@ -7,6 +7,8 @@
 
 ## using LinearAlgebra 
 
+`using GenericLinearAlgebra, LinearAlgebra`
+
 - `lu`
 - `eigvals`
 - `svdvals` # except matrices of ArbComplex
