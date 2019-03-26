@@ -86,7 +86,8 @@ import Base: IEEEFloat,
        div, fld, cld, rem, mod, divrem, fldmod,
        ceil, floor, trunc, round,
        muladd, fma,
-       factorial, binomial
+       factorial, binomial,
+       conj
 
 import Base.Math:  max, min, minmax,
        exponent, significand,
