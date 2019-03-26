@@ -7,7 +7,7 @@
 
 ## using LinearAlgebra 
 
-`using GenericLinearAlgebra, LinearAlgebra`
+`using GenericSVD, LinearAlgebra`
 
 - `lu`
 - `eigvals`
