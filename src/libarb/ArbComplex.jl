@@ -328,8 +328,22 @@ floor(::Type{T}, x::ArbComplex{P}) where {P, T} = T(floor(real(x))), T(floor(ima
 ceil(x::ArbComplex{P}) where {P} = ArbComplex{P}(ceil(real(x)), ceil(imag(x)))
 ceil(::Type{T}, x::ArbComplex{P}) where {P, T} = T(ceil(real(x))), T(ceil(imag(x)))
 
+# phase angle
+function Base.angle(x::ArbComplex{P}) where {P}
+    rea, ima = reim(x / hypot(reim(x)...,))
 
+    y = hypot(rea - 1.0, ima)
+    x = hypot(rea + 1.0, ima)
 
+    a = 2 * atan(y , x)
+         
+    T = ArbFloat{P}
+    !(signbit(a) || signbit(T(pi) - a)) ? a : (signbit(a) ? zero(T) : T(pi))
+end
+
+magnitude(x::ArbComplex{P}) where {P} = hypot(reim(x)...)
+magnitude(x:T) where {T<:Complex} where {P} = hypot(reim(x)...)
+  
 # a type specific hash function helps the type to 'just work'
 const hash_arbcomplex_lo = (UInt === UInt64) ? 0x76143ad985246e79 : 0x5b6a64dc
 const hash_0_arbcomplex_lo = hash(zero(UInt), hash_arbcomplex_lo)
