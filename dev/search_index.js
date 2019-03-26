@@ -129,9 +129,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "precisions/#precision-modality-1",
+    "location": "precisions/#finding-precisions-1",
     "page": "Precisions",
-    "title": "precision modality",
+    "title": "finding precisions",
     "category": "section",
     "text": "The number of displayed bits is given by any of:    precision(ArbFloat), precision(ArbReal), precision(ArbComplex)     All of these are kept in sync.The number of working bits is given by any of:     workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)     All of these are kept in sync.The number of extrabits is given by extrabits()."
 },
@@ -261,7 +261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Interval Functions",
     "title": "Interval Functions",
     "category": "page",
-    "text": ""
+    "text": "Where x is an ArbReal value and other values are ArbFloats."
 },
 
 {
@@ -269,7 +269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Interval Functions",
     "title": "parts",
     "category": "section",
-    "text": "midpoint, radius\nupperbound, lowerbound\nupperbound_abs, lowerbound_abs"
+    "text": "midpoint(x), radius(x)\nlowerbound(x), upperbound(x)\nupperbound_abs(x), lowerbound_abs(x)"
 },
 
 {
@@ -285,7 +285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Interval Functions",
     "title": "retrieval",
     "category": "section",
-    "text": "midpoint, radius = ball(x::ArbReal)\nlobound, hibound = interval(x::ArbReal)"
+    "text": "midpoint, radius = ball(x)\nlobound, hibound = interval(x)"
 },
 
 {
