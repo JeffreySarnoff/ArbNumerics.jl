@@ -124,9 +124,6 @@ Matrix(x::Array{ArbComplex{P}, 2}) where {P} = x
 @inline eachcell(x::ArbComplexMatrix{P}) where {P} = getfield(x, :eachcell)
 @inline eachrow(x::ArbComplexMatrix{P}) where {P} = getfield(x, :eachrow)
 
-@inline rowcount(x::Array{T,2}) where {T} = size(x)[1]
-@inline colcount(x::Array{T,2}) where {T} = size(x)[2]
-
 @inline cellvalue(x::ArbComplexMatrix{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
 
 arbzeros(::Type{ArbComplex{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
@@ -293,12 +290,6 @@ end
     throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
 end
 
-@inline function checkmulable(x::Array{T,2}, y::Array{T,2}) where {T}
-    mulable = colcount(x) === rowcount(y)
-    mulable && return nothing
-    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
-end
-
 #=
 (::Type{Array{ArbComplex{P},2}})(::UndefInitializer, nrows::Int, ncols::Int) where {P} =
 ArbComplexMatrix{P}(nrows, ncols)
@@ -322,18 +313,6 @@ function transpose(src::ArbComplexMatrix{P}) where {P}
     return dest
 end
 
-function transpose(src::ArbComplexMatrix)
-    if issquare(src)
-    	dest = copy(src)
-    else
-        P = workingprecision(ArbComplex)
-   	dest = ArbComplexMatrix{P}(colcount(src), rowcount(src))
-    end
-
-    ccall(@libarb(acb_mat_transpose), Cvoid,
-          (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
-    return dest
-end
 
 function transpose(src::Array{ArbComplex{P}, 2}) where {P}
     result = transpose(ArbComplexMatrix{P}(src))
@@ -439,7 +418,12 @@ end
 inv(x::Array{ArbComplex{P},2}) where {P} = Matrix(inv(ArbComplexMatrix{P}(x)))
 
 """
-    inverse(ArbMatrix)
+    inverse(ArbMatrix)WARNING: Method definition transpose(ArbNumerics.ArbRealMatrix{P} where P) in module ArbNumerics at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbRealMatrix.jl:326 overwritten at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbRealMatrix.jl:338.
+WARNING: Method definition rowcount(Array{T, 2}) where {T} in module ArbNumerics at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbRealMatrix.jl:138 overwritten at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbComplexMatrix.jl:127.
+WARNING: Method definition colcount(Array{T, 2}) where {T} in module ArbNumerics at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbRealMatrix.jl:139 overwritten at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbComplexMatrix.jl:128.
+WARNING: Method definition checkmulable(Array{T, 2}, Array{T, 2}) where {T} in module ArbNumerics at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbRealMatrix.jl:308 overwritten at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbComplexMatrix.jl:297.
+WARNING: Method definition transpose(ArbNumerics.ArbComplexMatrix{P} where P) in module ArbNumerics at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbComplexMatrix.jl:314 overwritten at /home/jas/.julia/packages/ArbNumerics/HCeSA/src/libarb/ArbComplexMatrix.jl:326.
+
 A version of `inv` with greater accuracy.
 """
 function inverse(x::ArbComplexMatrix{P}) where {P}
