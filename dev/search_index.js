@@ -73,14 +73,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "seeingvalues/#Seeing-Values-1",
-    "page": "Seeing Values",
-    "title": "Seeing Values",
-    "category": "section",
-    "text": "show works, showall shows the digits closer to workingprecision. string and stringall correspond."
-},
-
-{
     "location": "seeingvalues/#show,-showall,-string,-stringall-1",
     "page": "Seeing Values",
     "title": "show, showall, string, stringall",
