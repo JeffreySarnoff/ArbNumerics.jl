@@ -225,6 +225,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "mathfunctions/#complex-functions-1",
+    "page": "Math Functions",
+    "title": "complex functions",
+    "category": "section",
+    "text": "conj # applies to a value and applies to a matrix"
+},
+
+{
     "location": "matrixfunctions/#",
     "page": "Matrix Functions",
     "title": "Matrix Functions",
