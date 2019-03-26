@@ -3,7 +3,7 @@
 ## Performance
 
 
-Keeping the working precision at 128 bits, with 100x100 element matrices, 7.2x
+Keeping the working precision at 128 bits, with 100x100 element matrices, 12.4x
 
 ```julia
 using BenchmarkTools
@@ -17,38 +17,38 @@ bf = rand(BigFloat, n, n);
 af = rand(ArbFloat, n, n);
 
 @btime bf * bf;
- 154.192 ms (4080002 allocations: 186.84 MiB)
+  151.812 ms (4080002 allocations: 186.84 MiB)
 
 @btime af * af;
- 21.161 ms (40011 allocations: 2.44 MiB)
+  12.210 ms (40011 allocations: 2.44 MiB)
 ```
 
-Keeping the working precision at 128 bits, increasing n from 100 to 250, 14.8x
+Keeping the working precision at 128 bits, increasing n from 100 to 250, 16.4x
 
 ```julia
 @btime bf * bf;
-  2.618 s (63000002 allocations: 2.82 GiB)
+  2.573 s (63000002 allocations: 2.82 GiB)
 
 @btime af * af;
-  176.600 ms (250011 allocations: 15.26 MiB)
+  156.604 ms (250011 allocations: 15.26 MiB)
 ```
 
 as the working precision increases, they narrow -- e.g. with precision of 512 bits and n=100, 2.8x
 
 ```julia
 @btime bf * bf;
-  225.928 ms (4080002 allocations: 280.23 MiB)
+  125.851 ms (4080002 allocations: 186.84 MiB)
 
 @btime af * af;
-  79.719 ms (40013 allocations: 2.44 MiB)
+  75.515 ms (40013 allocations: 2.44 MiB)
 ```
 
-as n increases they widen -- e.g. with precision of 512 bits and n=250, 6.3x
+as n increases they widen -- e.g. with precision of 512 bits and n=250, 3.5x
 
 ```julia
 @btime bf * bf;
-  3.849 s (63000002 allocations: 4.22 GiB)
+  2.168 s (63000002 allocations: 2.82 GiB)
 
 @btime af * af;
-  610.671 ms (250013 allocations: 15.26 MiB)
+  606.713 ms (250013 allocations: 15.26 MiB)
 ```
