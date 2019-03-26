@@ -15,7 +15,7 @@
 
 ## Performance
 
-Keeping the working precision at 128 bits, with 100x100 element matrices, 13x (24x, 32x with 8 cores)
+With the working precision at 128 bits, and 100x100 element matrices, 13x (24x, 32x with 8 cores)
 
 ```julia
 using BenchmarkTools
@@ -43,7 +43,7 @@ ar = rand(ArbReal, n, n);
 
 ```
 
-Keeping the working precision at 128 bits, increasing n from 100 to 250, 18x (35x, 44x with 8 cores)
+With the working precision at 128 bits, increasing n from 100 to 250, 18x (35x, 44x with 8 cores)
 
 ```julia
 @btime $bf * $bf;
@@ -59,7 +59,8 @@ Keeping the working precision at 128 bits, increasing n from 100 to 250, 18x (35
   65.392 ms (62506 allocations: 4.29 MiB)
 ```
 
-as the working precision increases, they narrow -- e.g. with precision of 512 bits and n=100, 3x (9x, 11x with 8 cores)
+as the working precision increases, they narrow --    
+e.g. with precision of 512 bits and n=100, 3x (9x, 11x with 8 cores)
 
 ```julia
 @btime $bf * $bf;
@@ -75,7 +76,8 @@ as the working precision increases, they narrow -- e.g. with precision of 512 bi
   21.264 ms (10008 allocations: 703.44 KiB)
 ```
 
-as n increases they widen -- e.g. with precision of 512 bits and n=250, 7x (9x, 12x with 8 cores)
+as n increases they widen --    
+e.g. with precision of 512 bits and n=250, 7x (9x, 12x with 8 cores)
 
 ```julia
 @btime $bf * $bf;
