@@ -129,9 +129,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "precisions/#finding-precisions-1",
+    "location": "precisions/#precision-modality-1",
     "page": "Precisions",
-    "title": "finding precisions",
+    "title": "precision modality",
     "category": "section",
     "text": "The number of displayed bits is given by any of:    precision(ArbFloat), precision(ArbReal), precision(ArbComplex)     All of these are kept in sync.The number of working bits is given by any of:     workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)     All of these are kept in sync.The number of extrabits is given by extrabits()."
 },
