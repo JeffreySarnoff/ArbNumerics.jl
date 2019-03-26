@@ -3,7 +3,7 @@
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
 - `.+`, `.-`, `.*`, `./`           # element-wise
-- `+`, `-`, `*`, `/`               # matrix op matrix
+- `+`, `-`, `*`, `/`, `\`               # matrix op matrix
 
 ## using LinearAlgebra 
 
