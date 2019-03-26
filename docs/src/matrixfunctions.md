@@ -3,7 +3,7 @@
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
 
-## functions with LinearAlgebra 
+## using LinearAlgebra 
 
 - `lu`
 - `eigvals`
