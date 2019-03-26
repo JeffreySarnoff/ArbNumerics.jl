@@ -1,387 +1,454 @@
-# heavily influenced by and mostly of the Arb C interface used in Nemo.jl
-        
-#=
-typedef struct
-{
-    acb_ptr entries;
-    slong r;
-    slong c;
-    acb_ptr * rows;
-}
-acb_mat_struct;
-=#
 
-            
+const ArbMatIdx0 = zero(Int32)
+
 mutable struct ArbComplexMatrix{P} <: AbstractArbMatrix{P, ArbComplex}
-    entries::Ptr{ArbComplex{P}}
-    nrows::Int
-    ncols::Int
-    rows::Ptr{Ptr{ArbComplex{P}}}
+    eachcell::Ptr{ArbComplex{P}}
+    rowcount::Int
+    colcount::Int
+    eachrow::Ptr{Ptr{ArbComplex{P}}}
 
-   function ArbComplexMatrix{P}(nrows::Int, ncols::Int) where {P}
-       nrows, ncols = ncols, nrows
-       z = new{P}() # z = new{P}(Ptr{ArbComplex{P}}(0), 0, 0, Ptr{Ptr{ArbComplex{P}}}(0))
-       acb_mat_init(z, nrows, ncols)
-       finalizer(acb_mat_clear, z)
-       return z
-   end
-
-   function ArbComplexMatrix(nrows::Int, ncols::Int)
-        P = workingprecision(ArbComplex)
-        return ArbComplexMatrix{P}(nrows, ncols)
-   end
+    function ArbComplexMatrix{P}(rowcount::Int, colcount::Int) where {P}
+        z = new{P}() # z = new{P}(Ptr{ArbComplex{P}}(0), 0, 0, Ptr{Ptr{ArbComplex{P}}}(0))
+        acb_mat_init(z, rowcount, colcount)
+        finalizer(acb_mat_clear, z)
+        return z
+    end
 end
 
-Base.isempty(x::ArbComplexMatrix{P}) where {P} = x.nrows == 0 || x.ncols == 0
 
-function acb_mat_clear(x::ArbComplexMatrix{P}) where {P}
+#ArbComplexMatrix(x::ArbComplexMatrix) = x
+ArbComplexMatrix(x::ArbComplexMatrix{P}) where {P} = x
+ArbComplexMatrix{P}(x::ArbComplexMatrix{P}) where {P} = x
+
+
+@inline function acb_mat_clear(x::ArbComplexMatrix{P}) where {P}
     ccall(@libarb(acb_mat_clear), Cvoid, (Ref{ArbComplexMatrix}, ), x)
-    return nothing
 end
 
-function acb_mat_init(x::ArbComplexMatrix{P}, nrows::Int, ncols::Int) where {P}
-    ccall(@libarb(acb_mat_init), Cvoid, (Ref{ArbComplexMatrix}, Cint, Cint), x, nrows, ncols)
-    return nothing
+@inline function acb_mat_init(x::ArbComplexMatrix{P}, rowcount::I, colcount::I) where {P, I<:Signed}
+    ccall(@libarb(acb_mat_init), Cvoid, (Ref{ArbComplexMatrix}, Cint, Cint),
+                                         x, rowcount, colcount)
 end
 
-Base.size(x::ArbComplexMatrix{P}) where {P} = (x.ncols, x.nrows)
+@inline function ArbComplexMatrix(nrows::Int, ncols::Int)
+    P = workingprecision(ArbComplex)
+	return ArbComplexMatrix{P}(nrows, ncols)
+end
 
-@inline function checkbounds(x::ArbComplexMatrix{P}, r::Int, c::Int) where {P}
-    ok = 0 < r <= x.nrows && 0 < c <= x.ncols
-    if !ok
-        throw(BoundsError("($r, $c) not in 1:$(x.nrows), 1:$(x.ncols)"))
+function ArbComplexMatrix(fpm::Array{ArbComplex, 2})
+    P = workingprecision(ArbComplex)
+    nrows, ncols = size(fpm)
+    arm = ArbComplexMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
+end
+
+function ArbComplexMatrix(fpm::Array{ArbComplex{P},2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbComplexMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
+end
+
+function ArbComplexMatrix{P}(fpm::Array{ArbComplex{P},2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbComplexMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = fpm[r,c]
+	    end
+	end
+	return arm
+end
+
+function ArbComplexMatrix{P}(fpm::Array{ArbComplex,2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbComplexMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = ArbComplex{P}(fpm[r,c])
+	    end
+	end
+	return arm
+end
+
+
+function ArbComplexMatrix(fpm::Array{ArbFloat{P},2}) where {P}
+    nrows, ncols = size(fpm)
+    arm = ArbComplexMatrix(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = ArbComplex{P}(fpm[r,c])
+	    end
+	end
+	return arm
+end
+
+function ArbComplexMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
+    P = workingprecision(ArbComplex)
+    nrows, ncols = size(fpm)
+    arm = ArbComplexMatrix{P}(nrows, ncols)
+    for r = 1:nrows
+		for c = 1:ncols
+			arm[r,c] = ArbComplex{P}(fpm[r,c])
+	    end
+	end
+	return arm
+end
+
+function Matrix(arm::ArbComplexMatrix{P}) where {P}
+    nrows, ncols = arm.rowcount, arm.colcount
+    m = zeros(ArbComplex{P}, nrows, ncols)
+    for r = 1:nrows
+        for c = 1:ncols
+            m[r,c] = arm[r,c]
+        end
     end
-    return nothing
+    return m
 end
 
-@inline function checkbounds(x::ArbComplexMatrix{P}, rc::Int) where {P}
-    ok = 0 < rc <= x.nrows * x.ncols
-    if !ok
-        throw(BoundsError("($rc) not in 1:$(x.nrows * x.ncols)"))
-    end
-    return nothing
-end
+Matrix(x::Array{ArbComplex, 2}) = x
+Matrix(x::Array{ArbComplex{P}, 2}) where {P} = x
 
-@inline function Base.getindex(x::ArbComplexMatrix{P}, rowidx::Int, colidx::Int) where {P}
-    rowidx, colidx = colidx, rowidx
-    checkbounds(x, rowidx, colidx)
 
-   z = ArbComplex{P}()
-   GC.@preserve x begin
-       v = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex},
-                 (Ref{ArbComplexMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
-       ccall(@libarb(acb_set), Cvoid, (Ref{ArbComplex}, Ptr{ArbComplex}), z, v)
-   end
-   return z
+@inline rowcount(x::ArbComplexMatrix{P}) where {P} = getfield(x, :rowcount)
+@inline colcount(x::ArbComplexMatrix{P}) where {P} = getfield(x, :colcount)
+@inline eachcell(x::ArbComplexMatrix{P}) where {P} = getfield(x, :eachcell)
+@inline eachrow(x::ArbComplexMatrix{P}) where {P} = getfield(x, :eachrow)
+
+@inline rowcount(x::Array{T,2}) where {T} = size(x)[1]
+@inline colcount(x::Array{T,2}) where {T} = size(x)[2]
+
+@inline cellvalue(x::ArbComplexMatrix{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
+
+arbzeros(::Type{ArbComplex{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+    ArbComplexMatrix{P}(rowcount, colcount)
+
+arbzeros(::Type{ArbComplex},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+    ArbComplexMatrix(rowcount, colcount)
+
+@inline Base.isempty(x::ArbComplexMatrix{P}) where {P} =
+    rowcount(x) === ArbMatIdx0 || colcount(x) === ArbMatIdx0
+
+@inline Base.size(x::ArbComplexMatrix{P}) where {P} = (rowcount(x), colcount(x))
+
+@inline function issquare(x::ArbComplexMatrix{P}) where {P}
+	return rowcount(x) === colcount(x)
 end
 
 @inline function Base.getindex(x::ArbComplexMatrix{P}, linearidx::Int) where {P}
-    rowidx, colidx = linear_to_cartesian(x.nrows, linearidx)
+    rowidx, colidx = linear_to_cartesian(rowcount(x), linearidx)
     return getindex(x, rowidx, colidx)
 end
 
-function Base.getindex(x::ArbComplexMatrix{P}, linearidxs::Array{Int,1}) where {P}
-    nrows = x.nrows
-    values = Vector{ArbComplex{P}}(undef, length(linearidxs))
-    valueidx = 1
-    for idx in linearidx
-        rowidx, colidx = linear_to_cartesian(nrows, idx)
-        values[valueidx] = getindex(x, rowidx, colidx)
-        valueidx += 1
+@inline function Base.getindex(x::ArbComplexMatrix{P}, rowidx::Int, colidx::Int) where {P}
+    checkbounds(x, rowidx, colidx)
+    return getindexˌ(x, rowidx, colidx)
+end
+
+@inline function getindexˌ(x::ArbComplexMatrix{P}, rowidx::Int, colidx::Int) where {P}
+    z = ArbComplex{P}()
+    GC.@preserve x begin
+        v = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex},
+                  (Ref{ArbComplexMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
+        ccall(@libarb(acb_set), Cvoid, (Ref{ArbComplex}, Ptr{ArbComplex}), z, v)
     end
-    return values
+    return z
 end
 
 
 function Base.setindex!(x::ArbComplexMatrix{P}, z::ArbComplex{P}, linearidx::Int) where {P}
-    rowidx, colidx = linear_to_cartesian(x.nrows, linearidx)
-    rowidx, colidx = colidx, rowidx
-    checkbounds(x, rowidx, colidx)
-   
-    GC.@preserve x begin
-        ptr = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex}, (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
-        ccall(@libarb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
-        end
-    return z
+    rowidx, colidx = linear_to_cartesian(rowcount(x), linearidx)
+    return setindex!(x, z, rowidx, colidx)
 end
 
-function Base.setindex!(x::ArbComplexMatrix{P}, z::ArbComplex{P}, rowidx::Int, colidx::Int) where {P}
-    rowidx, colidx = colidx, rowidx
+Base.setindex!(x::ArbComplexMatrix{P1}, z::ArbComplex{P2}, linearidx::Int) where {P1,P2} =
+    setindex!(x, ArbComplex{P1}(z), linearidx)
+
+Base.setindex!(x::ArbComplexMatrix{P}, z::ArbFloat{P}, linearidx::Int) where {P} =
+    setindex!(x, ArbComplex{P}(z), linearidx)
+
+Base.setindex!(x::ArbComplexMatrix{P1}, z::ArbFloat{P2}, linearidx::Int) where {P1,P2} =
+    setindex!(x, ArbComplex{P1}(ArbFloat{P1}(z)), linearidx)
+
+Base.setindex!(x::ArbComplexMatrix{P}, z::F, linearidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
+    setindex!(x, ArbComplex{P}(z), linearidx)
+
+Base.setindex!(x::ArbComplexMatrix{P}, z::R, linearidx::Int) where {P, R<:Real} =
+    setindex!(x, ArbComplex{P}(BigFloat(z)), linearidx)
+
+
+function Base.setindex!(x::ArbComplexMatrix{P}, z::ArbComplex{P},
+                        rowidx::Int, colidx::Int) where {P}
     checkbounds(x, rowidx, colidx)
-    
-    GC.@preserve x begin
-        ptr = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex}, (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
-        ccall(@libarb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
-        end
-    return z
+    return setindexˌ!(x, z, rowidx, colidx)
 end
 
-function Base.setindex!(x::ArbComplexMatrix{P}, z::Array{ArbComplex{P},1}, linearidx::Array{Int,1}) where {P}
-    for (az, alinearidx) in (z, linearidx)
-        setindex!(x, ax, alinearidx)
+Base.setindex!(x::ArbComplexMatrix{P1}, z::ArbComplex{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
+    setindex!(x, ArbComplex{P1}(z), rowidx, colidx)
+
+Base.setindex!(x::ArbComplexMatrix{P}, z::ArbFloat{P}, rowidx::Int, colidx::Int) where {P} =
+    setindex!(x, ArbComplex{P}(z), rowidx, colidx)
+
+Base.setindex!(x::ArbComplexMatrix{P1}, z::ArbFloat{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
+    setindex!(x, ArbComplex{P1}(ArbFloat{P1}(z)), rowidx, colidx)
+
+Base.setindex!(x::ArbComplexMatrix{P}, z::F, rowidx::Int, colidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
+    setindex!(x, ArbComplex{P}(z), rowidx, colidx)
+
+Base.setindex!(x::ArbComplexMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R<:Real} =
+    setindex!(x, ArbComplex{P}(BigFloat(z)), rowidx, colidx)
+
+
+@inline function setindexˌ!(x::ArbComplexMatrix{P}, z::ArbComplex{P},
+                            rowidx::Int, colidx::Int) where {P}
+    GC.@preserve x begin
+        ptr = ccall(@libarb(acb_mat_entry_ptr), Ptr{ArbComplex},
+        	        (Ref{ArbComplexMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
+        ccall(@libarb(acb_set), Cvoid, (Ptr{ArbComplex}, Ref{ArbComplex}), ptr, z)
     end
+    return z
+end
+
+
+# matrix multiply
+
+function mul!(z::ArbComplexMatrix{P}, x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
+    ccall(@libarb(acb_mat_mul), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, y, P)
+    return nothing
+end
+
+function matmul(x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
+    z = ArbComplexMatrix{P}(rowcount(x), colcount(y))
+    ccall(@libarb(acb_mat_mul), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, y, P)
+    return Matrix(z)
+end	
+
+function matmul(x::Array{ArbComplex, 2}, y::Array{ArbComplex, 2})
+    xx = ArbComplexMatrix(x)
+    yy = ArbComplexMatrix(x)
+    xy = *(xx, yy)
+    return Matrix(xy)
+end
+
+function matmul(x::Array{ArbComplex{P}, 2}, y::Array{ArbComplex{P},2}) where {P}
+    xx = ArbComplexMatrix{P}(x)
+    yy = ArbComplexMatrix{P}(x)
+    xy = *(xx, yy)
+    return Matrix(xy)
+end
+
+function Base.:(*)(x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
+    checkmulable(x, y)
+    return matmul(x, y)
+end
+
+@inline function Base.:(*)(x::Array{ArbComplex{P},2}, y::Array{ArbComplex{P},2}) where {P}
+    checkmulable(x, y)
+    return matmul(ArbComplexMatrix{P}(x), ArbComplexMatrix{P}(y))
+end
+
+@inline function Base.:(*)(x::Array{ArbComplex,2}, y::Array{ArbComplex,2})
+    checkmulable(x, y)
+    P = workingprecision(ArbComplex)	
+    return matmul(ArbComplexMatrix{P}(x), ArbComplexMatrix{P}(y))
+end
+
+# checks for validity
+
+@inline function checkbounds(x::ArbComplexMatrix{P}, r::Int, c::Int) where {P}
+    withinbounds = 0 < r <= rowcount(x) && 0 < c <= colcount(x)
+    withinbounds && return nothing
+    throw(BoundsError("($r, $c) not in 1:$(rowcount(x)), 1:$(colcount(x))"))
+end
+
+@inline function checkbounds(x::ArbComplexMatrix{P}, linear_rc::Int) where {P}
+    withinbounds = 0 < linear_rc <= rowcount(x) * colcount(x)
+    withinbounds && return nothing
+    throw(BoundsError("($rc) not in 1:$(rowcount(x) * colcount(x))"))
+end
+
+@inline function checksquare(x::ArbComplexMatrix{P}) where {P}
+    issquare(x) && return nothing
+    throw(DomainError("matrix is not square ($rowcount(x), $colcount(x))"))
+end
+
+@inline function checkcompat(x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
+    compat = (rowcount(x) === colcount(y) && rowcount(y) === colcount(x))
+    compat && return nothing
+    throw(DomainError("incompatible matrices: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
+@inline function checkmulable(x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
+    mulable = colcount(x) === rowcount(y)
+    mulable && return nothing
+    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
+@inline function checkmulable(x::Array{T,2}, y::Array{T,2}) where {T}
+    mulable = colcount(x) === rowcount(y)
+    mulable && return nothing
+    throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
+end
+
+#=
+(::Type{Array{ArbComplex{P},2}})(::UndefInitializer, nrows::Int, ncols::Int) where {P} =
+ArbComplexMatrix{P}(nrows, ncols)
+Base.Matrix{ArbComplex{P}}(undef::UndefInitializer, r::I, c::I) where {P, I<:Integer} = ArbComplexMatrix{P}(m, n)
+Base.zeros(::Type{ArbComplex{P}}, r::I, c::I) where {P, I<:Integer} = ArbComplexMatrix{P}(m,n)
+=#
+
+
+# operators over a matrix
+
+
+function transpose(src::ArbComplexMatrix{P}) where {P}
+    if issquare(src)
+    	dest = copy(src)
+    else
+    	dest = ArbComplexMatrix{P}(colcount(src), rowcount(src))
+    end
+
+    ccall(@libarb(acb_mat_transpose), Cvoid,
+          (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
+    return dest
+end
+
+function transpose(src::ArbComplexMatrix)
+    if issquare(src)
+    	dest = copy(src)
+    else
+        P = workingprecision(ArbComplex)
+   	dest = ArbComplexMatrix{P}(colcount(src), rowcount(src))
+    end
+
+    ccall(@libarb(acb_mat_transpose), Cvoid,
+          (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
+    return dest
+end
+
+function transpose(src::Array{ArbComplex{P}, 2}) where {P}
+    result = transpose(ArbComplexMatrix{P}(src))
+    return Matrix(result)
+end
+
+function transpose!(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    y = copy(x)
+    ccall(@libarb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), x, y)
     return x
 end
 
-# constructors
-
-ArbComplexMatrix{P}(x::ArbComplexMatrix{P}) where {P} = x
-
-function ArbComplexMatrix{P}(x::ArbComplexMatrix{Q}) where {P, Q}
-   nrows, ncols = size(x)
-   arm = ArbComplexMatrix{P}(nrows, ncols)
-   for col in 1:ncols
-       for row in 1:nrows
-           arm[row,col]  = ArbComplex{P}(x[row,col])
-       end
-    end
-    return arm
+function transpose!(src::Array{ArbComplex{P}, 2}) where {P}
+    result = transpose(ArbComplexMatrix{P}(src))
+    src[:] = Matrix(result)[:]
+    return src
 end
-
-ArbComplexMatrix(x::ArbComplexMatrix{Q}) where {Q} = ArbComplexMatrix{workingprecision(ArbComplex)}(x)
-
-function ArbComplexMatrix{P}(x::ArbRealMatrix{P}) where {P}
-   nrows, ncols = size(x)
-   arm = ArbComplexMatrix{P}(nrows, ncols)
-   for row in 1:nrows
-       for col in 1:ncols
-           arm[row,col]  = ArbComplex{P}(x[row,col])
-       end
-    end
-    return arm
-end
-
-function ArbComplexMatrix{P}(x::ArbFloatMatrix{P}) where {P}
-   nrows, ncols = size(x)
-   arm = ArbComplexMatrix{P}(nrows, ncols)
-   for row in 1:nrows
-       for col in 1:ncols
-           arm[row,col]  = ArbComplex{P}(x[row,col])
-       end
-    end
-    return arm
-end
-
-function ArbRealMatrix{P}(x::ArbComplexMatrix{P}) where {P}
-   nrows, ncols = size(x)
-   arm = ArbFloatMatrix{P}(nrows, ncols)
-   for row in 1:nrows
-       for col in 1:ncols
-           arm[row,col]  = ArbReal{P}(x[row,col])
-       end
-    end
-    return arm
-end
-
-function ArbFloatMatrix{P}(x::ArbComplexMatrix{P}) where {P}
-   nrows, ncols = size(x)
-   arm = ArbFloatMatrix{P}(nrows, ncols)
-   for row in 1:nrows
-       for col in 1:ncols
-           arm[row,col]  = ArbFloat{P}(x[row,col])
-       end
-    end
-    return arm
-end
-
-ArbComplexMatrix{P}(x::ArbRealMatrix{Q}) where {P,Q} = ArbComplexMatrix{P}(ArbRealMatrix{P}(x))
-ArbComplexMatrix{P}(x::ArbFloatMatrix{Q}) where {P,Q} = ArbComplexMatrix{P}(ArbFloatMatrix{P}(x))
-
-ArbRealMatrix{P}(x::ArbComplexMatrix{Q}) where {P,Q} = ArbRealMatrix{P}(ArbComplexMatrix{P}(x))
-ArbFloatMatrix{P}(x::ArbComplexMatrix{Q}) where {P,Q} = ArbFloatMatrix{P}(ArbComplexMatrix{P}(x))
-
-function ArbComplexMatrix{P}(x::M) where {P, T<:AbstractFloat, M<:AbstractMatrix{T}}
-   nrows, ncols = size(x)
-   arm = ArbComplexMatrix{P}(nrows, ncols)
-   for row in 1:nrows
-       for col in 1:ncols
-           arm[row,col]  = ArbComplex{P}(x[row,col])
-       end
-    end
-    return arm
-end
-
-function ArbComplexMatrix{P}(x::M) where {P, T<:Integer, M<:AbstractMatrix{T}}
-   nrows, ncols = size(x)
-   arm = ArbComplexMatrix{P}(nrows, ncols)
-   for row in 1:nrows
-       for col in 1:ncols
-           arm[row,col]  = ArbComplex{P}(x[row,col])
-       end
-    end
-    return arm
-end
-
-function ArbComplexMatrix(x::M) where {T<:AbstractFloat, M<:AbstractMatrix{T}}
-    P = workingprecision(ArbComplex)
-    return ArbComplexMatrix{P}(x)
-end
-
-function ArbComplexMatrix(x::M) where {T<:Integer, M<:AbstractMatrix{T}}
-    P = workingprecision(ArbComplex)
-    return ArbComplexMatrix{P}(x)
-end
-
-function Matrix{T}(x::A) where {P, T<:AbstractFloat, A<:ArbComplexMatrix{P}}
-   nrows, ncols = x.ncols, x.nrows
-   fpm = reshape(zeros(nrows*ncols), (nrows, ncols))
-   for row in 1:nrows
-       for col in 1:ncols
-           aacb = x[row,col]
-           fpm[row,col]  = T(aacb)
-       end
-    end
-    return fpm
-end
-
-function Matrix{T}(x::A) where {P, T<:Integer, A<:ArbComplexMatrix{P}}
-   nrows, ncols = x.ncols, x.nrows
-   intm = reshape(zeros(nrows*ncols), (nrows, ncols))
-   for row in 1:nrows
-       for col in 1:ncols
-           aacb = x[row,col]
-           intm[row,col]  = T(aacb)
-       end
-    end
-    return intm
-end
-
-
-function det(x::ArbComplexMatrix{P}) where {P}
-    x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
-    z = ArbComplex{P}()
-    ccall(@libarb(acb_mat_det), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
-    return z
-end
-
-function determinant(x::ArbComplexMatrix{P}) where {P}
-    x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
-    Q = 2*P
-    z = ArbComplex{Q}()
-    m = ArbComplexMatrix{2*P}(x)
-    ccall(@libarb(acb_mat_det_precond), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, Q)    
-    return z
-end
-
-
-function tr(x::ArbComplexMatrix{P}) where {P}
-    x.nrows === x.ncols || throw(DimensionMismatch("matrix is not square ($x.cols , $x.rows)"))
-    z = ArbComplex{P}()
-    ccall(@libarb(acb_mat_trace), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
-    return z
-end
-
 
 function transpose!(dest::ArbComplexMatrix{P}, src::ArbComplexMatrix{P}) where {P}
-    (src.nrows === dest.ncols && src.ncols === dest.nrows) ||
-    throw(DimensionMismatch("src($(src.ncols), $(src.nrows)) and dest($(dest.nrows), $(dest.ncols))"))
+    checkcompat(dest, src)
     ccall(@libarb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), dest, src)
     return dest
 end
 
-function transpose!(m::ArbComplexMatrix{P}) where {P}
-    m.nrows === m.ncols ||
-    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
-    ccall(@libarb(acb_mat_transpose), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}),m ,m)
-    return m
+function transpose!(dest::Array{ArbComplex{P},2}, src::Array{ArbComplex{P},2}) where {P}
+    result = transpose!(ArbComplexMatrix{P}(dest), ArbComplexMatrix{P}(src))
+    dest[:] = Matrix(result)[:]
+    return(dest)
 end
 
-function transpose(m::ArbComplexMatrix{P}) where {P}
-    dest = ArbComplexMatrix{P}(m.ncols, m.nrows)
-    transpose!(dest, m)
-    return dest
-end
-        
 function norm(m::ArbComplexMatrix{P}) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_mat_frobenius_norm), Cvoid, (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, P)
+    ccall(@libarb(acb_mat_frobenius_norm), Cvoid,
+    	  (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, m, P)
     return z
 end
 
-function inv(m::ArbComplexMatrix{P}) where {P}
-    m.nrows === m.ncols ||
-    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))       
-    z = ArbComplexMatrix{P}(m.nrows, m.ncols)
-    ok = ccall(@libarb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z,m, P)
-    ok == 0 && throw(ErrorException("cannot invert $(m)"))
+function norm(m::Array{ArbComplex{P},2}) where {P}
+    return Matrix(norm(ArbComplexMatrix{P}(m)))
+end
+
+function tr(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    return trˌ(x)
+end
+
+function trˌ(x::ArbComplexMatrix{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_mat_trace), Cvoid,
+    	  (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
     return z
 end
 
-function inverse(m::ArbComplexMatrix{P}) where {P}
-    m.nrows === m.ncols ||
-    throw(DimensionMismatch("matrix($(m.ncols) != $(m.nrows))"))
-    Q = 2*P
-    z = ArbComplexMatrix{Q}(m.nrows, m.ncols)
-    ok = ccall(@libarb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, m, Q)
-    ok == 0 && throw(ErrorException("cannot invert $(m)"))
+function tr(m::Array{ArbComplex{P},2}) where {P}
+    return Matrix(tr(ArbComplexMatrix{P}(m)))
+end
+
+function det(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    return detˌ(x)
+end
+
+function detˌ(x::ArbComplexMatrix{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_mat_det), Cvoid,
+          (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P)
     return z
 end
 
-#  lu, ldlt, cholesky, tril, triu
-
-
-# int acb_mat_lu(slong * perm, acb_mat_t LU, const acb_mat_t A, slong prec)
-#   Given an n×n matrix A, computes an LU decomposition PLU=A
-# using Gaussian elimination with partial pivoting. The input and output matrices can be the same, performing the decomposition in-place.
-
-# void acb_mat_solve_triu(acb_mat_t X, const acb_mat_t U, const acb_mat_t B, int unit, slong prec)
-# Solves the lower triangular system LX=B or the upper triangular system UX=B, respectively.
-
-
-# int acb_mat_cho(acb_mat_t L, const acb_mat_t A, slong prec)
-#   Computes the Cholesky decomposition of A, returning nonzero iff the symmetric matrix defined by the lower triangular part of A is certainly positive definite.
-#   If a nonzero value is returned, then L is set to the lower triangular matrix such that A=L∗LT
-
-# int acb_mat_ldl(acb_mat_t res, const acb_mat_t A, slong prec)
-#   Computes the LDLT decomposition of A, returning nonzero iff the symmetric matrix defined by the lower triangular part of A is certainly positive definite.
-
-#=
-
-void acb_mat_approx_mul(acb_mat_t res, const acb_mat_t mat1, const acb_mat_t mat2, slong prec)
-
-    Approximate matrix multiplication. 
-    The input radii are ignored and the output matrix is set to an approximate floating-point result. 
-    The radii in the output matrix will not necessarily be zeroed.
-
-void acb_mat_approx_solve_triu(acb_mat_t X, const acb_mat_t U, const acb_mat_t B, int unit, slong prec)
-
-void acb_mat_approx_solve_tril(acb_mat_t X, const acb_mat_t L, const acb_mat_t B, int unit, slong prec)
-
-int acb_mat_approx_lu(slong * P, acb_mat_t LU, const acb_mat_t A, slong prec)
-
-void acb_mat_approx_solve_lu_precomp(acb_mat_t X, const slong * perm, const acb_mat_t A, const acb_mat_t B, slong prec)
-
-int acb_mat_approx_solve(acb_mat_t X, const acb_mat_t A, const acb_mat_t B, slong prec)
-
-    These methods perform approximate solving without any error control.
-    The radii in the input matrices are ignored, 
-        the computations are done numerically with floating-point arithmetic
-         (using ordinary Gaussian elimination and triangular solving,
-          accelerated through the use of block recursive strategies for large matrices),
-        and the output matrices are set to the approximate floating-point results with zeroed error bounds.
-
-    Approximate solutions are useful for computing preconditioning matrices for certified solutions. 
-    Some users may also find these methods useful for doing ordinary numerical linear algebra
-        in applications where error bounds are not needed.
-=#
-
-# void acb_mat_mul(acb_mat_t res, const acb_mat_t mat1, const acb_mat_t mat2, slong prec)
-function Base.:(*)(x::ArbComplexMatrix{P}, y::ArbComplexMatrix{P}) where {P}
-    if x.ncols !== y.nrows
-        throw(ErrorException("Dimension Mismatach: x($(x.nrows), $(x.ncols)) y($(y.nrows), $(y.ncols))"))
-    end
-    z = ArbComplexMatrix{P}(x.nrows, y.ncols)
-    ccall(@libarb(acb_mat_mul), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, y, P)
-    return z
+function det(m::Array{ArbComplex{P},2}) where {P}
+    return Matrix(det(ArbComplexMatrix{P}(m)))
 end
 
-
-function (==)(a::ArbComplexMatrix{P}, b::ArbComplexMatrix{P}) where {P}
-    result = ccall(@libarb(acb_mat_eq), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), a, b)
-    return !iszero(result)
+"""
+    determinant(<:ArbMatrix)
+Computes the determinant using a more stable, albeit slower
+algorithm than that used for `det`.
+"""
+function determinant(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    P2 = P + P>>1
+    z = ArbComplex{P2}()
+    ccall(@libarb(acb_mat_det_precond), Cvoid,
+          (Ref{ArbComplex}, Ref{ArbComplexMatrix}, Cint), z, x, P2)
+    return ArbComplex{P}(z)
 end
 
-function (!=)(a::ArbComplexMatrix{P}, b::ArbComplexMatrix{P}) where {P}
-    result = ccall(@libarb(acb_mat_ne), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}), a, b)
-    return !iszero(result)
+determinant(x::Array{ArbComplex{P},2}) where {P} = Matrix(determinant(ArbComplexMatrix{P}(x)))
+
+function inv(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    return invˌ(x)
 end
+
+function invˌ(x::ArbComplexMatrix{P}) where {P}
+    z = ArbComplexMatrix{P}(rowcount(x), colcount(x))
+    ok = ccall(@libarb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, P)
+    ok !== Cint(0) && return z
+    throw(ErrorException("cannot invert $(x)"))
+end
+
+inv(x::Array{ArbComplex{P},2}) where {P} = Matrix(inv(ArbComplexMatrix{P}(x)))
+
+"""
+    inverse(ArbMatrix)
+A version of `inv` with greater accuracy.
+"""
+function inverse(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    P2 = P + P>>1
+    z = ArbComplexMatrix{P2}(rowcount(x), colcount(x))
+    ok = ccall(@libarb(acb_mat_inv), Cint, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, P2)
+    ok !== Cint(0) && return z
+    throw(ErrorException("cannot invert $(x)"))
+end
+
+inverse(x::Array{ArbComplex{P},2}) where {P} = Matrix(inverse(ArbComplexMatrix{P}(x)))
