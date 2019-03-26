@@ -2,6 +2,8 @@
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
+- `.+`, `.-`, `.*`, `./`           # element-wise
+- `+`, `-`, `*`, `/`               # matrix op matrix
 
 ## using LinearAlgebra 
 
