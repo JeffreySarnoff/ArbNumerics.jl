@@ -1,7 +1,15 @@
-# Matrix Functions
+## functions
+
+- `det`, `tr`
+- `transpose`, `adjoint`, `inv`
+
+## functions with LinearAlgebra 
+
+- `lu`
+- `eigvals`
+- `svdvals` # except matrices of ArbComplex
 
 ## Performance
-
 
 Keeping the working precision at 128 bits, with 100x100 element matrices, 13x (24x, 32x with 8 cores)
 
