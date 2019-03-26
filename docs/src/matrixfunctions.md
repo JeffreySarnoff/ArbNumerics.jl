@@ -1,17 +1,15 @@
-## functions
+## using LinearAlgebra 
+
+`using GenericSVD, LinearAlgebra`
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
 - `.+`, `.-`, `.*`, `./`           ( element op element )
 - `+`, `-`, `*`, `/`, `\`          ( matrix  op matrix  )
 
-## using LinearAlgebra 
-
-`using GenericSVD, LinearAlgebra`
-
-- `lu`
+- `lu`, `qr`, `factorize`
 - `eigvals`
-- `svdvals` # except matrices of ArbComplex
+- `svdvals`
 
 ## Performance
 
