@@ -1,8 +1,10 @@
+Where `x` is an `ArbReal` value and other values are `ArbFloat`s.
+
 ## parts
 
-- `midpoint`, `radius`
-- `upperbound`, `lowerbound`
-- `upperbound_abs`, `lowerbound_abs`
+- `midpoint(x)`, `radius(x)`
+- `lowerbound(x)`, `upperbound(x)`
+- `upperbound_abs(x)`, `lowerbound_abs(x)`
 
 ## construction
 
@@ -11,5 +13,5 @@
 
 ## retrieval
 
-- `midpoint, radius = ball(x::ArbReal)`
-- `lobound, hibound = interval(x::ArbReal)`
+- `midpoint, radius = ball(x)`
+- `lobound, hibound = interval(x)`
