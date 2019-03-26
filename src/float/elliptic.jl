@@ -82,7 +82,7 @@ function ellipticf(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     modulus = modulus * modulus
     flag = Int32(1)
-    ccall(@libarb(acb_elliptic_f), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, CInt, Cint), 
+    ccall(@libarb(acb_elliptic_f), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
           result, phi, modulus, flag, P)
     return result
 end
