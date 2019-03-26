@@ -41,7 +41,7 @@ The number of displayed bits is given by any of:
 `precision(ArbFloat), precision(ArbReal), precision(ArbComplex)`    
 All of these are kept in sync.
 
-The number of working bits is given by any of:
+The number of working bits is given by any of:    
 `workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)`    
 All of these are kept in sync.
 
