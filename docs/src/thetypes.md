@@ -21,6 +21,6 @@ You can form an `ArbComplex` using two `ArbReals` or two `ArbFloats` or one of e
 
 - The real and imaginary parts are recovered using `real(z)` and `imag(z)` where `z` is an `ArbComplex`.
 
-- `angle` and `magnitude` recover the phase angle and the lineal extent of an `ArbComplex` number.
+- `angle(z)` and `magnitude(z)` recover the phase angle and the lineal extent of an `ArbComplex` number.
 
-- `conj` obtains the complex conjugate of an `ArbComplex` number.
+- `conj(z)` obtains the complex conjugate of an `ArbComplex` number.
