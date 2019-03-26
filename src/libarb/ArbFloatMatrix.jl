@@ -8,14 +8,11 @@
 
 
 mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
-    eachcell::Ptr{ArbReal{P}}
-    rowcount::Int
-    colcount::Int
-    eachrow::Ptr{Ptr{ArbReal{P}}}
-
+    arbrealmatrix::ArbRealMatrix{P}
+	
     function ArbFloatMatrix{P}(rowcount::Int, colcount::Int) where {P}
         z = ArbRealMatrix{P}(rowcount, colcount)
-        return new{P}(z.eachcell, rowcount, colcount, z.eachrow)
+        return new{P}(z)
     end
 end
 
@@ -45,7 +42,7 @@ function ArbFloatMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
+			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	    end
 	end
 	return arm
@@ -56,7 +53,7 @@ function ArbFloatMatrix{P}(fpm::Array{ArbFloat{P},2}) where {P}
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
+			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	    end
 	end
 	return arm
@@ -67,7 +64,7 @@ function ArbFloatMatrix{P}(fpm::Array{ArbFloat,2}) where {P}
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
-			arm[r,c] = ArbFloat{P}(fpm[r,c])
+			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	    end
 	end
 	return arm
@@ -79,7 +76,7 @@ function ArbFloatMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
 		for c = 1:ncols
-			arm[r,c] = ArbFloat{P}(fpm[r,c])
+			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	    end
 	end
 	return arm
@@ -90,7 +87,7 @@ function Matrix(arm::ArbFloatMatrix{P}) where {P}
     m = zeros(ArbFloat{P}, nrows, ncols)
     for r = 1:nrows
         for c = 1:ncols
-            m[r,c] = arm[r,c]
+            m[r,c] = ArbFloat{P}(arm.arbrealmatrix[r,c])
         end
     end
     return m
@@ -100,10 +97,10 @@ Matrix(x::Array{ArbFloat, 2}) = x
 Matrix(x::Array{ArbFloat{P}, 2}) where {P} = x
 
 
-@inline rowcount(x::ArbFloatMatrix{P}) where {P} = getfield(x, :rowcount)
-@inline colcount(x::ArbFloatMatrix{P}) where {P} = getfield(x, :colcount)
-@inline eachcell(x::ArbFloatMatrix{P}) where {P} = getfield(x, :eachcell)
-@inline eachrow(x::ArbFloatMatrix{P}) where {P} = getfield(x, :eachrow)
+@inline rowcount(x::ArbFloatMatrix{P}) where {P} = getfield(x.arbrealmatrix, :rowcount)
+@inline colcount(x::ArbFloatMatrix{P}) where {P} = getfield(x.arbrealmatrix, :colcount)
+@inline eachcell(x::ArbFloatMatrix{P}) where {P} = getfield(x.arbrealmatrix, :eachcell)
+@inline eachrow(x::ArbFloatMatrix{P}) where {P} = getfield(x.arbrealmatrix, :eachrow)
 
 @inline cellvalue(x::ArbFloatMatrix{P}, row::Int, col::Int) where {P} = eachrow(x)[row][col-1]
 
@@ -128,67 +125,48 @@ end
 end
 
 @inline function Base.getindex(x::ArbFloatMatrix{P}, rowidx::Int, colidx::Int) where {P}
-    checkbounds(x, rowidx, colidx)
-    return getindexˌ(x, rowidx, colidx)
-end
-
-@inline function getindexˌ(x::ArbFloatMatrix{P}, rowidx::Int, colidx::Int) where {P}
-    z = ArbFloat{P}()
-    GC.@preserve x begin
-        v = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbFloat},
-                  (Ref{ArbFloatMatrix}, Int, Int), x, rowidx - 1, colidx - 1)
-        ccall(@libarb(arb_set), Cvoid, (Ref{ArbFloat}, Ptr{ArbFloat}), z, v)
-    end
-    return z
+    checkbounds(x.arbrealmatrix, rowidx, colidx)
+    return getindexˌ(x.arbrealmatrix, rowidx, colidx)
 end
 
 
 function Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P}, linearidx::Int) where {P}
     rowidx, colidx = linear_to_cartesian(rowcount(x), linearidx)
-    return setindex!(x, z, rowidx, colidx)
+    return setindex!(x.arbrealmatrix, ArbReal{P}(z), rowidx, colidx)
 end
 
 Base.setindex!(x::ArbFloatMatrix{P1}, z::ArbFloat{P2}, linearidx::Int) where {P1,P2} =
-    setindex!(x, ArbFloat{P1}(z), linearidx)
+    setindex!(x.arbrealmatrix, ArbReal{P1}(z), linearidx)
 
 Base.setindex!(x::ArbFloatMatrix{P}, z::F, linearidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
-    setindex!(x, ArbFloat{P}(z), linearidx)
+    setindex!(x.arbrealmatrix, ArbReal{P}(z), linearidx)
 
 Base.setindex!(x::ArbFloatMatrix{P}, z::R, linearidx::Int) where {P, R<:Real} =
-    setindex!(x, ArbFloat{P}(BigFloat(z)), linearidx)
+    setindex!(x.arbrealmatrix, ArbReal{P}(BigFloat(z)), linearidx)
 
 
 function Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P},
                         rowidx::Int, colidx::Int) where {P}
     checkbounds(x, rowidx, colidx)
-    return setindexˌ!(x, z, rowidx, colidx)
+    return setindexˌ!(x.arbrealmatrix, ArbReal{P}(z), rowidx, colidx)
 end
 
 Base.setindex!(x::ArbFloatMatrix{P1}, z::ArbFloat{P2}, rowidx::Int, colidx::Int) where {P1,P2} =
-    setindex!(x, ArbFloat{P1}(z), rowidx, colidx)
+    setindex!(x.arbrealmatrix, ArbReal{P1}(z), rowidx, colidx)
 
 Base.setindex!(x::ArbFloatMatrix{P}, z::F, rowidx::Int, colidx::Int) where {P, F<:Union{Signed,IEEEFloat}} =
-    setindex!(x, ArbFloat{P}(z), rowidx, colidx)
+    setindex!(x.arbrealmatrix, ArbReal{P}(z), rowidx, colidx)
 
 Base.setindex!(x::ArbFloatMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R<:Real} =
-    setindex!(x, ArbFloat{P}(BigFloat(z)), rowidx, colidx)
+    setindex!(x.arbrealmatrix, ArbReal{P}(BigFloat(z)), rowidx, colidx)
 
-
-@inline function setindexˌ!(x::ArbFloatMatrix{P}, z::ArbFloat{P},
-                            rowidx::Int, colidx::Int) where {P}
-    GC.@preserve x begin
-        ptr = ccall(@libarb(arb_mat_entry_ptr), Ptr{ArbFloat},
-        	        (Ref{ArbFloatMatrix}, Cint, Cint), x, rowidx-1, colidx-1)
-        ccall(@libarb(arb_set), Cvoid, (Ptr{ArbFloat}, Ref{ArbFloat}), ptr, z)
-    end
-    return z
-end
 
 
 # matrix multiply
 
 function mul!(z::ArbFloatMatrix{P}, x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Cint), z, x, y, P)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+           z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
     return nothing
 end
 
@@ -204,8 +182,9 @@ end
 
 function matmul(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
     z = ArbFloatMatrix{P}(rowcount(x), colcount(y))
-    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Ref{ArbFloatMatrix}, Cint), z, x, y, P)
-    return Matrix(z)
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+          z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
+    return ArbFloat{P}.(Matrix(z))
 end	
 
 function matmul(x::Array{ArbFloat, 2}, y::Array{ArbFloat, 2})
