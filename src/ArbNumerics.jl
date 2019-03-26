@@ -36,6 +36,7 @@ export ArbNumber,
 
        inf, posinf, neginf, nan,
        typemax, typemin, floatmax, floatmin,
+       magnitude,     # complex magnitude, `angle` gives phase 
 
        signs, signbits,
        significand_bits, relerror_bits, relaccuracy_bits,
