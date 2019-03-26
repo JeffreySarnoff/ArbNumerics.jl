@@ -217,6 +217,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "matrixfunctions/#",
+    "page": "Matrix Functions",
+    "title": "Matrix Functions",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "matrixfunctions/#Matrix-Functions-1",
+    "page": "Matrix Functions",
+    "title": "Matrix Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
     "location": "intervalfunctions/#",
     "page": "Interval Functions",
     "title": "Interval Functions",
