@@ -1,6 +1,6 @@
-## using LinearAlgebra 
+## functions
 
-`using GenericSVD, LinearAlgebra`
+#### `using ArbNumerics, GenericSVD, LinearAlgebra`
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
