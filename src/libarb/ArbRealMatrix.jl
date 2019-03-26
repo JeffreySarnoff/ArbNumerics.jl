@@ -334,10 +334,35 @@ function transpose(src::ArbRealMatrix{P}) where {P}
     return dest
 end
 
+function transpose(src::ArbRealMatrix)
+    if issquare(src)
+    	dest = copy(src)
+    else
+        P = workingprecision(ArbReal)
+   	dest = ArbRealMatrix{P}(colcount(src), rowcount(src))
+    end
+
+    ccall(@libarb(arb_mat_transpose), Cvoid,
+          (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), dest, src)
+    return dest
+end
+
+function transpose(src::Array{ArbReal{P}, 2}) where {P}
+    result = transpose(ArbRealMatrix{P}(src))
+    return Matrix(result)
+end
+
 function transpose!(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
-    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), x, x)
+    y = copy(x)
+    ccall(@libarb(arb_mat_transpose), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}), x, y)
     return x
+end
+
+function transpose!(src::Array{ArbReal{P}, 2}) where {P}
+    result = transpose(ArbRealMatrix{P}(src))
+    src[:] = Matrix(result)[:]
+    return src
 end
 
 function transpose!(dest::ArbRealMatrix{P}, src::ArbRealMatrix{P}) where {P}
@@ -346,7 +371,11 @@ function transpose!(dest::ArbRealMatrix{P}, src::ArbRealMatrix{P}) where {P}
     return dest
 end
 
-
+function transpose!(dest::Array{ArbReal{P},2}, src::Array{ArbReal{P},2}) where {P}
+    result = transpose!(ArbRealMatrix{P}(dest), ArbRealMatrix{P}(src))
+    dest[:] = Matrix(result)[:]
+    return(dest)
+end
 
 function norm(m::ArbRealMatrix{P}) where {P}
     z = ArbReal{P}()
@@ -355,6 +384,9 @@ function norm(m::ArbRealMatrix{P}) where {P}
     return z
 end
 
+function norm(m::Array{ArbReal{P},2}) where {P}
+    return Matrix(norm(ArbRealMatrix{P}(m)))
+end
 
 function tr(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
@@ -368,6 +400,9 @@ function trˌ(x::ArbRealMatrix{P}) where {P}
     return z
 end
 
+function tr(m::Array{ArbReal{P},2}) where {P}
+    return Matrix(tr(ArbRealMatrix{P}(m)))
+end
 
 function det(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
@@ -379,6 +414,10 @@ function detˌ(x::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_det), Cvoid,
           (Ref{ArbReal}, Ref{ArbRealMatrix}, Cint), z, x, P)
     return z
+end
+
+function det(m::Array{ArbReal{P},2}) where {P}
+    return Matrix(det(ArbRealMatrix{P}(m)))
 end
 
 """
@@ -395,6 +434,7 @@ function determinant(x::ArbRealMatrix{P}) where {P}
     return ArbReal{P}(z)
 end
 
+determinant(x::Array{ArbReal{P},2}) where {P} = Matrix(determinant(ArbRealMatrix{P}(x)))
 
 function inv(x::ArbRealMatrix{P}) where {P}
     checksquare(x)
@@ -407,6 +447,8 @@ function invˌ(x::ArbRealMatrix{P}) where {P}
     ok !== Cint(0) && return z
     throw(ErrorException("cannot invert $(x)"))
 end
+
+inv(x::Array{ArbReal{P},2}) where {P} = Matrix(inv(ArbRealMatrix{P}(x)))
 
 """
     inverse(ArbMatrix)
@@ -421,3 +463,4 @@ function inverse(x::ArbRealMatrix{P}) where {P}
     throw(ErrorException("cannot invert $(x)"))
 end
 
+inverse(x::Array{ArbReal{P},2}) where {P} = Matrix(inverse(ArbRealMatrix{P}(x)))
