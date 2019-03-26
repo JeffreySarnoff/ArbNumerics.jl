@@ -51,3 +51,7 @@
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`
+
+## complex functions
+
+- `conj` # applies to a value and applies to a matrix
