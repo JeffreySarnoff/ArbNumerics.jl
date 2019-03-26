@@ -115,6 +115,7 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      eta, zeta
 
 using  GenericLinearAlgebra
+using  GenericSVD
 
 using  LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
