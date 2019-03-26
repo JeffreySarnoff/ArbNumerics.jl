@@ -11,6 +11,8 @@
 - `eigvals`
 - `svdvals`
 
+----
+
 ## Performance
 
 With the working precision at 128 bits, and 100x100 element matrices, 13x (24x, 32x with 8 cores)
