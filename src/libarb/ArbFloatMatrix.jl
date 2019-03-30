@@ -256,3 +256,13 @@ end
     mulable && return nothing
     throw(ErrorException("Dimension Mismatach: ($rowcount(x), $colcount(x)), ($rowcount(y), $colcount(y))"))
 end
+
+# matrix functions: exp
+
+function exp(x::ArbFloatMatrix{P}) where {P}
+    y = ArbFloatMatrix{P}(x) 	
+    z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
+    ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+      z.arbrealmatrix, x.arbrealmatrix, P)
+    return ArbFloat{P}.(Matrix(z))
+end
