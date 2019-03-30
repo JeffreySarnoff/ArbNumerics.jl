@@ -450,6 +450,14 @@ inverse(x::Array{ArbComplex{P},2}) where {P} = Matrix(inverse(ArbComplexMatrix{P
 # matrix functions: exp
 
 function exp(x::Array{ArbComplex, 2})
+    P = workingprecision(ArbComplex)
+    y = ArbComplexMatrix(x)
+    z = ArbComplexMatrix{P}(rowcount(x), colcount(x))
+    ccall(@libarb(acb_mat_exp), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, y, P)
+    return Matrix(z)
+end
+
+function exp(x::Array{ArbComplex{P}, 2}) where {P}
     y = ArbComplexMatrix(x)
     z = ArbComplexMatrix{P}(rowcount(x), colcount(x))
     ccall(@libarb(acb_mat_exp), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, y, P)
