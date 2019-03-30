@@ -478,3 +478,10 @@ function exp(x::Array{ArbReal, 2})
     ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, y, P)
     return Matrix(z)
 end
+
+function expm(x::Array{ArbReal, 2})
+    y = ArbRealMatrix(x)
+    z = ArbRealMatrix{P}(rowcount(x), colcount(x))
+    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, y, P)
+    return Matrix(z)
+end
