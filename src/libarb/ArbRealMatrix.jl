@@ -460,3 +460,21 @@ function inverse(x::ArbRealMatrix{P}) where {P}
 end
 
 inverse(x::Array{ArbReal{P},2}) where {P} = Matrix(inverse(ArbRealMatrix{P}(x)))
+
+# matrix functions: exp
+
+#=
+void arb_mat_exp(arb_mat_t B, const arb_mat_t A, slong prec)
+
+function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
+    z = ArbRealMatrix{P}(rowcount(x), colcount(y))
+    ccall(@libarb(arb_mat_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
+    return Matrix(z)
+end
+=#
+function exp(x::Array{ArbReal, 2})
+    y = ArbRealMatrix(x)
+    z = ArbRealMatrix{P}(rowcount(x), colcount(x))
+    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, y, P)
+    return Matrix(z)
+end
