@@ -259,16 +259,7 @@ end
 
 # matrix functions: exp
 
-function exp(x::ArbFloatMatrix{P}) where {P}
-    y = ArbFloatMatrix{P}(x) 	
-    z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
-    ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
-      z.arbrealmatrix, x.arbrealmatrix, P)
-    return ArbFloat{P}.(Matrix(z))
-end
-
-
-function expm(x::ArbFloatMatrix{P}) where {P}
+function exp(x::Array{ArbFloat{P},2}) where {P}
     y = ArbFloatMatrix{P}(x) 	
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
     ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
