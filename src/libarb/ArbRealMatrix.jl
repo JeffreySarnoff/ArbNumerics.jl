@@ -302,12 +302,12 @@ end
 
 @inline function checksquare(x::Array{T,2}) where {T}
     issquare(x) && return nothing
-    throw(ErrorException("matrix is not square $(size(x))"))
+    throw(ErrorException("matrix is not square: size=$(size(x))"))
 end
 
 @inline function checksquare(x::ArbRealMatrix{P}) where {P}
     issquare(x) && return nothing
-    throw(DomainError("matrix is not square ($rowcount(x), $colcount(x))"))
+    throw(DomainError("matrix is not square: size=($rowcount(x), $colcount(x))"))
 end
 
 @inline function checkcompat(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
