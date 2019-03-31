@@ -260,6 +260,7 @@ end
 # matrix functions: exp
 
 function exp(x::Array{ArbFloat{P},2}) where {P}
+    checksquare(x)
     y = ArbFloatMatrix{P}(x) 	
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
     ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
@@ -268,6 +269,7 @@ function exp(x::Array{ArbFloat{P},2}) where {P}
 end
 
 function exp(x::Array{ArbFloat,2})
+    checksquare(x)
     P = workingprecision(ArbFloat)
     y = ArbFloatMatrix{P}(x) 	
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
@@ -276,6 +278,7 @@ function exp(x::Array{ArbFloat,2})
     return ArbFloat{P}.(Matrix(z))
 end
 
+#=
 function exp(x::ArbFloatMatrix{P}) where {P}
     y = ArbFloatMatrix{P}(x) 	
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
@@ -283,3 +286,4 @@ function exp(x::ArbFloatMatrix{P}) where {P}
       z.arbrealmatrix, y.arbrealmatrix, P)
     return ArbFloat{P}.(Matrix(z))
 end
+=#
