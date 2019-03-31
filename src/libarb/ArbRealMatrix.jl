@@ -296,6 +296,15 @@ end
     throw(BoundsError("($rc) not in 1:$(rowcount(x) * colcount(x))"))
 end
 
+@inline function issquare(x::Array{T,2}) where {T}
+    (===).(size(x)...,)
+end
+
+@inline function checksquare(x::Array{T,2}) where {T}
+    issquare(x) && return nothing
+    throw(ErrorException("matrix is not square $(size(x))))
+end
+
 @inline function checksquare(x::ArbRealMatrix{P}) where {P}
     issquare(x) && return nothing
     throw(DomainError("matrix is not square ($rowcount(x), $colcount(x))"))
@@ -472,15 +481,9 @@ function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return Matrix(z)
 end
 =#
+				
 function exp(x::Array{ArbReal, 2})
-    P = workingprecision(ArbReal)
-    y = ArbRealMatrix(x)
-    z = ArbRealMatrix{P}(rowcount(x), colcount(x))
-    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, y, P)
-    return Matrix(z)
-end
-
-function expm(x::Array{ArbReal, 2})
+    checksquare(x)				
     P = workingprecision(ArbReal)
     y = ArbRealMatrix(x)
     z = ArbRealMatrix{P}(rowcount(x), colcount(x))
@@ -489,13 +492,7 @@ function expm(x::Array{ArbReal, 2})
 end
 
 function exp(x::Array{ArbReal{P}, 2}) where {P}
-    y = ArbRealMatrix(x)
-    z = ArbRealMatrix{P}(rowcount(x), colcount(x))
-    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, y, P)
-    return Matrix(z)
-end
-
-function expm(x::Array{ArbReal{P}, 2}) where {P}
+    checksquare(x)
     y = ArbRealMatrix(x)
     z = ArbRealMatrix{P}(rowcount(x), colcount(x))
     ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, y, P)
