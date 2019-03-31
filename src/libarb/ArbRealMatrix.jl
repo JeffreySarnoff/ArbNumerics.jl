@@ -390,7 +390,7 @@ function norm(m::ArbRealMatrix{P}) where {P}
 end
 
 function norm(m::Array{ArbReal{P},2}) where {P}
-    return Matrix(norm(ArbRealMatrix{P}(m)))
+    return norm(ArbRealMatrix{P}(m))
 end
 
 function tr(x::ArbRealMatrix{P}) where {P}
@@ -406,7 +406,7 @@ function trˌ(x::ArbRealMatrix{P}) where {P}
 end
 
 function tr(m::Array{ArbReal{P},2}) where {P}
-    return Matrix(tr(ArbRealMatrix{P}(m)))
+    return tr(ArbRealMatrix{P}(m))
 end
 
 function det(x::ArbRealMatrix{P}) where {P}
@@ -422,7 +422,8 @@ function detˌ(x::ArbRealMatrix{P}) where {P}
 end
 
 function det(m::Array{ArbReal{P},2}) where {P}
-    return Matrix(det(ArbRealMatrix{P}(m)))
+    checksquare(x)
+    return det(ArbRealMatrix{P}(m))
 end
 
 """
