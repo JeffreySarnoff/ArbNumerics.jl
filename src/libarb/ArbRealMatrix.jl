@@ -405,8 +405,8 @@ function trˌ(x::ArbRealMatrix{P}) where {P}
     return z
 end
 
-function tr(m::Array{ArbReal{P},2}) where {P}
-    return tr(ArbRealMatrix{P}(m))
+function tr(x::Array{ArbReal{P},2}) where {P}
+    return tr(ArbRealMatrix{P}(x))
 end
 
 function det(x::ArbRealMatrix{P}) where {P}
@@ -421,9 +421,9 @@ function detˌ(x::ArbRealMatrix{P}) where {P}
     return z
 end
 
-function det(m::Array{ArbReal{P},2}) where {P}
+function det(x::Array{ArbReal{P},2}) where {P}
     checksquare(x)
-    return det(ArbRealMatrix{P}(m))
+    return det(ArbRealMatrix{P}(x))
 end
 
 """
