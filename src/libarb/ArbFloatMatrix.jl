@@ -160,7 +160,16 @@ Base.setindex!(x::ArbFloatMatrix{P}, z::F, rowidx::Int, colidx::Int) where {P, F
 Base.setindex!(x::ArbFloatMatrix{P}, z::R, rowidx::Int, colidx::Int) where {P, R<:Real} =
     setindex!(x.arbrealmatrix, ArbReal{P}(BigFloat(z)), rowidx, colidx)
 
+# transpose
 
+#=
+function transpose(x::Array{ArbFloat,2})
+    y = transpose(Array{ArbReal,2}(x))
+    z = Array{ArbFloat,2}(undef, size(y))
+    z[:,:] = y[:,:]
+    return (Transpose{ArbFloat,Array{ArbFloat,2}}).(z)	
+end
+=#
 
 # matrix multiply
 
