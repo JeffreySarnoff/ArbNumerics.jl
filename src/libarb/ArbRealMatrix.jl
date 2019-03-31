@@ -302,7 +302,7 @@ end
 
 @inline function checksquare(x::Array{T,2}) where {T}
     issquare(x) && return nothing
-    throw(ErrorException("matrix is not square $(size(x))))
+    throw(ErrorException("matrix is not square $(size(x))"))
 end
 
 @inline function checksquare(x::ArbRealMatrix{P}) where {P}
