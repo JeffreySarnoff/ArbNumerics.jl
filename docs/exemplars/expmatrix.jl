@@ -2,6 +2,7 @@
 These examples use ArbNumerics v0.4.4, no earlier version supports `exp(matrix)`. 
 So, either first do `pkg> up` or do `pkg> rm ArbNumerics` then `pkg> add ArbNumerics`.
 Sometimes, rebuilding with `pkg> build ArbNumerics` cleans up after itself.
+(and ignore SpecialFunctions, should it complain)
 
 All the matrix handling is new code, the examples here are working as of now.
 If you find anything unclear or something awry, post an issue and
