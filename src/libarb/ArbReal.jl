@@ -54,7 +54,7 @@ ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real
 ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x))
 ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
 
-ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{workingbits(prec)}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
+ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{prec}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
 
 function ArbReal(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
     if base === 10
