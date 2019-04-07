@@ -47,7 +47,7 @@ export ArbNumber,
        addmul, submul, mulsub,
        square, cube, rsqrt, rcbrt, pow, root, loghypot,
        risingfactorial, doublefactorial,
-       tanpi,
+       tanpi, cotpi,
 
        # special functions
        agm1, agm,
