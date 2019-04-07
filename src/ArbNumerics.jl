@@ -47,6 +47,7 @@ export ArbNumber,
        addmul, submul, mulsub,
        square, cube, rsqrt, rcbrt, pow, root, loghypot,
        risingfactorial, doublefactorial,
+       tanpi,
 
        # special functions
        agm1, agm,
@@ -98,7 +99,7 @@ import Base.Math:  max, min, minmax,
        sqrt, cbrt, hypot,
 
        (^), exp, log, expm1, log1p, log2, log10,
-       sin, cos, sincos, tan, csc, sec, cot, sinc,
+       sin, cos, sincos, tan, csc, sec, cot, sinc, sinpi, cospi,
        asin, acos, atan, acsc, asec, acot,
        sinh, cosh, tanh, csch, sech, coth,
        asinh, acosh, atanh, acsch, asech, acoth,
