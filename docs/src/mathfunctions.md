@@ -11,6 +11,7 @@
 - `exp`, `expm1`
 - `log`, `log1p`, `log2`, `log10`
 - `sin`, `cos`, `tan`, `csc`, `sec`, `cot`
+- `sinpi`, `cospi`, `tanpi`, `cotpi`
 - `asin`, `acos`, `atan`, `atan(y,x)`
 - `sinh`, `cosh`, `tanh`, `csch`, `sech`, `coth`
 - `asinh`, `acosh`, `atanh`
