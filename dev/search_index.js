@@ -165,7 +165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elementary Functions",
     "title": "elementary functions",
     "category": "section",
-    "text": "exp, expm1\nlog, log1p, log2, log10\nsin, cos, tan, csc, sec, cot\nasin, acos, atan, atan(y,x)\nsinh, cosh, tanh, csch, sech, coth\nasinh, acosh, atanh"
+    "text": "exp, expm1\nlog, log1p, log2, log10\nsin, cos, tan, csc, sec, cot\nsinpi, cospi, tanpi, cotpi\nasin, acos, atan, atan(y,x)\nsinh, cosh, tanh, csch, sech, coth\nasinh, acosh, atanh"
 },
 
 {
