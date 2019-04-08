@@ -21,6 +21,8 @@ end
 
 const fmpr_rnd_t = Int32
 
+const COEFF_MAX = ((Int(1) << (FLINT_BITS - 2)) - Int(1))
+const COEFF_MIN = (-((Int(1) << (FLINT_BITS - 2)) - Int(1)))
 
 # Automatically generated using Clang.jl
 
