@@ -24,6 +24,9 @@ const fmpr_rnd_t = Int32
 const COEFF_MAX = ((Int(1) << (FLINT_BITS - 2)) - Int(1))
 const COEFF_MIN = (-((Int(1) << (FLINT_BITS - 2)) - Int(1)))
 
+# const flint_abort = abort
+const flint_abort = -1
+
 # Automatically generated using Clang.jl
 
 
@@ -436,8 +439,6 @@ end
 const bernoulli_rev_t = NTuple{1, bernoulli_rev_struct}
 
 # Skipping MacroDefinition: BOOL_MAT_INLINE static __inline__
-
-const flint_abort = abort
 
 # Skipping MacroDefinition: bool_mat_nrows ( mat ) ( ( mat ) -> r )
 # Skipping MacroDefinition: bool_mat_ncols ( mat ) ( ( mat ) -> c )
