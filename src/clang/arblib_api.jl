@@ -7829,9 +7829,9 @@ end
 # Automatically generated using Clang.jl
 
 
-function arb_test_multiplier()
-    ccall((:arb_test_multiplier, libarb), Cdouble, ())
-end
+
+                                                                                
+                                                                                
 
 function bool_mat_get_entry(mat, i, j)
     ccall((:bool_mat_get_entry, libarb), Cint, (bool_mat_t, Cint, Cint), mat, i, j)
@@ -8370,9 +8370,9 @@ end
 # Automatically generated using Clang.jl
 
 
-function arb_test_multiplier()
-    ccall((:arb_test_multiplier, libarb), Cdouble, ())
-end
+                                                                                
+                                                                                
+                                                                                
 
 function rounds_up(rnd, negative)
     ccall((:rounds_up, libarb), Cint, (Cint, Cint), rnd, negative)
@@ -8864,10 +8864,6 @@ end
 # Julia wrapper for header: fmpz_extras.h
 # Automatically generated using Clang.jl
 
-
-function arb_test_multiplier()
-    ccall((:arb_test_multiplier, libarb), Cdouble, ())
-end
 
 function fmpz_add_inline(z, x, y)
     ccall((:fmpz_add_inline, libarb), Cvoid, (Cint, Cint, Cint), z, x, y)
