@@ -9,6 +9,8 @@ else
     const FLINT_D_BITS = 31
 end
 
+const fmpr_rnd_t = Int32
+
 # Automatically generated using Clang.jl
 
 
