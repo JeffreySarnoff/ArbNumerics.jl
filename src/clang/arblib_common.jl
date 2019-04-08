@@ -1,3 +1,14 @@
+# from flint2/flint.h
+
+if Int == Int64
+    const  FLINT_BITS = 64
+    const FLINT_D_BITS = 53
+    const FLINT64 = 1
+else 
+    const FLINT_BITS = 32
+    const FLINT_D_BITS = 31
+end
+
 # Automatically generated using Clang.jl
 
 
