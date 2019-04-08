@@ -74,7 +74,7 @@ import Base: IEEEFloat,
        UInt8, UInt16, UInt32, UInt64, UInt128,
        Int8, Int16, Int32, Int64, Int128,
        BigInt, BigFloat, Rational, Complex, real, imag, complex,
-       floatmax, floatmin, typemax, typemin,
+       floatmax, floatmin, typemax, typemin, maxintfloat,
        rationalize,
 
        iszero, isone, isinteger, isfinite, isinf, isnan, issubnormal,
@@ -130,11 +130,6 @@ import Base.MathConstants: π, ℯ, γ, φ, catalan
 using Libdl
 using Random
 
-#testing \/
-include("clang/arblib_common.jl")
-include("clang/arblib_api.jl")
-#testing /\
-
 include("support/arblib.jl")
 include("support/abstractions.jl")
 include("support/matrices.jl")
@@ -169,6 +164,7 @@ include("values/compare.jl")
 include("values/rounding.jl")
 include("values/random.jl")
 
+include("float/parametrics.jl")
 include("float/prearith.jl")
 include("float/arith.jl")
 include("float/arith_inplace.jl")
