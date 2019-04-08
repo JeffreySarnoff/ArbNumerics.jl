@@ -130,6 +130,11 @@ import Base.MathConstants: π, ℯ, γ, φ, catalan
 using Libdl
 using Random
 
+#testing \/
+include("clang/arblib_common.jl")
+include("clang/arblib_api.jl")
+#testing /\
+
 include("support/arblib.jl")
 include("support/abstractions.jl")
 include("support/matrices.jl")
@@ -181,6 +186,7 @@ include("intervals/eps_ulp.jl")
 
 include("support/printf.jl")
 include("support/helptext.jl")
+
 
 function __init__()
     ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), Sys.CPU_THREADS)
