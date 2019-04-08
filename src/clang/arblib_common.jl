@@ -1,15 +1,26 @@
 # from flint2/flint.h
 
 if Int == Int64
-    const  FLINT_BITS = 64
+    const FLINT_BITS = 64
     const FLINT_D_BITS = 53
     const FLINT64 = 1
+
+    const UWORD_MAX = typemax(UInt64)
+    const UWORD_MIN = typemin(UInt64)
+    const WORD_MAX  = typemax(Int64)
+    const WORD_MIN  = typemin(Int64)
 else 
     const FLINT_BITS = 32
     const FLINT_D_BITS = 31
+    
+    const UWORD_MAX = typemax(UInt32)
+    const UWORD_MIN = typemin(UInt32)
+    const WORD_MAX  = typemax(Int32)
+    const WORD_MIN  = typemin(Int32)
 end
 
 const fmpr_rnd_t = Int32
+
 
 # Automatically generated using Clang.jl
 
