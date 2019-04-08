@@ -29,6 +29,7 @@ const flint_abort = -1
 
 const FLINT_TLS_PREFIX = ""
 
+const FLINT_DLL = "libflint"
 
 # Automatically generated using Clang.jl
 
