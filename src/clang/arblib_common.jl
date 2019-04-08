@@ -27,6 +27,9 @@ const COEFF_MIN = (-((Int(1) << (FLINT_BITS - 2)) - Int(1)))
 # const flint_abort = abort
 const flint_abort = -1
 
+const FLINT_TLS_PREFIX = ""
+
+
 # Automatically generated using Clang.jl
 
 
