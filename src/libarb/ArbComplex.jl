@@ -339,9 +339,6 @@ function Base.angle(x::ArbComplex{P}) where {P}
     !(signbit(a) || signbit(T(pi) - a)) ? a : (signbit(a) ? zero(T) : T(pi))
 end
 
-magnitude(x::ArbComplex{P}) where {P} = hypot(reim(x)...)
-magnitude(x::T) where {T<:Complex} where {P} = hypot(reim(x)...)
-
 # needed for GenericSVD
 
 flipsign(x::ArbComplex{P}, y::T) where {P, T<:Base.IEEEFloat} =
