@@ -19,7 +19,7 @@
 
 ----
 
-__All of the following functions are available for `ArbFloat, `ArbReal` and `ArbComplex`__
+### _All of the following functions are available for `ArbFloat, `ArbReal` and `ArbComplex`_
 
 ## elementary functions
 
