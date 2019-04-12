@@ -3,7 +3,7 @@ float(::Type{ArbReal})    = ArbFloat
 float(::Type{ArbComplex}) = ArbFloat
 
 float(::Type{ArbFloat{P}})   where {P} = ArbFloat{P}
-float(::Type{ArbReal{P})}    where {P} = ArbFloat{P}
+float(::Type{ArbReal{P}})    where {P} = ArbFloat{P}
 float(::Type{ArbComplex{P}}) where {P} = ArbFloat{P}
 
 float(x::ArbFloat)   = x
@@ -20,7 +20,7 @@ real(::Type{ArbReal})    = ArbReal
 real(::Type{ArbComplex}) = ArbReal
 
 real(::Type{ArbFloat{P}})   where {P} = ArbFloat{P}
-real(::Type{ArbReal{P})}    where {P} = ArbReal{P}
+real(::Type{ArbReal{P}})    where {P} = ArbReal{P}
 real(::Type{ArbComplex{P}}) where {P} = ArbReal{P}
 
 real(x::ArbFloat)   = x
@@ -48,7 +48,7 @@ imag(::Type{ArbReal})    = ArbReal
 imag(::Type{ArbComplex}) = ArbReal
 
 imag(::Type{ArbFloat{P}})   where {P} = ArbFloat{P}
-imag(::Type{ArbReal{P})}    where {P} = ArbReal{P}
+imag(::Type{ArbReal{P}})    where {P} = ArbReal{P}
 imag(::Type{ArbComplex{P}}) where {P} = ArbReal{P}
 
 imag(x::ArbFloat)   = zero(ArbFloat)
@@ -74,7 +74,7 @@ complex(::Type{ArbReal})    = ArbComplex
 complex(::Type{ArbComplex}) = ArbComplex
 
 complex(::Type{ArbFloat{P}})   where {P} = ArbComplex{P}
-complex(::Type{ArbReal{P})}    where {P} = ArbComplex{P}
+complex(::Type{ArbReal{P}})    where {P} = ArbComplex{P}
 complex(::Type{ArbComplex{P}}) where {P} = ArbComplex{P}
 
 complex(x::ArbFloat)   = ArbComplex(x)
