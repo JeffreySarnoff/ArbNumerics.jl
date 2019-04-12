@@ -169,6 +169,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "mathfunctions/#complex-constituent-functions-1",
+    "page": "Elementary Functions",
+    "title": "complex constituent functions",
+    "category": "section",
+    "text": "real, imag\nangle, magnitude\nconj # applies to a value and applies to a matrix"
+},
+
+{
+    "location": "mathfunctions/#arithmetic-geometric-mean-1",
+    "page": "Elementary Functions",
+    "title": "arithmetic-geometric mean",
+    "category": "section",
+    "text": "agm, agm1All of the following functions are available for ArbFloat, ArbReal and ArbComplex types"
+},
+
+{
     "location": "mathfunctions/#elementary-functions-1",
     "page": "Elementary Functions",
     "title": "elementary functions",
@@ -209,14 +225,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "mathfunctions/#arithmetic-geometric-mean-1",
-    "page": "Elementary Functions",
-    "title": "arithmetic-geometric mean",
-    "category": "section",
-    "text": "agm, agm1"
-},
-
-{
     "location": "mathfunctions/#elliptic-functions-1",
     "page": "Elementary Functions",
     "title": "elliptic functions",
@@ -230,14 +238,6 @@ var documenterSearchIndex = {"docs": [
     "title": "other special functions",
     "category": "section",
     "text": "ei, si, ci\nshi, chi\nzeta, eta, xi    # Reimann\nlambertw"
-},
-
-{
-    "location": "mathfunctions/#complex-functions-1",
-    "page": "Elementary Functions",
-    "title": "complex functions",
-    "category": "section",
-    "text": "conj # applies to a value and applies to a matrix"
 },
 
 {
