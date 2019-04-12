@@ -131,18 +131,6 @@ end
 
 # parts
 
-function real(x::ArbComplex{P}) where {P}
-    z = ArbReal{P}()
-    ccall(@libarb(acb_get_real), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}), z, x)
-    return z
-end
-
-function imag(x::ArbComplex{P}) where {P}
-    z = ArbReal{P}()
-    ccall(@libarb(acb_get_imag), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}), z, x)
-    return z
-end
-
 function arg(x::ArbComplex{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(acb_arg), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}, Clong), z, x, P)
