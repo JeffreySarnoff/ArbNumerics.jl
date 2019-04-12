@@ -21,7 +21,6 @@ real(::Type{ArbComplex{P}}) where {P} = ArbReal{P}
 
 real(x::ArbFloat{P})   where {P} = x
 real(x::ArbReal{P})    where {P} = x
-real(z::ArbComplex{P}) where {P} = ArbReal{P}(z)
 function real(x::ArbComplex{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(acb_get_real), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}), z, x)
