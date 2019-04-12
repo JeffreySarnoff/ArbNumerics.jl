@@ -1,3 +1,4 @@
+
 ## arithmetic functions
 
 - `+`,`-`, `*`, `/`
@@ -5,6 +6,20 @@
 - `pow(x,i)`, `root(x,i)` _where i is an integer > 0_
 - `factorial`, `doublefactorial`, `risingfactorial`
 - `binomial`
+
+## complex constituent functions
+
+- `real`, `imag`
+- `angle`, `magnitude`
+- `conj` # applies to a value and applies to a matrix
+
+## arithmetic-geometric mean
+
+- `agm`, `agm1`
+
+----
+
+__All of the following functions are available for `ArbFloat, `ArbReal` and `ArbComplex`__
 
 ## elementary functions
 
@@ -36,10 +51,6 @@
 - `airyai`, `airyaiprime`
 - `airybi`, `airybiprime`
 
-## arithmetic-geometric mean
-
-- `agm`, `agm1`
-
 ## elliptic functions
 
 - `elliptice`, `elliptick`
@@ -52,9 +63,3 @@
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`
-
-## complex constituent functions
-
-- `real`, `imag`
-- `angle`, `magnitude`
-- `conj` # applies to a value and applies to a matrix
