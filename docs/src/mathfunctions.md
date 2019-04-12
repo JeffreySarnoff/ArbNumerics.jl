@@ -55,4 +55,5 @@
 
 ## complex functions
 
+- `angle`, `magnitude`
 - `conj` # applies to a value and applies to a matrix
