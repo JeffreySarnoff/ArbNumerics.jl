@@ -41,8 +41,6 @@ arb_clear(x::ArbReal{P}) where {P} = ccall(@libarb(arb_clear), Cvoid, (Ref{ArbRe
 ArbReal{P}(x::ArbReal{P}) where {P} = x
 ArbReal(x::ArbReal{P}) where {P} = x
 
-float(x::ArbReal{P}) where {P} = x
-
 ArbReal{P}(x::Missing) where {P} = missing
 ArbReal(x::Missing) = missing
 
