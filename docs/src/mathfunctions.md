@@ -53,7 +53,8 @@
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`
 
-## complex functions
+## complex constituent functions
 
+- `real`, `imag`
 - `angle`, `magnitude`
 - `conj` # applies to a value and applies to a matrix
