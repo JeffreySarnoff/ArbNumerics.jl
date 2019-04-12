@@ -131,7 +131,6 @@ using Libdl
 using Random
 
 include("support/arblib.jl")
-include("support/complex.jl")
 include("support/abstractions.jl")
 include("support/matrices.jl")
 
@@ -142,6 +141,7 @@ include("libarb/Mag.jl")
 include("libarb/ArbFloat.jl")
 include("libarb/ArbReal.jl")
 include("libarb/ArbComplex.jl")
+include("support/complex.jl")
 
 include("support/random.jl")
 
