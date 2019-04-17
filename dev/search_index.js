@@ -153,6 +153,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "rounding/#",
+    "page": "Rounding",
+    "title": "Rounding",
+    "category": "page",
+    "text": ""
+},
+
+{
     "location": "mathfunctions/#",
     "page": "Elementary Functions",
     "title": "Elementary Functions",
