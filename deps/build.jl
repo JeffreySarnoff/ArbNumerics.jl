@@ -8,10 +8,10 @@ oldwdir = pwd()
 @show YASM_VERSION = "1.3.0"
 @show MPIR_VERSION = "3.0.0"
 @show MPFR_VERSION = "4.0.0"
-@show FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
-#@show FLINT_VERSION = "b44e31c4b456653a54d046b094491039d0cde612"
-@show ARB_VERSION = "987e7a1395d7dd608139b6ac07ba889cc4fadbd9"
-
+#@show ARB_VERSION = "987e7a1395d7dd608139b6ac07ba889cc4fadbd9"
+#@show FLINT_VERSION = "adf1583c6bd92a454f3f92a18adf9063d14637a0"
+@show FLINT_VERSION = "2b8f8acb317c265db99f828e7baf3266f07f92a7"
+@show ARB_VERSION = "fe53e3f306380b5a65b30dcec776e10428601790"
 
 
 pkgdir = dirname(dirname(@__FILE__))
@@ -41,7 +41,7 @@ else
     mkdir(joinpath(vdir, "lib"))
 end
 
-LDFLAGS = "-Wl,-rpath,$vdir/lib -Wl,-rpath,\$\$ORIGIN/../share/julia/site/v$(VERSION.major).$(VERSION.minor)/Nemo/local/lib"
+LDFLAGS = "-Wl,-rpath,$vdir/lib -Wl,-rpath,\$\$ORIGIN/../share/julia/site/v$(VERSION.major).$(VERSION.minor)/ArbNumerics/local/lib"
 DLCFLAGS = "-fPIC -fno-common"
 
 cd(wdir)
