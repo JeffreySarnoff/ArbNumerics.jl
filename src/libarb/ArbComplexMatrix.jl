@@ -505,7 +505,7 @@ function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
 		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
-		  eigvalues, Cnull, Cnull, m, tol, maxiter, P)
+		  eigvalues, Cvoid, Cvoid, m, tol, maxiter, P)
     return sort(eigvalues, lt=complex_lt)
 end
 
@@ -517,7 +517,7 @@ function LinearAlgebra.eigvecs(m::ArbComplexMatrix{P}) where {P}
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
 		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
-		  eigvalues, Cnull, eigvectors, m, tol, maxiter, P)
+		  eigvalues, Cvoid, eigvectors, m, tol, maxiter, P)
     return eigvectors			
 end
 
@@ -529,7 +529,7 @@ function LinearAlgebra.eigen(m::ArbComplexMatrix{P}) where {P}
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
 		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
-		  eigvalues, Cnull, eigvectors, m, tol, maxiter, P)
+		  eigvalues, Cvoid, eigvectors, m, tol, maxiter, P)
     eigvalues = sort(eigvalues, lt=complex_lt)
     return eigvalues, eigvectors			
 end
