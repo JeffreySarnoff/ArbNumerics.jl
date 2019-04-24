@@ -465,3 +465,76 @@ function exp(x::Array{ArbComplex{P}, 2}) where {P}
     ccall(@libarb(acb_mat_exp), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, y, P)
     return Matrix(z)
 end
+
+function exp(x::ArbComplexMatrix{P}) where {P}
+    checksquare(x)	
+    z = ArbComplexMatrix{P}(rowcount(x), colcount(x))
+    ccall(@libarb(acb_mat_exp), Cvoid, (Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Cint), z, x, P)
+    return Matrix(z)
+end
+
+## eigenvalues and eigenvectors
+
+# sort complex values
+complex_lt = (a,b)->(real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag(b)))
+
+#=
+int acb_mat_approx_eig_qr(acb_ptr E, acb_mat_t L, acb_mat_t R, const acb_mat_t A, const mag_t tol, slong maxiter, slong prec)
+
+Computes floating-point approximations of all the n eigenvalues (and optionally eigenvectors) of the given n by n matrix A.
+The approximations of the eigenvalues are written to the vector E, in no particular order. 
+If L is not NULL, approximations of the corresponding left eigenvectors are written to the rows of L. 
+If R is not NULL, approximations of the corresponding right eigenvectors are written to the columns of R.
+
+The parameters tol and maxiter can be used to control the target numerical error and the maximum number of iterations allowed
+before giving up. Passing NULL and 0 respectively results in default values being used.
+
+Uses the implicitly shifted QR algorithm with reduction to Hessenberg form. 
+No guarantees are made about the accuracy of the output. 
+A nonzero return value indicates that the QR iteration converged numerically, 
+but this is only a heuristic termination test and does not imply any statement whatsoever about error bounds. 
+
+The output may also be accurate even if this function returns zero.
+=#
+
+function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    eigvalues = zeros(ArbComplex, rowcount(m))
+    # eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
+    tol = Cnull
+    maxiter = 0
+    result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
+		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
+		  eigvalues, Cnull, Cnull, m, tol, maxiter, P)
+    return eigvalues			
+end
+
+function LinearAlgebra.eigvecs(m::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    eigvalues = zeros(ArbComplex, rowcount(m))
+    eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
+    tol = Cnull
+    maxiter = 0
+    result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
+		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
+		  eigvalues, Cnull, eigvectors, m, tol, maxiter, P)
+    return eigvectors			
+end
+
+function LinearAlgebra.eigs(m::ArbComplexMatrix{P}) where {P}
+    checksquare(x)
+    eigvalues = zeros(ArbComplex, rowcount(m))
+    eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
+    tol = Cnull
+    maxiter = 0
+    result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
+		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
+		  eigvalues, Cnull, eigvectors, m, tol, maxiter, P)
+    return eigvalues, eigvectors			
+end
+
+LinearAlgebra.eigvals(m::Array{ArbComplex{P},2}) where {P} = eigvals(ArbComplexMatrix(m))
+LinearAlgebra.eigvecs(m::Array{ArbComplex{P},2}) where {P} = eigvecs(ArbComplexMatrix(m))
+LinearAlgebra.eigs(m::Array{ArbComplex{P},2}) where {P} = eigs(ArbComplexMatrix(m))
+
+	
