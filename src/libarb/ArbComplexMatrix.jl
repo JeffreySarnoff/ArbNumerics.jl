@@ -501,7 +501,7 @@ function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
     checksquare(m)
     eigvalues = zeros(ArbComplex, rowcount(m))
     # eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
-    tol = Cnull
+    tol = Cvoid
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
 		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
@@ -513,7 +513,7 @@ function LinearAlgebra.eigvecs(m::ArbComplexMatrix{P}) where {P}
     checksquare(m)
     eigvalues = zeros(ArbComplex, rowcount(m))
     eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
-    tol = Cnull
+    tol = Cvoid
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
 		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
@@ -525,7 +525,7 @@ function LinearAlgebra.eigen(m::ArbComplexMatrix{P}) where {P}
     checksquare(m)
     eigvalues = zeros(ArbComplex, rowcount(m))
     eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
-    tol = Cnull
+    tol = Cvoid
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
 		  (Ref(Vector{ArbComplex}), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
