@@ -476,7 +476,7 @@ end
 ## eigenvalues and eigenvectors
 
 # sort complex values
-complex_lt = (a,b)->(real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag(b)))
+complex_lt = (a,b)->(real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag(b))
 
 #=
 int acb_mat_approx_eig_qr(acb_ptr E, acb_mat_t L, acb_mat_t R, const acb_mat_t A, const mag_t tol, slong maxiter, slong prec)
