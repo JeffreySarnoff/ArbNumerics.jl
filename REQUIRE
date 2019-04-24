@@ -1,4 +1,4 @@
 julia 1.0
-BinaryProvider
+BinDeps
 SpecialFunctions 0.7
 GenericSVD 0.2
