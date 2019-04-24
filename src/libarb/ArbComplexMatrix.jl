@@ -498,7 +498,7 @@ The output may also be accurate even if this function returns zero.
 =#
 
 function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
-    checksquare(x)
+    checksquare(m)
     eigvalues = zeros(ArbComplex, rowcount(m))
     # eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
     tol = Cnull
@@ -510,7 +510,7 @@ function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
 end
 
 function LinearAlgebra.eigvecs(m::ArbComplexMatrix{P}) where {P}
-    checksquare(x)
+    checksquare(m)
     eigvalues = zeros(ArbComplex, rowcount(m))
     eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
     tol = Cnull
@@ -522,7 +522,7 @@ function LinearAlgebra.eigvecs(m::ArbComplexMatrix{P}) where {P}
 end
 
 function LinearAlgebra.eigen(m::ArbComplexMatrix{P}) where {P}
-    checksquare(x)
+    checksquare(m)
     eigvalues = zeros(ArbComplex, rowcount(m))
     eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
     tol = Cnull
