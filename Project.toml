@@ -23,6 +23,6 @@ test = ["Test"]
 
 [compat]
 SpecialFunctions = ">=0.7.2"
-BinDeps = ">=0.8.10"
+BinaryProvider = ">=0.5.3"
 GenericSVD = ">=0.2.1"
 GenericSchur = ">=0.2.3"
