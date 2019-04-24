@@ -505,7 +505,7 @@ function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
     tol = Base.C_NULL
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
-		  (Ptr{ArbComplex}, Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(ArbComplexMatrix), Ref(Mag), Clong, Clong),
+		  (Ptr{ArbComplex}, ArbComplexMatrix, ArbComplexMatrix, ArbComplexMatrix, Ref(Mag), Clong, Clong),
 		  eigvalues, eigvectors, eigvectors2, m, tol, maxiter, P)
     return sort(eigvalues, lt=complex_lt)
 end
