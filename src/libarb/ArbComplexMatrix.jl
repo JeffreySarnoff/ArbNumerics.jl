@@ -521,7 +521,7 @@ function LinearAlgebra.eigvecs(m::ArbComplexMatrix{P}) where {P}
     return eigvectors			
 end
 
-function LinearAlgebra.eigs(m::ArbComplexMatrix{P}) where {P}
+function LinearAlgebra.eigen(m::ArbComplexMatrix{P}) where {P}
     checksquare(x)
     eigvalues = zeros(ArbComplex, rowcount(m))
     eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
@@ -536,6 +536,6 @@ end
 
 LinearAlgebra.eigvals(m::Array{ArbComplex{P},2}) where {P} = eigvals(ArbComplexMatrix(m))
 LinearAlgebra.eigvecs(m::Array{ArbComplex{P},2}) where {P} = eigvecs(ArbComplexMatrix(m))
-LinearAlgebra.eigs(m::Array{ArbComplex{P},2}) where {P} = eigs(ArbComplexMatrix(m))
+LinearAlgebra.eigen(m::Array{ArbComplex{P},2}) where {P} = eigs(ArbComplexMatrix(m))
 
 	
