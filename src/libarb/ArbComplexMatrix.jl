@@ -481,6 +481,16 @@ complex_lt = (a,b)->(real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag
 #=
 int acb_mat_approx_eig_qr(acb_ptr E, acb_mat_t L, acb_mat_t R, const acb_mat_t A, const mag_t tol, slong maxiter, slong prec)
 
+            acb_mat_t C, R;
+            acb_ptr E;
+
+            acb_mat_init(R, n, n);
+            acb_mat_init(C, n, n);
+            E = _acb_vec_init(n);
+
+            acb_mat_set_arb_mat(C, A);
+            acb_mat_approx_eig_qr(E, NULL, R, C, NULL, 0, prec)
+
 Computes floating-point approximations of all the n eigenvalues (and optionally eigenvectors) of the given n by n matrix A.
 The approximations of the eigenvalues are written to the vector E, in no particular order. 
 If L is not NULL, approximations of the corresponding left eigenvectors are written to the rows of L. 
@@ -497,16 +507,18 @@ but this is only a heuristic termination test and does not imply any statement w
 The output may also be accurate even if this function returns zero.
 =#
 
+
 function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
     checksquare(m)
-    eigvalues = zeros(ArbComplex{P}, rowcount(m))
+    n = rowcount(m)
+    eigvalues = ccall(@libarb(_acb_vec_init), Ptr{ArbComplex}, (Cint,), n)
     eigvectors = ArbComplexMatrix(rowcount(m), colcount(m))	
-    eigvectors2 = ArbComplexMatrix(rowcount(m), colcount(m))	
+    eigvectors2 = copy(m)	
     tol = Base.C_NULL
     maxiter = 0
     result = ccall(@libarb(acb_mat_approx_eig_qr), Cint, 
-		  (Ptr{ArbComplex}, Ptr{Nothing}, Ptr{Nothing}, Ref{ArbComplexMatrix}, Ptr{Nothing}, Clong, Clong),
-		  eigvalues, Base.C_NULL, Base.C_NULL, m, tol, maxiter, P)
+		  (Ptr{ArbComplex}, Ptr{Nothing}, Ref{ArbComplexMatrix}, Ref{ArbComplexMatrix}, Ptr{Nothing}, Clong, Clong),
+		  eigvalues, Base.C_NULL, eigvectors, eigvectors2, Base.C_NULL, maxiter, P)
     eigvalues = sort(eigvalues, lt=complex_lt)
     return eigvalues
 end
