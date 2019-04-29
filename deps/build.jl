@@ -19,8 +19,7 @@ if !issource_build
     "https://github.com/JuliaMath/GMPBuilder/releases/download/v6.1.2-2/build_GMP.v6.1.2.jl",
     "https://github.com/JuliaMath/MPFRBuilder/releases/download/v4.0.1-3/build_MPFR.v4.0.1.jl",
     "https://github.com/thofma/Flint2Builder/releases/download/2b8f8acb/build_libflint.v2.0.0-b8f8acb317c265db99f828e7baf3266f07f92a7.jl",
-    "https://github.com/thofma/ArbBuilder/releases/download/v2.16.0/build_libarb.v2.16.0.jl",
-    "https://github.com/thofma/AnticBuilder/releases/download/v0.2.0/build_libantic.v0.0.1.jl"
+    "https://github.com/thofma/ArbBuilder/releases/download/v2.16.0/build_libarb.v2.16.0.jl"
    ]
 
   const prefix = Prefix(get([a for a in ARGS if a != "--verbose"], 1, joinpath(@__DIR__, "usr")))
@@ -48,7 +47,6 @@ else
   @show YASM_VERSION = "1.3.0"
   @show MPIR_VERSION = "3.0.0-90740d8fdf03b941b55723b449831c52fd7f51ca"
   @show MPFR_VERSION = "4.0.0"
-  @show ANTIC_VERSION = "ede86094503380648ce51fa56cd3ff16217cffed"
   @show FLINT_VERSION = "2b8f8acb317c265db99f828e7baf3266f07f92a7"
   @show ARB_VERSION = "fe53e3f306380b5a65b30dcec776e10428601790"
 
