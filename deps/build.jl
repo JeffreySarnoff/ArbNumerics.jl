@@ -11,6 +11,7 @@ issource_build = "ARBNUMERICS_SOURCE_BUILD" in keys(ENV) && ENV["ARBNUMERICS_SOU
 const prefixpath = joinpath(@__DIR__, "usr")
 
 const wdir = joinpath(@__DIR__)
+println("wdir = ", wdir)
 
 if !issource_build
   # Dependencies that must be installed before this package can be built
