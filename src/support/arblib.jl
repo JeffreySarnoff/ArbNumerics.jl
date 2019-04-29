@@ -28,22 +28,23 @@ end
 
  
     
-const ArbLibsDir = abspath(normpath(joinpath(@__DIR__,"..","..","local","lib")))
+const LibsDir = abspath(normpath(joinpath(@__DIR__,"..","..","local","lib")))
+println("LibsDir = ",LibsDir)
 
-libnames = readdir(ArbLibsDir)
+libnames = readdir(LibsDir)
 
 haslibarb   = any(startswith(x,"libarb") for x in libnames)
 haslibflint = any(startswith(x,"libflint") for x in libnames)
 
 if !(haslibarb)
-   throw(ErrorException(string("the Arb C library was not found in ",ArbLibsDir)))
+   throw(ErrorException(string("the Arb C library was not found in ",LibsDir)))
 elseif !(haslibflint)
-   throw(ErrorException(string("the Flint C library was not found in ",ArbLibsDir)))
+   throw(ErrorException(string("the Flint C library was not found in ",LibsDir)))
 end
 
 
-const LibArb   = library_filepath( ArbLibsDir, libnames, "libarb"   )
-const LibFlint = library_filepath( ArbLibsDir, libnames, "libflint" )
+const LibArb   = library_filepath( LibsDir, libnames, "libarb"   )
+const LibFlint = library_filepath( LibsDir, libnames, "libflint" )
 
 const LibArbHandle   = dlopen(LibArb)
 const LibFlintHandle = dlopen(LibFlint)
