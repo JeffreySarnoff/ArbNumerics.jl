@@ -1,4 +1,3 @@
-using BinDeps
 using Libdl
 
 const pathsep = Sys.iswindows() ? "\\" : "/"
