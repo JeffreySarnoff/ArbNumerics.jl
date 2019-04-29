@@ -28,7 +28,7 @@ end
 
  
     
-const LibsDir = abspath(normpath(joinpath(@__DIR__,"..","..","local","lib")))
+const LibsDir = abspath(normpath(joinpath(@__DIR__,"..","..","deps","usr","lib")))
 println("LibsDir = ",LibsDir)
 
 libnames = readdir(LibsDir)
