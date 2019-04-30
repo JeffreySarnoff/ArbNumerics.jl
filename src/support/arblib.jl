@@ -1,4 +1,42 @@
 using Libdl
+ 
+iswindows64() = (Sys.iswindows() ? true : false) && (Int == Int64)
+
+const pkgdir = realpath(joinpath(dirname(@__DIR__)))
+const libdir = joinpath(pkgdir, "deps", "usr", "lib")
+const bindir = joinpath(pkgdir, "deps", "usr", "bin")
+
+if Sys.iswindows()
+   const LibGMP = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libgmp-10"))
+   const LibMPFR = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libmpfr-6"))
+   const LibFlint = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libflint"))
+   const LibArb = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libarb"))
+else
+   const LibGMP = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libgmp"))
+   const LibMPFR = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libmpfr"))
+   const LibFlint = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libflint"))
+   const LibArb = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libarb"))
+end
+
+macro libarb(libraryfunction)
+    (:($libraryfunction), LibArb)
+end
+
+macro libflint(libraryfunction)
+    (:($libraryfunction), LibFlint)
+end
+
+macro libgmp(libraryfunction)
+    (:($libraryfunction), LibGMP)
+end
+
+macro libmpfr(libraryfunction)
+    (:($libraryfunction), LibMPFR)
+end
+
+
+#=
+using Libdl
 
 const pathsep = Sys.iswindows() ? "\\" : "/"
 
@@ -68,3 +106,4 @@ end
 macro flintlib(libraryfunction)
     :(dlsym(LibFlintHandle, $libraryfunction))
 end
+=#
