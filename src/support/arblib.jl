@@ -10,15 +10,15 @@ println(libdir);println("")
 println(bindir);println("")
 
 if Sys.iswindows()
-   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10")))
-   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6")))
-   const LibFlint = Symbol(realpath(joinpath(bindir, "libflint")))
-   const LibArb = Symbol(realpath(joinpath(bindir,  "libarb")))
+   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dll")))
+   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dll")))
+   const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dll")))
+   const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dll")))
 else
-   const LibGMP = Symbol(realpath(joinpath(libdir, "libgmp")))
-   const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr")))
-   const LibFlint = Symbol(realpath(joinpath(libdir, "libflint")))
-   const LibArb = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "lib", "libarb")))
+   const LibGMP = Symbol(realpath(joinpath(libdir, "libgmp.so")))
+   const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr.so")))
+   const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.so")))
+   const LibArb = Symbol(realpath(joinpath(libdir, "libarb.so")))
 end
 
 println(LibArb);println("")
