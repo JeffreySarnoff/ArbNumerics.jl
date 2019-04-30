@@ -9,11 +9,11 @@ version = "v0.4.7"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+BinaryProvider = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
 GenericSVD = "01680d73-4ee2-5a08-a1aa-533608c188bb"
 GenericSchur = "c145ed77-6b09-5dd9-b285-bf645a82121e"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 Readables = "0d4725de-cd7c-5e44-8a85-a48caeef9fa5"
-BinaryProvider = "9e28174c-4ba2-5203-b857-d8d62c4213ee"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
@@ -23,6 +23,6 @@ test = ["Test"]
 
 [compat]
 SpecialFunctions = ">=0.7.2"
-BinaryProvider = ">=0.5.3"
+BinaryProvider = ">=0.5.4"
 GenericSVD = ">=0.2.1"
 GenericSchur = ">=0.2.3"
