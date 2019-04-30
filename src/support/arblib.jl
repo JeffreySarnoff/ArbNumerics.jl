@@ -2,20 +2,20 @@ using Libdl
  
 iswindows64() = (Sys.iswindows() ? true : false) && (Int == Int64)
 
-const pkgdir = realpath(joinpath(dirname(@__DIR__)))
-const libdir = joinpath(pkgdir, "deps", "usr", "lib")
-const bindir = joinpath(pkgdir, "deps", "usr", "bin")
+const pkgdir = realpath(joinpath(dirname(@__DIR__), ".."))
+const libdir = joinpath(pkgdir, "..", "deps", "usr", "lib")
+const bindir = joinpath(pkgdir, "..", "deps", "usr", "bin")
 
 if Sys.iswindows()
-   const LibGMP = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libgmp-10"))
-   const LibMPFR = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libmpfr-6"))
-   const LibFlint = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libflint"))
-   const LibArb = Symbol(joinpath(pkgdir, "deps", "usr", "bin", "libarb"))
+   const LibGMP = Symbol(realpath(joinpath(pkgdir,  "deps", "usr", "bin", "libgmp-10")))
+   const LibMPFR = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "bin", "libmpfr-6")))
+   const LibFlint = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "bin", "libflint")))
+   const LibArb = Symbol(realpath(joinpath(pkgdir,  "deps", "usr", "bin", "libarb")))
 else
-   const LibGMP = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libgmp"))
-   const LibMPFR = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libmpfr"))
-   const LibFlint = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libflint"))
-   const LibArb = Symbol(joinpath(pkgdir, "deps", "usr", "lib", "libarb"))
+   const LibGMP = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "lib", "libgmp")))
+   const LibMPFR = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "lib", "libmpfr")))
+   const LibFlint = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "lib", "libflint")))
+   const LibArb = Symbol(realpath(joinpath(pkgdir, "deps", "usr", "lib", "libarb")))
 end
 
 macro libarb(libraryfunction)
