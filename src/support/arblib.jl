@@ -29,7 +29,7 @@ end
  
     
 const LibsDir = abspath(normpath(joinpath(@__DIR__,"..","..","deps","usr","lib")))
-println("LibsDir = ",LibsDir)
+println("LibsDir = ",LibsDir);println("")
 
 libnames = readdir(LibsDir)
 
@@ -45,6 +45,7 @@ end
 
 const LibArb   = library_filepath( LibsDir, libnames, "libarb"   )
 const LibFlint = library_filepath( LibsDir, libnames, "libflint" )
+println(LibArb);println("");
 
 const LibArbHandle   = dlopen(LibArb)
 const LibFlintHandle = dlopen(LibFlint)
