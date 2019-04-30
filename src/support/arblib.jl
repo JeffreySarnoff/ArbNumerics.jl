@@ -12,6 +12,7 @@ function libdirpath(libname::String, prefix_lib::Bool=true)
     libstr = Libdl.find_library(libname)
     length(libstr) === 0 && throw(ErrorException("lib$libname not found"))
     libstr = dlpath(libstr)
+    println("libstr = ", libstr);println("")
     return abspath(libstr)
 end
 
