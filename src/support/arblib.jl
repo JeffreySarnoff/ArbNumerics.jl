@@ -6,6 +6,9 @@ const pkgdir = realpath(joinpath(dirname(@__DIR__), ".."))
 const libdir = joinpath(pkgdir, "deps", "usr", "lib")
 const bindir = joinpath(pkgdir, "deps", "usr", "bin")
 
+println(libdir);println("")
+println(bindir);println("")
+
 if Sys.iswindows()
    const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10")))
    const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6")))
