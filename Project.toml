@@ -3,7 +3,7 @@ uuid = "7e558dbc-694d-5a72-987c-6f4ebed21442"
 repo = "https://github.com/JeffreySarnoff/ArbNumerics.jl.git"
 author = "Jeffrey Sarnoff"
 license = "MIT"
-version = "v0.4.7"
+version = "v0.4.8"
 
 [deps]
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
@@ -22,7 +22,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 test = ["Test"]
 
 [compat]
-SpecialFunctions = ">=0.7.2"
-BinaryProvider = ">=0.5.4"
-GenericSVD = ">=0.2.1"
-GenericSchur = ">=0.2.3"
+SpecialFunctions = "0"
+BinaryProvider = "0"
+GenericSVD = "0"
+GenericSchur = "0"
