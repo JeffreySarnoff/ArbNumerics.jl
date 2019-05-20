@@ -106,7 +106,7 @@ import Base.Math:  max, min, minmax,
 
        clamp, clamp!
 
-import Random.rand
+import Random: rand, randn
 
 import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, trigamma,
      beta, lbeta, sinint, cosint,
