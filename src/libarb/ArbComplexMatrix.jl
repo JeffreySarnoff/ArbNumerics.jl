@@ -15,7 +15,6 @@ mutable struct ArbComplexMatrix{P} <: AbstractArbMatrix{P, ArbComplex}
     end
 end
 
-
 #ArbComplexMatrix(x::ArbComplexMatrix) = x
 ArbComplexMatrix(x::ArbComplexMatrix{P}) where {P} = x
 ArbComplexMatrix{P}(x::ArbComplexMatrix{P}) where {P} = x
