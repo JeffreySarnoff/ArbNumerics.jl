@@ -129,6 +129,7 @@ import Base.MathConstants: π, ℯ, γ, φ, catalan
 
 using Libdl
 using Random
+using Random: SamplerType, SamplerTrivial, CloseOpen01
 
 include("support/arblib.jl")
 include("support/abstractions.jl")
