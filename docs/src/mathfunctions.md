@@ -13,6 +13,10 @@
 - `angle`, `magnitude`
 - `conj` # applies to a value and applies to a matrix
 
+## random numbers
+
+- `rand`, `randn`
+
 ## arithmetic-geometric mean
 
 - `agm`, `agm1`
