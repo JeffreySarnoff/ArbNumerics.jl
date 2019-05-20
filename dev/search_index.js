@@ -209,6 +209,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "mathfunctions/#random-numbers-1",
+    "page": "Elementary Functions",
+    "title": "random numbers",
+    "category": "section",
+    "text": "rand, randn"
+},
+
+{
     "location": "mathfunctions/#arithmetic-geometric-mean-1",
     "page": "Elementary Functions",
     "title": "arithmetic-geometric mean",
