@@ -182,6 +182,7 @@ include("intervals/intervalparts.jl")
 include("intervals/complex_intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
+include("support/minprec.jl")
 include("support/linearalgebra.jl")
 include("support/printf.jl")
 include("support/helptext.jl")
