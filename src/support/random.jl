@@ -1,6 +1,6 @@
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
-import Random: rand
+import Random: rand, randn
 
 function rand(::AbstractRNG, ::SamplerTrivial{CloseOpen01{T}}) where {P, T<:ArbFloat{P}}
     oldprec = precision(BigFloat)
