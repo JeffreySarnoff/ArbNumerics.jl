@@ -120,7 +120,7 @@ using  GenericSVD
 using  LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
                       cholesky, tril, triu, eigvals, svdvals, floatmin2,
-                      mul!, rmul!, lmul!
+                      mul!, rmul!, lmul!, eigvecs
 
 export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
        cholesky, tril, tiru, eigvals, svdvals
@@ -182,6 +182,7 @@ include("intervals/intervalparts.jl")
 include("intervals/complex_intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
+include("support/linearalgebra.jl")
 include("support/printf.jl")
 include("support/helptext.jl")
 
