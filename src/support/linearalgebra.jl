@@ -9,11 +9,11 @@ Base.convert(::ArbRealMatrix{P}, x::Array{ArbReal{P}, 2})  where {P} = ArbRealMa
 Base.convert(::ArbComplexMatrix{P}, x::Array{ArbComplex{P}, 2}) where {P} = ArbComplexMatrix(x)
 
 svdvals(x::Array{ArbReal{N},2}) where {N} = ArbReal{N}.(svdvals(ArbFloat{N}.(midpoint.(x))))
-#svdvals(x::Array{ArbReal{N},M}) where {N,M} = throw(ErrorException("not implemented"))
-#svdvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not implemented"))
+svdvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supproted"))
 
 eigvals(x::Array{ArbReal{N},2}) where {N} = ArbReal{N}.(eigvals(ArbFloat{N}.(midpoint.(x))))
-#eigvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not implemented"))
-#LinearAlgebra.eigvecs(x::Array{ArbFloat{N},M}) where {N,M} = throw(ErrorException("not implemented"))
-#LinearAlgebra.eigvecs(x::Array{ArbReal{N},M}) where {N,M} = throw(ErrorException("not implemented"))
-#LinearAlgebra.eigvecs(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not implemented"))
+eigvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
+
+LinearAlgebra.eigvecs(x::Array{ArbFloat{N},M}) where {N,M} = throw(ErrorException("not supported"))
+LinearAlgebra.eigvecs(x::Array{ArbReal{N},M}) where {N,M} = throw(ErrorException("not supported"))
+LinearAlgebra.eigvecs(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
