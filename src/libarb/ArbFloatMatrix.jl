@@ -30,18 +30,18 @@ function ArbFloatMatrix(fpm::Array{ArbFloat, 2})
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+       for c = 1:ncols
+	       arm[r,c] = fpm[r,c]
+	   end
+    end
+    return arm
 end
 
 function ArbFloatMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
+	    for c = 1:ncols
 			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	    end
 	end
