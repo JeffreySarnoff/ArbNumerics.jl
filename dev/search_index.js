@@ -121,6 +121,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "precisions/#minimum-precision-1",
+    "page": "Precisions",
+    "title": "minimum precision",
+    "category": "section",
+    "text": "The minimum precision is 24 significant bits."
+},
+
+{
     "location": "precisions/#working-precision-1",
     "page": "Precisions",
     "title": "working precision",
