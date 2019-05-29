@@ -9,6 +9,7 @@ Base.convert(::ArbRealMatrix{P}, x::Array{ArbReal{P}, 2})  where {P} = ArbRealMa
 Base.convert(::ArbComplexMatrix{P}, x::Array{ArbComplex{P}, 2}) where {P} = ArbComplexMatrix(x)
 
 svdvals(x::Array{ArbReal{N},2}) where {N} = ArbReal{N}.(svdvals(ArbFloat{N}.(midpoint.(x))))
+svdvals(x::ArbComplexMatrix{N}) where {N} = throw(ErrorException("not supported"))
 svdvals(x::Array{ArbComplex{N},2}) where {N} = throw(ErrorException("not supported"))
 svdvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
 svdvals(x::Array{Complex{ArbFloat{N}},2}) where {N} = throw(ErrorException("not supported"))
