@@ -30,3 +30,27 @@ eigvecs(x::Array{Complex{ArbReal{N}},2}) where {N} = throw(ErrorException("not s
 eigvecs(x::Array{ArbFloat{N},M}) where {N,M} = throw(ErrorException("not supported"))
 eigvecs(x::Array{ArbReal{N},M}) where {N,M} = throw(ErrorException("not supported"))
 eigvecs(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
+
+
+svdvals(x::Array{ArbReal,2}) = ArbReal{workingprecision(ArbReal)}.(svdvals(ArbFloat{workingprecision(ArbFloat)}.(midpoint.(x))))
+svdvals(x::ArbComplexMatrix) = throw(ErrorException("not supported"))
+svdvals(x::Array{ArbComplex,2}) = throw(ErrorException("not supported"))
+svdvals(x::Array{ArbComplex,M}) where {M} = throw(ErrorException("not supported"))
+svdvals(x::Array{Complex{ArbFloat},2}) = throw(ErrorException("not supported"))
+svdvals(x::Array{Complex{ArbReal},2}) = throw(ErrorException("not supported"))
+
+eigvals(x::Array{ArbReal,2})  = ArbReal{workingprecision{ArbReal}}.(eigvals(ArbFloat{workingprecision(ArbFloat)}.(midpoint.(x))))
+eigvals(x::Array{ArbComplex,2}) = throw(ErrorException("not supported"))
+eigvals(x::Array{ArbReal,M}) where {M} = throw(ErrorException("not supported"))
+eigvals(x::Array{ArbComplex,M}) where {M} = throw(ErrorException("not supported"))
+eigvals(x::Array{Complex{ArbFloat},2}) = throw(ErrorException("not supported"))
+eigvals(x::Array{Complex{ArbReal},2}) = throw(ErrorException("not supported"))
+
+eigvecs(x::Array{ArbFloat,2}) = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbReal,2}) = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbComplex,2}) = throw(ErrorException("not supported"))
+eigvecs(x::Array{Complex{ArbFloat},2}) = throw(ErrorException("not supported"))
+eigvecs(x::Array{Complex{ArbReal},2}) = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbFloat,M}) where {M} = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbReal,M}) where {M} = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbComplex,M}) where {M} = throw(ErrorException("not supported"))
