@@ -120,7 +120,7 @@ using  GenericSVD
 using  LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
                       cholesky, tril, triu, eigvals, svdvals, floatmin2,
-                      mul!, rmul!, lmul!, eigvecs
+                      mul!, rmul!, lmul!, eigvecs, svd, eigen
 
 export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
        cholesky, tril, tiru, eigvals, svdvals
