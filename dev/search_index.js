@@ -353,11 +353,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "matrixfunctions/#using-ArbNumerics,-GenericSVD,-LinearAlgebra-1",
+    "location": "matrixfunctions/#using-ArbNumerics,-GenericSchur,-GenericSVD,-LinearAlgebra-1",
     "page": "Matrix Functions",
-    "title": "using ArbNumerics, GenericSVD, LinearAlgebra",
+    "title": "using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra",
     "category": "section",
-    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize\neigvals\nsvdvals"
+    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize\neigvals, svdvals\nMatrix{ArbFloat | ArbReal}\nsvd\nMatrix{ArbFloat | ArbReal | ArbComplex}"
 },
 
 {
