@@ -9,11 +9,23 @@ Base.convert(::ArbRealMatrix{P}, x::Array{ArbReal{P}, 2})  where {P} = ArbRealMa
 Base.convert(::ArbComplexMatrix{P}, x::Array{ArbComplex{P}, 2}) where {P} = ArbComplexMatrix(x)
 
 svdvals(x::Array{ArbReal{N},2}) where {N} = ArbReal{N}.(svdvals(ArbFloat{N}.(midpoint.(x))))
+svdvals(x::Array{ArbComplex{N},2}) where {N} = throw(ErrorException("not supported"))
 svdvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
+svdvals(x::Array{Complex{ArbFloat{N}},2}) where {N} = throw(ErrorException("not supported"))
+svdvals(x::Array{Complex{ArbReal{N}},2}) where {N} = throw(ErrorException("not supported"))
 
 eigvals(x::Array{ArbReal{N},2}) where {N} = ArbReal{N}.(eigvals(ArbFloat{N}.(midpoint.(x))))
+eigvals(x::Array{ArbComplex{N},2}) where {N} = throw(ErrorException("not supported"))
+eigvals(x::Array{ArbReal{N},M}) where {N,M} = throw(ErrorException("not supported"))
 eigvals(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
+eigvals(x::Array{Complex{ArbFloat{N}},2}) where {N} = throw(ErrorException("not supported"))
+eigvals(x::Array{Complex{ArbReal{N}},2}) where {N} = throw(ErrorException("not supported"))
 
+eigvecs(x::Array{ArbFloat{N},2}) where {N} = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbReal{N},2}) where {N} = throw(ErrorException("not supported"))
+eigvecs(x::Array{ArbComplex{N},2}) where {N} = throw(ErrorException("not supported"))
+eigvecs(x::Array{Complex{ArbFloat{N}},2}) where {N} = throw(ErrorException("not supported"))
+eigvecs(x::Array{Complex{ArbReal{N}},2}) where {N} = throw(ErrorException("not supported"))
 eigvecs(x::Array{ArbFloat{N},M}) where {N,M} = throw(ErrorException("not supported"))
 eigvecs(x::Array{ArbReal{N},M}) where {N,M} = throw(ErrorException("not supported"))
 eigvecs(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not supported"))
