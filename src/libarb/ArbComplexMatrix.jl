@@ -505,7 +505,7 @@ but this is only a heuristic termination test and does not imply any statement w
 
 The output may also be accurate even if this function returns zero.
 =#
-
+#=
 
 function LinearAlgebra.eigvals(m::ArbComplexMatrix{P}) where {P}
     checksquare(m)
@@ -550,5 +550,5 @@ end
 LinearAlgebra.eigvals(m::Array{ArbComplex{P},2}) where {P} = eigvals(ArbComplexMatrix(m))
 LinearAlgebra.eigvecs(m::Array{ArbComplex{P},2}) where {P} = eigvecs(ArbComplexMatrix(m))
 LinearAlgebra.eigen(m::Array{ArbComplex{P},2}) where {P} = eigs(ArbComplexMatrix(m))
-
+=#
 	
