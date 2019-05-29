@@ -8,6 +8,7 @@ Base.convert(::ArbFloatMatrix{P}, x::Array{ArbFloat{P}, 2}) where {P} = ArbFloat
 Base.convert(::ArbRealMatrix{P}, x::Array{ArbReal{P}, 2})  where {P} = ArbRealMatrix(x)
 Base.convert(::ArbComplexMatrix{P}, x::Array{ArbComplex{P}, 2}) where {P} = ArbComplexMatrix(x)
 
+#=
 svdvals(x::Array{ArbReal{N},2}) where {N} = ArbReal{N}.(svdvals(ArbFloat{N}.(midpoint.(x))))
 svdvals(x::ArbComplexMatrix{N}) where {N} = throw(ErrorException("not su
                   pported"))
@@ -87,3 +88,4 @@ eigen(x::Array{Complex{ArbReal},2}) = throw(ErrorException("not supported"))
 eigen(x::Array{ArbFloat,M}) where {M} = throw(ErrorException("not supported"))
 eigen(x::Array{ArbReal,M}) where {M} = throw(ErrorException("not supported"))
 eigen(x::Array{ArbComplex,M}) where {M} = throw(ErrorException("not supported"))
+=#
