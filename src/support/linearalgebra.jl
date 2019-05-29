@@ -33,7 +33,6 @@ eigvecs(x::Array{ArbComplex{N},M}) where {N,M} = throw(ErrorException("not suppo
 
 
 svdvals(x::Array{ArbReal,2}) = ArbReal{workingprecision(ArbReal)}.(svdvals(ArbFloat{workingprecision(ArbFloat)}.(midpoint.(x))))
-# svdvals(x::ArbComplexMatrix) = throw(ErrorException("not supported"))
 svdvals(x::Array{ArbComplex,2}) = throw(ErrorException("not supported"))
 svdvals(x::Array{ArbComplex,M}) where {M} = throw(ErrorException("not supported"))
 svdvals(x::Array{Complex{ArbFloat},2}) = throw(ErrorException("not supported"))
