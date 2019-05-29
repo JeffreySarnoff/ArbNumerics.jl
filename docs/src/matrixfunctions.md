@@ -1,6 +1,6 @@
 ## functions
 
-#### `using ArbNumerics, GenericSVD, LinearAlgebra`
+#### `using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra`
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
@@ -8,8 +8,10 @@
 - `+`, `-`, `*`, `/`, `\`          ( matrix  op matrix  )
 
 - `lu`, `qr`, `factorize`
-- `eigvals`
-- `svdvals`
+- `eigvals`, `svdvals`
+    - `Matrix{ArbFloat | ArbReal}`
+- `svd`
+    - `Matrix{ArbFloat | ArbReal | ArbComplex}`
 
 ----
 
