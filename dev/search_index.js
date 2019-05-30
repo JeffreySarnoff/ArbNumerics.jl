@@ -277,7 +277,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elementary Functions",
     "title": "elliptic functions",
     "category": "section",
-    "text": "elliptice, elliptick\nellipticp, ellipticpi\nellipticzeta, ellipticsigma"
+    "text": "elliptice, elliptick, ellipticpi     (complete and incomplete integrals)\nelliptic_e, elliptic_k, elliptic_pi  (squares the modulus)\nellipticrf, ellipticrg, ellipticrj   (Carleson\'s symmetric integrals)"
 },
 
 {
@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Complete Elliptic Integrals",
     "category": "section",
-    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">     |\nelliptic_k(M) == elliptick(m^2)\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptice.png\" alt=\"elliptice\" width=\"500\">     |\nelliptic_e(M) == elliptice(m^2)\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind            |    |:––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"600\">  |\nelliptic_pi(n, M) == ellipticpi(n, m^2)"
+    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">     |    | elliptic_k(m) == elliptick(m^2)                                 |\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptice.png\" alt=\"elliptice\" width=\"500\">     |    | elliptic_e(m) == elliptice(m^2)                                 |\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind            |    |:––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"600\">  |    | elliptic_pi(n, m) == ellipticpi(n, m^2)                         |"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Incomplete Elliptic Integrals",
     "category": "section",
-    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |\nelliptic_f(phi, M) == ellipticf(phi, m^2)\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind                 |    |:––––––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/elliptice_incomplete.png\" alt=\"elliptice\" width=\"500\"> |\nelliptic_e(phi, M) == elliptice(phi, m^2)\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind                   |    |:–––––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticpi_incomplete.png\" alt=\"elliptice\" width=\"600\"> |\nelliptic_pi(n, phi, M) == ellipticpi(n, phi, m^2)"
+    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |    | elliptic_f(phi, m) == ellipticf(phi, m^2)                        |\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind                 |    |:––––––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/ellipticeincomplete.png\" alt=\"elliptice\" width=\"500\"> |    | `elliptice(phi, m) == elliptice(phi, m^2)`                               |\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind                   |    |:–––––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticpiincomplete.png\" alt=\"elliptice\" width=\"600\"> |    | `ellipticpi(n, phi, m) == ellipticpi(n, phi, m^2)`                        |"
 },
 
 {
