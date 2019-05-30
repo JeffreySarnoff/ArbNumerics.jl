@@ -47,19 +47,19 @@
 
      |       the symmetric elliptic integral of the first kind           |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/ellipticrf.png" alt="ellipticrf" width="600">     |
+     |   <img src="assets/elliptic_rf.png" alt="ellipticrf" width="600">     |
 
 - `ellipticrg(x, y, z)`
 
      |       the symmetric elliptic integral of the second kind          |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/ellipticrg.png" alt="ellipticrg" width="600">     |
+     |   <img src="assets/elliptic_rg.png" alt="ellipticrg" width="600">     |
 
 - `ellipticrj(x, y, z, p)`
 
      |       the symmetric elliptic integral of the third kind          |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/ellipticrg.png" alt="ellipticrj" width="600">     |
+     |   <img src="assets/elliptic_rg.png" alt="ellipticrj" width="600">     |
 
 
 ## Jacobi's Theta Functions
