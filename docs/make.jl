@@ -12,6 +12,7 @@ makedocs(
         "Rounding"                 => "rounding.md",
         "Elementary Functions"     => "mathfunctions.md",
         "Elliptic Functions"       => "ellipticfunctions.md",
+        "More Elliptic Functions"  => "ellipticfunctions2.md",
         "Matrix Functions"         => "matrixfunctions.md",
         "Interval Functions"       => "intervalfunctions.md",
         "LibArb Differences"       => "libarb_differences.md",
