@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Incomplete Elliptic Functions",
     "category": "section",
-    "text": "ellipticf(x, m)\nLegendre incomplete elliptic integral of the first kind (Image: ellipticf)"
+    "text": "ellipticf(phi, m)\nLegendre incomplete elliptic integral of the first kind (Image: ellipticf)"
 },
 
 {
