@@ -2,20 +2,20 @@
 
 ## Complete Elliptic Functions
 
-- elliptick(m)
+- `elliptick(m)`
     - the complete elliptic integral of the first kind
      ![elliptick](assets/elliptic_k.png) 
-- elliptice(m)
+- `elliptice(m)`
     - the complete elliptic integral of the second kind
    ![elliptice](assets/elliptice.png)
-- ellipticpi(n, m)
+- `ellipticpi(n, m)`
     - the complete elliptic integral of the third kind
    ![ellipticpi](assets/ellipticpi.png)
--    
+   
 ## Incomplete Elliptic Functions
 
-- ellipticf(phi, m)
-    - Legendre incomplete elliptic integral of the first kind
+- `ellipticf(phi, m)`
+    - the incomplete elliptic integral of the first kind
       ![ellipticf](assets/ellipticf.png)
 
 ## Carlson's Elliptic Functions
