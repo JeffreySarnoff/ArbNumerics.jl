@@ -30,15 +30,15 @@
 
 - `elliptice(phi, m)`
 
-     |       the incomplete elliptic integral of the second kind          |
-     |:------------------------------------------------------------------:|
-     |   <img src="assets/elliptice_incomplete.png" alt="elliptice" width="500">     |
+     |       the incomplete elliptic integral of the second kind                 |
+     |:-------------------------------------------------------------------------:|
+     |   <img src="assets/elliptice_incomplete.png" alt="elliptice" width="500"> |
 
 - `ellipticpi(n, phi, m)`
 
-     |       the incomplete elliptic integral of the third kind          |
-     |:------------------------------------------------------------------:|
-     |   <img src="assets/ellipticpi_incomplete.png" alt="elliptice" width="600">     |
+     |       the incomplete elliptic integral of the third kind                   |
+     |:--------------------------------------------------------------------------:|
+     |   <img src="assets/ellipticpi_incomplete.png" alt="elliptice" width="600"> |
 
 
 ## Carlson's Symmetric Elliptic Functions
@@ -47,19 +47,19 @@
 
      |       the symmetric elliptic integral of the first kind            |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/elliptic_rf.png" alt="ellipticrf" width="400">   |
+     |   <img src="assets/elliptic_rf.png" alt="ellipticrf" width="400">  |
 
 - `ellipticrg(x, y, z)`
 
-     |       the symmetric elliptic integral of the second kind          |
+     |       the symmetric elliptic integral of the second kind           |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/elliptic_rg.png" alt="ellipticrg" width="600">     |
+     |   <img src="assets/elliptic_rg.png" alt="ellipticrg" width="600">  |
 
 - `ellipticrj(x, y, z, p)`
 
-     |       the symmetric elliptic integral of the third kind          |
-     |:------------------------------------------------------------------:|
-     |   <img src="assets/elliptic_rj.png" alt="ellipticrj" width="550">     |
+     |       the symmetric elliptic integral of the third kind              |
+     |:--------------------------------------------------------------------:|
+     |   <img src="assets/elliptic_rj.png" alt="ellipticrj" width="500">    |
 
 
 ## Jacobi's Theta Functions
