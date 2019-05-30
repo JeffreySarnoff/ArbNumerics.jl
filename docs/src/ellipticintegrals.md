@@ -1,4 +1,4 @@
-## Complete Elliptic Functions
+## Complete Elliptic Integrals
 
 - `elliptick(m)`
 
@@ -20,7 +20,7 @@
      |   <img src="assets/ellipticpi.png" alt="ellipticpi" width="600">  |
 
    
-## Incomplete Elliptic Functions
+## Incomplete Elliptic Integrals
 
 - `ellipticf(phi, m)`
 
@@ -41,7 +41,7 @@
      |   <img src="assets/ellipticpi_incomplete.png" alt="elliptice" width="600"> |
 
 
-## Carlson's Symmetric Elliptic Functions
+## Carlson's Symmetric Elliptic Integrals
 
 - `ellipticrf(x, y, z)`
 
