@@ -1,5 +1,3 @@
-(images from the Arb C library docs)
-
 ## Complete Elliptic Functions
 
 - `elliptick(m)`
@@ -25,3 +23,5 @@
 
 
 ## Weierstrass's elliptic functions
+
+(images from the Arb C library docs)
