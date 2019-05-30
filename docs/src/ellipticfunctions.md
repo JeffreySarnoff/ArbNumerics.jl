@@ -47,7 +47,7 @@
 
      |       the symmetric elliptic integral of the first kind            |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/elliptic_rf.png" alt="ellipticrf" width="450">   |
+     |   <img src="assets/elliptic_rf.png" alt="ellipticrf" width="400">   |
 
 - `ellipticrg(x, y, z)`
 
