@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Incomplete Elliptic Functions",
     "category": "section",
-    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |"
+    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind          |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptice_incomplete.png\" alt=\"elliptice\" width=\"500\">     |\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind          |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticpi_incomplete.png\" alt=\"elliptice\" width=\"500\">     |"
 },
 
 {
