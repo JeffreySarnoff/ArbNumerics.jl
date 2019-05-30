@@ -59,7 +59,7 @@
 
      |       the symmetric elliptic integral of the third kind          |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/elliptic_rg.png" alt="ellipticrj" width="600">     |
+     |   <img src="assets/elliptic_rj.png" alt="ellipticrj" width="600">     |
 
 
 ## Jacobi's Theta Functions
