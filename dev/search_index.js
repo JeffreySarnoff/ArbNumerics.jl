@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Complete Elliptic Functions",
     "category": "section",
-    "text": "elliptick(m)\nthe complete elliptic integral of the first kind\n(Image: elliptick) \nelliptice(m)\nthe complete elliptic integral of the second kind\n(Image: elliptice)\nellipticpi(n, m)\nthe complete elliptic integral of the third kind\n(Image: ellipticpi)"
+    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |    <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">     |\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |    <img src=\"assets/elliptice.png\" alt=\"elliptice\" width=\"500\">     |\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind            |    |:––––––––––––––––––––––––––––––––-:|    |    <img src=\"assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"500\">     |"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Incomplete Elliptic Functions",
     "category": "section",
-    "text": "ellipticf(phi, m)\nthe incomplete elliptic integral of the first kind (Image: ellipticf)"
+    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:––––––––––––––––––––––––––––––––-:|    |    <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |"
 },
 
 {
