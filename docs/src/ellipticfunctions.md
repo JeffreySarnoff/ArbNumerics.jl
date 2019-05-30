@@ -28,6 +28,19 @@
      |:------------------------------------------------------------------:|
      |   <img src="assets/ellipticf.png" alt="ellipticf" width="500">     |
 
+- `elliptice(phi, m)`
+
+     |       the incomplete elliptic integral of the second kind          |
+     |:------------------------------------------------------------------:|
+     |   <img src="assets/elliptice_incomplete.png" alt="elliptice" width="500">     |
+
+- `ellipticpi(n, phi, m)`
+
+     |       the incomplete elliptic integral of the third kind          |
+     |:------------------------------------------------------------------:|
+     |   <img src="assets/ellipticpi_incomplete.png" alt="elliptice" width="500">     |
+
+
 ## Carlson's Elliptic Functions
 
 
