@@ -168,3 +168,79 @@ function ellipticpi(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) whe
     return result
 end
 
+
+#=
+# Carleson Symmetric Elliptic Integrals
+
+first kind
+void acb_elliptic_rf(acb_t res, const acb_t x, const acb_t y, const acb_t z, int flags, slong prec)
+second kind
+void acb_elliptic_rg(acb_t res, const acb_t x, const acb_t y, const acb_t z, int flags, slong prec)
+third kind
+void acb_elliptic_rj(acb_t res, const acb_t x, const acb_t y, const acb_t z, const acb_t p, int flags, slong prec)
+=#
+
+function ellipticrf(x::ArbComplex{P}, y::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    result = ArbComplex{P}()
+    flags = 0
+    ccall(@libarb(acb_elliptic_rf), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
+          result, x, y, z, flags, P)
+    return result
+end
+
+function ellipticrg(x::ArbComplex{P}, y::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    result = ArbComplex{P}()
+    flags = 0
+    ccall(@libarb(acb_elliptic_rg), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
+          result, x, y, z, flags, P)
+    return result
+end
+
+function ellipticrj(x::ArbComplex{P}, y::ArbComplex{P}, z::ArbComplex{P}, p::ArbComplex{P}) where {P}
+    result = ArbComplex{P}()
+    flags = 0
+    ccall(@libarb(acb_elliptic_rf), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
+          result, x, y, z, p, flags, P)
+    return result
+end
+
+function ellipticrf(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
+    xx, yy, zz = ArbComplex{P}(x), ArbComplex{P}(y), ArbComplex{P}(z)
+    result = ArbReal{P}(real(ellipticrf(xx, yy, zz)))
+    return result
+end
+
+function ellipticrg(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}) where {P}
+    xx, yy, zz = ArbComplex{P}(x), ArbComplex{P}(y), ArbComplex{P}(z)
+    result = ArbReal{P}(real(ellipticrg(xx, yy, zz)))
+    return result
+end
+
+function ellipticrj(x::ArbReal{P}, y::ArbReal{P}, z::ArbReal{P}, p::ArbReal{P}) where {P}
+    xx, yy, zz, pp = ArbComplex{P}(x), ArbComplex{P}(y), ArbComplex{P}(z), ArbComplex{P}(p)
+    result = ArbReal{P}(real(ellipticrj(xx, yy, zz, pp)))
+    return result
+end
+
+function ellipticrf(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P}
+    xx, yy, zz = ArbComplex{P}(x), ArbComplex{P}(y), ArbComplex{P}(z)
+    result = ArbFloat{P}(real(ellipticrf(xx, yy, zz)))
+    return result
+end
+
+function ellipticrg(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}) where {P}
+    xx, yy, zz = ArbComplex{P}(x), ArbComplex{P}(y), ArbComplex{P}(z)
+    result = ArbFloat{P}(real(ellipticrg(xx, yy, zz)))
+    return result
+end
+
+function ellipticrj(x::ArbFloat{P}, y::ArbFloat{P}, z::ArbFloat{P}, p::ArbFloat{P}) where {P}
+    xx, yy, zz, pp = ArbComplex{P}(x), ArbComplex{P}(y), ArbComplex{P}(z), ArbComplex{P}(p)
+    result = ArbFloat{P}(real(ellipticrj(xx, yy, zz, pp)))
+    return result
+end
+
+
+
+
+
