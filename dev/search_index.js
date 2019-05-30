@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Complete Elliptic Functions",
     "category": "section",
-    "text": "elliptick(m)\nthe complete elliptic integral of the first kind\nelliptice(m)\nthe complete elliptic integral of the second kind\nellipticpi(n, m)\nthe complete elliptic integral of the third kind"
+    "text": "elliptick(m)\nthe complete elliptic integral of the first kind\n(Image: elliptick)\nelliptice(m)\nthe complete elliptic integral of the second kind\n(Image: elliptice)\nellipticpi(n, m)\nthe complete elliptic integral of the third kind\n(Image: ellipticpi)\n"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Incomplete Elliptic Functions",
     "category": "section",
-    "text": "ellipticf(x, m)\nLegendre incomplete elliptic integral of the first kind"
+    "text": "ellipticf(x, m)\nLegendre incomplete elliptic integral of the first kind (Image: ellipticf)"
 },
 
 {
