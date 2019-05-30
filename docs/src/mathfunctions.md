@@ -59,9 +59,9 @@ _All of the following functions are available for `ArbFloat`, `ArbReal` and `Arb
 
 ## elliptic functions
 
-- `elliptice`, `elliptick`
-- `ellipticp`, `ellipticpi`
-- `ellipticzeta`, `ellipticsigma`
+- `elliptice`, `elliptick`, `ellipticpi`     (complete and incomplete integrals)
+- `elliptic_e`, `elliptic_k`, `elliptic_pi`  (squares the modulus)
+- `ellipticrf`, `ellipticrg`, `ellipticrj`   (Carleson's symmetric integrals)
 
 ## other special functions
 
