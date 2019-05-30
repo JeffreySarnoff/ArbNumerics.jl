@@ -12,7 +12,7 @@
 -    
 ## Incomplete Elliptic Functions
 
-- ellipticf(x, m)
+- ellipticf(phi, m)
     - Legendre incomplete elliptic integral of the first kind
       ![ellipticf](assets/ellipticf.png)
 
