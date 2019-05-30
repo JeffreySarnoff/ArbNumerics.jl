@@ -1,8 +1,10 @@
+(images from the Arb C library docs)
+
 ## Complete Elliptic Functions
 
 - elliptick(m)
     - the complete elliptic integral of the first kind
-    ![elliptick](assets/elliptic_k.png)
+     ![elliptick](assets/elliptic_k.png) 
 - elliptice(m)
     - the complete elliptic integral of the second kind
    ![elliptice](assets/elliptice.png)
