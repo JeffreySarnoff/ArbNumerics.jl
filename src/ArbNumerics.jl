@@ -56,8 +56,9 @@ export ArbNumber,
        airyai, airyaiprime, airybi, airybiprime,
        besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
        elliptick, elliptice, ellipticpi, ellipticf,
+       elliptic_k, elliptic_e, elliptic_pi, elliptic_f, # modulus^2 
        ellipticrf, ellipticrg, ellipticrj,
-       ellipticp, ellipticzeta, ellipticsigma,
+       # ellipticp, ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
        π, ℯ, γ, φ, catalan,
