@@ -96,7 +96,7 @@ for F in (:airyai, :airyaiprime, :airybi, :airybiprime)
     @eval begin
         function $F(x::ArbFloat{P}, prec::Int=P) where {P}
             r = ArbReal{P}(x)
-            r = airy(r, prec)
+            r = $F(r, prec)
             z = ArbFloat{P}(r)
             return r
         end
