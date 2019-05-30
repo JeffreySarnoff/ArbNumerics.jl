@@ -38,7 +38,7 @@
 
      |       the incomplete elliptic integral of the third kind          |
      |:------------------------------------------------------------------:|
-     |   <img src="assets/ellipticpi_incomplete.png" alt="elliptice" width="500">     |
+     |   <img src="assets/ellipticpi_incomplete.png" alt="elliptice" width="600">     |
 
 
 ## Carlson's Elliptic Functions
