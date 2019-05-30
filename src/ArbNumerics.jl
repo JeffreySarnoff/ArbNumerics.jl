@@ -56,6 +56,7 @@ export ArbNumber,
        airyai, airyaiprime, airybi, airybiprime,
        besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
        elliptick, elliptice, ellipticpi, ellipticf,
+       ellipticrf, ellipticrg, ellipticrj,
        ellipticp, ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
