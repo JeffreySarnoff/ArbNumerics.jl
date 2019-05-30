@@ -317,23 +317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Carlson\'s Symmetric Elliptic Functions",
     "category": "section",
-    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind            |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rf.png\" alt=\"ellipticrf\" width=\"400\">  |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rg.png\" alt=\"ellipticrg\" width=\"600\">  |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind              |    |:––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rj.png\" alt=\"ellipticrj\" width=\"500\">    |"
-},
-
-{
-    "location": "ellipticfunctions/#Jacobi\'s-Theta-Functions-1",
-    "page": "Elliptic Functions",
-    "title": "Jacobi\'s Theta Functions",
-    "category": "section",
-    "text": ""
-},
-
-{
-    "location": "ellipticfunctions/#Weierstrass\'s-elliptic-functions-1",
-    "page": "Elliptic Functions",
-    "title": "Weierstrass\'s elliptic functions",
-    "category": "section",
-    "text": "(images from the Arb C library docs)"
+    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind            |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rf.png\" alt=\"ellipticrf\" width=\"400\">  |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rg.png\" alt=\"ellipticrg\" width=\"600\">  |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind              |    |:––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rj.png\" alt=\"ellipticrj\" width=\"500\">    |(images from the Arb C library docs)"
 },
 
 {
