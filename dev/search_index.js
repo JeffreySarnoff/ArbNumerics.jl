@@ -321,6 +321,30 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "ellipticfunctions2/#",
+    "page": "More Elliptic Functions",
+    "title": "More Elliptic Functions",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions2/#Weierstrass\'s-Elliptic-Functions-1",
+    "page": "More Elliptic Functions",
+    "title": "Weierstrass\'s Elliptic Functions",
+    "category": "section",
+    "text": "void acbellipticp(acbt res, const acbt z, const acb_t tau, slong prec)¶ Computes Weierstrass’s elliptic functionvoid acbellipticinvp(acbt res, const acbt z, const acbt tau, slong prec)¶ Computes the inverse of the Weierstrass elliptic functionvoid acbellipticzeta(acbt res, const acbt z, const acb_t tau, slong prec)¶ Computes the Weierstrass zeta functionvoid acbellipticsigma(acbt res, const acbt z, const acb_t tau, slong prec)¶ Computes the Weierstrass sigma function"
+},
+
+{
+    "location": "ellipticfunctions2/#Jacobi\'s-Theta-Functions-1",
+    "page": "More Elliptic Functions",
+    "title": "Jacobi\'s Theta Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
     "location": "matrixfunctions/#",
     "page": "Matrix Functions",
     "title": "Matrix Functions",
