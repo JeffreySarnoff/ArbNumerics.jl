@@ -2,7 +2,7 @@
 
 - elliptick(m)
     - the complete elliptic integral of the first kind
-    ![elliptick](assets/elliptick.png)
+    ![elliptick](assets/elliptic_k.jpg)
 - elliptice(m)
     - the complete elliptic integral of the second kind
    ![elliptice](assets/elliptice.png)
