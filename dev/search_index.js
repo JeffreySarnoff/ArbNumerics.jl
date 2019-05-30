@@ -313,11 +313,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticfunctions/#Carlson\'s-Elliptic-Functions-1",
+    "location": "ellipticfunctions/#Carlson\'s-Symmetric-Elliptic-Functions-1",
     "page": "Elliptic Functions",
-    "title": "Carlson\'s Elliptic Functions",
+    "title": "Carlson\'s Symmetric Elliptic Functions",
     "category": "section",
-    "text": ""
+    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticrf.png\" alt=\"ellipticrf\" width=\"600\">     |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind          |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticrg.png\" alt=\"ellipticrg\" width=\"600\">     |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind          |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticrg.png\" alt=\"ellipticrj\" width=\"600\">     |"
 },
 
 {
