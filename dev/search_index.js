@@ -293,7 +293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Elliptic Functions",
     "category": "page",
-    "text": "(images from the Arb C library docs)"
+    "text": ""
 },
 
 {
@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Complete Elliptic Functions",
     "category": "section",
-    "text": "elliptick(m)\nthe complete elliptic integral of the first kind\n(Image: elliptick) \nelliptice(m)\nthe complete elliptic integral of the second kind\n(Image: elliptice)\nellipticpi(n, m)\nthe complete elliptic integral of the third kind\n(Image: ellipticpi)\n"
+    "text": "elliptick(m)\nthe complete elliptic integral of the first kind\n(Image: elliptick) \nelliptice(m)\nthe complete elliptic integral of the second kind\n(Image: elliptice)\nellipticpi(n, m)\nthe complete elliptic integral of the third kind\n(Image: ellipticpi)"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Incomplete Elliptic Functions",
     "category": "section",
-    "text": "ellipticf(phi, m)\nLegendre incomplete elliptic integral of the first kind (Image: ellipticf)"
+    "text": "ellipticf(phi, m)\nthe incomplete elliptic integral of the first kind (Image: ellipticf)"
 },
 
 {
@@ -333,7 +333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Weierstrass\'s elliptic functions",
     "category": "section",
-    "text": ""
+    "text": "(images from the Arb C library docs)"
 },
 
 {
