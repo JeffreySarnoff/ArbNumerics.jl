@@ -5,7 +5,7 @@
     ![elliptick](assets/elliptick.png)
 - elliptice(m)
     - the complete elliptic integral of the second kind
-   ![elliptice](assets/elliptice.png)
+   ![elliptice](assets/elliptice_.png)
 - ellipticpi(n, m)
     - the complete elliptic integral of the third kind
    ![ellipticpi](assets/ellipticpi.png)
