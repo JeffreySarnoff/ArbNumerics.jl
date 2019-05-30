@@ -1,20 +1,32 @@
 ## Complete Elliptic Functions
 
 - `elliptick(m)`
-    - the complete elliptic integral of the first kind
-     ![elliptick](assets/elliptic_k.png) 
+
+    
+     |       the complete elliptic integral of the first kind            |
+     |:-----------------------------------------------------------------:|
+     |    <img src="assets/elliptick.png" alt="elliptick" width="500">     |
+
 - `elliptice(m)`
-    - the complete elliptic integral of the second kind
-   ![elliptice](assets/elliptice.png)
+
+     |       the complete elliptic integral of the second kind           |
+     |:-----------------------------------------------------------------:|
+     |    <img src="assets/elliptice.png" alt="elliptice" width="500">     |
+
 - `ellipticpi(n, m)`
-    - the complete elliptic integral of the third kind
-   ![ellipticpi](assets/ellipticpi.png)
+
+     |       the complete elliptic integral of the third kind            |
+     |:-----------------------------------------------------------------:|
+     |    <img src="assets/ellipticpi.png" alt="ellipticpi" width="500">     |
+
    
 ## Incomplete Elliptic Functions
 
 - `ellipticf(phi, m)`
-    - the incomplete elliptic integral of the first kind
-      ![ellipticf](assets/ellipticf.png)
+
+     |       the incomplete elliptic integral of the first kind           |
+     |:-----------------------------------------------------------------:|
+     |    <img src="assets/ellipticf.png" alt="ellipticf" width="500">     |
 
 ## Carlson's Elliptic Functions
 
