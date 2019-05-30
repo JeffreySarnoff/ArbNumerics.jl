@@ -289,6 +289,38 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "ellipticintegrals/#",
+    "page": "Elliptic Integrals",
+    "title": "Elliptic Integrals",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "ellipticintegrals/#Complete-Elliptic-Integrals-1",
+    "page": "Elliptic Integrals",
+    "title": "Complete Elliptic Integrals",
+    "category": "section",
+    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">     |\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptice.png\" alt=\"elliptice\" width=\"500\">     |\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind            |    |:––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"600\">  |"
+},
+
+{
+    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-1",
+    "page": "Elliptic Integrals",
+    "title": "Incomplete Elliptic Integrals",
+    "category": "section",
+    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind                 |    |:––––––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/elliptice_incomplete.png\" alt=\"elliptice\" width=\"500\"> |\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind                   |    |:–––––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticpi_incomplete.png\" alt=\"elliptice\" width=\"600\"> |"
+},
+
+{
+    "location": "ellipticintegrals/#Carlson\'s-Symmetric-Elliptic-Integrals-1",
+    "page": "Elliptic Integrals",
+    "title": "Carlson\'s Symmetric Elliptic Integrals",
+    "category": "section",
+    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind            |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rf.png\" alt=\"ellipticrf\" width=\"400\">  |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rg.png\" alt=\"ellipticrg\" width=\"600\">  |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind              |    |:––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rj.png\" alt=\"ellipticrj\" width=\"500\">    |(images from the Arb C library docs)"
+},
+
+{
     "location": "ellipticfunctions/#",
     "page": "Elliptic Functions",
     "title": "Elliptic Functions",
@@ -297,51 +329,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticfunctions/#Complete-Elliptic-Functions-1",
+    "location": "ellipticfunctions/#Weierstrass\'s-Elliptic-Functions-1",
     "page": "Elliptic Functions",
-    "title": "Complete Elliptic Functions",
-    "category": "section",
-    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">     |\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptice.png\" alt=\"elliptice\" width=\"500\">     |\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind            |    |:––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"600\">  |"
-},
-
-{
-    "location": "ellipticfunctions/#Incomplete-Elliptic-Functions-1",
-    "page": "Elliptic Functions",
-    "title": "Incomplete Elliptic Functions",
-    "category": "section",
-    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">     |\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind                 |    |:––––––––––––––––––––––––––––––––––––-:|    |   <img src=\"assets/elliptice_incomplete.png\" alt=\"elliptice\" width=\"500\"> |\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind                   |    |:–––––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/ellipticpi_incomplete.png\" alt=\"elliptice\" width=\"600\"> |"
-},
-
-{
-    "location": "ellipticfunctions/#Carlson\'s-Symmetric-Elliptic-Functions-1",
-    "page": "Elliptic Functions",
-    "title": "Carlson\'s Symmetric Elliptic Functions",
-    "category": "section",
-    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind            |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rf.png\" alt=\"ellipticrf\" width=\"400\">  |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rg.png\" alt=\"ellipticrg\" width=\"600\">  |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind              |    |:––––––––––––––––––––––––––––––––––:|    |   <img src=\"assets/elliptic_rj.png\" alt=\"ellipticrj\" width=\"500\">    |(images from the Arb C library docs)"
-},
-
-{
-    "location": "ellipticfunctions2/#",
-    "page": "More Elliptic Functions",
-    "title": "More Elliptic Functions",
-    "category": "page",
-    "text": ""
-},
-
-{
-    "location": "ellipticfunctions2/#Weierstrass\'s-Elliptic-Functions-1",
-    "page": "More Elliptic Functions",
     "title": "Weierstrass\'s Elliptic Functions",
     "category": "section",
-    "text": "void acbellipticp(acbt res, const acbt z, const acb_t tau, slong prec)¶ Computes Weierstrass’s elliptic functionvoid acbellipticinvp(acbt res, const acbt z, const acbt tau, slong prec)¶ Computes the inverse of the Weierstrass elliptic functionvoid acbellipticzeta(acbt res, const acbt z, const acb_t tau, slong prec)¶ Computes the Weierstrass zeta functionvoid acbellipticsigma(acbt res, const acbt z, const acb_t tau, slong prec)¶ Computes the Weierstrass sigma function"
-},
-
-{
-    "location": "ellipticfunctions2/#Jacobi\'s-Theta-Functions-1",
-    "page": "More Elliptic Functions",
-    "title": "Jacobi\'s Theta Functions",
-    "category": "section",
-    "text": ""
+    "text": "elliptic_p(m)\n|       Weierstrass\'s elliptic function                             |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticp.png\" alt=\"ellipticp\" width=\"500\">   |\nelliptic_invp(m)\n|       inverse of Weierstrass\'s elliptic function                        |    |:–––––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticinvp.png\" alt=\"ellipticinvp\" width=\"500\">   |\nelliptic_zeta(m)\n|       Weierstrass zeta function                                         |    |:–––––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticzeta.png\" alt=\"ellipticzeta\" width=\"500\">   |\nelliptic_sigma(m)\n|       Weierstrass sigma function                                          |    |:––––––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticsigma.png\" alt=\"ellipticsigma\" width=\"500\">   |"
 },
 
 {
