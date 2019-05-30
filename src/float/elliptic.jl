@@ -89,7 +89,7 @@ function ellipticpi(nu::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
     return result
 end
 
-elliptic_pi(nu::ArFloat{P}, modulus::ArbFloat{P}) where {P} = ellipticpi(nu, modulus * modulus)
+elliptic_pi(nu::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = ellipticpi(nu, modulus * modulus)
 
 # Legendre incomplete elliptic integral of the first kind F(phi, m)
 
