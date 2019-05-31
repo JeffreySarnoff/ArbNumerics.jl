@@ -10,7 +10,7 @@ An `ArbFloat` value is an extended precision floating point value where the prec
 
 An `ArbReal` value is implemented in the underlying C library as an `ArbFloat` _midpoint_ and a value enclosing _radius_.
 
-<img align="right" src="./assets/midrad.jpg" alt="midrad" width="500"></img>
+<div><img align="center" src="./assets/midrad.jpg" alt="midrad" width="500"></img></div>
 
 ## ArbComplex
 
