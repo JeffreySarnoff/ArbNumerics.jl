@@ -4,14 +4,14 @@
     
      |       the complete elliptic integral of the first kind            |
      |:-----------------------------------------------------------------:|
-     |  <img src="../assets/elliptick.png" alt="elliptick" width="500">  |
+     |  <img src="assets/elliptick.png" alt="elliptick" width="500">  |
      | `elliptic_k(m) == elliptick(m^2)`                                 |
         
 - `elliptice(m)`
 
      |       the complete elliptic integral of the second kind           |
      |:-----------------------------------------------------------------:|
-     |  <img src="../assets/elliptice.png" alt="elliptice" width="500">  |
+     |  <img src="./assets/elliptice.png" alt="elliptice" width="500">  |
      | `elliptic_e(m) == elliptice(m^2)`                                 |
 
 - `ellipticpi(n, m)`
