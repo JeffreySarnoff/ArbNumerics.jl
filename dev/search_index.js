@@ -37,7 +37,7 @@ var documenterSearchIndex = {"docs": [
     "page": "The Types",
     "title": "ArbReal",
     "category": "section",
-    "text": "An ArbReal value is implemented in the underlying C library as an ArbFloat midpoint and a value enclosing radius.(Image: midrad) <img src=\"../assets/midrad.jpg\" alt=\"midrad\" width=\"300\"> "
+    "text": "An ArbReal value is implemented in the underlying C library as an ArbFloat midpoint and a value enclosing radius.<a style=\"text-align:center;\"><img src=\"./assets/midrad.jpg\" alt=\"midrad\" width=\"500\"></a>"
 },
 
 {
@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Complete Elliptic Integrals",
     "category": "section",
-    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">  |    | elliptic_k(m) == elliptick(m^2)                                 |\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"./assets/elliptice.png\" alt=\"elliptice\" width=\"500\">  |    | elliptic_e(m) == elliptice(m^2)                                 |\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind              |    |:–––––––––––––––––––––––––––––––––-:|    |   <img src=\"../assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"600\"> |    | elliptic_pi(n, m) == ellipticpi(n, m^2)                           |"
+    "text": "elliptick(m)\n|       the complete elliptic integral of the first kind            |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/elliptick.png\" alt=\"elliptick\" width=\"500\">     |    | elliptic_k(m) == elliptick(m^2)                                 |\nelliptice(m)\n|       the complete elliptic integral of the second kind           |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"./assets/elliptice.png\" alt=\"elliptice\" width=\"500\">   |    | elliptic_e(m) == elliptice(m^2)                                 |\nellipticpi(n, m)\n|       the complete elliptic integral of the third kind              |    |:–––––––––––––––––––––––––––––––––-:|    |   <img src=\"./assets/ellipticpi.png\" alt=\"ellipticpi\" width=\"600\"> |    | elliptic_pi(n, m) == ellipticpi(n, m^2)                           |"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Incomplete Elliptic Integrals",
     "category": "section",
-    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"../assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">  |    | elliptic_f(phi, m) == ellipticf(phi, m^2)                        |\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind                    |    |:––––––––––––––––––––––––––––––––––––––:|    |   <img src=\"../assets/ellipticeincomplete.png\" alt=\"elliptice\" width=\"500\"> |    | `elliptice(phi, m) == elliptice(phi, m^2)`                                  |\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind                      |    |:––––––––––––––––––––––––––––––––––––––-:|    |   <img src=\"../assets/ellipticpiincomplete.png\" alt=\"elliptice\" width=\"600\"> |    | `ellipticpi(n, phi, m) == ellipticpi(n, phi, m^2)`                           |"
+    "text": "ellipticf(phi, m)\n|       the incomplete elliptic integral of the first kind           |    |:–––––––––––––––––––––––––––––––––:|    |   <img src=\"./assets/ellipticf.png\" alt=\"ellipticf\" width=\"500\">  |    | elliptic_f(phi, m) == ellipticf(phi, m^2)                        |\nelliptice(phi, m)\n|       the incomplete elliptic integral of the second kind                    |    |:––––––––––––––––––––––––––––––––––––––:|    |   <img src=\"./assets/ellipticeincomplete.png\" alt=\"elliptice\" width=\"500\"> |    | `elliptice(phi, m) == elliptice(phi, m^2)`                                  |\nellipticpi(n, phi, m)\n|       the incomplete elliptic integral of the third kind                      |    |:––––––––––––––––––––––––––––––––––––––-:|    |   <img src=\"./assets/ellipticpiincomplete.png\" alt=\"elliptice\" width=\"600\"> |    | `ellipticpi(n, phi, m) == ellipticpi(n, phi, m^2)`                           |"
 },
 
 {
@@ -317,7 +317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Carlson\'s Symmetric Elliptic Integrals",
     "category": "section",
-    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind               |    |:––––––––––––––––––––––––––––––––––-:|    |   <img src=\"../assets/elliptic_rf.png\" alt=\"ellipticrf\" width=\"400\">  |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind              |    |:––––––––––––––––––––––––––––––––––-:|    |   <img src=\"../assets/elliptic_rg.png\" alt=\"ellipticrg\" width=\"600\">  |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind                 |    |:–––––––––––––––––––––––––––––––––––-:|    |   <img src=\"../assets/elliptic_rj.png\" alt=\"ellipticrj\" width=\"500\">    |(images from the Arb C library docs)"
+    "text": "ellipticrf(x, y, z)\n|       the symmetric elliptic integral of the first kind               |    |:––––––––––––––––––––––––––––––––––-:|    |   <img src=\"./assets/elliptic_rf.png\" alt=\"ellipticrf\" width=\"400\">  |\nellipticrg(x, y, z)\n|       the symmetric elliptic integral of the second kind              |    |:––––––––––––––––––––––––––––––––––-:|    |   <img src=\"./assets/elliptic_rg.png\" alt=\"ellipticrg\" width=\"600\">  |\nellipticrj(x, y, z, p)\n|       the symmetric elliptic integral of the third kind                 |    |:–––––––––––––––––––––––––––––––––––-:|    |   <img src=\"./assets/elliptic_rj.png\" alt=\"ellipticrj\" width=\"500\">    |(images from the Arb C library docs)"
 },
 
 {
