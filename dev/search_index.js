@@ -37,7 +37,7 @@ var documenterSearchIndex = {"docs": [
     "page": "The Types",
     "title": "ArbReal",
     "category": "section",
-    "text": "An ArbReal value is implemented in the underlying C library as an ArbFloat midpoint and a value enclosing radius.(Image: midrad)"
+    "text": "An ArbReal value is implemented in the underlying C library as an ArbFloat midpoint and a value enclosing radius.(Image: midrad) <img src=\"../assets/midrad.jpg\" alt=\"midrad\" width=\"500\"> "
 },
 
 {
