@@ -138,7 +138,12 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
     end
 end
 
-trunc(x::ArbReal{P}) where {P} = signbit(x) ? lowerbound(x) : upperbound(x)
+function trunc(x::ArbReal{P}) where {P}
+    newlo = trunc(lowerbound(x))
+    newhi = trunc(upperbound(x))
+    return setinterval(newlo, newhi)
+end
+
 trunc(::Type{T}, x::ArbReal{P}) where {P, T} = T(trunc(x))
 
 function midpoint(x::ArbReal{P}) where {P}
