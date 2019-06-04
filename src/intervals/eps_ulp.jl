@@ -13,20 +13,20 @@ function significand_bits(x::ArbFloat{P}) where {P}
     # returns the number of bits needed to represent the absolute value of the significand of x,
     # i.e. the minimum precision sufficient to represent x exactly. Returns 0 if x is a special value.
     nbits = ccall(@libarb(arf_bits), Clong, (Ref{ArbFloat},), x)
-    return nbits
+    return nbits%Int
 end
 
 function significand_bits(x::ArbReal{P}) where {P}
     # returns the number of bits needed to represent the absolute value of the significand of midpoint(x),
     # i.e. the minimum precision sufficient to represent x exactly. Returns 0 if x is a special value.
     nbits = ccall(@libarb(arb_bits), Clong, (Ref{ArbReal},), x)
-    return nbits
+    return nbits%Int
 end
 
 function significand_bits(x::ArbComplex{P}) where {P}
     # returns the number of bits needed to represent the maximum of bits(real(x)), bits(imag(x)).
     nbits = ccall(@libarb(acb_bits), Clong, (Ref{ArbComplex},), x)
-    return nbits
+    return nbits%Int
 end
 
 
@@ -52,12 +52,12 @@ relerror_bits(x::ArbFloat{P}) where {P} = 0
 
 function relerror_bits(x::ArbReal{P}) where {P}
     nbits = ccall(@libarb(arb_rel_error_bits), Clong, (Ref{ArbReal},), x)
-    return nbits
+    return nbits%Int
 end
 
 function relerror_bits(x::ArbComplex{P}) where {P}
     nbits = ccall(@libarb(crb_rel_error_bits), Clong, (Ref{ArbComplex},), x)
-    return nbits
+    return nbits%Int
 end
 
 #=
@@ -72,12 +72,12 @@ relaccuracy_bits(x::ArbFloat{P}) where {P} = 0
 
 function relaccuracy_bits(x::ArbReal{P}) where {P}
     nbits = ccall(@libarb(arb_rel_accuracy_bits), Clong, (Ref{ArbReal},), x)
-    return nbits
+    return nbits%Int
 end
 
 function relaccuracy_bits(x::ArbComplex{P}) where {P}
     nbits = ccall(@libarb(acb_rel_accuracy_bits), Clong, (Ref{ArbComplex},), x)
-    return nbits
+    return nbits%Int
 end
 
 
@@ -158,7 +158,7 @@ end
 function eps(x::ArbFloat{P}, prec::Int) where {P}
     prec < MINIMUM_PRECISION && throw(DomainError("bit precision ($prec) is too low"))
     y = ArbFloat(x, prec)
-    z = epsp(y)
+    z = eps(y)
     return z
 end
 
