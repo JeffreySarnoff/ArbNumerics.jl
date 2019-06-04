@@ -36,6 +36,7 @@ function round(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
 end
 =#
 
+# int arf_set_round(arf_t res, const arf_t x, slong prec, arf_rnd_t rnd)
 function round(x::ArbFloat{P}, bitprecision::Int, roundingmode::RoundingMode) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
@@ -43,17 +44,24 @@ function round(x::ArbFloat{P}, bitprecision::Int, roundingmode::RoundingMode) wh
     return z
 end
 
-function round(x::ArbReal{P}, bitprecision::Int, roundingmode::RoundingMode) where {P}
-    z = ArbReal{P}()
-    rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(arb_set_round), Cint, (Ref{ArbReal}, Ref{ArbReal}, Clong, Cint), z, x, bitprecision, rounding)
+function round(x::ArbFloat{P}, bitprecision::Int) where {P}
+    z = ArbFloat{P}()
+    rounding = match_rounding_mode(RoundNearest)
+    rounddir = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, bitprecision, rounding)
     return z
 end
 
-function round(x::ArbComplex{P}, bitprecision::Int, roundingmode::RoundingMode) where {P}
+# void arb_set_round(arb_t y, const arb_t x, slong prec)
+function round(x::ArbReal{P}, bitprecision::Int) where {P}
+    z = ArbReal{P}()
+    ccall(@libarb(arb_set_round), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, bitprecision)
+    return z
+end
+
+#void acb_set_round(acb_t z, const acb_t x, slong prec)
+function round(x::ArbComplex{P}, bitprecision::Int) where {P}
     z = ArbComplex{P}()
-    rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(acb_set_round), Cint, (Ref{ArbComplex}, Ref{ArbComplex}, Clong, Cint), z, x, bitprecision, rounding)
+    ccall(@libarb(acb_set_round), Cint, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, bitprecision)
     return z
 end
 
