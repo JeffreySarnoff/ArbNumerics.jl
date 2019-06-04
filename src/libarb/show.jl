@@ -4,19 +4,19 @@ function show(io::IO, x::Mag)
 end
 
 function showinf(io::IO, x::ArbFloat{P}) where {P}
-    str = sign(x) > 0 ? "Inf" : "-Inf"
+    str = sign(x) >= 0 ? "Inf" : "-Inf"
     print(io, str)
 end
 function showinf(io::IO, x::ArbReal{P}) where {P}
-    str = sign(x) > 0 ? "Inf" : "-Inf"
+    str = sign(x) >= 0 ? "Inf" : "-Inf"
     print(io, str)
 end
 function showinf(io::IO, x::ArbComplex{P}) where {P}
-    str = sign(real(x)) > 0 ? "Inf" : "-Inf"
+    str = sign(real(x)) >= 0 ? "Inf" : "-Inf"
     i = imag(x)
     if isinf(i)
-        str = string(str, (sign(i) > 0) ? " + Inf*im" : " - Inf*im")
-    elseif sign(i) > 0
+        str = string(str, (sign( > 0) ? " + Inf*im" : " - Inf*im")
+    elseif sign(i) >= 0
         str = string(str," + ", string(i), "im")
     else
         str = string(str," - ", string(abs(i)), "im")
