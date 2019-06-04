@@ -142,7 +142,7 @@ roundbits(x::ArbComplex{P}, sigbits::Int) where {P} = roundbits(x, RoundNearest,
 rounddigits(x::ArbComplex{P}, roundingmode::RoundingMode, digits::Int) where {P} =
     roundbits(x, roundingmode, bits4digits(digits))
 
-rounddigits(x::ArbComplex{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
+rounddigits(x::ArbComplex{P}, digits::Int) where {P} = roundbits(x, RoundNearest, bits4digits(digits))
 
 function round(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
    r = round!(x, roundingmode, sigdigits=sigdigits, base=base)
