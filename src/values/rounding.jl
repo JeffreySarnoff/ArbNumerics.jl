@@ -3,23 +3,23 @@ round(x::ArbFloat{P}, ::RoundingMode{:Down}) where {P} = floor(x)
 round(x::ArbFloat{P}, ::RoundingMode{:ToZero}) where {P} = signbit(x) ? ceil(x) : floor(x)
 round(x::ArbFloat{P}, ::RoundingMode{:FromZero}) where {P} = signbit(x) ? floor(x) : ceil(x)
 
-round(x::ArbReal{P}, ::RoundingMode{:Up}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:Up}))
-round(x::ArbReal{P}, ::RoundingMode{:Down}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:Down}))
-round(x::ArbReal{P}, ::RoundingMode{:ToZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:ToZero}))
-round(x::ArbReal{P}, ::RoundingMode{:FromZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:FromZero}))
+round(x::ArbReal{P}, ::RoundingMode{:Up}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundUp))
+round(x::ArbReal{P}, ::RoundingMode{:Down}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundDown))
+round(x::ArbReal{P}, ::RoundingMode{:ToZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundToZero))
+round(x::ArbReal{P}, ::RoundingMode{:FromZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundFromZero))
 
 round(x::ArbComplex{P}, ::RoundingMode{:Up}) where {P} =
-    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:Up})),
-                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:Up})) )
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundUp)),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundUp)) )
 round(x::ArbComplex{P}, ::RoundingMode{:Down}) where {P} =
-    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:Down})),
-                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:Down})) )
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundDown)),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundDown)) )
 round(x::ArbComplex{P}, ::RoundingMode{:ToZero}) where {P} =
-    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:ToZero})),
-                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:ToZero})) )
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundToZero)),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundToZero)) )
 round(x::ArbComplex{P}, ::RoundingMode{:FromZero}) where {P} =
-    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:FromZero})),
-                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:FromZero})) )
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundFromZero)),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundFromZero)) )
 
 function round(x::ArbFloat{P}, ::RoundingMode{:Nearest}) where {P}
     absx = abs(x)
@@ -38,18 +38,18 @@ function round(x::ArbFloat{P}, ::RoundingMode{:Nearest}) where {P}
     end
 end
 
-round(x::ArbReal{P}, ::RoundingMode{:Nearest}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:Nearest}))
+round(x::ArbReal{P}, ::RoundingMode{:Nearest}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundNearest))
 round(x::ArbComplex{P}, ::RoundingMode{:Nearest}) where {P} =
-    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:Nearest})),
-                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:Nearest})) )
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundNearest)),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundNearest)) )
 
-round(x::ArbFloat{P}) where {P} = round(x, RoundingMode{:Nearest})
-round(x::ArbReal{P}) where {P} = round(x, RoundingMode{:Nearest})
-round(x::ArbComplex{P}) where {P} = round(x, RoundingMode{:Nearest})
+round(x::ArbFloat{P}) where {P} = round(x, RoundNearest)
+round(x::ArbReal{P}) where {P} = round(x, RoundNearest)
+round(x::ArbComplex{P}) where {P} = round(x, RoundNearest)
 
-round!(x::ArbFloat{P}) where {P} = round!(x, RoundingMode{:Nearest})
-round!(x::ArbReal{P}) where {P} = round!(x, RoundingMode{:Nearest})
-round!(x::ArbComplex{P}) where {P} = round!(x, RoundingMode{:Nearest})
+round!(x::ArbFloat{P}) where {P} = round!(x, RoundNearest)
+round!(x::ArbReal{P}) where {P} = round!(x, RoundNearest)
+round!(x::ArbComplex{P}) where {P} = round!(x, RoundNearest)
 
 
 #=
@@ -204,6 +204,7 @@ function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, sigdigits::Intege
        throw(ErrorException("unsupported base ($base)"))
    end
 end
+
 
 #=    
 function round(x::ArbFloat{P}, bitprecision::Int) where {P}
