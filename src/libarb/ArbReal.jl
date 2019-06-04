@@ -139,9 +139,10 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
 end
 
 function trunc(x::ArbReal{P}) where {P}
-    newlo = trunc(lowerbound(x))
-    newhi = trunc(upperbound(x))
-    return setinterval(newlo, newhi)
+    newlo = trunc(ArbFloat(lowerbound(x)))
+    newhi = trunc(ArbFloat(upperbound(x)))
+    result = setinterval(newlo, newhi)
+    return result
 end
 
 trunc(::Type{T}, x::ArbReal{P}) where {P, T} = T(trunc(x))
