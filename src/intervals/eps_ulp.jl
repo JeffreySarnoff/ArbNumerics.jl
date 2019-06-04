@@ -110,8 +110,9 @@ function trim_bits(x::ArbComplex{P}) where {P}
 end
 
 function trim_bits(x::ArbFloat{P}) where {P}
-    z = trim_bits(ArbReal{P}(x))
-    return ArbFloat{precision(z)}(z)
+    ar = ArbReal(x)
+    z = trim_bits(ar)
+    return ArbFloat(z)
 end    
 
 
