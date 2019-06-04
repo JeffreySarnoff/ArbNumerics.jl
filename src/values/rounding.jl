@@ -121,7 +121,7 @@ function round!(x::ArbReal{P}, roundingmode::RoundingMode=RoundNearest; digits::
     end
 end
     
-function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, base::Integer)  
+function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, base::Integer) where {P}
    if base==10
        return rounddigits(x, roundingmode, sigdigits)
    elseif base == 2
