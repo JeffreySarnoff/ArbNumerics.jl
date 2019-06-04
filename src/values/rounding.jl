@@ -78,4 +78,25 @@ for A in (:ArbFloat, :ArbReal, :ArbComplex)
                 
 end
 
+#=
+  round([T,] x, [r::RoundingMode])
+  round(x, [r::RoundingMode]; digits::Integer=0, base = 10)
+  round(x, [r::RoundingMode]; sigdigits::Integer, base = 10)
+
+  Rounds the number x.
+
+  Without keyword arguments, x is rounded to an integer value, returning a value of type T, or of the same type of x
+  if no T is provided. An InexactError will be thrown if the value is not representable by T, similar to convert.
+
+  If the digits keyword argument is provided, it rounds to the specified number of digits after the decimal place (or
+  before if negative), in base base.
+
+  If the sigdigits keyword argument is provided, it rounds to the specified number of significant digits, in base
+  base.
+
+  The RoundingMode r controls the direction of the rounding; the default is RoundNearest, which rounds to the nearest
+  integer, with ties (fractional values of 0.5) being rounded to the nearest even integer. Note that round may give
+  incorrect results if the global rounding mode is changed (see rounding).
+=#
+
 
