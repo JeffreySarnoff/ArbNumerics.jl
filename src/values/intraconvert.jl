@@ -74,7 +74,7 @@ function Mag(x::ArbFloat{P}, ::Type{LowerBound}) where {P}
     return z
 end
 
-ArbFloat{P}(x::ArbReal{P}) where {P} = ArbFloat{P}(x, UpperBound)
+ArbFloat{P}(x::ArbReal{P}) where {P} = ArbFloat{P}(midpoint(x), UpperBound)
 
 function ArbFloat{P}(x::ArbReal{P}, ::Type{UpperBound}) where {P}
     z = ArbFloat{P}()
