@@ -63,7 +63,7 @@ end
 
 # int arf_set_round(arf_t res, const arf_t x, slong prec, arf_rnd_t rnd)
 function roundbits(x::ArbFloat{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
-    sigbits >= P && return copy(x)
+    sigbits >= P && return ArbFloat{sigbits}(x)
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
     rounddir = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, sigbits, rounding)
@@ -82,8 +82,57 @@ roundbits!(x::ArbFloat{P}, sigbits::Int) where {P} = roundbits!(x, RoundNearest,
 rounddigits(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
     roundbits(x, roundingmode, digits2bits(digits))
 
+rounddigits(x::ArbFloat{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
+
 rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
     roundbits!(x, roundingmode, digits2bits(digits))
+
+rounddigits!(x::ArbFloat{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, digits2bits(digits))
+
+function roundbits(x::ArbReal{P}, roundingmode::RooundingMode, sigbits::Int) where {P}
+    sigbits >= P && return ArbReal{sigbits}(x)
+    z = ArbReal{P}()
+    ccall(@libarb(arb_set_round), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, sigbits)
+    return z
+end
+
+function roundbits!(x::ArbReal{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    z = roundbits(x, roundingmode, sigbits)
+    P2 = sigbits + extrabits()
+    return ArbReal{P2}(z)
+end
+
+roundbits(x::ArbReal{P}, sigbits::Int) where {P} = roundbits(x, RoundNearest, sigbits)
+
+rounddigits(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
+    roundbits(x, roundingmode, digits2bits(digits))
+
+rounddigits(x::ArbReal{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
+
+rounddigits!(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
+    roundbits!(x, roundingmode, digits2bits(digits))
+
+rounddigits!(x::ArbReal{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, digits2bits(digits))
+
+function roundbits(x::ArbComplex{P}, roundingmode::RooundingMode, sigbits::Int) where {P}
+    sigbits >= P && return ArbComplex{sigbits}(x)
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_set_round), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, sigbits)
+    return z
+end
+
+function roundbits!(x::ArbComplex{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    z = roundbits(x, roundingmode, sigbits)
+    P2 = sigbits + extrabits()
+    return ArbComplex{P2}(z)
+end
+
+roundbits(x::ArbComplex{P}, sigbits::Int) where {P} = roundbits(x, RoundNearest, sigbits)
+
+rounddigits(x::ArbComplex{P}, roundingmode::RoundingMode, digits::Int) where {P} =
+    roundbits(x, roundingmode, digits2bits(digits))
+
+rounddigits(x::ArbComplex{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
 
 function round(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
    if base==10
@@ -105,25 +154,46 @@ function round!(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, 
    end
 end
 
-function round(x::ArbReal{P}, roundingmode::RoundingMode; digits::Integer, base::Integer=10) where {P}
-    if digits > 0
-        return roundfrac(x, roundingmode, digits, base)
-    elseif digits < 0
-        return roundint(x, roundingmode, digits, base)
-    else
-        return round(x, roundingmode)
-    end
+function round(x::ArbReal{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
+   if base==10
+       return rounddigits(x, roundingmode, sigdigits)
+   elseif base==2
+       return roundbits(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
 end
 
-function round!(x::ArbReal{P}, roundingmode::RoundingMode; digits::Integer, base::Integer=10) where {P}
-    if digits > 0
-        return roundfrac!(x, roundingmode, digits, base)
-    elseif digits < 0
-        return roundint!(x, roundingmode, digits, base)
-    else
-        return round!(x, roundingmode)
-    end
+function round!(x::ArbReal{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
+   if base==10
+       return rounddigits!(x, roundingmode, sigdigits)
+   elseif base == 2
+       return roundbits!(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
 end
+
+function round(x::ArbComplex{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
+   if base==10
+       return rounddigits(x, roundingmode, sigdigits)
+   elseif base==2
+       return roundbits(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
+end
+
+function round!(x::ArbComplex{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
+   if base==10
+       return rounddigits!(x, roundingmode, sigdigits)
+   elseif base == 2
+       return roundbits!(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
+end
+
     
 function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, base::Integer) where {P}
    if base==10
@@ -135,7 +205,7 @@ function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, 
    end
 end
 
-    
+#=    
 function round(x::ArbFloat{P}, bitprecision::Int) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(RoundNearest)
@@ -156,6 +226,7 @@ function round(x::ArbComplex{P}, bitprecision::Int) where {P}
     ccall(@libarb(acb_set_round), Cint, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, bitprecision)
     return z
 end
+=#
 
 #=    
 for A in (:ArbFloat, :ArbReal, :ArbComplex)
