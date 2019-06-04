@@ -114,7 +114,7 @@ rounddigits!(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
 
 rounddigits!(x::ArbReal{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, digits2bits(digits))
 
-function roundbits(x::ArbComplex{P}, roundingmode::RooundingMode, sigbits::Int) where {P}
+function roundbits(x::ArbComplex{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
     sigbits >= P && return ArbComplex{sigbits}(x)
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_round), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, sigbits)
