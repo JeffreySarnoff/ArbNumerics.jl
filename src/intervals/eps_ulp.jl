@@ -89,24 +89,30 @@ end
 
 trim_bits(x::Mag) = x
 
-function trim_bits(x::ArbFloat{P}, roundingmode::RoundingMode=RoundFromZero) where {P}
-    nbits = significand_bits(x)
-    nbits == P && return x
-    rounding = match_rounding_mode(roundingmode)
-    z = ArbFloat{nbits}
-    res = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, nbits, rounding)
-    return res
-end
+#=  
+  void arb_trim(arb_t y, const arb_t x)¶
+  Sets y to a trimmed copy of x: rounds x to a number of bits equal to the accuracy of x (as indicated by its radius), 
+  plus a few guard bits. The resulting ball is guaranteed to contain x, but is more economical if x has less than full accuracy.
+=#
+
 function trim_bits(x::ArbReal{P}) where {P}
-    z = ArbReal{P}()
+    nbits = significand_bits(x)
+    z = ArbReal{nbits}()
     ccall(@libarb(arb_trim), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
     return z
 end
+
 function trim_bits(x::ArbComplex{P}) where {P}
-    z = ArbComplex{P}()
-    ccall(@libarb(acb_trim), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
+    nbits = significand_bits(x)
+    z = ArbComplex{nbits}()
+    ccall(@libarb(arb_trim), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
     return z
 end
+
+function trim_bits(x::ArbFloat{P}) where {P}
+    z = trim_bits(ArbReal{P}(x))
+    return ArbFloat{precision(z)}(z)
+end    
 
 
 #=
