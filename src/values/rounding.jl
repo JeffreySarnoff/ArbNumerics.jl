@@ -195,7 +195,7 @@ function round!(x::ArbComplex{P}, roundingmode::RoundingMode; sigdigits::Integer
 end
 
     
-function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, base::Integer) where {P}
+function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, sigdigits::Integer, base::Integer) where {P}
    if base==10
        return rounddigits(x, roundingmode, sigdigits)
    elseif base == 2
