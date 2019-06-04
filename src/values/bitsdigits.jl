@@ -4,6 +4,9 @@
 const log10of2 = log10(2)
 const log2of10 = log2(10)
 
+@inline digits2bits(x::Int) = floor(Int, log2of10*x)
+@inline bits2digits(x::Int) = ceil(Int, log10of2*x)
+
 @inline maximin_digits(nbits) = floor(Int, log10of2*nbits + 0.125)   # match on round trip
 @inline maximin_bits(ndigits) = floor(Int, log2of10*ndigits + 2.625) # at least enough, at most 3 more on round trip
 
