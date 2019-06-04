@@ -51,6 +51,13 @@ round!(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round!(x,RoundNeares
 round!(x::ArbReal; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
 round!(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
 
+round(x::ArbFloat{P}) where {P} = round(x, RoundNearest)
+round(x::ArbReal{P}) where {P} = round(x, RoundNearest)
+round(x::ArbComplex{P}) where {P} = round(x, RoundNearest)
+
+round!(x::ArbFloat{P}) where {P} = round!(x, RoundNearest)
+round!(x::ArbReal{P}) where {P} = round!(x, RoundNearest)
+round!(x::ArbComplex{P}) where {P} = round!(x, RoundNearest)
 
 #=
 function round(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
