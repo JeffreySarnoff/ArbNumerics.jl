@@ -101,7 +101,7 @@ function round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigi
    end
 end
 
-function round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
+function round(x::ArbReal{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
     if digits > 0
         return roundfrac(x, roundingmode, digits, base)
     elseif digits < 0
@@ -111,7 +111,7 @@ function round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::
     end
 end
 
-function round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
+function round!(x::ArbReal{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
     if digits > 0
         return roundfrac!(x, roundingmode, digits, base)
     elseif digits < 0
