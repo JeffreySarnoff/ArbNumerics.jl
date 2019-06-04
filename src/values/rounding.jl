@@ -90,14 +90,14 @@ end
 roundbits!(x::ArbFloat{P}, sigbits::Int) where {P} = roundbits!(x, RoundNearest, sigbits)
 
 rounddigits(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
-    roundbits(x, roundingmode, digits2bits(digits))
+    roundbits(x, roundingmode, bits4digits(digits))
 
-rounddigits(x::ArbFloat{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
+rounddigits(x::ArbFloat{P}, digits::Int) where {P} = roundbits(x, RoundNearest, bits4digits(digits))
 
 rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
-    roundbits!(x, roundingmode, digits2bits(digits))
+    roundbits!(x, roundingmode, bits4digits(digits))
 
-rounddigits!(x::ArbFloat{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, digits2bits(digits))
+rounddigits!(x::ArbFloat{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, bits4digits(digits))
 
 function roundbits(x::ArbReal{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
     sigbits >= P && return ArbReal{sigbits}(x)
@@ -115,14 +115,14 @@ end
 roundbits(x::ArbReal{P}, sigbits::Int) where {P} = roundbits(x, RoundNearest, sigbits)
 
 rounddigits(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
-    roundbits(x, roundingmode, digits2bits(digits))
+    roundbits(x, roundingmode, bits4digits(digits))
 
-rounddigits(x::ArbReal{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
+rounddigits(x::ArbReal{P}, digits::Int) where {P} = roundbits(x, RoundNearest, bits4digits(digits))
 
 rounddigits!(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
-    roundbits!(x, roundingmode, digits2bits(digits))
+    roundbits!(x, roundingmode, bits4digits(digits))
 
-rounddigits!(x::ArbReal{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, digits2bits(digits))
+rounddigits!(x::ArbReal{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, bits4digits(digits))
 
 function roundbits(x::ArbComplex{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
     sigbits >= P && return ArbComplex{sigbits}(x)
@@ -140,7 +140,7 @@ end
 roundbits(x::ArbComplex{P}, sigbits::Int) where {P} = roundbits(x, RoundNearest, sigbits)
 
 rounddigits(x::ArbComplex{P}, roundingmode::RoundingMode, digits::Int) where {P} =
-    roundbits(x, roundingmode, digits2bits(digits))
+    roundbits(x, roundingmode, bits4digits(digits))
 
 rounddigits(x::ArbComplex{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
 
