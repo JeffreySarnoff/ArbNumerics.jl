@@ -48,16 +48,19 @@
 ## Carlson's Symmetric Elliptic Integrals
 
 - the symmetric elliptic integral of the first kind
+    
     - `ellipticrf(x, y, z)`
 
 ![ellipticrf](assets/elliptic_rf.png)
 
 - the symmetric elliptic integral of the second kind
+    
     - `ellipticrg(x, y, z)`
 
 ![ellipticrg](assets/elliptic_rg.png)
 
 - the symmetric elliptic integral of the third kind
+    
     - `ellipticrj(x, y, z)`
 
 ![ellipticrj](assets/elliptic_rj.png)
