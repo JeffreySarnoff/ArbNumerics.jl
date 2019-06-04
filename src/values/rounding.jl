@@ -3,6 +3,11 @@ round(x::ArbFloat{P}, ::RoundingMode{:Down}) where {P} = floor(x)
 round(x::ArbFloat{P}, ::RoundingMode{:ToZero}) where {P} = signbit(x) ? ceil(x) : floor(x)
 round(x::ArbFloat{P}, ::RoundingMode{:FromZero}) where {P} = signbit(x) ? floor(x) : ceil(x)
 
+round(x::ArbReal{P}, ::RoundingMode{:Up}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), ::RoundingMode{:Up})
+round(x::ArbReal{P}, ::RoundingMode{:Down}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), ::RoundingMode{:Down})
+round(x::ArbReal{P}, ::RoundingMode{:ToZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), ::RoundingMode{:ToZero})
+round(x::ArbReal{P}, ::RoundingMode{:FromZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), ::RoundingMode{:FromZero})
+
 function round(x::ArbFloat{P}, ::RoundingMode{:Nearest}) where {P}
     absx = abs(x)
     fl = floor(absx)
@@ -20,11 +25,7 @@ function round(x::ArbFloat{P}, ::RoundingMode{:Nearest}) where {P}
     end
 end
 
-round(x::ArbReal{P}, ::RoundingMode{:Up}) where {P} = ceil(ArbFloat{P}(x))
-round(x::ArbReal{P}, ::RoundingMode{:Down}) where {P} = floor(ArbFloat{P}(x))
-round(x::ArbReal{P}, ::RoundingMode{:ToZero}) where {P} = round(ArbFloat{P}(x), RoundToZero)
-round(x::ArbReal{P}, ::RoundingMode{:FromZero}) where {P} = round(ArbFloat{P}(x), RoundFromZero)
-round(x::ArbReal{P}, ::RoundingMode{:Nearest}) where {P} = round(ArbFloat{P}(x), RoundNearest)
+round(x::ArbReal{P}, ::RoundingMode{:Nearest}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundNearest))
 
 #=
 function round(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
