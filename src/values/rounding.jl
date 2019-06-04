@@ -43,13 +43,13 @@ round(x::ArbComplex{P}, ::RoundingMode{:Nearest}) where {P} =
     ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundNearest)),
                   ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundNearest)) )
 
-round(x::ArbFloat{P}) where {P} = round(x, RoundNearest)
-round(x::ArbReal{P}) where {P} = round(x, RoundNearest)
-round(x::ArbComplex{P}) where {P} = round(x, RoundNearest)
+round(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+round(x::ArbReal; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+round(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
 
-round!(x::ArbFloat{P}) where {P} = round!(x, RoundNearest)
-round!(x::ArbReal{P}) where {P} = round!(x, RoundNearest)
-round!(x::ArbComplex{P}) where {P} = round!(x, RoundNearest)
+round!(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
+round!(x::ArbReal; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
+round!(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
 
 
 #=
@@ -205,9 +205,7 @@ function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, sigdigits::Intege
    end
 end
 
-round(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
-round(x::ArbReal; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
-round(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+
 
 #=    
 function round(x::ArbFloat{P}, bitprecision::Int) where {P}
