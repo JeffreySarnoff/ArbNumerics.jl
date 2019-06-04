@@ -205,6 +205,9 @@ function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, sigdigits::Intege
    end
 end
 
+round(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+round(x::ArbReal; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+round(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
 
 #=    
 function round(x::ArbFloat{P}, bitprecision::Int) where {P}
