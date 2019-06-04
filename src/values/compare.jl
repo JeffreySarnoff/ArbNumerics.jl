@@ -22,10 +22,10 @@ function (!=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
 end
 
 function (==)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 != ccall(@libarb(acb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    0 != ccall(@libarb(acb_equal), Cint, (Ref{ArbComplex}, Ref{ArbComplex}), x, y)
 end
 function (!=)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 == ccall(@libarb(acb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+    0 == ccall(@libarb(acb_equal), Cint, (Ref{ArbComplex}, Ref{ArbComplex}), x, y)
 end
 
 
