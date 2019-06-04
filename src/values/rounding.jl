@@ -84,7 +84,7 @@ rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} 
 function round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigits::Integer, base::Integer=10) where {P}
    if base==10
        return rounddigits(x, roundingmode, sigdigits)
-   elif base==2
+   elseif base==2
        return roundbits(x, roundingmode, sigdigits)
    else
        throw(ErrorException("unsupported base ($base)"))
@@ -94,7 +94,7 @@ end
 function round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigits::Integer, base::Integer=10) where {P}
    if base==10
        return rounddigits!(x, roundingmode, sigdigits)
-   elif base == 2
+   elseif base == 2
        return roundbits!(x, roundingmode, sigdigits)
    else
        throw(ErrorException("unsupported base ($base)"))
@@ -104,7 +104,7 @@ end
 function round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
     if digits > 0
         return roundfrac(x, roundingmode, digits, base)
-    elif digits < 0
+    elseif digits < 0
         return roundint(x, roundingmode, digits, base)
     else
         return round(x, roundingmode)
@@ -114,7 +114,7 @@ end
 function round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
     if digits > 0
         return roundfrac!(x, roundingmode, digits, base)
-    elif digits < 0
+    elseif digits < 0
         return roundint!(x, roundingmode, digits, base)
     else
         return round!(x, roundingmode)
@@ -124,7 +124,7 @@ end
 function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, base::Integer)  
    if base==10
        return rounddigits(x, roundingmode, sigdigits)
-   elif base == 2
+   elseif base == 2
        return roundbits(x, roundingmode, sigdigits)
    else
        throw(ErrorException("unsupported base ($base)"))
