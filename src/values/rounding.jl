@@ -47,6 +47,10 @@ round(x::ArbFloat{P}) where {P} = round(x, RoundingMode{:Nearest})
 round(x::ArbReal{P}) where {P} = round(x, RoundingMode{:Nearest})
 round(x::ArbComplex{P}) where {P} = round(x, RoundingMode{:Nearest})
 
+round!(x::ArbFloat{P}) where {P} = round!(x, RoundingMode{:Nearest})
+round!(x::ArbReal{P}) where {P} = round!(x, RoundingMode{:Nearest})
+round!(x::ArbComplex{P}) where {P} = round!(x, RoundingMode{:Nearest})
+
 
 #=
 function round(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
@@ -81,7 +85,7 @@ rounddigits(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
 rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
     roundbits!(x, roundingmode, digits2bits(digits))
 
-function round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigits::Integer, base::Integer=10) where {P}
+function round(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
    if base==10
        return rounddigits(x, roundingmode, sigdigits)
    elseif base==2
@@ -91,7 +95,7 @@ function round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigit
    end
 end
 
-function round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigits::Integer, base::Integer=10) where {P}
+function round!(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
    if base==10
        return rounddigits!(x, roundingmode, sigdigits)
    elseif base == 2
@@ -101,7 +105,7 @@ function round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigi
    end
 end
 
-function round(x::ArbReal{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
+function round(x::ArbReal{P}, roundingmode::RoundingMode; digits::Integer, base::Integer=10) where {P}
     if digits > 0
         return roundfrac(x, roundingmode, digits, base)
     elseif digits < 0
@@ -111,7 +115,7 @@ function round(x::ArbReal{P}, roundingmode::RoundingMode=RoundNearest; digits::I
     end
 end
 
-function round!(x::ArbReal{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P}
+function round!(x::ArbReal{P}, roundingmode::RoundingMode; digits::Integer, base::Integer=10) where {P}
     if digits > 0
         return roundfrac!(x, roundingmode, digits, base)
     elseif digits < 0
