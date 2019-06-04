@@ -43,13 +43,6 @@ round(x::ArbComplex{P}, ::RoundingMode{:Nearest}) where {P} =
     ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundNearest)),
                   ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundNearest)) )
 
-round(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
-round(x::ArbReal; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
-round(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
-
-round!(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
-round!(x::ArbReal; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
-round!(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
 
 round(x::ArbFloat{P}) where {P} = round(x, RoundNearest)
 round(x::ArbReal{P}) where {P} = round(x, RoundNearest)
@@ -67,7 +60,15 @@ function round(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
     return z
 end
 =#
+#=
+round(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+round(x::ArbReal; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
+round(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round(x,RoundNearest,sigdigits=sigdigits,base=base)
 
+round!(x::ArbFloat; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
+round!(x::ArbReal; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
+round!(x::ArbComplex; sigdigits::Integer, base::Integer=10) = round!(x,RoundNearest,sigdigits=sigdigits,base=base)
+=#
 # int arf_set_round(arf_t res, const arf_t x, slong prec, arf_rnd_t rnd)
 function roundbits(x::ArbFloat{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
     sigbits >= P && return ArbFloat{sigbits}(x)
