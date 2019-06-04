@@ -17,6 +17,7 @@ export ArbNumber,
        lowerbound_abs, upperbound_abs,
        increase_radius, decrease_radius,
        bits4digits, digits4bits,
+       bits2digits, digits2bits,
        workingprecision, setworkingprecision,
        extrabits, setextrabits,
 
@@ -43,6 +44,7 @@ export ArbNumber,
        trim_bits, ulp, ulps, eps, epss,
 
        # other functions
+       round!,
        add2!, sub2!, mul2!, div2!,
        addmul, submul, mulsub,
        square, cube, rsqrt, rcbrt, pow, root, loghypot,
