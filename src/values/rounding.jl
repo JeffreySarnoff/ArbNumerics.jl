@@ -145,13 +145,10 @@ rounddigits(x::ArbComplex{P}, roundingmode::RoundingMode, digits::Int) where {P}
 rounddigits(x::ArbComplex{P}, digits::Int) where {P} = roundbits(x, RoundNearest, digits2bits(digits))
 
 function round(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
-   if base==10
-       return rounddigits(x, roundingmode, sigdigits)
-   elseif base==2
-       return roundbits(x, roundingmode, sigdigits)
-   else
-       throw(ErrorException("unsupported base ($base)"))
-   end
+   r = round!(x, roundingmode, sigdigits=sigdigits, base=base)
+   s = string(r)
+   result = ArbFloat{P}(s)
+   return result
 end
 
 function round!(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
