@@ -1,6 +1,5 @@
 #=
     significand_bits
-
     Returns the number of bits needed to represent
     the absolute value of the significand of an
     ArbFloat{P} value, directly or as an ArbReal{P} midpoint.
@@ -32,16 +31,13 @@ end
 
 #=
     arb_rel_error_bits
-
     Returns the effective relative error of x measured in bits,
     defined as the difference between
     the position of the top bit in the radius
     and the top bit in the midpoint, plus one.
     The result is clamped between plus/minus ARF_PREC_EXACT
     (ARF_PREC_EXACT == ±(2^{63}-1) inclusive on a 64-bit machine).
-
     acb_rel_error_bits
-
     Returns the effective relative error of x measured in bits.
     This is computed as if calling arb_rel_error_bits() on the real ball
     whose midpoint is the larger out of the real and imaginary midpoints of x,
@@ -62,7 +58,6 @@ end
 
 #=
     rel_accuracy_bits
-
     Returns the effective relative accuracy intrinsic to a ball, measured in bits.
     This is equal to -relerror_bits.
 =#
@@ -89,37 +84,28 @@ end
 
 trim_bits(x::Mag) = x
 
-#=  
-  void arb_trim(arb_t y, const arb_t x)¶
-  Sets y to a trimmed copy of x: rounds x to a number of bits equal to the accuracy of x (as indicated by its radius), 
-  plus a few guard bits. The resulting ball is guaranteed to contain x, but is more economical if x has less than full accuracy.
-=#
-
-function trim_bits(x::ArbReal{P}) where {P}
+function trim_bits(x::ArbFloat{P}, roundingmode::RoundingMode=RoundFromZero) where {P}
     nbits = significand_bits(x)
-    z = ArbReal{nbits}()
+    nbits == P && return x
+    rounding = match_rounding_mode(roundingmode)
+    z = ArbFloat{nbits}
+    res = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, nbits, rounding)
+    return res
+end
+function trim_bits(x::ArbReal{P}) where {P}
+    z = ArbReal{P}()
     ccall(@libarb(arb_trim), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
     return z
 end
-
 function trim_bits(x::ArbComplex{P}) where {P}
-    nbits = significand_bits(x)
-    z = ArbComplex{nbits}()
-    ccall(@libarb(arb_trim), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_trim), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
     return z
 end
 
-function trim_bits(x::ArbFloat{P}) where {P}
-    ar = ArbReal(x)
-    z = trim_bits(ar)
-    return ArbFloat(z)
-end    
-
 
 #=
-
 void arf_mag_set_ulp(mag_t res, const arf_t x, slong prec)
-
     Sets res to the magnitude of the unit in the last place (ulp) of x at precision prec.
 =#
     
@@ -206,5 +192,3 @@ nextfloat(x::ArbFloat{P}, n::Int) where {P} = x + n*ulp(x)
 nextfloat(x::ArbReal{P}, n::Int) where {P} = x + n*ulp(x)
 prevfloat(x::ArbFloat{P}, n::Int) where {P} = x - n*ulp(x)
 prevfloat(x::ArbReal{P}, n::Int) where {P} = x - n*ulp(x)
-
-
