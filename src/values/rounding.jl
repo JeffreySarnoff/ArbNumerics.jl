@@ -8,6 +8,19 @@ round(x::ArbReal{P}, ::RoundingMode{:Down}) where {P} = ArbReal{P}(round(ArbFloa
 round(x::ArbReal{P}, ::RoundingMode{:ToZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:ToZero}))
 round(x::ArbReal{P}, ::RoundingMode{:FromZero}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:FromZero}))
 
+round(x::ArbComplex{P}, ::RoundingMode{:Up}) where {P} =
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:Up})),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:Up})) )
+round(x::ArbComplex{P}, ::RoundingMode{:Down}) where {P} =
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:Down})),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:Down})) )
+round(x::ArbComplex{P}, ::RoundingMode{:ToZero}) where {P} =
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:ToZero})),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:ToZero})) )
+round(x::ArbComplex{P}, ::RoundingMode{:FromZero}) where {P} =
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:FromZero})),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:FromZero})) )
+
 function round(x::ArbFloat{P}, ::RoundingMode{:Nearest}) where {P}
     absx = abs(x)
     fl = floor(absx)
@@ -25,7 +38,15 @@ function round(x::ArbFloat{P}, ::RoundingMode{:Nearest}) where {P}
     end
 end
 
-round(x::ArbReal{P}, ::RoundingMode{:Nearest}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundNearest))
+round(x::ArbReal{P}, ::RoundingMode{:Nearest}) where {P} = ArbReal{P}(round(ArbFloat{P}(x), RoundingMode{:Nearest}))
+round(x::ArbComplex{P}, ::RoundingMode{:Nearest}) where {P} =
+    ArbComplex{P}(ArbReal{P}(round(ArbFloat{P}(real(x)), RoundingMode{:Nearest})),
+                  ArbReal{P}(round(ArbFloat{P}(imag(x)), RoundingMode{:Nearest})) )
+
+round(x::ArbFloat{P}) where {P} = round(x, RoundingMode{:Nearest})
+round(x::ArbReal{P}) where {P} = round(x, RoundingMode{:Nearest})
+round(x::ArbComplex{P}) where {P} = round(x, RoundingMode{:Nearest})
+
 
 #=
 function round(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
@@ -37,13 +58,76 @@ end
 =#
 
 # int arf_set_round(arf_t res, const arf_t x, slong prec, arf_rnd_t rnd)
-function round(x::ArbFloat{P}, bitprecision::Int, roundingmode::RoundingMode) where {P}
+function roundbits(x::ArbFloat{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    sigbits => P && return copy(x)
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
-    rounddir = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, bitprecision, rounding)
+    rounddir = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, sigbits, rounding)
     return z
 end
 
+roundbits(x::ArbFloat{P}, sigbits::Int) where {P} = roundbits(x, RoundNearest, sigbits)
+
+function roundbits!(x::ArbFloat{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    z = roundbits(x, roundingmode, sigbits)
+    return ArbFloat{sigbits+extrabits()}(z)
+end
+
+roundbits!(x::ArbFloat{P}, sigbits::Int) where {P} = roundbits!(x, RoundNearest, sigbits)
+
+rounddigits(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
+    roundbits(x, roundingmode, digits2bits(digits))
+
+rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} =
+    roundbits!(x, roundingmode, digits2bits(digits))
+
+round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigits::Integer, base::Integer=10) where {P} =
+   if base==10
+       rounddigits(x, roundingmode, sigdigits)
+   elif base == 2
+       roundbits(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
+
+round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; sigdigits::Integer, base::Integer=10) where {P} =
+   if base==10
+       rounddigits!(x, roundingmode, sigdigits)
+   elif base == 2
+       roundbits!(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
+
+round(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P} =
+    if digits > 0
+        return roundfrac(x, roundingmode, digits, base)
+    elif digits < 0
+        return roundint(x, roundingmode, digits, base)
+    else
+        return round(x, roundingmode)
+    end
+
+round!(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest; digits::Integer, base::Integer=10) where {P} =
+    if digits > 0
+        return roundfrac!(x, roundingmode, digits, base)
+    elif digits < 0
+        return roundint!(x, roundingmode, digits, base)
+    else
+        return round!(x, roundingmode)
+    end
+
+function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Integer, base::Integer)
+    
+   if base==10
+       roundfdigits(x, roundingmode, sigdigits)
+   elif base == 2
+       roundbits(x, roundingmode, sigdigits)
+   else
+       throw(ErrorException("unsupported base ($base)"))
+   end
+    
+    
 function round(x::ArbFloat{P}, bitprecision::Int) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(RoundNearest)
@@ -65,7 +149,7 @@ function round(x::ArbComplex{P}, bitprecision::Int) where {P}
     return z
 end
 
-    
+#=    
 for A in (:ArbFloat, :ArbReal, :ArbComplex)
   @eval begin
     
@@ -86,6 +170,7 @@ for A in (:ArbFloat, :ArbReal, :ArbComplex)
   end
                 
 end
+=#
 
 #=
   round([T,] x, [r::RoundingMode])
