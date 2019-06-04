@@ -15,7 +15,7 @@ function showinf(io::IO, x::ArbComplex{P}) where {P}
     str = sign(real(x)) >= 0 ? "Inf" : "-Inf"
     i = imag(x)
     if isinf(i)
-        str = string(str, (sign(i >= 0) ? " + Inf*im" : " - Inf*im")
+        str = string(str, (sign(i >= 0) ? " + Inf*im" : " - Inf*im"))
     elseif sign(i) >= 0
         str = string(str," + ", string(i), "im")
     else
