@@ -1,69 +1,66 @@
 ## Complete Elliptic Integrals
 
-- `elliptick(m)`
-    
-     |       the complete elliptic integral of the first kind            |
-     |:-----------------------------------------------------------------:|
-     |  <img src="assets/elliptick.png" alt="elliptick" width="500">     |
-     | `elliptic_k(m) == elliptick(m^2)`                                 |
+- the complete elliptic integral of the first kind
+
+    - `elliptick(m)`
+    - `elliptic_k(m) == elliptick(m^2)`
+
+![elliptick](assets/elliptick.png)
+
+- the complete elliptic integral of the second kind
+
+    - `elliptice(m)`
+    - `elliptic_e(m) == elliptice(m^2)`
+
+![elliptice](assets/elliptice.png)
         
-- `elliptice(m)`
+- the complete elliptic integral of the third kind
 
-     |       the complete elliptic integral of the second kind           |
-     |:-----------------------------------------------------------------:|
-     |  <img src="./assets/elliptice.png" alt="elliptice" width="500">   |
-     | `elliptic_e(m) == elliptice(m^2)`                                 |
+    - `ellipticpi(n, m)`
+    - `elliptic_pi(n, m) == ellipticpi(n, m^2)`
 
-- `ellipticpi(n, m)`
+![ellipticpi](assets/ellipticpi.png)
 
-     |       the complete elliptic integral of the third kind              |
-     |:-------------------------------------------------------------------:|
-     |   <img src="./assets/ellipticpi.png" alt="ellipticpi" width="600"> |
-     | `elliptic_pi(n, m) == ellipticpi(n, m^2)`                           |
-   
 ## Incomplete Elliptic Integrals
 
-- `ellipticf(phi, m)`
+- the incomplete elliptic integral of the first kind
 
-     |       the incomplete elliptic integral of the first kind           |
-     |:------------------------------------------------------------------:|
-     |   <img src="./assets/ellipticf.png" alt="ellipticf" width="500">  |
-     | `elliptic_f(phi, m) == ellipticf(phi, m^2)`                        |
+    - `ellipticf(phi, m)`
+    - `elliptic_f(phi, m) == ellipticf(phi, m^2)`
 
-- `elliptice(phi, m)`
+![ellipticf](assets/ellipticf.png)
 
-     |       the incomplete elliptic integral of the second kind                    |
-     |:----------------------------------------------------------------------------:|
-     |   <img src="./assets/elliptice_incomplete.png" alt="elliptice" width="500"> |
-     | `elliptic_e(phi, m) == elliptice(phi, m^2)`                                  |
+- the incomplete elliptic integral of the second kind
 
-- `ellipticpi(n, phi, m)`
+    - `elliptice(phi, m)`
+    - `elliptic_e(phi, m) == elliptice(phi, m^2)`
 
-     |       the incomplete elliptic integral of the third kind                      |
-     |:-----------------------------------------------------------------------------:|
-     |   <img src="./assets/ellipticpi_incomplete.png" alt="elliptice" width="600"> |
-     | `elliptic_pi(n, phi, m) == ellipticpi(n, phi, m^2)`                           |
+![elliptice_incomplete](assets/elliptice_incomplete.png)
+        
+- the incomplete elliptic integral of the third kind
+
+    - `ellipticpi(n, phi, m)`
+    - `elliptic_pi(n, phi, m) == ellipticpi(n, phi, m^2)`
+
+![ellipticpi_incomplete](assets/ellipticpi_incomplete.png)
+
 
 ## Carlson's Symmetric Elliptic Integrals
 
-- `ellipticrf(x, y, z)`
+- the symmetric elliptic integral of the first kind
+    - `ellipticrf(x, y, z)`
 
-     |       the symmetric elliptic integral of the first kind               |
-     |:---------------------------------------------------------------------:|
-     |   <img src="./assets/elliptic_rf.png" alt="ellipticrf" width="400">  |
+![ellipticrf](assets/elliptic_rf.png)
 
-- `ellipticrg(x, y, z)`
+- the symmetric elliptic integral of the second kind
+    - `ellipticrg(x, y, z)`
 
-     |       the symmetric elliptic integral of the second kind              |
-     |:---------------------------------------------------------------------:|
-     |   <img src="./assets/elliptic_rg.png" alt="ellipticrg" width="600">  |
+![ellipticrg](assets/elliptic_rg.png)
 
-- `ellipticrj(x, y, z, p)`
+- the symmetric elliptic integral of the third kind
+    - `ellipticrj(x, y, z)`
 
-     |       the symmetric elliptic integral of the third kind                 |
-     |:-----------------------------------------------------------------------:|
-     |   <img src="./assets/elliptic_rj.png" alt="ellipticrj" width="500">    |
-
+![ellipticrj](assets/elliptic_rj.png)
 
 
 (images from the Arb C library docs)
