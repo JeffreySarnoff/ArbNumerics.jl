@@ -182,6 +182,8 @@ include("float/special2.jl")
 include("float/elliptic.jl")
 include("float/export_fallbacks.jl")
 
+include("float/float64.jl")
+
 include("intervals/intervalparts.jl")
 include("intervals/complex_intervalparts.jl")
 include("intervals/eps_ulp.jl")
