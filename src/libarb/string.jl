@@ -26,7 +26,7 @@ function trimzeros(str::String)
             str1 = join(str1a, str1b, '.')
         end    
         str = join(str1, str2, 'e')
-    else if occursin('.', str)   
+    elseif occursin('.', str)   
         str1a, str1b = String.(split(str, '.'))
         str1b = trimallzeros(str1b)
         str = join(str1a, str1b, '.')
