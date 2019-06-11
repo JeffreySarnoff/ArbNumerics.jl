@@ -20,24 +20,23 @@ end
 function trimzeros(str::String)
     if occursin('e', str)
         str1, str2 = String.(split(str, 'e'))
-        str1 = trimzerosafterdecpoint(str1)
+        if occursin('.', str1)
+            str1a, str1b = String.(split(str1, '.'))
+            str1b = trimallzeros(str1b)
+            str1 = join(str1a, str1b, '.')
+        end    
         str = join(str1, str2, 'e')
-    end    
-    return str
-end
-
-function trimzerosafterdecpoint(str::String)
-    if occursin('.', str)
-        str1, str2 = String.(split(str, '.'))
-        str2 = trimallzeros(str2)
-        str = join(str1,str2,'.')
-    end
+    else if occursin('.', str)   
+        str1a, str1b = String.(split(str, '.'))
+        str1b = trimallzeros(str1b)
+        str = join(str1a, str1b, '.')
+    end        
     return str
 end
             
 function trimallzeros(str::String)
-    m =  n = length(str)
-    n === 0 && return str
+    m = n = length(str)
+    (n === 0 || str[n] !== '0') && return str
     while n>1 && str[n] === '0'
         n -= 1
     end
