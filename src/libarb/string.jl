@@ -23,13 +23,19 @@ function trimzeros(str::String)
         if occursin('.', str1)
             str1a, str1b = String.(split(str1, '.'))
             str1b = trimallzeros(str1b)
-            str1 = join(str1a, str1b, '.')
-        end    
-        str = join(str1, str2, 'e')
+            if str1b === ""
+                str1b = "0"
+            end    
+            str1 = join((str1a, str1b), '.')
+        end
+        str = join((str1, str2), 'e')
     elseif occursin('.', str)   
         str1a, str1b = String.(split(str, '.'))
         str1b = trimallzeros(str1b)
-        str = join(str1a, str1b, '.')
+        if str1b === ""
+            str1b = "0"
+        end    
+        str = join((str1a, str1b), '.')
     end        
     return str
 end
