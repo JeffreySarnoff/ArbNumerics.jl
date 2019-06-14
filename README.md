@@ -199,6 +199,13 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `airyai`, `airyaiprime`
 - `airybi`, `airybiprime`
 
+#### hypergeometric functions
+    - unregularized and regularized forms
+    
+- `hypgeom0f1`, `hypgeom0f1reg`
+- `hypgeom1f1`, `hypgeom1f1reg`
+- `hypgeom1f2`, `hypgeom1f2reg`
+
 #### arithmetic-geometric mean
 
 - `agm`, `agm1`
