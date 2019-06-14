@@ -20,7 +20,7 @@ function hypgeom0f1(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     return result
 end
 
-function hypgeom0f1regularized(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function hypgeom0f1reg(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_0f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
@@ -43,7 +43,7 @@ function hypgeom1f1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where 
     return result
 end
 
-function hypgeom1f1regularized(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function hypgeom1f1reg(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_1f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
@@ -59,7 +59,7 @@ function hypgeom2f1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::Arb
     return result
 end
 
-function hypgeom2f1regularized(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function hypgeom2f1reg(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_2f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
@@ -92,7 +92,7 @@ function hypgeom0f1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     return result
 end
 
-function hypgeom0f1regularized(a::ArbReal{P}, z::ArbReal{P}) where {P}
+function hypgeom0f1reg(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(1)
     ccall(@libarb(arb_hypgeom_0f1), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
@@ -115,7 +115,7 @@ function hypgeom1f1(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
     return result
 end
 
-function hypgeom1f1regularized(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
+function hypgeom1f1reg(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(1)
     ccall(@libarb(arb_hypgeom_1f1), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
@@ -131,7 +131,7 @@ function hypgeom2f1(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P}, z::ArbReal{P}) 
     return result
 end
 
-function hypgeom2f1regularized(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P}, z::ArbReal{P}) where {P}
+function hypgeom2f1reg(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(1)
     ccall(@libarb(arb_hypgeom_2f1), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
@@ -144,8 +144,8 @@ end
 hypgeom0f1(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeom0f1(ArbReal{P}(a), ArbReal{P}(z)))
 
-hypgeom0f1regularized(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom0f1regularized(ArbReal{P}(a), ArbReal{P}(z)))
+hypgeom0f1reg(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(hypgeom0f1reg(ArbReal{P}(a), ArbReal{P}(z)))
 
 hypgeomu(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeomu(ArbReal{P}(a), ArbReal{P}(z)))
@@ -153,11 +153,11 @@ hypgeomu(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
 hypgeom1f1(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeom1f1(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
 
-hypgeom1f1regularized(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom1f1regularized(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
+hypgeom1f1reg(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(hypgeom1f1reg(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
 
 hypgeom1f2(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeom1f2(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
 
-hypgeom1f2regularized(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom1f2regularized(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
+hypgeom1f2reg(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(hypgeom1f2reg(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
