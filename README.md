@@ -179,6 +179,10 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `sinh`, `cosh`, `tanh`, `csch`, `sech`, `coth`
 - `asinh`, `acosh`, `atanh`
 
+#### arithmetic-geometric mean
+
+- `agm`, `agm1`
+
 #### gamma functions
 
 - `gamma`, `lgamma`
@@ -199,23 +203,18 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `airyai`, `airyaiprime`
 - `airybi`, `airybiprime`
 
-#### hypergeometric functions
-    - unregularized and regularized forms
-    
-- `hypgeom0f1`, `hypgeom0f1reg`
-- `hypgeom1f1`, `hypgeom1f1reg`
-- `hypgeom1f2`, `hypgeom1f2reg`
-
-#### arithmetic-geometric mean
-
-- `agm`, `agm1`
-
 ##### elliptic functions
 
-- `elliptice`, `elliptick`
-- `ellipticp`, `ellipticpi`
-- `ellipticzeta`, `ellipticsigma`
+- `ellipe`, `ellipk`
+- `ellipp`, `ellippi`
+- `ellipzeta`, `ellipsigma`
 
+#### hypergeometric functions
+    
+- `hypgeom0f1`, `hypgeom1f1`, `hypgeom1f2`  
+- `hypgeom0f1reg`, `hypgeom1f1reg`, `hypgeom1f2reg`
+   - regularized
+   
 #### other special functions
 
 - `ei`, `si`, `ci`
