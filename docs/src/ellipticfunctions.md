@@ -1,24 +1,24 @@
 ## Weierstrass's Elliptic Functions
 
-- `elliptic_p(m)`
+- `weierstrass_p(z, tau)`
     
      |       Weierstrass's elliptic function                             |
      |:-----------------------------------------------------------------:|
      |  <img src="assets/elliptic_p.png" alt="elliptic_p" width="500">   |
 
-- `elliptic_invp(m)`
+- `weierstrass_invp(z, tau)`
     
      |       inverse of Weierstrass's elliptic function                        |
      |:-----------------------------------------------------------------------:|
      |  <img src="assets/elliptic_invp.png" alt="elliptic_invp" width="500">   |
 
-- `elliptic_zeta(m)`
+- `weierstrass_zeta(z, tau)`
     
      |       Weierstrass zeta function                                         |
      |:-----------------------------------------------------------------------:|
      |  <img src="assets/elliptic_zeta.png" alt="elliptic_zeta" width="500">   |
 
-- `elliptic_sigma(m)`
+- `weierstrass_sigma(z, tau)`
     
      |       Weierstrass sigma function                                          |
      |:-------------------------------------------------------------------------:|
