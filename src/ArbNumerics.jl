@@ -60,7 +60,7 @@ export ArbNumber,
        ellipk, ellipe, ellippi, ellipf,
        ellip_k, ellip_e, ellip_pi, ellip_f, # modulus^2 
        elliprf, elliprg, elliprj,
-       # ellipticp, ellipticzeta, ellipticsigma,
+       weierstrass_p, weierstrass_invp, weierstrass_zeta, weierstrass_sigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
        hypgeom0f1, hypgeom1f1, hypgeom2f1,
