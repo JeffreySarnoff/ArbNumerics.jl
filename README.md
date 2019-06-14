@@ -203,11 +203,16 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `airyai`, `airyaiprime`
 - `airybi`, `airybiprime`
 
-##### elliptic functions
+#### elliptic integrals
 
 - `ellipe`, `ellipk`
 - `ellipp`, `ellippi`
 - `ellipzeta`, `ellipsigma`
+
+#### elliptic functions
+
+- `weierstrass_p`, `weierstrass_invp`
+- `weierstrass_zeta`, `weierstrass_sigma`
 
 #### hypergeometric functions
     
