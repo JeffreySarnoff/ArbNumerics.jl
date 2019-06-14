@@ -64,7 +64,7 @@ export ArbNumber,
        zeta, eta, xi,                  # Reimann
        lambertw,
        hypgeom0f1, hypgeom1f1, hypgeom2f1,
-       hypgeom0f1regularized, hypgeom1f1regularized, hypgeom2f1regularized,
+       hypgeom0f1reg, hypgeom1f1reg, hypgeom2f1reg,
        π, ℯ, γ, φ, catalan,
 
        # special linear algebra
