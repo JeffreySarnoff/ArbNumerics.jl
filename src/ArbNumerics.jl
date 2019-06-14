@@ -63,6 +63,8 @@ export ArbNumber,
        # ellipticp, ellipticzeta, ellipticsigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
+       hypgeom0f1, hypgeom1f1, hypgeom1f2,
+       hypgeom0f1regularized, hypgeom1f1regularized, hypgeom1f2regularized,
        π, ℯ, γ, φ, catalan,
 
        # special linear algebra
@@ -180,6 +182,7 @@ include("float/elementary.jl")
 include("float/special.jl")
 include("float/special2.jl")
 include("float/elliptic.jl")
+include("float/hypergeometric.jl")
 include("float/export_fallbacks.jl")
 
 include("float/float64.jl")
