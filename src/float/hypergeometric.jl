@@ -159,5 +159,5 @@ hypgeom1f1regularized(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} 
 hypgeom1f2(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeom1f2(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
 
-hypgeom1f2(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+hypgeom1f2regularized(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeom1f2regularized(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
