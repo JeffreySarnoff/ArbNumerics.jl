@@ -321,6 +321,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "ellipticfunctions/#",
+    "page": "Elliptic Functions",
+    "title": "Elliptic Functions",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "ellipticfunctions/#Weierstrass\'s-Elliptic-Functions-1",
+    "page": "Elliptic Functions",
+    "title": "Weierstrass\'s Elliptic Functions",
+    "category": "section",
+    "text": "weierstrass_p(z, tau)\n|       Weierstrass\'s elliptic function                             |    |:––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticp.png\" alt=\"ellipticp\" width=\"500\">   |\nweierstrass_invp(z, tau)\n|       inverse of Weierstrass\'s elliptic function                        |    |:–––––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticinvp.png\" alt=\"ellipticinvp\" width=\"500\">   |\nweierstrass_zeta(z, tau)\n|       Weierstrass zeta function                                         |    |:–––––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticzeta.png\" alt=\"ellipticzeta\" width=\"500\">   |\nweierstrass_sigma(z, tau)\n|       Weierstrass sigma function                                          |    |:––––––––––––––––––––––––––––––––––––-:|    |  <img src=\"assets/ellipticsigma.png\" alt=\"ellipticsigma\" width=\"500\">   |"
+},
+
+{
     "location": "matrixfunctions/#",
     "page": "Matrix Functions",
     "title": "Matrix Functions",
