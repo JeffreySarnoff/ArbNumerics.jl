@@ -12,6 +12,11 @@ acb_hypgeom_2f1(acb_t res, const acb_t a, const acb_t b,
         const acb_t c, const acb_t z, int flags, slong prec)
 =#
 
+"""
+    hypgeom0f1(a, z)
+
+confluent hypergeometric function ₀f₁  ₁f₁  ₂f₁
+"""
 function hypgeom0f1(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(0)
@@ -20,6 +25,11 @@ function hypgeom0f1(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     return result
 end
 
+"""
+    hypgeom0f1reg(a, z)
+
+regularized confluent hypergeometric function, inv(gamma(a)) * ₀f₁
+"""
 function hypgeom0f1reg(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
@@ -28,6 +38,11 @@ function hypgeom0f1reg(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     return result
 end
 
+"""
+    hypgeomu(a, b, z)
+
+confluent hypergeometric function U
+"""
 function hypgeomu(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbReal{P}()
     ccall(@libarb(acb_hypgeom_u), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Clong),
@@ -35,6 +50,11 @@ function hypgeomu(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P
     return result
 end
 
+"""
+    hypgeom1f1(a, b, z)
+
+confluent hypergeometric function ₁f₁  ₂f₁
+"""
 function hypgeom1f1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(0)
@@ -43,6 +63,11 @@ function hypgeom1f1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where 
     return result
 end
 
+"""
+    hypgeom1f1reg(a, b, z)
+
+regularized confluent hypergeometric function, inv(gamma(a)) * ₁f₁
+"""
 function hypgeom1f1reg(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
@@ -51,6 +76,11 @@ function hypgeom1f1reg(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) whe
     return result
 end
 
+"""
+    hypgeom2f1(a, b, c, z)
+
+confluent hypergeometric function ₂f₁
+"""
 function hypgeom2f1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(0)
@@ -59,6 +89,11 @@ function hypgeom2f1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::Arb
     return result
 end
 
+"""
+    hypgeom2f1reg(a, b, c, z)
+
+regularized confluent hypergeometric function, inv(gamma(a)) * ₂f₁
+"""
 function hypgeom2f1reg(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
@@ -67,23 +102,6 @@ function hypgeom2f1reg(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::
     return result
 end
 
-#=
-oid arb_hypgeom_0f1(arb_t res, const arb_t a, const arb_t z, int regularized, slong prec)
-Computes the confluent hypergeometric limit function 0F1(a,z), or 1Γ(a)0F1(a,z) if regularized is set.
-
-void arb_hypgeom_m(arb_t res, const arb_t a, const arb_t b, const arb_t z, int regularized, slong prec)
-Computes the confluent hypergeometric function M(a,b,z)=1F1(a,b,z), or M(a,b,z)=1Γ(b)1F1(a,b,z) if regularized is set.
-
-void arb_hypgeom_1f1(arb_t res, const arb_t a, const arb_t b, const arb_t z, int regularized, slong prec)
-Alias for arb_hypgeom_m().
-
-void arb_hypgeom_u(arb_t res, const arb_t a, const arb_t b, const arb_t z, slong prec)
-Computes the confluent hypergeometric function U(a,b,z).
-
-Gauss hypergeometric function
-void arb_hypgeom_2f1(arb_t res, const arb_t a, const arb_t b, const arb_t c, const arb_t z, int regularized, slong prec)
-Computes the Gauss hypergeometric function 2F1(a,b,c,z), or F(a,b,c,z)=1Γ(c)2F1(a,b,c,z) if regularized is set.
-=#
 function hypgeom0f1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(0)
