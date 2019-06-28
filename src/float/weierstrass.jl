@@ -12,6 +12,11 @@ void acb_elliptic_sigma(acb_t res, const acb_t z, const acb_t tau, slong prec)¶
 Computes the Weierstrass sigma function
 =#
 
+"""
+    weierstrass_p(z, tau)
+
+- weierstrass_p(z, tau) == weierstrass_p(z+1, tau) == weierstrass_p(z+tau, tau)
+"""
 function weierstrass_p(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     flag = 0
@@ -20,6 +25,11 @@ function weierstrass_p(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     return result
 end
 
+"""
+    weierstrass_invp(z, tau)
+
+- weierstrass_p(weierstrass_invp(z, tau), tau) == z
+"""
 function weierstrass_invp(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     flag = 0
@@ -28,6 +38,12 @@ function weierstrass_invp(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     return result
 end
 
+"""
+    weierstrass_zeta(z, tau)
+
+- weierstrass_zeta(z+1, tau) == weierstrass_zeta(z, tau) + weierstrass_zeta(1/2, tau)
+- weierstrass_zeta(z+tau, tau) == weierstrass_zeta(z, tau) + weierstrass_zeta(tau/2, tau)
+"""
 function weierstrass_zeta(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     flag = 0
@@ -36,6 +52,11 @@ function weierstrass_zeta(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     return result
 end
 
+"""
+    weierstrass_sigma(z, tau)
+
+- weierstrass_sigma(z+1, tau) == −exp(2*(z+τ/2)*weierstrass_zeta(τ/2,τ)) * weierstrass_sigma(z, tau)
+"""
 function weierstrass_sigma(z::ArbComplex{P}, tau::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     flag = 0
