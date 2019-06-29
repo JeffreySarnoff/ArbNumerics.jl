@@ -329,11 +329,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticfunctions/#Weierstrass\'s-Elliptic-Functions-1",
+    "location": "ellipticfunctions/#Weierstrass-Functions-1",
     "page": "Elliptic Functions",
-    "title": "Weierstrass\'s Elliptic Functions",
+    "title": "Weierstrass Functions",
     "category": "section",
-    "text": "weierstrass_p(z, tau)\n|       Weierstrass\'s elliptic function                             |    |:––––––––––––––––––––––––––––––––-:|    |  (Image: ellipticp)                           |\nweierstrass_invp(z, tau)\n|       inverse of Weierstrass\'s elliptic function                        |    |:–––––––––––––––––––––––––––––––––––-:|    |  (Image: ellipticinvp)                           |\nweierstrass_zeta(z, tau)\n|       Weierstrass zeta function                                         |    |:–––––––––––––––––––––––––––––––––––-:|    |  (Image: ellipticzeta)                           |\nweierstrass_sigma(z, tau)\n|       Weierstrass sigma function                                          |    |:––––––––––––––––––––––––––––––––––––-:|    |  (Image: ellipticsigma)                           |"
+    "text": "Weierstrass elliptic function\nweierstrass_p(z, tau)(Image: ellipticp)     Weierstrass inverse elliptic function\nweierstrass_invp(z, tau)(Image: ellipticinvp)Weierstrass zeta function\nweierstrass_zeta(z, tau)(Image: ellipticzeta)Weierstrass sigma function\nweierstrass_sigma(z, tau)\n(Image: ellipticsigma)"
 },
 
 {
