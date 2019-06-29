@@ -1,4 +1,4 @@
-> use with ArbFloat, ArbReal, ArbComplex or __Float64__ args  _all args are to be of the same type_
+> use with ArbFloat, ArbReal, ArbComplex or _Float64_ args  (_all args must be of the same type_)
 ----
 
 ## Complete Elliptic Integrals
