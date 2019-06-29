@@ -17,6 +17,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "#image-test-1",
+    "page": "Overview",
+    "title": "image test",
+    "category": "section",
+    "text": "(Image: tst1)(Image: tst2)(Image: tst3)(Image: tst4)(Image: tst5)"
+},
+
+{
     "location": "thetypes/#",
     "page": "The Types",
     "title": "The Types",
