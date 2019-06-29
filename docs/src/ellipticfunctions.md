@@ -10,7 +10,7 @@
     
      |       inverse of Weierstrass's elliptic function                        |
      |:-----------------------------------------------------------------------:|
-     |  ![ellipticinvp](assets/Weierstrass_invp.PNG)                           |
+     |  ![ellipticinvp](assets/Weierstrass_pinv.PNG)                           |
 
 - `weierstrass_zeta(z, tau)`
     
