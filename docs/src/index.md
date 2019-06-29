@@ -19,15 +19,15 @@
 
 ----
 
-![tst2](assets/Weierstrass_pinvhalfdpi.png)
+![tst2](assets/Weierstrass_pinv_halfdpi.png)
 
 -----
 
-![tst3](assets/Weierstrass_pinvhalfpixels.png)
+![tst3](assets/Weierstrass_pinv_halfpixels.png)
 
 -----
 
-![tst4](assets/Weierstrass_pinvhalfandhalf.png)
+![tst4](assets/Weierstrass_pinv_halfandhalf.png)
 
 -----
 
