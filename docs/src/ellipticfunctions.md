@@ -17,11 +17,11 @@
 
     - `weierstrass_zeta(z, tau)`
     
-![ellipticzeta](assets/Weierstrass_zeta.PNG)
+![Weierstrass_zeta](assets/Weierstrass_zeta.png)
 
 - Weierstrass sigma function
 
     - `weierstrass_sigma(z, tau)`
     
-    ![ellipticsigma](assets/Weierstrass_sigma.PNG)
+![Weierstrass_sigma](assets/Weierstrass_sigma.png)
 
