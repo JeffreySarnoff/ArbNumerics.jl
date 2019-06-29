@@ -341,7 +341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Weierstrass Functions",
     "category": "section",
-    "text": "Weierstrass elliptic function\nweierstrass_p(z, tau)(Image: Weierstrass_p)     Weierstrass inverse elliptic function\nweierstrass_invp(z, tau)(Image: Weierstrass_pinv)Weierstrass zeta function\nweierstrass_zeta(z, tau)(Image: ellipticzeta)Weierstrass sigma function\nweierstrass_sigma(z, tau)\n(Image: ellipticsigma)"
+    "text": "Weierstrass elliptic function\nweierstrass_p(z, tau)(Image: Weierstrass_p)     Weierstrass inverse elliptic function\nweierstrass_invp(z, tau)(Image: Weierstrass_pinv)Weierstrass zeta function\nweierstrass_zeta(z, tau)(Image: Weierstrass_zeta)Weierstrass sigma function\nweierstrass_sigma(z, tau)(Image: Weierstrass_sigma)"
 },
 
 {
