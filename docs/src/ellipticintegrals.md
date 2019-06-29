@@ -15,14 +15,14 @@
     - `elliptice(m)`
     - `elliptic_e(m) == elliptice(m^2)`
 
-![elliptice](assets/elliptice.png)
+![elliptice](assets/elliptic_e.png)
         
 - the complete elliptic integral of the third kind
 
     - `ellipticpi(n, m)`
     - `elliptic_pi(n, m) == ellipticpi(n, m^2)`
 
-![ellipticpi](assets/ellipticpi.png)
+![ellipticpi](assets/elliptic_pi.png)
 
 ## Incomplete Elliptic Integrals
 
@@ -31,21 +31,21 @@
     - `ellipticf(phi, m)`
     - `elliptic_f(phi, m) == ellipticf(phi, m^2)`
 
-![ellipticf](assets/ellipticf.png)
+![ellipticf](assets/elliptic_f.png)
 
 - the incomplete elliptic integral of the second kind
 
     - `elliptice(phi, m)`
     - `elliptic_e(phi, m) == elliptice(phi, m^2)`
 
-![elliptice_incomplete](assets/elliptice_incomplete.png)
+![elliptice_incomplete](assets/elliptic_e_incomplete.png)
         
 - the incomplete elliptic integral of the third kind
 
     - `ellipticpi(n, phi, m)`
     - `elliptic_pi(n, phi, m) == ellipticpi(n, phi, m^2)`
 
-![ellipticpi_incomplete](assets/ellipticpi_incomplete.png)
+![ellipticpi_incomplete](assets/elliptic_pi_incomplete.png)
 
 
 ## Carlson's Symmetric Elliptic Integrals
