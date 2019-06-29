@@ -32,7 +32,7 @@ const F₀₁ = hypergeometric_0F1
 
 regularized confluent hypergeometric function, ``₀F₁ / gamma(a)``
 """
-function hypgeometric_0F1_regularized(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function hypergeometric_0F1_regularized(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_0f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
