@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Elliptic Integrals",
     "category": "page",
-    "text": "call these functions with ArbFloat, ArbReal, ArbComplex or Float64 args (all args are to be of the same type)"
+    "text": "call these functions with ArbFloat, ArbReal, ArbComplex or Float64 argsall args are to be of the same type"
 },
 
 {
