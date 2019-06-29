@@ -11,7 +11,7 @@
 
     - `weierstrass_invp(z, tau)`
     
-![Weierstrass_pinv](assets/Weierstrass_pinv.png)
+![Weierstrass_pinv](assets/Weierstrass_pinv_halfandhalf.png)
 
 - Weierstrass zeta function
 
