@@ -8,7 +8,7 @@
     - `elliptick(m)`
     - `elliptic_k(m) == elliptick(m^2)`
 
-![elliptick](assets/elliptick.png)
+![elliptick](assets/elliptic_k.png)
 
 - the complete elliptic integral of the second kind
 
