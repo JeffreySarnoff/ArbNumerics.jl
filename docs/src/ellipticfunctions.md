@@ -4,14 +4,14 @@
 
     - `weierstrass_p(z, tau)`
     
-![ellipticp](assets/Weierstrass_p.PNG)     
+![Weierstrass_p](assets/Weierstrass_p.png)     
 
 
 - Weierstrass inverse elliptic function
 
     - `weierstrass_invp(z, tau)`
     
-![Weierstrass_pinv](assets/Weierstrass_pinv_halfandhalf.png)
+![Weierstrass_pinv](assets/Weierstrass_pinv.png)
 
 - Weierstrass zeta function
 
