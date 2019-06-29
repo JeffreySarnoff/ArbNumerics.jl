@@ -45,7 +45,7 @@ const ₀F₁Γ⁻¹ = hypergeometric_0F1_regularized
 """
     hypergeometric_U(a, b, z)
 
-confluent hypergeometric function U
+confluent hypergeometric function of the second kind
 """
 function hypergeometric_U(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbReal{P}()
