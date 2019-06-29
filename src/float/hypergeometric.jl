@@ -15,7 +15,7 @@ acb_hypgeom_2f1(acb_t res, const acb_t a, const acb_t b,
 """
     hypergeometric_0F1(a, z)
 
-confluent hypergeometric function ₀F₁
+confluent hypergeometric function ``₀F₁``
 """
 function hypergeometric_0F1(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
@@ -25,12 +25,12 @@ function hypergeometric_0F1(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     return result
 end
 
-const ₀F₁ = hypergeometric_0F1
+const F₀₁ = hypergeometric_0F1
 
 """
     hypergeometric_0F1_regularized(a, z)
 
-regularized confluent hypergeometric function, ₀F₁ / gamma(a)
+regularized confluent hypergeometric function, ``₀F₁ / gamma(a)``
 """
 function hypgeometric_0F1_regularized(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
@@ -40,7 +40,7 @@ function hypgeometric_0F1_regularized(a::ArbComplex{P}, z::ArbComplex{P}) where 
     return result
 end
 
-const ₀F₁Γ⁻¹ = hypergeometric_0F1_regularized
+const F₀₁regularized = hypergeometric_0F1_regularized
 
 """
     hypergeometric_U(a, b, z)
@@ -57,7 +57,7 @@ end
 """
     hypergeometric_1F1(a, b, z)
 
-confluent hypergeometric function ₁F₁
+confluent hypergeometric function ``₁F₁``
 """
 function hypergeometric_1F1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
@@ -67,12 +67,12 @@ function hypergeometric_1F1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}
     return result
 end
 
-const ₁F₁ = hypergeometric_1F1
+const F₁₁ = hypergeometric_1F1
 
 """
     hypergeometric_1F1_regularized(a, b, z)
 
-regularized confluent hypergeometric function, ₁F₁ / gamma(a)
+regularized confluent hypergeometric function, ``₁F₁ / gamma(a)``
 """
 function hypergeometric_1F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
@@ -82,12 +82,12 @@ function hypergeometric_1F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, z::A
     return result
 end
 
-const ₁F₁Γ⁻¹ = hypergeometric_1F1_regularized
+const F₁₁regularized = hypergeometric_1F1_regularized
 
 """
     hypergeometric_2F1(a, b, c, z)
 
-confluent hypergeometric function ₂F₁
+confluent hypergeometric function ``₂F₁``
 """
 function hypergeometric_2F1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
@@ -97,12 +97,12 @@ function hypergeometric_2F1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}
     return result
 end
 
-const ₂F₁ = hypergeometric_2F1
+const F₂₁ = hypergeometric_2F1
 
 """
     hypergeometric_2F1_regularized(a, b, c, z)
 
-regularized confluent hypergeometric function, ₂f₁ / gamma(a)
+regularized confluent hypergeometric function, ``₂F₁ / gamma(a)``
 """
 function hypergeometric_2F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
@@ -112,7 +112,7 @@ function hypergeometric_2F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, c::A
     return result
 end
 
-const ₂F₁Γ⁻¹ = hypergeometric_2F1_regularized
+const F₂₁regularized = hypergeometric_2F1_regularized
 
 function hypergeometric_0F1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
