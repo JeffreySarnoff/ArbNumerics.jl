@@ -4,23 +4,23 @@
     
      |       Weierstrass's elliptic function                             |
      |:-----------------------------------------------------------------:|
-     |  ![ellipticp](assets/ellipticp.png)                               |
+     |  ![ellipticp](assets/Weierstrass_p.PNG)                           |
 
 - `weierstrass_invp(z, tau)`
     
      |       inverse of Weierstrass's elliptic function                        |
      |:-----------------------------------------------------------------------:|
-     |  ![ellipticinvp](assets/elliptic_invp.png)
+     |  ![ellipticinvp](assets/Weierstrass_invp.PNG)                           |
 
 - `weierstrass_zeta(z, tau)`
     
      |       Weierstrass zeta function                                         |
      |:-----------------------------------------------------------------------:|
-     |  ![ellipticzeta](assets/elliptic_zeta.png)                              |
+     |  ![ellipticzeta](assets/Weierstrass_zeta.PNG)                           |
 
 - `weierstrass_sigma(z, tau)`
     
      |       Weierstrass sigma function                                          |
      |:-------------------------------------------------------------------------:|
-     |  ![ellipticsigma](assets/elliptic_sigma.png)                              |
+     |  ![ellipticsigma](assets/Weierstrass_sigma.PNG)                           |
 
