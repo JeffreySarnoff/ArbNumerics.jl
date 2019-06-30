@@ -69,4 +69,4 @@
 ![ellipticrj](assets/elliptic_rj.png)
 
 
-(Arb C Library)[http://arblib.org/acb_elliptic.html#complete-elliptic-integrals docs]
+(Arb C library docs)[http://arblib.org/acb_elliptic.html#complete-elliptic-integrals]
