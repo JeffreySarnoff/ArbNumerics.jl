@@ -309,7 +309,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Complete Elliptic Integrals",
     "category": "section",
-    "text": "<sup>lib</sup>the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
+    "text": ""
+},
+
+{
+    "location": "ellipticintegrals/#[*lib-ref*](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)-1",
+    "page": "Elliptic Integrals",
+    "title": "lib ref",
+    "category": "section",
+    "text": "the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
 },
 
 {
