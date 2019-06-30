@@ -112,7 +112,7 @@ function regular_hypergeometric_2F1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbCo
     return result
 end
 
-const regularF₂₁ = hypergeometric_2F1_regularized
+const regularF₂₁ = regular_hypergeometric_2F1
 
 function hypergeometric_0F1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
