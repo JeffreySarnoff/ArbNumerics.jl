@@ -1,7 +1,9 @@
 
 
 ## Complete Elliptic Integrals 
-#### [_lib ref_](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)
+
+| [complete elliptic integrals ](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals) |
+|:-----------------------------------------------------------------------------------------------:|
 
 - the complete elliptic integral of the first kind
 
@@ -24,7 +26,10 @@
 
 ![ellipticpi](assets/elliptic_pi.png)
 
-## Incomplete Elliptic Integrals <sup>[lib](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)</sup>
+## Incomplete Elliptic Integrals
+
+| [incomplete elliptic integrals ](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals) |
+|:-----------------------------------------------------------------------------------------------:|
 
 - the incomplete elliptic integral of the first kind
 
