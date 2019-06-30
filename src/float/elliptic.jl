@@ -44,7 +44,7 @@ elliptic_e2(modulus::ArbComplex{P}) where {P} = elliptic_e(modulus * modulus)
 
 function elliptic_e(modulus::ArbReal{P}) where {P}
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = elliptice(cmodulus)
+    cresult  = elliptic_e(cmodulus)
     result   = real(cresult)
     return result
 end
@@ -53,7 +53,7 @@ elliptic_e2(modulus::ArbReal{P}) where {P} = elliptic_e(modulus * modulus)
 
 function elliptic_e(modulus::ArbFloat{P}) where {P}
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = elliptice(cmodulus)
+    cresult  = elliptic_e(cmodulus)
     result   = ArbFloat{P}(real(cresult))
     return result
 end
@@ -75,7 +75,7 @@ elliptic_pi2(nu::ArbComplex{P}, modulus::ArbComplex{P}) where {P} = elliptic_pi(
 function elliptic_pi(nu::ArbReal{P}, modulus::ArbReal{P}) where {P}
     cnu      = ArbComplex(nu, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = ellipticpi(cnu, cmodulus)
+    cresult  = elliptic_pi(cnu, cmodulus)
     result   = real(cresult)
     return result
 end
@@ -85,7 +85,7 @@ elliptic_pi2(nu::ArbReal{P}, modulus::ArbReal{P}) where {P} = elliptic_pi(nu, mo
 function elliptic_pi(nu::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
     cnu      = ArbComplex(nu, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = ellipticpi(cnu, cmodulus)
+    cresult  = elliptic_pi(cnu, cmodulus)
     result   = ArbFloat{P}(real(cresult))
     return result
 end
@@ -125,7 +125,7 @@ elliptic_k2(phi::ArbReal{P}, modulus::ArbReal{P}) where {P} = elliptic_f(phi, mo
 function elliptic_f(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = ellipticf(cphi, cmodulus)
+    cresult  = elliptic_f(cphi, cmodulus)
     result   = ArbFloat{P}(real(cresult))
     return result
 end
@@ -198,7 +198,7 @@ function elliptic_pi(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) wh
     cnu      = ArbComplex(nu, 0)
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = ellipticpi(cnu, cphi, cmodulus)
+    cresult  = elliptic_pi(cnu, cphi, cmodulus)
     result   = ArbFloat{P}(real(cresult))
     return result
 end
