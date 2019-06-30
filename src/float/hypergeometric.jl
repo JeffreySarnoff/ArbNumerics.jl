@@ -28,11 +28,11 @@ end
 const F₀₁ = hypergeometric_0F1
 
 """
-    hypergeometric_0F1_regularized(a, z)
+    regular_hypergeometric_0F1(a, z)
 
 regularized confluent hypergeometric function, ``₀F₁ / gamma(a)``
 """
-function hypergeometric_0F1_regularized(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function regular_hypergeometric_0F1(a::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_0f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
@@ -70,11 +70,11 @@ end
 const F₁₁ = hypergeometric_1F1
 
 """
-    hypergeometric_1F1_regularized(a, b, z)
+    regular_hypergeometric_1F1(a, b, z)
 
 regularized confluent hypergeometric function, ``₁F₁ / gamma(a)``
 """
-function hypergeometric_1F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function regular_hypergeometric_1F1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_1f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
@@ -100,11 +100,11 @@ end
 const F₂₁ = hypergeometric_2F1
 
 """
-    hypergeometric_2F1_regularized(a, b, c, z)
+    regular_hypergeometric_2F1_regularized(a, b, c, z)
 
 regularized confluent hypergeometric function, ``₂F₁ / gamma(a)``
 """
-function hypergeometric_2F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
+function regular_hypergeometric_2F1(a::ArbComplex{P}, b::ArbComplex{P}, c::ArbComplex{P}, z::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     regularized = Cint(1)
     ccall(@libarb(acb_hypgeom_2f1), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Clong),
@@ -145,7 +145,7 @@ function hypergeometric_1F1(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {
     return result
 end
 
-function hypergeometric_1F1_regularized(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
+function regular_hypergeometric_1F1(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(1)
     ccall(@libarb(arb_hypgeom_1f1), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
@@ -161,7 +161,7 @@ function hypergeometric_2F1(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P}, z::ArbR
     return result
 end
 
-function hypergeometric_2F1_regularized(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P}, z::ArbReal{P}) where {P}
+function regular_hypergeometric_2F1(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(1)
     ccall(@libarb(arb_hypgeom_2f1), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
