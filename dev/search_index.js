@@ -305,15 +305,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticintegrals/#Complete-Elliptic-Integrals-sup[*lib*](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)/sup-1",
+    "location": "ellipticintegrals/#Complete-Elliptic-Integrals-suplib](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)/sup-1",
     "page": "Elliptic Integrals",
-    "title": "Complete Elliptic Integrals <sup>lib</sup>",
+    "title": "Complete Elliptic Integrals <sup>lib](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)</sup>",
     "category": "section",
     "text": "the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
 },
 
 {
-    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-sup[*lib*](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)/sup-1",
+    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-sup[lib](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)/sup-1",
     "page": "Elliptic Integrals",
     "title": "Incomplete Elliptic Integrals <sup>lib</sup>",
     "category": "section",
