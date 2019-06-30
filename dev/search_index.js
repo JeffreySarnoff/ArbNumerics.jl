@@ -309,23 +309,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Complete Elliptic Integrals",
     "category": "section",
-    "text": ""
+    "text": "| complete elliptic integrals  | |:–––––––––––––––––––––––––––––––––––––––––––––––-:|the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
 },
 
 {
-    "location": "ellipticintegrals/#[*lib-ref*](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)-1",
+    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-1",
     "page": "Elliptic Integrals",
-    "title": "lib ref",
+    "title": "Incomplete Elliptic Integrals",
     "category": "section",
-    "text": "the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
-},
-
-{
-    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-sup[lib](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)/sup-1",
-    "page": "Elliptic Integrals",
-    "title": "Incomplete Elliptic Integrals <sup>lib</sup>",
-    "category": "section",
-    "text": "the incomplete elliptic integral of the first kind\nelliptic_f(phi, m)\nelliptic_f2(phi, m) == elliptic_f(phi, m^2)(Image: ellipticf)the incomplete elliptic integral of the second kind\nelliptic_e(phi, m)\nelliptic_e2(phi, m) == elliptic_e(phi, m^2)(Image: elliptice_incomplete)the incomplete elliptic integral of the third kind\nelliptic_pi(n, phi, m)\nelliptic_pi2(n, phi, m) == elliptic_pi(n, phi, m^2)(Image: ellipticpi_incomplete)"
+    "text": "| incomplete elliptic integrals  | |:–––––––––––––––––––––––––––––––––––––––––––––––-:|the incomplete elliptic integral of the first kind\nelliptic_f(phi, m)\nelliptic_f2(phi, m) == elliptic_f(phi, m^2)(Image: ellipticf)the incomplete elliptic integral of the second kind\nelliptic_e(phi, m)\nelliptic_e2(phi, m) == elliptic_e(phi, m^2)(Image: elliptice_incomplete)the incomplete elliptic integral of the third kind\nelliptic_pi(n, phi, m)\nelliptic_pi2(n, phi, m) == elliptic_pi(n, phi, m^2)(Image: ellipticpi_incomplete)"
 },
 
 {
