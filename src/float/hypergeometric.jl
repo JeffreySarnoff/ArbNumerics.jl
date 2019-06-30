@@ -40,7 +40,7 @@ function regular_hypergeometric_0F1(a::ArbComplex{P}, z::ArbComplex{P}) where {P
     return result
 end
 
-const regularF₀₁ = hypergeometric_0F1_regularized
+const regularF₀₁ = regular_hypergeometric_0F1
 
 """
     hypergeometric_U(a, b, z)
@@ -82,7 +82,7 @@ function regular_hypergeometric_1F1(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbCo
     return result
 end
 
-const regularF₁₁ = hypergeometric_1F1_regularized
+const regularF₁₁ = regular_hypergeometric_1F1
 
 """
     hypergeometric_2F1(a, b, c, z)
@@ -122,7 +122,7 @@ function hypergeometric_0F1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     return result
 end
 
-function hypergeometric_0F1_regularized(a::ArbReal{P}, z::ArbReal{P}) where {P}
+function regular_hypergeometric_0F1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(1)
     ccall(@libarb(arb_hypgeom_0f1), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
