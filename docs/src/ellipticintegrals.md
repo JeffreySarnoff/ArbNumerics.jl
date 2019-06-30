@@ -23,6 +23,7 @@
 
 ![ellipticpi](assets/elliptic_pi.png)
 
+----
 
 ### [incomplete elliptic integrals ](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)
 
@@ -48,6 +49,7 @@
 
 ![ellipticpi_incomplete](assets/elliptic_pi_incomplete.png)
 
+----
 
 ### [Carlson's Symmetric Elliptic Integrals](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals)
 
