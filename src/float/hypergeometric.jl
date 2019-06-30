@@ -40,7 +40,7 @@ function hypergeometric_0F1_regularized(a::ArbComplex{P}, z::ArbComplex{P}) wher
     return result
 end
 
-const F₀₁regularized = hypergeometric_0F1_regularized
+const regularF₀₁ = hypergeometric_0F1_regularized
 
 """
     hypergeometric_U(a, b, z)
@@ -82,7 +82,7 @@ function hypergeometric_1F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, z::A
     return result
 end
 
-const F₁₁regularized = hypergeometric_1F1_regularized
+const regularF₁₁ = hypergeometric_1F1_regularized
 
 """
     hypergeometric_2F1(a, b, c, z)
@@ -112,7 +112,7 @@ function hypergeometric_2F1_regularized(a::ArbComplex{P}, b::ArbComplex{P}, c::A
     return result
 end
 
-const F₂₁regularized = hypergeometric_2F1_regularized
+const regularF₂₁ = hypergeometric_2F1_regularized
 
 function hypergeometric_0F1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
