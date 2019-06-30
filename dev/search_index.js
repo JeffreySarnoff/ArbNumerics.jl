@@ -305,9 +305,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticintegrals/#Complete-Elliptic-Integrals-1",
+    "location": "ellipticintegrals/#Complete-Elliptic-Integralssup[𝓪](#source)/sup-1",
     "page": "Elliptic Integrals",
-    "title": "Complete Elliptic Integrals",
+    "title": "Complete Elliptic Integrals<sup>𝓪</sup>",
     "category": "section",
     "text": "the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
 },
@@ -325,7 +325,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Carlson\'s Symmetric Elliptic Integrals",
     "category": "section",
-    "text": "the symmetric elliptic integral of the first kind\nelliptic_rf(x, y, z)(Image: ellipticrf)the symmetric elliptic integral of the second kind\nelliptic_rg(x, y, z)(Image: ellipticrg)the symmetric elliptic integral of the third kind\nelliptic_rj(x, y, z)(Image: ellipticrj)Arb C library docs"
+    "text": "the symmetric elliptic integral of the first kind\nelliptic_rf(x, y, z)(Image: ellipticrf)the symmetric elliptic integral of the second kind\nelliptic_rg(x, y, z)(Image: ellipticrg)the symmetric elliptic integral of the third kind\nelliptic_rj(x, y, z)(Image: ellipticrj)<sup><a name=\"source\">𝓪</a></sup>Arb C library docs"
 },
 
 {
