@@ -49,7 +49,8 @@
 ![ellipticpi_incomplete](assets/elliptic_pi_incomplete.png)
 
 
-[Carlson's Symmetric Elliptic Integrals](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals)
+| [Carlson's Symmetric Elliptic Integrals](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals) |
+|:------------------------------------------------------------------------------------------------------------------:|
 
 
 - the symmetric elliptic integral of the first kind
