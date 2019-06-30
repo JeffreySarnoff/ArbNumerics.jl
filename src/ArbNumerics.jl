@@ -57,14 +57,14 @@ export ArbNumber,
        ei, si, ci, shi, chi,
        airyai, airyaiprime, airybi, airybiprime,
        besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
-       ellipk, ellipe, ellippi, ellipf,
-       ellip_k, ellip_e, ellip_pi, ellip_f, # modulus^2 
-       elliprf, elliprg, elliprj,
+       hypergeometric_0F1, hypergeometric_1F1, hypergeometric_2F1,
+       hypergeometric_0F1_regularized, hypergeometric_1F1_regularized, hypergeometric_2F1_regularized,
+       elliptic_k, elliptic_e, elliptic_pi, elliptic_f,
+       elliptic_k2, elliptic_e2, elliptic_pi2, elliptic_f2, # modulus^2 
+       elliptic_rf, elliptic_rg, elliptic_rj,
        weierstrass_p, weierstrass_invp, weierstrass_zeta, weierstrass_sigma,
        zeta, eta, xi,                  # Reimann
        lambertw,
-       hypgeom0f1, hypgeom1f1, hypgeom2f1,
-       hypgeom0f1reg, hypgeom1f1reg, hypgeom2f1reg,
        π, ℯ, γ, φ, catalan,
 
        # special linear algebra
