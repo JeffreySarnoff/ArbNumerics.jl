@@ -1,5 +1,7 @@
+
+
 ## Complete Elliptic Integrals 
-<sup>[lib](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)</sup>
+#### [_lib ref_](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)
 
 - the complete elliptic integral of the first kind
 
