@@ -301,31 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Elliptic Integrals",
     "category": "page",
-    "text": ""
-},
-
-{
-    "location": "ellipticintegrals/#Complete-Elliptic-Integrals-1",
-    "page": "Elliptic Integrals",
-    "title": "Complete Elliptic Integrals",
-    "category": "section",
-    "text": "| complete elliptic integrals  | |:–––––––––––––––––––––––––––––––––––––––––––––––-:|the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)"
-},
-
-{
-    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-1",
-    "page": "Elliptic Integrals",
-    "title": "Incomplete Elliptic Integrals",
-    "category": "section",
-    "text": "| incomplete elliptic integrals  | |:–––––––––––––––––––––––––––––––––––––––––––––––-:|the incomplete elliptic integral of the first kind\nelliptic_f(phi, m)\nelliptic_f2(phi, m) == elliptic_f(phi, m^2)(Image: ellipticf)the incomplete elliptic integral of the second kind\nelliptic_e(phi, m)\nelliptic_e2(phi, m) == elliptic_e(phi, m^2)(Image: elliptice_incomplete)the incomplete elliptic integral of the third kind\nelliptic_pi(n, phi, m)\nelliptic_pi2(n, phi, m) == elliptic_pi(n, phi, m^2)(Image: ellipticpi_incomplete)"
-},
-
-{
-    "location": "ellipticintegrals/#Carlson\'s-Symmetric-Elliptic-Integrals-sup[*lib*](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals)/sup-1",
-    "page": "Elliptic Integrals",
-    "title": "Carlson\'s Symmetric Elliptic Integrals <sup>lib</sup>",
-    "category": "section",
-    "text": "the symmetric elliptic integral of the first kind\nelliptic_rf(x, y, z)(Image: ellipticrf)the symmetric elliptic integral of the second kind\nelliptic_rg(x, y, z)(Image: ellipticrg)the symmetric elliptic integral of the third kind\nelliptic_rj(x, y, z)(Image: ellipticrj)"
+    "text": "| complete elliptic integrals  | |:–––––––––––––––––––––––––––––––––––––––––––––––-:|the complete elliptic integral of the first kind\nelliptic_k(m)\nelliptic_k2(m) == elliptic_k(m^2)(Image: elliptick)the complete elliptic integral of the second kind\nelliptic_e(m)\nelliptic_e2(m) == elliptic_e(m^2)(Image: elliptice)the complete elliptic integral of the third kind\nelliptic_pi(n, m)\nelliptic_pi2(n, m) == elliptic_pi(n, m^2)(Image: ellipticpi)| incomplete elliptic integrals  | |:–––––––––––––––––––––––––––––––––––––––––––––––-:|the incomplete elliptic integral of the first kind\nelliptic_f(phi, m)\nelliptic_f2(phi, m) == elliptic_f(phi, m^2)(Image: ellipticf)the incomplete elliptic integral of the second kind\nelliptic_e(phi, m)\nelliptic_e2(phi, m) == elliptic_e(phi, m^2)(Image: elliptice_incomplete)the incomplete elliptic integral of the third kind\nelliptic_pi(n, phi, m)\nelliptic_pi2(n, phi, m) == elliptic_pi(n, phi, m^2)(Image: ellipticpi_incomplete)Carlson\'s Symmetric Elliptic Integralsthe symmetric elliptic integral of the first kind\nelliptic_rf(x, y, z)(Image: ellipticrf)the symmetric elliptic integral of the second kind\nelliptic_rg(x, y, z)(Image: ellipticrg)the symmetric elliptic integral of the third kind\nelliptic_rj(x, y, z)(Image: ellipticrj)"
 },
 
 {
