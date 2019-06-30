@@ -17,14 +17,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "#image-test-1",
-    "page": "Overview",
-    "title": "image test",
-    "category": "section",
-    "text": "<img src=\"assets/midrad.jpg\" alt=\"drawing1\" width=\"200\" /><img src=\"assets/Weierstrasspinvhalfandhalf.png\" alt=\"drawing2\" width=\"150\" /><img src=\"/assets/midrad.png\" alt=\"drawing3\" width=\"300\" />(Image: tst1)(Image: tst2)(Image: tst3)(Image: tst4)(Image: tst5)"
-},
-
-{
     "location": "thetypes/#",
     "page": "The Types",
     "title": "The Types",
