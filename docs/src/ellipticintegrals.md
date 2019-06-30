@@ -1,9 +1,6 @@
-
-
-## Complete Elliptic Integrals 
-
 | [complete elliptic integrals ](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals) |
 |:-----------------------------------------------------------------------------------------------:|
+
 
 - the complete elliptic integral of the first kind
 
@@ -26,7 +23,6 @@
 
 ![ellipticpi](assets/elliptic_pi.png)
 
-## Incomplete Elliptic Integrals
 
 | [incomplete elliptic integrals ](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals) |
 |:-----------------------------------------------------------------------------------------------:|
@@ -53,7 +49,8 @@
 ![ellipticpi_incomplete](assets/elliptic_pi_incomplete.png)
 
 
-## Carlson's Symmetric Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals)</sup>
+[Carlson's Symmetric Elliptic Integrals](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals)
+
 
 - the symmetric elliptic integral of the first kind
     
