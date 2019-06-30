@@ -15,6 +15,17 @@
 
 # image test
 
+<img src="assets/midrad.jpg" alt="drawing1" width="200" />
+
+
+<img src="assets/Weierstrass_pinv_halfandhalf.png" alt="drawing2" width="150" />
+
+
+
+<img src="/assets/midrad.png" alt="drawing3" width="300" />
+
+
+
 ![tst1](assets/Weierstrass_pinv.PNG)
 
 ----
