@@ -325,7 +325,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Carlson\'s Symmetric Elliptic Integrals",
     "category": "section",
-    "text": "the symmetric elliptic integral of the first kind\nelliptic_rf(x, y, z)(Image: ellipticrf)the symmetric elliptic integral of the second kind\nelliptic_rg(x, y, z)(Image: ellipticrg)the symmetric elliptic integral of the third kind\nelliptic_rj(x, y, z)(Image: ellipticrj)(Arb C Library)[http://arblib.org/acb_elliptic.html#complete-elliptic-integrals docs]"
+    "text": "the symmetric elliptic integral of the first kind\nelliptic_rf(x, y, z)(Image: ellipticrf)the symmetric elliptic integral of the second kind\nelliptic_rg(x, y, z)(Image: ellipticrg)the symmetric elliptic integral of the third kind\nelliptic_rj(x, y, z)(Image: ellipticrj)Arb C library docs"
 },
 
 {
