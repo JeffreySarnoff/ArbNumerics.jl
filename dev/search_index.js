@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Integrals",
     "title": "Elliptic Integrals",
     "category": "page",
-    "text": "use with ArbFloat, ArbReal, ArbComplex or Float64 args  (all args must be of the same type)"
+    "text": ""
 },
 
 {
@@ -313,7 +313,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-sup[*lib*](http://arblib.org/acb_elliptic.html#incomplete-elliptic-integrals)/sup-1",
+    "location": "ellipticintegrals/#Incomplete-Elliptic-Integrals-sup[*lib*](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)/sup-1",
     "page": "Elliptic Integrals",
     "title": "Incomplete Elliptic Integrals <sup>lib</sup>",
     "category": "section",
