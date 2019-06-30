@@ -59,6 +59,7 @@ export ArbNumber,
        besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
        hypergeometric_0F1, hypergeometric_1F1, hypergeometric_2F1,
        hypergeometric_0F1_regularized, hypergeometric_1F1_regularized, hypergeometric_2F1_regularized,
+       F₀₁,  F₁₁, F₂₁, regularF₀₁,  regularF₁₁, regularF₂₁,
        elliptic_k, elliptic_e, elliptic_pi, elliptic_f,
        elliptic_k2, elliptic_e2, elliptic_pi2, elliptic_f2, # modulus^2 
        elliptic_rf, elliptic_rg, elliptic_rj,
