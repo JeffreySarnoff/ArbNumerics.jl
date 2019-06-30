@@ -205,9 +205,14 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 
 #### elliptic integrals
 
-- `ellipe`, `ellipk`
-- `ellipp`, `ellippi`
-- `ellipzeta`, `ellipsigma`
+- `elliptic_e`, `elliptic_k`
+- `elliptic_p`, `elliptic_pi`
+- `elliptic_zeta`, `elliptic_sigma`
+
+##### elliptic integrals of squared modulus
+- `elliptic_e2`, `elliptic_k2`
+- `elliptic_p2`, `elliptic_pi2`
+- `elliptic_zeta2`, `elliptic_sigma2`
 
 #### elliptic functions
 
