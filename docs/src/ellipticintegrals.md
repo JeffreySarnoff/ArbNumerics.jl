@@ -1,7 +1,7 @@
 > use with ArbFloat, ArbReal, ArbComplex or __Float64__ args  (_all args must be of the same type_)
 ----
 
-## Complete Elliptic Integrals
+## Complete Elliptic Integrals<sup>[𝓪](#source)</sup>
 
 - the complete elliptic integral of the first kind
 
@@ -69,4 +69,4 @@
 ![ellipticrj](assets/elliptic_rj.png)
 
 
-[Arb C library docs](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)
+<sup><a name="source">[𝓪](#attribution)</a></sup>[Arb C library docs](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)
