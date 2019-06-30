@@ -1,7 +1,7 @@
 > use with ArbFloat, ArbReal, ArbComplex or __Float64__ args  (_all args must be of the same type_)
 ----
 
-## Complete Elliptic Integrals<sup>[𝓪](#source)</sup>
+## Complete Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)</sup>
 
 - the complete elliptic integral of the first kind
 
@@ -24,7 +24,7 @@
 
 ![ellipticpi](assets/elliptic_pi.png)
 
-## Incomplete Elliptic Integrals
+## Incomplete Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#incomplete-elliptic-integrals)</sup>
 
 - the incomplete elliptic integral of the first kind
 
@@ -48,7 +48,7 @@
 ![ellipticpi_incomplete](assets/elliptic_pi_incomplete.png)
 
 
-## Carlson's Symmetric Elliptic Integrals
+## Carlson's Symmetric Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#carlson-symmetric-elliptic-integrals)</sup>
 
 - the symmetric elliptic integral of the first kind
     
@@ -68,5 +68,3 @@
 
 ![ellipticrj](assets/elliptic_rj.png)
 
-
-<sup><a name="source">[𝓪](#attribution)</a></sup>[Arb C library docs](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)
