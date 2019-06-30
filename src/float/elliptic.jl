@@ -139,7 +139,7 @@ elliptic_k2(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = elliptic_f(phi, 
 # void acb_elliptic_e_inc(acb_t res, const acb_t phi, const acb_t m, int pi, slong prec)
 # Legendre incomplete elliptic integral of the second kind E(phi, m)
 
-function elliptic_e_incomplete(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
+function elliptic_e(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     flag = 0
     ccall(@libarb(acb_elliptic_e_inc), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
@@ -147,32 +147,32 @@ function elliptic_e_incomplete(phi::ArbComplex{P}, modulus::ArbComplex{P}) where
     return result
 end
 
-elliptic_e2_incomplete(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P} = elliptice(phi, modulus * modulus)
+elliptic_e2(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P} = elliptice(phi, modulus * modulus)
 
-function elliptic_e_incomplete(phi::ArbReal{P}, modulus::ArbReal{P}) where {P}
+function elliptic_e(phi::ArbReal{P}, modulus::ArbReal{P}) where {P}
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = elliptic_e_incomplete(cphi, cmodulus)
+    cresult  = elliptic_e(cphi, cmodulus)
     result   = real(cresult)
     return result
 end
 
-elliptic_e2_incomplete(phi::ArbReal{P}, modulus::ArbReal{P}) where {P} = elliptic_e_incomplete(phi, modulus * modulus)
+elliptic_e2(phi::ArbReal{P}, modulus::ArbReal{P}) where {P} = elliptic_e_incomplete(phi, modulus * modulus)
 
-function elliptic_e_incomplete(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
+function elliptic_e(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = elliptice(cphi, cmodulus)
+    cresult  = elliptic_e(cphi, cmodulus)
     result   = ArbFloat{P}(real(cresult))
     return result
 end
 
-elliptic_e2_incomplete(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = elliptic_e_incomplete(phi, modulus * modulus)
+elliptic_e2(phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = elliptic_e(phi, modulus * modulus)
 
 # void acb_elliptic_pi_inc(acb_t res, const acb_t n, const acb_t phi, const acb_t m, int pi, slong prec)
 # the Legendre incomplete elliptic integral of the third kind, given by
 
-function elliptic_pi_incomplete(nu::ArbComplex{P}, phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
+function elliptic_pi(nu::ArbComplex{P}, phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P}
     result = ArbComplex{P}()
     flag = 0
     ccall(@libarb(acb_elliptic_pi_inc), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint, Cint), 
@@ -180,21 +180,21 @@ function elliptic_pi_incomplete(nu::ArbComplex{P}, phi::ArbComplex{P}, modulus::
     return result
 end
 
-elliptic_pi2_incomplete(nu::ArbComplex{P}, phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P} =
-    elliptic_pi_incomplete(nu, phi, modulus * modulus)
+elliptic_pi2(nu::ArbComplex{P}, phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P} =
+    elliptic_pi(nu, phi, modulus * modulus)
 
-function elliptic_pi_incomplete(nu::ArbReal{P}, phi::ArbReal{P}, modulus::ArbReal{P}) where {P}
+function elliptic_pi(nu::ArbReal{P}, phi::ArbReal{P}, modulus::ArbReal{P}) where {P}
     cnu      = ArbComplex(nu, 0)
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = ellipticpi(cnu, cphi, cmodulus)
+    cresult  = elliptic_pi(cnu, cphi, cmodulus)
     result   = real(cresult)
     return result
 end
 
-elliptic_pi2_incomplete(nu::ArbReal{P}, phi::ArbReal{P}, modulus::ArbReal{P}) where {P} = elliptic_pi_incomplete(nu, phi, modulus * modulus)
+elliptic_pi2(nu::ArbReal{P}, phi::ArbReal{P}, modulus::ArbReal{P}) where {P} = elliptic_pi_incomplete(nu, phi, modulus * modulus)
 
-function elliptic_pi_incomplete(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
+function elliptic_pi(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P}
     cnu      = ArbComplex(nu, 0)
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
@@ -203,7 +203,7 @@ function elliptic_pi_incomplete(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbF
     return result
 end
 
-elliptic_pi2_incomplete(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = elliptic_pi_incomplete(nu, phi, modulus * modulus)
+elliptic_pi2(nu::ArbFloat{P}, phi::ArbFloat{P}, modulus::ArbFloat{P}) where {P} = elliptic_pi_incomplete(nu, phi, modulus * modulus)
 
 
 #=
