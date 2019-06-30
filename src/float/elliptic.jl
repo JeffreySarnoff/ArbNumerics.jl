@@ -3,8 +3,12 @@
 
 
 # void acb_elliptic_k(acb_t res, const acb_t m, slong prec)
-# Computes the complete elliptic integral of the first kind  K(m)
 
+"""
+    elliptic_k(modulus)
+
+Computes the complete elliptic integral of the first kind  K(m)
+"""
 function elliptic_k(modulus::ArbComplex{P}) where {P}
     isone(modulus) && return ArbComplex{P}(Inf,0)
     result = ArbComplex{P}()
@@ -12,6 +16,11 @@ function elliptic_k(modulus::ArbComplex{P}) where {P}
     return result
 end
 
+"""
+    elliptic_k2(modulus)
+
+Computes the complete elliptic integral of the first kind  K(m^2)
+"""
 elliptic_k2(modulus::ArbComplex{P}) where {P} = elliptic_k(modulus * modulus)
 
 function elliptic_k(modulus::ArbReal{P}) where {P}
