@@ -1,6 +1,3 @@
-> use with ArbFloat, ArbReal, ArbComplex or __Float64__ args  (_all args must be of the same type_)
-----
-
 ## Complete Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)</sup>
 
 - the complete elliptic integral of the first kind
