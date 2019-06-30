@@ -337,9 +337,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticfunctions/#Weierstrass-Functions-1",
+    "location": "ellipticfunctions/#Weierstrass-Functions-sup[*lib*](http://arblib.org/acb_elliptic.html#weierstrass-elliptic-functions)/sup-1",
     "page": "Elliptic Functions",
-    "title": "Weierstrass Functions",
+    "title": "Weierstrass Functions <sup>lib</sup>",
     "category": "section",
     "text": "Weierstrass elliptic function\nweierstrass_p(z, tau)(Image: Weierstrass_p)     Weierstrass inverse elliptic function\nweierstrass_invp(z, tau)(Image: Weierstrass_pinv)Weierstrass zeta function\nweierstrass_zeta(z, tau)(Image: Weierstrass_zeta)Weierstrass sigma function\nweierstrass_sigma(z, tau)(Image: Weierstrass_sigma)"
 },
