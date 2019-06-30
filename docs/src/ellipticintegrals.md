@@ -24,7 +24,7 @@
 
 ![ellipticpi](assets/elliptic_pi.png)
 
-## Incomplete Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#incomplete-elliptic-integrals)</sup>
+## Incomplete Elliptic Integrals <sup>[_lib_](http://arblib.org/acb_elliptic.html#legendre-incomplete-elliptic-integrals)</sup>
 
 - the incomplete elliptic integral of the first kind
 
