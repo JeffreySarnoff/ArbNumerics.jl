@@ -1,4 +1,6 @@
-## Weierstrass Functions <sup>[_lib_](http://arblib.org/acb_elliptic.html#weierstrass-elliptic-functions)</sup>
+## Weierstrass Elliptic Functions
+
+### [Weierstrass Functions](http://arblib.org/acb_elliptic.html#weierstrass-elliptic-functions)
 
 - Weierstrass elliptic function
 
