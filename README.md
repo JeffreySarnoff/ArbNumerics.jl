@@ -7,7 +7,7 @@
 
 For multiprecision numerical computing using values with 25..2,500 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy.
 
-This package uses the [Arb C Library](http://arblib.org/index.html), and adapts some C library interface work from [Nemo.jl](https://github.com/wbhart/Nemo.jl): [_𝒶_](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements).
+This package uses the [Arb C Library](http://arblib.org/index.html), and adapts some C library interface work from [Nemo](https://github.com/wbhart/Nemo.jl) (see [_below_](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)).
 
 
 -----
