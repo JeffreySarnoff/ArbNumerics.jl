@@ -50,5 +50,6 @@ The number of working bits is given by any of:
 `workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)`.        
 All of these are kept in sync.
 
-The number of `extrabits` is given by `extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex)`.    
+The number of `extrabits` is given by any of:    
+`extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex)`.    
 All of these are kept in sync.
