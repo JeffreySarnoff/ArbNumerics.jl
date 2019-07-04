@@ -117,7 +117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "Precisions",
     "category": "page",
-    "text": ""
+    "text": "#Precision"
 },
 
 {
@@ -125,7 +125,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "minimum precision",
     "category": "section",
-    "text": "The minimum precision is 24 significant bits."
+    "text": "The minimum precision is 24 significant bits, or 8 significant digits."
 },
 
 {
