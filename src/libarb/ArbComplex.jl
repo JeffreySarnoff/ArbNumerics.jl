@@ -12,6 +12,7 @@
 - `ArbComplex`(re, im, digits=digits, base=10) == `ArbComplex`(re, im, digits=digits)
 
 `ArbComplexs` are arbitrary precision complex binary floating-point regions with some specific precision established at construction.
+
 The precision of an `ArbComplex` must be >= 24 bits or >= 8 digits.
 
 Internally, an `ArbComplex` represents as a pair of `ArbReals`, where the real part and the imaginary part are each
@@ -92,7 +93,6 @@ function ArbComplex(x::T; y::T, bits::Int=0, digits::Int=0, base::Int=iszero(bit
     end
     ArbComplex{bits}(x, y)
 end
-
 
 function ArbComplex(x::T1, y::T2; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T1<:Number, T2<:Number}
     ArbComplex(promote(x, y)...,)
