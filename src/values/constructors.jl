@@ -146,8 +146,8 @@ ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real
 ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x))
 ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
 
-#ArbComplex{P}(x::BigInt) where {P} = ArbComplex{P}(ArbReal{P}(x))
-#ArbComplex{P}(x::BigFloat) where {P} = ArbComplex{P}(ArbReal{P}(x))
+ArbComplex{P}(x::BigInt) where {P} = ArbComplex{P}(ArbReal{P}(x))
+ArbComplex{P}(x::BigFloat) where {P} = ArbComplex{P}(ArbReal{P}(x))
 ArbComplex{P}(x::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x))
 ArbComplex(x::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x))
 ArbComplex{P}(x::T, y::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x), BigFloat(y))
