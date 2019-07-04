@@ -128,6 +128,13 @@ for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
   end
 end
 
+# rational
+
+ArbFloat(x::T) where {S, T<:Rational{S}} = ArbFloat(x.num)/ArbFloat(x.den)
+ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(ArbFloat(x))
+ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x))
+
+
 # retype
 
 ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
