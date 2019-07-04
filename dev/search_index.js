@@ -373,7 +373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Matrix Functions",
     "title": "using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra",
     "category": "section",
-    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize\neigvals, svdvals\nMatrix{ArbFloat | ArbReal}\nsvd\nMatrix{ArbFloat | ArbReal | ArbComplex}"
+    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize"
 },
 
 {
