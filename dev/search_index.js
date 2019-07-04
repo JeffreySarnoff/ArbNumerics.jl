@@ -361,9 +361,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "matrixfunctions/#functions-1",
+    "location": "matrixfunctions/#Matrix-Functions-1",
     "page": "Matrix Functions",
-    "title": "functions",
+    "title": "Matrix Functions",
     "category": "section",
     "text": ""
 },
@@ -373,7 +373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Matrix Functions",
     "title": "using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra",
     "category": "section",
-    "text": "det, tr\ntranspose, adjoint, inv\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize"
+    "text": "det, tr\ntranspose, adjoint, inv\nexp\n.+, .-, .*, ./           ( element op element )\n+, -, *, /, \\          ( matrix  op matrix  )\nlu, qr, factorize"
 },
 
 {
