@@ -1,4 +1,4 @@
-## matrix functions
+## Matrix Functions
 
 #### `using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra`
 
