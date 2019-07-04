@@ -141,7 +141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "enclosed precision",
     "category": "section",
-    "text": "The alternative is to use some of the least significant bits as a \"cushion\" that protects against showing greater precision than is warranted by the accuracy that is assured.  This is particularly important when showing values that are point estimates of an interval that encloses the mathematical result. If you prefer to be shown quantities as point values that best reflect the accuracy available at the end of a computation by letting go of uncertain trailing bits, start using the package this way:using ArbNumerics\nsetextrabits(32)"
+    "text": "The alternative is to use some of the least significant bits as a \"cushion\" that protects against showing greater precision than is warranted by the accuracy that is assured.  This is particularly important when showing values that are point estimates of an interval that encloses the mathematical result. If you prefer to be shown quantities as point values that best reflect the accuracy available at the end of a computation by letting go of uncertain trailing bits, start using the package this way:using ArbNumerics\nsetextrabits(48)"
 },
 
 {
@@ -157,7 +157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "finding precisions",
     "category": "section",
-    "text": "The number of displayed bits is given by any of:    precision(ArbFloat), precision(ArbReal), precision(ArbComplex)     All of these are kept in sync.The number of working bits is given by any of:     workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)     All of these are kept in sync.The number of extrabits is given by extrabits()."
+    "text": "The number of displayed bits is given by any of:    precision(ArbFloat), precision(ArbReal), precision(ArbComplex)     All of these are kept in sync.The number of working bits is given by any of:     workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)     All of these are kept in sync.The number of extrabits is given by extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex). All of these are kept in sync."
 },
 
 {
