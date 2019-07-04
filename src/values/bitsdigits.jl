@@ -113,8 +113,23 @@ end
 
 extrabits() = ExtraBits.x
 
+extrabits(::Type{ArbFloat}) = ExtraBits.x
+extrabits(::Type{ArbReal}) = ExtraBits.x
+extrabits(::Type{ArbComplex}) = ExtraBits.x
+
+extrabits(::Type{ArbFloat{P}}) where {P} = extrabits(ArbFloat)
+extrabits(::Type{ArbReal{P}}) where {P} = extrabits(ArbReal)
+extrabits(::Type{ArbComplex{P}}) where {P} = extrabits(ArbComplex)
+
+extrabits(x::ArbFloat{P}) where {P} = extrabits(ArbFloat)
+extrabits(x::ArbReal{P}) where {P} = extrabits(ArbReal)
+extrabits(x::ArbComplex{P}) where {P} = extrabits(ArbComplex)
+
 function setextrabits(n::Int)
     ExtraBits.x = max(0,n)
-    DEFAULT_PRECISION.x = workingbits(128 - ExtraBits.x)
+    working = precision(ArbFloat) + ExtraBits.x
+    DEFAULT_PRECISION.x = working
     return ExtraBits.x
 end
+
+setextrabits(::Type{T}, n::Int) where {T<:ArbNumber} = setextrabits(n)
