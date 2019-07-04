@@ -1,10 +1,17 @@
 """
-from Arb docs:
+    ArbFloat(x)
+    ArbFloat(x; [bits])
+    ArbFloat(x; [digits [, base=10]])
 
-A variable of type arf_t holds an arbitrary-precision binary floating-point number:
-that is, a rational number of the form x⋅2y where x,y∈Z and x is odd, or one of
-the special values zero, plus infinity, minus infinity, or NaN (not-a-number).
-There is currently no support for negative zero, unsigned infinity, or a NaN with a payload.
+- ArbFloat(x) == ArbFloat(x, bits=workingprecision(ArbFloat))
+- ArbFloat(x, digits=digits, base=2) == ArbFloat(x, bits=digits)
+- ArbFloat(x, digits=digits, base=10) == ArbFloat(x, digits=digits)
+
+ArbFloats are arbitrary precision binary floating-point numbers with some specific precision established at construction.
+
+The precision of an ArbFloat must be >= 24 bits or >= 8 digits.
+
+Negative zero does not exist, nor does unsigned Infinity, nor NaNs with distinct payloads.
 """ ArbFloat
 
 mutable struct ArbFloat{P} <: AbstractFloat    # P is the precision in bits
@@ -36,17 +43,17 @@ ArbFloat(x::Missing) = missing
 @inline sign_bit(x::ArbFloat{P}) where {P} = isodd(x.size)
 
 
-ArbFloat(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbFloat{prec}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
-
 function ArbFloat(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
+    bits > 0 && bits >= MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
+    digits > 0 && digits >= MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
     if base === 10
-        digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
+        bits = digits > 0 ? bits4digits(digits)+extrabits() : (bits > 0 ? bits+extrabits() : DEFAULT_PRECISION.x)
     elseif base === 2
-        digits = bits > 0 ? bits : (digits > 0 ? digits : DEFAULT_PRECISION.x)
+        bits = bits > 0 ? bits+extrabits() : (digits > 0 ? digits+extrabits() : DEFAULT_PRECISION.x)
     else
         throw(ErrorException("base expects 2 or 10"))
     end
-    ArbFloat(x, digits)
+    ArbFloat{bits}(x)
 end
 
 swap(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ccall(@libarb(arf_swap), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), x, y)
