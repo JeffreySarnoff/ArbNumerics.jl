@@ -126,9 +126,13 @@ extrabits(x::ArbReal{P}) where {P} = extrabits(ArbReal)
 extrabits(x::ArbComplex{P}) where {P} = extrabits(ArbComplex)
 
 function setextrabits(n::Int)
-    ExtraBits.x = max(0,n)
-    working = precision(ArbFloat) + ExtraBits.x
-    DEFAULT_PRECISION.x = working
+    n >=0 || throw(DomainError("extrabits must be >= 0"))
+    priorextra = extrabits()
+    priorworking = workingprecision(ArbFloat)
+    newextra = n
+    newworking = priorworking + (newextra - priorextra)
+    ExtraBits.x = newextra
+    DEFAULT_PRECISION.x = newworking
     return ExtraBits.x
 end
 
