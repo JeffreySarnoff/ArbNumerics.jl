@@ -39,8 +39,11 @@ const ExtraBits = Ref(BitsOfStability + BitsOfAbsorption)
 @inline evincedbits(workingbits) = workingbits - ExtraBits.x
 
 
-# default precision
-const MINIMUM_PRECISION = 24
+# preset precisions
+const MINIMUM_PRECISION_BASE2 = 24
+const MINIMUM_PRECISION_BASE10 = 8
+const MINIMUM_PRECISION = MINIMUM_PRECISION_BASE2
+
 const DEFAULT_PRECISION = Ref(workingbits(128 - ExtraBits.x))
 
 # these typed significands have this many signficant bits
