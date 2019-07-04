@@ -43,12 +43,12 @@ Reliabile computations presume you __not__ alter it midstream.
 ## finding precisions 
 
 The number of displayed bits is given by any of:   
-`precision(ArbFloat), precision(ArbReal), precision(ArbComplex)`    
+`precision(ArbFloat), precision(ArbReal), precision(ArbComplex)`.        
 All of these are kept in sync.
 
 The number of working bits is given by any of:    
-`workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)`    
+`workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)`.        
 All of these are kept in sync.
 
-The number of `extrabits` is given by `extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex)`.
+The number of `extrabits` is given by `extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex)`.    
 All of these are kept in sync.
