@@ -17,7 +17,7 @@ that are assured to contain the true mathematical result.  There is no a priori 
 the interval that results.  Good practice is to set the precision substantively greater than the precision
 of the resultant width required, and to check the radius of results.
 
-See also: [`ball`](@ref), [`setball`](@ref), [`midpoint`](@ref), [`radius`](@ref), [`workingprecision`](@ref)
+See also: [`ArbFloat`](@ref), [`ArbComplex`](@ref), [`ball`](@ref), [`setball`](@ref), [`midpoint`](@ref), [`radius`](@ref)
 """ ArbReal
 
 # ArbReal structs hold balls given as midpoint, radius
