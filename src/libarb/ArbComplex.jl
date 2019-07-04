@@ -1,3 +1,29 @@
+"""
+    ArbComplex(x)
+    ArbComplex(x; [bits])
+    ArbComplex(x; [digits [, base=10]])
+
+    ArbComplex(re, im)
+    ArbComplex(re, im; [bits])
+    ArbComplex(re, im; [digits [, base=10]])
+
+- `ArbComplex`(re, im) == `ArbComplex`(re, im, bits=workingprecision(ArbComplex))
+- `ArbComplex`(re, im, digits=digits, base=2) == `ArbComplex`(re, im, bits=digits)
+- `ArbComplex`(re, im, digits=digits, base=10) == `ArbComplex`(re, im, digits=digits)
+
+`ArbComplexs` are arbitrary precision complex binary floating-point regions with some specific precision established at construction.
+The precision of an `ArbComplex` must be >= 24 bits or >= 8 digits.
+
+Internally, an `ArbComplex` represents as a pair of `ArbReals`, where the real part and the imaginary part are each
+intervals given by midpoint and radius (half-width of the interval). This representation serves as a _ball_ over the complex numbers.
+Calculations with `ArbComplex` generate results that are assured to contain the true mathematical result.
+There is no a priori assurance on the width of the interval that results.
+Good practice is to set the precision substantively greater than the precision
+of the resultant width required, and to check the radius of results.
+
+See also: [`ArbFloat`](@ref), [`ArbReal`](@ref), [`ball`](@ref), [`setball`](@ref), [`midpoint`](@ref), [`radius`](@ref)
+""" ArbComplex
+
 # ArbComplex structs hold complex balls given as ArbReal pairs
 
 mutable struct ArbComplex{P}  <: Number  # P is the precision in bits
@@ -41,18 +67,32 @@ ArbComplex{P}(x::Missing) where {P} = missing
 ArbComplex(x::Missing) = missing
 
 
-ArbComplex(x, y, prec::Int) = prec>=MINIMUM_PRECISION ? ArbComplex{prec}(x, y) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
-
-function ArbComplex(x::T, y::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
+function ArbComplex(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
+    bits > 0 && bits >= MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
+    digits > 0 && digits >= MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
     if base === 10
-        digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
+        bits = digits > 0 ? bits4digits(digits)+extrabits() : (bits > 0 ? bits+extrabits() : DEFAULT_PRECISION.x)
     elseif base === 2
-        digits = bits > 0 ? bits : (digits > 0 ? digits : DEFAULT_PRECISION.x)
+        bits = bits > 0 ? bits+extrabits() : (digits > 0 ? digits+extrabits() : DEFAULT_PRECISION.x)
     else
         throw(ErrorException("base expects 2 or 10"))
     end
-    ArbComplex(x, y, digits)
+    ArbComplex{bits}(x, zero(T))
 end
+
+function ArbComplex(x::T; y::T, bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
+    bits > 0 && bits >= MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
+    digits > 0 && digits >= MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
+    if base === 10
+        bits = digits > 0 ? bits4digits(digits)+extrabits() : (bits > 0 ? bits+extrabits() : DEFAULT_PRECISION.x)
+    elseif base === 2
+        bits = bits > 0 ? bits+extrabits() : (digits > 0 ? digits+extrabits() : DEFAULT_PRECISION.x)
+    else
+        throw(ErrorException("base expects 2 or 10"))
+    end
+    ArbComplex{bits}(x, y)
+end
+
 
 function ArbComplex(x::T1, y::T2; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T1<:Number, T2<:Number}
     ArbComplex(promote(x, y)...,)
