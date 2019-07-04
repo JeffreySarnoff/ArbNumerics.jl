@@ -57,3 +57,9 @@ function interval_abs(x::ArbComplex{P}, ::Type{ArbFloat}) where {P}
 end
 
 interval_abs(x::ArbComplex{P}) where {P} = interval_abs(x, ArbFloat)
+
+function ball(x::ArbComplex{P}) where {P}
+    mid = midpoint(x)
+    rad = radius(x)
+    return mid, rad
+end
