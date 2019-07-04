@@ -12,6 +12,8 @@ ArbFloats are arbitrary precision binary floating-point numbers with some specif
 The precision of an ArbFloat must be >= 24 bits or >= 8 digits.
 
 Negative zero does not exist, nor does unsigned Infinity, nor NaNs with distinct payloads.
+
+See also: [`ArbReal`](@ref), [`ArbComplex`](@ref), [`workingprecision`](@ref), [`displayprecision`](@ref)
 """ ArbFloat
 
 mutable struct ArbFloat{P} <: AbstractFloat    # P is the precision in bits
