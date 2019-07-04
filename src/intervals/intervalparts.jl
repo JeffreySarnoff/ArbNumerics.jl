@@ -61,7 +61,7 @@ See also:  [`midpoint`](@ref), [`radius`](@ref), [`setball`](@ref), [`interval`]
 Returns the ball given as _midpoint_ and _radius_.
 
 See also:  [`midpoint`](@ref), [`radius`](@ref), [`ball`](@ref), [`interval`](@ref), [`setinterval`](@ref)
-""" ball
+""" setball
 
 
 function setinterval(lo::ArbFloat{P}, hi::ArbFloat{P}) where {P}
