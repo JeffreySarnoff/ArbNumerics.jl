@@ -1,3 +1,69 @@
+"""
+    upperbound(x)
+
+The largest value that _x_ may actually hold.
+
+See also: [`lowerbound`](@Ref), [`interval`](@ref), [`setinterval`](@ref), [`ball`](@ref), [`setball`](@ref)
+""" upperbound
+
+"""
+    lowerbound(x)
+
+The smallest value that _x_ may actually hold.
+
+See also: [`upperbound`](@Ref), [`interval`](@ref), [`setinterval`](@ref), [`ball`](@ref), [`setball`](@ref)
+""" lowerbound
+
+"""
+    interval(x)
+
+The smallest value and the largest value that _x_ may actually hold.
+
+See also: [`lowerbound`](@Ref), [`uppebround`](@ref), [`setinterval`](@ref), [`ball`](@ref), [`setball`](@ref)
+""" interval
+
+"""
+    setinterval(lowerbound, upperbound)
+
+Returns the bounded interval as an `ArbReal` or an `ArbComplex`.
+
+See also: [`lowerbound`](@Ref), [`uppebround`](@ref), [`interval`](@ref), [`ball`](@ref), [`setball`](@ref)
+""" setinterval
+
+"""
+    midpoint(x)
+
+The midpoint of the ball represented by _x_.
+
+See also: [`radius`](@ref), [`ball`](@ref), [`setball`](@ref), [`interval`](@ref), [`setinterval`](@ref)
+""" midpoint
+
+"""
+    radius(x)
+
+The radius (half-width) of the ball represented by _x_.
+
+See also: [`midpoint`](@ref), [`ball`](@ref) [`setball`](@ref), [`interval`](@ref), [`setinterval`](@ref)
+""" radius
+
+"""
+    ball(x)
+
+The midpoint and radius of the ball represented by _x_.
+
+See also:  [`midpoint`](@ref), [`radius`](@ref), [`setball`](@ref), [`interval`](@ref), [`setinterval`](@ref)
+""" ball
+
+
+"""
+    setball(midpoint, radius)
+
+Returns the ball given as _midpoint_ and _radius_.
+
+See also:  [`midpoint`](@ref), [`radius`](@ref), [`ball`](@ref), [`interval`](@ref), [`setinterval`](@ref)
+""" ball
+
+
 function setinterval(lo::ArbFloat{P}, hi::ArbFloat{P}) where {P}
     lo > hi && return setinterval(hi, lo)
     z = ArbReal{P}()
