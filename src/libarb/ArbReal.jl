@@ -1,14 +1,23 @@
 """
-from Arb docs:
+    ArbReal(x)
+    ArbReal(x; [bits])
+    ArbReal(x; [digits [, base=10]])
 
-An arb_t represents a ball over the real numbers, that is, an interval [m±r]≡[m−r,m+r]
-where the midpoint m and the radius r are (extended) real numbers and r is nonnegative (possibly infinite).
-The result of an (approximate) operation done on arb_t variables is a ball which contains
-the result of the (mathematically exact) operation applied to any choice of points in the input balls.
-In general, the output ball is not the smallest possible.
+- `ArbReal`(x) == `ArbReal`(x, bits=workingprecision(ArbReal))
+- `ArbReal`(x, digits=digits, base=2) == `ArbReal`(x, bits=digits)
+- `ArbReal`(x, digits=digits, base=10) == `ArbReal`(x, digits=digits)
 
-The precision parameter passed to each function roughly indicates the precision to which calculations
-on the midpoint are carried out (operations on the radius are always done using a fixed, small precision.)
+ArbReals are arbitrary precision binary floating-point regions with some specific precision established at construction.
+
+The precision of an `ArbReal` must be >= 24 bits or >= 8 digits.
+
+Internally, an `ArbReal` represents an interval given by its midpoint and radius (half-width of the interval).
+This representation serves as a _ball_ over the real numbers.  Calculations with `ArbReals` generate results
+that are assured to contain the true mathematical result.  There is no a priori assurance on the width of
+the interval that results.  Good practice is to set the precision substantively greater than the precision
+of the resultant width required, and to check the radius of results.
+
+See also: [`ball`](@ref), [`setball`](@ref), [`midpoint`](@ref), [`radius`](@ref), [`workingprecision`](@ref)
 """ ArbReal
 
 # ArbReal structs hold balls given as midpoint, radius
@@ -46,18 +55,17 @@ ArbReal(x::Missing) = missing
 
 @inline sign_bit(x::ArbReal{P}) where {P} = isodd(x.mid_size)
 
-
-ArbReal(x, prec::Int) = prec>=MINIMUM_PRECISION ? ArbReal{prec}(x) : throw(DomainError("bit precision $prec < $MINIMUM_PRECISION"))
-
 function ArbReal(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
+    bits > 0 && bits >= MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
+    digits > 0 && digits >= MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
     if base === 10
-        digits = digits > 0 ? bits4digits(digits) : (bits > 0 ? bits : DEFAULT_PRECISION.x)
+        bits = digits > 0 ? bits4digits(digits)+extrabits() : (bits > 0 ? bits+extrabits() : DEFAULT_PRECISION.x)
     elseif base === 2
-        digits = bits > 0 ? bits : (digits > 0 ? digits : DEFAULT_PRECISION.x)
+        bits = bits > 0 ? bits+extrabits() : (digits > 0 ? digits+extrabits() : DEFAULT_PRECISION.x)
     else
         throw(ErrorException("base expects 2 or 10"))
     end
-    ArbReal(x, digits)
+    ArbReal{bits}(x)
 end
 
 swap(x::ArbReal{P}, y::ArbReal{P}) where {P} = ccall(@libarb(arb_swap), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), x, y)
