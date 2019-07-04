@@ -1,9 +1,10 @@
-## functions
+## matrix functions
 
 #### `using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra`
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`
+- `exp`
 
 - `.+`, `.-`, `.*`, `./`           ( element op element )
 - `+`, `-`, `*`, `/`, `\`          ( matrix  op matrix  )
