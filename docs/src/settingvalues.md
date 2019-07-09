@@ -1,4 +1,4 @@
-## Setting a Floating Point value
+## Set a Floating Point value
 
 To set a floating point value with 100 bits of precision
 ```julia
@@ -16,7 +16,7 @@ julia> sqrt2 = sqrt(two)
 1.41421356237309504880168872421
 ```
 
-## Setting a Real, interval enclosed value
+## Set a Real enclosure
 
 To set a real valued interval with 100 bits of precision
 ```julia
@@ -30,7 +30,7 @@ two = ArbReal(2, digits=30)
 sqrt2 = sqrt(two)            # precision(sqrt2, base=10) == 30
 ```
 
-## Setting a Complex value
+## Set a Complex value
 
 To set a complex value with 100 bits of precision
 ```julia
