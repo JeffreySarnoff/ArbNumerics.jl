@@ -297,14 +297,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "ellipticintegrals/#Elliptic-Integrals-1",
-    "page": "Elliptic Integrals",
-    "title": "Elliptic Integrals",
-    "category": "section",
-    "text": ""
-},
-
-{
     "location": "ellipticintegrals/#[complete](http://arblib.org/acb_elliptic.html#complete-elliptic-integrals)-1",
     "page": "Elliptic Integrals",
     "title": "complete",
@@ -333,14 +325,6 @@ var documenterSearchIndex = {"docs": [
     "page": "Elliptic Functions",
     "title": "Elliptic Functions",
     "category": "page",
-    "text": ""
-},
-
-{
-    "location": "ellipticfunctions/#Elliptic-Functions-1",
-    "page": "Elliptic Functions",
-    "title": "Elliptic Functions",
-    "category": "section",
     "text": ""
 },
 
