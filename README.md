@@ -12,7 +12,7 @@ This package uses the [Arb C Library](http://arblib.org/index.html), and adapts 
 
 -----
 
-[![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/dev/)
+[![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/stable/)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-dev-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/dev/)
 
 
 ----
