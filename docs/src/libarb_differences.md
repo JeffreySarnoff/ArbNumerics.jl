@@ -7,7 +7,7 @@
 >
 > -- Fredrik Johansson on nemo-dev, 2018-Dec-05
 
-## ArbNumerics's values own their own precision
+## ArbNumerics values own their own precision
 
 - works properly with mixed precision arithmetic
 - works as intended with precision reduction
