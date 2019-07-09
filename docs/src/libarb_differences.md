@@ -1,4 +1,4 @@
-## LibArb's values do not remember their own precision
+## LibArb values do not own their precision
 
 > The input values have no memory of the precision that was used to create them. An input value could be, say,    
 `[1.0 +/- 0.25]`, regardless of whether the precision used to compute it was 2 bits, 100 bits, or 1000000 bits.
@@ -7,7 +7,7 @@
 >
 > -- Fredrik Johansson on nemo-dev, 2018-Dec-05
 
-## ArbNumerics's values remember their own precision
+## ArbNumerics's values own their own precision
 
 - works properly with mixed precision arithmetic
 - works as intended with precision reduction
