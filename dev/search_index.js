@@ -169,25 +169,25 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "rounding/#Round-To-An-Integral-Value-1",
+    "location": "rounding/#To-an-integral-value-1",
     "page": "Rounding",
-    "title": "Round To An Integral Value",
+    "title": "To an integral value",
     "category": "section",
     "text": "julia> round(ArbFloat(2.5), RoundNearest), round(ArbFloat(3.5, RoundNearest)\n2.0, 2.0\n\njulia> round(ArbReal(4.5), RoundNearest), round(ArbReal(5.4, RoundNearest)\n4.0, 4.0\n\njulia> round(ArbFloat(pi), RoundDown), round(ArbFloat(pi), RoundUp)\n3.0, 4.0\n\njulia> round(ArbReal(pi), RoundToZero), round(ArbFloat(pi), RoundFromZero)\n3.0, 4.0"
 },
 
 {
-    "location": "rounding/#Round-to-a-given-number-of-bits-1",
+    "location": "rounding/#To-a-given-number-of-bits-1",
     "page": "Rounding",
-    "title": "Round to a given number of bits",
+    "title": "To a given number of bits",
     "category": "section",
     "text": ""
 },
 
 {
-    "location": "rounding/#Round-to-a-given-number1-of-digits-1",
+    "location": "rounding/#To-a-given-number1-of-digits-1",
     "page": "Rounding",
-    "title": "Round to a given number±1 of digits",
+    "title": "To a given number±1 of digits",
     "category": "section",
     "text": ""
 },
