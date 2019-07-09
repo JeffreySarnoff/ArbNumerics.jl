@@ -209,9 +209,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "mathfunctions/#complex-constituent-functions-1",
+    "location": "mathfunctions/#complex-constituents-1",
     "page": "Elementary Functions",
-    "title": "complex constituent functions",
+    "title": "complex constituents",
     "category": "section",
     "text": "real, imag\nangle, magnitude\nconj # applies to a value and applies to a matrix"
 },
