@@ -57,25 +57,25 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "settingvalues/#Setting-a-Floating-Point-value-1",
+    "location": "settingvalues/#Set-a-Floating-Point-value-1",
     "page": "Setting Values",
-    "title": "Setting a Floating Point value",
+    "title": "Set a Floating Point value",
     "category": "section",
     "text": "To set a floating point value with 100 bits of precisionjulia> two = ArbFloat(2, bits=100)\n2.0\njulia> sqrt2 = sqrt(two)\n1.41421356237309504880168872421To set a floating point value with a precision of 30 digitsjulia> two = ArbFloat(2, digits=30)\n2.0\njulia> sqrt2 = sqrt(two)\n1.41421356237309504880168872421"
 },
 
 {
-    "location": "settingvalues/#Setting-a-Real,-interval-enclosed-value-1",
+    "location": "settingvalues/#Set-a-Real-enclosure-1",
     "page": "Setting Values",
-    "title": "Setting a Real, interval enclosed value",
+    "title": "Set a Real enclosure",
     "category": "section",
     "text": "To set a real valued interval with 100 bits of precisiontwo = ArbReal(2, bits=100)\nsqrt2 = sqrt(two)           # precision(sqrt2, base=2) == 100To set a real valued interval with a precision of 30 digitstwo = ArbReal(2, digits=30)\nsqrt2 = sqrt(two)            # precision(sqrt2, base=10) == 30"
 },
 
 {
-    "location": "settingvalues/#Setting-a-Complex-value-1",
+    "location": "settingvalues/#Set-a-Complex-value-1",
     "page": "Setting Values",
-    "title": "Setting a Complex value",
+    "title": "Set a Complex value",
     "category": "section",
     "text": "To set a complex value with 100 bits of precisionArbComplex(1.0, 0.5, bits=100)\n# or\nre = ArbFloat(1.0, bits=100)\nim = ArbFloat(0.5, bits=100)\nArbComplex(re, im)\n# or\nre = ArbReal(1.0, bits=100)\nim = ArbReal(0.5, bits=100)\nArbComplex(re, im)To set a complex value with a precision of 30 digitsArbComplex(1.0, 0.5, digits=30)\n# or\nre = ArbFloat(1.0, digits=30)\nim = ArbFloat(0.5, digits=30)\nArbComplex(re, im)\n# or\nre = ArbReal(1.0, digits=30)\nim = ArbReal(0.5, digits=30)\nArbComplex(re, im)"
 },
