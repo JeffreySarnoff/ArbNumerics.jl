@@ -7,7 +7,7 @@
 - `factorial`, `doublefactorial`, `risingfactorial`
 - `binomial`
 
-## complex constituent functions
+## complex constituents
 
 - `real`, `imag`
 - `angle`, `magnitude`
