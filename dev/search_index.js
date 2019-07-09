@@ -117,7 +117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "Precisions",
     "category": "page",
-    "text": "#Precision"
+    "text": ""
 },
 
 {
