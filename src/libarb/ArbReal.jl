@@ -159,9 +159,21 @@ end
 
 fmod(fpartipart::Tuple{ArbReal{P}, ArbReal{P}}) where {P} =
     fpartipart[1] + fpartipart[2]
-fmod(fpart::ArbReal{P1}, ipart::ArbReal{P2}) where {P1, P2}=
+fmod(fpart::ArbReal{P}, ipart::ArbReal{P}) where {P}=
     fpart + ipart
 
+
+div(x::ArbReal{P}, y::ArbReal{P}) where {P} =
+    trunc(x / y)
+
+rem(x::ArbReal{P}, y::ArbReal{P}) where {P} =
+    x - (div(x,y) * y)
+
+function divrem(x::ArbReal{P}, y::ArbReal{P})
+    dv = div(x,y)
+    rm = x - (dv * y)
+    return (dv, rm)
+end
 
 function midpoint(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
