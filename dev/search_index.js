@@ -217,6 +217,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "mathfunctions/#constituents-1",
+    "page": "Elementary Functions",
+    "title": "constituents",
+    "category": "section",
+    "text": "modf, fmod (inv of modf)"
+},
+
+{
+    "location": "mathfunctions/#integer-related-1",
+    "page": "Elementary Functions",
+    "title": "integer related",
+    "category": "section",
+    "text": "floor, ceil, trunc\nround\nrem, mod\ndiv, cld, fld\ndivrem, fldmod"
+},
+
+{
     "location": "mathfunctions/#arithmetic-functions-1",
     "page": "Elementary Functions",
     "title": "arithmetic functions",
