@@ -1,7 +1,7 @@
 ## available precision
 
 - The minimum precision is 24 significant bits, or 8 significant digits.
-- Performance is strong with significands of 10_000 bits, 3000 digits.
+- Performance is strong with significands of 10_000 bits, or 3000 digits.
 - There is no maximum; 2^14 bits or 5_000 digits are accomodated easily.
 
 ## working precision
