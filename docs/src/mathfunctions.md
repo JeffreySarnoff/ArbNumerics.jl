@@ -1,4 +1,8 @@
 
+## constituents
+
+- `modf`, `fmod` _inv of modf_
+
 ## arithmetic functions
 
 - `+`,`-`, `*`, `/`
