@@ -1,6 +1,7 @@
-## minimum precision
+## available precision
 
-The minimum precision is 24 significant bits, or 8 significant digits.
+- The minimum precision is 24 significant bits, or 8 significant digits.
+- There is no maximum; 2^14 bits or 5_000 digits are easily accomodated.
 
 ## working precision
 
