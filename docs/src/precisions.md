@@ -60,10 +60,9 @@ it more resiliant to gross widening.
 
 ## Reliability and Production
 
-When computing for production or for presentation, it is __important__ 
-that you use `setextrabits` once and that happen only at the start.
-
-- Reliabile computations presume you not alter it midstream.
+When computing for production or for presentation
+ - use `setextrabits` once only, at the start.
+ - reliablility presumes you not alter it midstream.
 
 
 ## finding precisions 
