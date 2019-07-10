@@ -5,8 +5,12 @@
 
 ## integer related
 
-- `div`, `rem`, `divrem`
-- `fld`, `mod`, `fldmod`
+- `floor`, `ceil`, `trunc`
+- `round`
+
+- `rem`, `mod`
+- `div`, `cld`, `fld`
+- `divrem`, `fldmod`
 
 ## arithmetic functions
 
