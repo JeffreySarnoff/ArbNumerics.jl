@@ -44,6 +44,7 @@ export ArbNumber,
        trim_bits, ulp, ulps, eps, epss,
 
        # other functions
+       fmod, # inv of modf
        round!,
        add2!, sub2!, mul2!, div2!,
        addmul, submul, mulsub,
