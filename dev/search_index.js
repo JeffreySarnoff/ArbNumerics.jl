@@ -121,11 +121,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "precisions/#minimum-precision-1",
+    "location": "precisions/#available-precision-1",
     "page": "Precisions",
-    "title": "minimum precision",
+    "title": "available precision",
     "category": "section",
-    "text": "The minimum precision is 24 significant bits, or 8 significant digits."
+    "text": "The minimum precision is 24 significant bits, or 8 significant digits.\nThere is no maximum; 2^14 bits or 5_000 digits are easily accomodated."
 },
 
 {
