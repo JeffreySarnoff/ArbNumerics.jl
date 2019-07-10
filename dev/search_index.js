@@ -161,11 +161,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "precisions/#Reliability-and-Production-Work-1",
+    "location": "precisions/#Reliability-and-Production-1",
     "page": "Precisions",
-    "title": "Reliability and Production Work",
+    "title": "Reliability and Production",
     "category": "section",
-    "text": "For production work setextrabits should be used only at the start. Reliabile computations presume you not alter it midstream."
+    "text": "When computing for production or for presentation, it is important  that you use setextrabits once and that happen only at the start.Reliabile computations presume you not alter it midstream."
 },
 
 {
