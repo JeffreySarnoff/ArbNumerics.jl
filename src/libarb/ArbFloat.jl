@@ -185,7 +185,7 @@ div(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
 rem(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
     x - (div(x,y) * y)
 
-function divrem(x::ArbFloat{P}, y::ArbFloat{P})
+function divrem(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     dv = div(x,y)
     rm = x - (dv * y)
     return (dv, rm)
@@ -197,7 +197,7 @@ fld(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
 mod(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
     x - (fld(x,y) * y)
 
-function fldmod(x::ArbFloat{P}, y::ArbFloat{P})
+function fldmod(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     fd = fld(x,y)
     md = x - (fd * y)
     return (fd, md)
