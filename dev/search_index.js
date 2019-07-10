@@ -165,7 +165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "Reliability and Production",
     "category": "section",
-    "text": "When computing for production or for presentation, it is important  that you use setextrabits once and that happen only at the start.Reliabile computations presume you not alter it midstream."
+    "text": "When computing for production or for presentationuse setextrabits once only, at the start.\nreliablility presumes you not alter it midstream."
 },
 
 {
