@@ -179,7 +179,19 @@ fmod(fpartipart::Tuple{ArbFloat{P}, ArbFloat{P}}) where {P} =
 fmod(fpart::ArbFloat{P1}, ipart::ArbFloat{P2}) where {P1, P2}=
     fpart + ipart
 
+div(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
+    trunc(x / y)
 
+rem(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
+    x - (div(x,y) * y)
+
+function divrem(x::ArbFloat{P}, y::ArbFloat{P})
+    dv = div(x,y)
+    rm = x - (dv * y)
+    return (dv, rm)
+end
+
+    
 # a type specific hash function helps the type to 'just work'
 const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
 const hash_0_arbfloat_lo = hash(zero(UInt), hash_arbfloat_lo)
