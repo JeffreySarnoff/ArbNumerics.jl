@@ -293,7 +293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elementary Functions",
     "title": "elliptic functions",
     "category": "section",
-    "text": "elliptice, elliptick, ellipticpi     (complete and incomplete integrals)\nelliptic_e, elliptic_k, elliptic_pi  (squares the modulus)\nellipticrf, ellipticrg, ellipticrj   (Carleson\'s symmetric integrals)"
+    "text": "elliptic_e, elliptic_k, elliptic_pi     (complete and incomplete integrals)\nelliptic_e2, elliptic_k2, elliptic_pi2  (squares the modulus)\nelliptic_rf, elliptic_rg, elliptic_rj   (Carleson\'s symmetric integrals)"
 },
 
 {
