@@ -169,11 +169,25 @@ div(x::ArbReal{P}, y::ArbReal{P}) where {P} =
 rem(x::ArbReal{P}, y::ArbReal{P}) where {P} =
     x - (div(x,y) * y)
 
-function divrem(x::ArbReal{P}, y::ArbReal{P})
+function divrem(x::ArbReal{P}, y::ArbReal{P}) where {P}
     dv = div(x,y)
     rm = x - (dv * y)
     return (dv, rm)
 end
+
+
+fld(x::ArbReal{P}, y::ArbReal{P}) where {P} =
+    floor(x / y)    
+
+mod(x::ArbReal{P}, y::ArbReal{P}) where {P} =
+    x - (fld(x,y) * y)
+
+function fldmod(x::ArbReal{P}, y::ArbReal{P}) where {P}
+    fd = fld(x,y)
+    md = x - (fd * y)
+    return (fd, md)
+end
+
 
 function midpoint(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
