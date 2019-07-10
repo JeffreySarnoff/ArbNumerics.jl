@@ -6,6 +6,7 @@
 ## integer related
 
 - `div`, `rem`, `divrem`
+- `fld`, `mod`, `fldmod`
 
 ## arithmetic functions
 
