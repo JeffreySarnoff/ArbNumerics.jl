@@ -165,7 +165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "Reliability and Production",
     "category": "section",
-    "text": "When computing for production or for presentationuse setextrabits once only, at the start.\nreliablility presumes you not alter it midstream."
+    "text": "When computing for production or for presentationuse setextrabits once only, and at the start\nreliablility is reduced if it change midstream"
 },
 
 {
