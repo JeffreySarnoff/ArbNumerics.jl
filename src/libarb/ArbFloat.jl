@@ -203,6 +203,9 @@ function fldmod(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     return (fd, md)
 end
 
+cld(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
+    ceil(x / y)    
+
     
 # a type specific hash function helps the type to 'just work'
 const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
