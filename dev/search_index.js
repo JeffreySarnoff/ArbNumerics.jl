@@ -141,7 +141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "perceptual precision",
     "category": "section",
-    "text": "For some numerical work, it is preferred that all values are displayed as accurately as circumstance may allow, and without any non-informing or potentially misleading trailing digits.  This is certainly true when computation is designed to inform decisions, where the purpose of calculation is distill from complexity some coherence, or when the use of computed results has substantive consequences.This mode of use obtains by default, and may be made more or less coarse with an initial directive: setextrabits(_nbits_) where nbits is whatever you choose.  The default is 24 bits, and unless it is set to zero (see operating precision), that is the lowest recommended value."
+    "text": "For some numerical work, it is preferred that all values are displayed as accurately as circumstance may allow, and without any non-informing or potentially misleading trailing digits.  This is certainly true when computation is designed to inform decisions, where the purpose of calculation is distill from complexity some coherence, or when the use of computed results has substantive consequences.This mode of use obtains by default, and may be made more or less coarse with an initial directive: setextrabits(_nbits_) where nbits is whatever you choose.  The default is 24 bits, and unless it is set to zero (see operating precision), that is the lowest recommended value.This approach uses some of the least significant bits as a \"cushion\" that protects against showing greater precision than may be warranted by the available accuracy. When using this mode with intervals of enclosure, additional care is taken when preparing the values that you see."
 },
 
 {
@@ -161,27 +161,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "precisions/#working-precision-1",
+    "location": "precisions/#Reliability-and-Production-Work-1",
     "page": "Precisions",
-    "title": "working precision",
+    "title": "Reliability and Production Work",
     "category": "section",
-    "text": "ArbNumerics values have an intrinsic precision, which is the number of bits that are evaluated in computation.  Values that are determined by calculation may be displayed at this, their full precision.  If this is the behavior you prefer, start using the package this way:using ArbNumerics\nsetextrabits(0)"
-},
-
-{
-    "location": "precisions/#enclosed-precision-1",
-    "page": "Precisions",
-    "title": "enclosed precision",
-    "category": "section",
-    "text": "The alternative is to use some of the least significant bits as a \"cushion\" that protects against showing greater precision than is warranted by the accuracy that is assured.  This is particularly important when showing values that are point estimates of an interval that encloses the mathematical result. If you prefer to be shown quantities as point values that best reflect the accuracy available at the end of a computation by letting go of uncertain trailing bits, start using the package this way:using ArbNumerics\nsetextrabits(48)"
-},
-
-{
-    "location": "precisions/#rounded-precision-1",
-    "page": "Precisions",
-    "title": "rounded precision",
-    "category": "section",
-    "text": "If you do specify the number of extrabits to use, then the working precision will exceed the displayed precision by a fixed number of bits (24, the default).setextrabits should be used only at the start of work. Reliabile computations presume you not alter it midstream."
+    "text": "For production work setextrabits should be used only at the start. Reliabile computations presume you not alter it midstream."
 },
 
 {
