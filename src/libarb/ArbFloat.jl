@@ -176,7 +176,7 @@ end
 
 fmod(fpartipart::Tuple{ArbFloat{P}, ArbFloat{P}}) where {P} =
     fpartipart[1] + fpartipart[2]
-fmod(fpart::ArbFloat{P1}, ipart::ArbFloat{P2}) where {P1, P2}=
+fmod(fpart::ArbFloat{P}, ipart::ArbFloat{P}) where {P} =
     fpart + ipart
 
 div(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
