@@ -150,6 +150,19 @@ end
 
 trunc(::Type{T}, x::ArbReal{P}) where {P, T} = T(trunc(x))
 
+
+function modf(x::ArbReal{P}) where {P}
+    ipart = trunc(x)
+    fpart = x - ipart
+    return (fpart, ipart)
+end
+
+fmod(fpartipart::Tuple{ArbReal{P}, ArbReal{P}}) where {P} =
+    fpartipart[1] + fpartipart[2]
+fmod(fpart::ArbReal{P1}, ipart::ArbReal{P2}) where {P1, P2}=
+    fpart + ipart
+
+
 function midpoint(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_get_mid_arb), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), z, x)
