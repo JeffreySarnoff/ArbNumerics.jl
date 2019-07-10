@@ -168,6 +168,17 @@ trunc(::Type{T}, x::ArbFloat{P}) where {P, T} = T(trunc(x))
 midpoint(x::ArbFloat{P}) where {P} = x
 radius(x::ArbFloat{P}) where {P} = zero(ArbFloat{P})
 
+function modf(x::ArbFloat{P}) where {P}
+    ipart = trunc(x)
+    fpart = x - ipart
+    return (fpart, ipart)
+end
+
+fmod(fpartipart::Tuple{ArbFloat{P}, ArbFloat{P}}) where {P} =
+    fpartipart[1] + fpartipart[2]
+fmod(fpart::ArbFloat{P1}, ipart::ArbFloat{P2}) where {P1, P2}=
+    fpart + ipart
+
 
 # a type specific hash function helps the type to 'just work'
 const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
