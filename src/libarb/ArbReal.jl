@@ -177,7 +177,7 @@ end
 
 
 fld(x::ArbReal{P}, y::ArbReal{P}) where {P} =
-    floor(x / y)    
+    floor(x / y)
 
 mod(x::ArbReal{P}, y::ArbReal{P}) where {P} =
     x - (fld(x,y) * y)
@@ -188,6 +188,8 @@ function fldmod(x::ArbReal{P}, y::ArbReal{P}) where {P}
     return (fd, md)
 end
 
+cld(x::ArbReal{P}, y::ArbReal{P}) where {P} =
+    ceil(x / y)    
 
 function midpoint(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
