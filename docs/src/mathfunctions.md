@@ -1,7 +1,11 @@
 
 ## constituents
 
-- `modf`, `fmod` _inv of modf_
+- `modf`, `fmod` (_inv of modf_)
+
+## integer related
+
+- `div`, `rem`, `divrem`
 
 ## arithmetic functions
 
