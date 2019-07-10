@@ -191,6 +191,18 @@ function divrem(x::ArbFloat{P}, y::ArbFloat{P})
     return (dv, rm)
 end
 
+fld(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
+    floor(x / y)    
+
+mod(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
+    x - (fld(x,y) * y)
+
+function fldmod(x::ArbFloat{P}, y::ArbFloat{P})
+    fd = fld(x,y)
+    md = x - (fd * y)
+    return (fd, md)
+end
+
     
 # a type specific hash function helps the type to 'just work'
 const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
