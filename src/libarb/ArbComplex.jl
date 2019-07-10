@@ -363,15 +363,6 @@ end
 fmod(repart::Tuple{ArbReal{P1}, ArbReal{P1}}, impart::Tuple{ArbReal{P2},ArbReal{P2}}) where {P1, P2} =
     ArbComplex(fmod(repart), fmod(impart))
 
-function modf(x::ArbComplex{P}) where {P}
-    repart = modf(real(x))
-    impart = modf(imag(x))
-    return (repart, impart)
-end
-
-fmod(repart::Tuple{ArbReal{P1}, ArbReal{P1}}, impart::Tuple{ArbReal{P2},ArbReal{P2}) where {P1, P2}=
-    ArbComplex(fmod(repart), fmod(impart))
-
 # phase angle
 function Base.angle(x::ArbComplex{P}) where {P}
     rea, ima = reim(x / hypot(reim(x)...,))
