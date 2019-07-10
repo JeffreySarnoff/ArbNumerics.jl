@@ -68,14 +68,7 @@ When computing for production or for presentation
 
 ## finding precisions 
 
-The number of displayed bits is given by any of:    
-`precision(ArbFloat), precision(ArbReal), precision(ArbComplex)`.         
-All of these are kept in sync.
-
-The number of working bits is given by any of:    
-`workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex)`.         
-All of these are kept in sync.
-
-The number of `extrabits` is given by any of:    
-`extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex)`.     
-All of these are kept in sync.
+- `precision(<ArbNumber>)` gives the number signficant bits displayed
+- `workingprecision(<ArbNumber>)` gives the internal bit precision
+- `extrabits(<ArbNumber>)` gives the significance "cushion"
+    - `extrabits == workingprecision - precision`
