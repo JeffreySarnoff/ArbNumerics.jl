@@ -61,8 +61,8 @@ it more resiliant to gross widening.
 ## Reliability and Production
 
 When computing for production or for presentation
- - use `setextrabits` once only, at the start.
- - reliablility presumes you not alter it midstream.
+ - use `setextrabits` once only, and at the start
+ - reliablility is reduced if it change midstream
 
 
 ## finding precisions 
