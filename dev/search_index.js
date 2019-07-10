@@ -173,7 +173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Precisions",
     "title": "finding precisions",
     "category": "section",
-    "text": "The number of displayed bits is given by any of:     precision(ArbFloat), precision(ArbReal), precision(ArbComplex).          All of these are kept in sync.The number of working bits is given by any of:     workingprecision(ArbFloat), workingprecision(ArbReal), workingprecision(ArbComplex).          All of these are kept in sync.The number of extrabits is given by any of:     extrabits(ArbFloat), extrabits(ArbReal), extrabits(ArbComplex).      All of these are kept in sync."
+    "text": "precision(<ArbNumber>) gives the number signficant bits displayed\nworkingprecision(<ArbNumber>) gives the internal bit precision\nextrabits(<ArbNumber>) gives the significance \"cushion\"\nextrabits == workingprecision - precision"
 },
 
 {
