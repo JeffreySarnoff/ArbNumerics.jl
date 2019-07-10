@@ -27,6 +27,11 @@ _nbits_ is whatever you choose.  The default is 24 bits, and
 unless it is set to zero (see __operating precision__), that
 is the lowest recommended value.
 
+This approach uses some of the least significant bits as a "cushion"
+that protects against showing greater precision than may be warranted
+by the available accuracy. When using this mode with intervals of enclosure,
+additional care is taken when preparing the values that you see.
+
 ### ArbFloat
 
 It is reasonable to use settings of {32, 48, or 64} with `ArbFloats`.
@@ -53,40 +58,10 @@ the `midpoint` (as it were), which, at least temporarily, makes
 it more resiliant to gross widening.
 
 
-## working precision
+## Reliability and Production Work
 
-`ArbNumerics` values have an intrinsic precision, which is the number of bits
-that are evaluated in computation.  Values that are determined by calculation
-may be displayed at this, their full precision.  If this is the behavior you
-prefer, start using the package this way:
-
-```julia
-using ArbNumerics
-setextrabits(0)
-```
-
-## enclosed precision
-
-The alternative is to use some of the least significant bits as a "cushion"
-that protects against showing greater precision than is warranted by the
-accuracy that is assured.  This is particularly important when showing values
-that are point estimates of an interval that encloses the mathematical result.
-If you prefer to be shown quantities as point values that best reflect the
-accuracy available at the end of a computation by letting go of uncertain
-trailing bits, start using the package this way:
-
-```julia
-using ArbNumerics
-setextrabits(48)
-```
-
-## rounded precision
-
-If you do specify the number of `extrabits` to use, then the working precision
-will exceed the displayed precision by a fixed number of bits (24, the default).
-
-`setextrabits` should be used __only__ at the start of work.
-Reliabile computations presume you __not__ alter it midstream.
+For production work `setextrabits` should be used only at the start.
+Reliabile computations presume you not alter it midstream.
 
 
 ## finding precisions 
