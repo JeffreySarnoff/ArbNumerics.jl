@@ -62,8 +62,9 @@ it more resiliant to gross widening.
 
 When computing for production or for presentation
  - use `setextrabits` once only, and at the start
- - reliablility is reduced if it change midstream
-
+ - modifying `extrabits` may reduce reliablility
+ - changing a variables' precision is reliable
+ 
 
 ## finding precisions 
 
