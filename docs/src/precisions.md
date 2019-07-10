@@ -58,10 +58,12 @@ the `midpoint` (as it were), which, at least temporarily, makes
 it more resiliant to gross widening.
 
 
-## Reliability and Production Work
+## Reliability and Production
 
-For production work `setextrabits` should be used only at the start.
-Reliabile computations presume you not alter it midstream.
+When computing for production or for presentation, it is __important__ 
+that you use `setextrabits` once and that happen only at the start.
+
+- Reliabile computations presume you not alter it midstream.
 
 
 ## finding precisions 
