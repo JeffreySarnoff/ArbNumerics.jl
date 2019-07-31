@@ -42,13 +42,13 @@ end
 function atan(y::ArbReal{P}, x::ArbReal{P}, prec::Int=P) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_atan2), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong), z, y, x, prec)
-    return midpoint_byref(z)
+    return z
 end
 
 @inline function atan(y::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P}
     xr = ArbReal{P}(x)
     yr = ArbReal{P}(y)
-    return atan(yr, xr, prec)
+    return midpoint_byref(atan(yr, xr, prec))
 end
 
 function sincos(x::ArbReal{P}, prec::Int=P) where {P}
