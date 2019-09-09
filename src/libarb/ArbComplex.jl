@@ -54,6 +54,8 @@ mutable struct ArbComplex{P}  <: Number  # P is the precision in bits
     end
 end
 
+ArbComplex{P}(x::T) where {P, T<:Number} = ArbComplex{P}(real(x), imag(x))
+
 # for use within a struct, eg. ArbComplexMatrix
 const PtrToArbComplex = Ptr{ArbComplex} # acb_ptr
 const PtrToPtrToArbComplex = Ptr{Ptr{ArbComplex}} # acb_ptr*
