@@ -88,7 +88,7 @@ end
 
 function polylog(s::ArbComplex{P}, z::ArbComplex{P}, prec::Int=P) where {P}
     w = ArbComplex{P}()
-    ccall(@libarb(acb_polylog), Cvoid, (Ref{ArbComplex}, Ref{AarbComplex}, Ref{ArbComplex}, Cint), w, s, z, P)
+    ccall(@libarb(acb_polylog), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint), w, s, z, P)
     return w
 end
 
