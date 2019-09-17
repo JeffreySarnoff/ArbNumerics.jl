@@ -66,7 +66,7 @@ export ArbNumber,
        elliptic_rf, elliptic_rg, elliptic_rj,
        weierstrass_p, weierstrass_invp, weierstrass_zeta, weierstrass_sigma,
        zeta, eta, xi,                  # Reimann
-       lambertw,
+       lambertw, polylog,
        π, ℯ, γ, φ, catalan,
 
        # special linear algebra
