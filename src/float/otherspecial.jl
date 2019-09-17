@@ -94,15 +94,33 @@ end
 
 function polylog(s::ArbReal{P}, z::ArbReal{P}, prec::Int=P) where {P}
     sc = ArbComplex(s)
-    zx = ArbComplex(z)
+    zc = ArbComplex(z)
     wc = polylog(sc, zc, prec)
     return wc
 end
 
 function polylog(s::ArbFloat{P}, z::ArbFloat{P}, prec::Int=P) where {P}
     sc = ArbComplex(s)
-    zx = ArbComplex(z)
+    zc = ArbComplex(z)
     wc = polylog(sc, zc, prec)
+    return wc
+end
+
+function polylog(s::Int, z::ArbComplex{P}, prec::Int=P) where {P}
+    w = ArbComplex{P}()
+    ccall(@libarb(acb_polylog_si), Cvoid, (Ref{ArbComplex}, Cint, Ref{ArbComplex}, Cint), w, s, z, P)
+    return w
+end
+
+function polylog(s::Int, z::ArbReal{P}, prec::Int=P) where {P}
+    zc = ArbComplex(z)
+    wc = polylog(s, zc, prec)
+    return wc
+end
+
+function polylog(s::Int, z::ArbFloat{P}, prec::Int=P) where {P}
+    zc = ArbComplex(z)
+    wc = polylog(s, zc, prec)
     return wc
 end
 
