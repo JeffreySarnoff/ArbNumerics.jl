@@ -81,4 +81,4 @@ _All of the following functions are available for `ArbFloat`, `ArbReal` and `Arb
 - `ei`, `si`, `ci`
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
-- `lambertw`
+- `polylog`, `lambertw`
