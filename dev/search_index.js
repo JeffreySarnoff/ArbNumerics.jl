@@ -317,7 +317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Elementary Functions",
     "title": "other special functions",
     "category": "section",
-    "text": "ei, si, ci\nshi, chi\nzeta, eta, xi    # Reimann\nlambertw"
+    "text": "ei, si, ci\nshi, chi\nzeta, eta, xi    # Reimann\npolylog, lambertw"
 },
 
 {
