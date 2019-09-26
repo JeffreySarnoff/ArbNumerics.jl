@@ -230,7 +230,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `ei`, `si`, `ci`
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
-- `lambertw`
+- `lambertw`, `polylog`
 
 
 ## Intervals
