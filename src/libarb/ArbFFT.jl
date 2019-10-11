@@ -65,3 +65,8 @@ end
 @inline function midpoint(V::ArbComplexVector{P}) where {P}
     return ArbComplexVector([midpoint(x) for x in V])
 end
+
+@inline function real(V::ArbComplexVector{P}) where {P}
+    return ArbComplexVector([real(x) for x in V])
+end
+
