@@ -38,6 +38,17 @@ function ArbComplexVector(fpm::Array{ArbComplex{P},1}) where {P}
     return arv
 end
 
+@inline function ArbComplexVector(fpm::Array{ArbComplex,1})
+    P = workingprecision(ArbComplex)
+    length = size(fpm)[1]
+    arv = ArbComplexVector{P}(length)
+    @inbounds for i in 1:length
+                arv[i]=fpm[i]
+              end
+    return arv
+end
+
+
 function Base.getindex(V::ArbComplexVector{P}, i) where {P}
     @assert(i>0 && i<=V.length)
     return unsafe_load(V.data, i)
@@ -58,6 +69,9 @@ function ArbDFT(x::ArbComplexVector{P}) where {P}
     return transf
 end
 
+ArbDFT(x::Array{ArbComplex{P},1}) where {P} = ArbDFT(ArbComplexVector{P}(x))
+ArbDFT(x::Array{ArbComplex,1}) = ArbDFT(ArbComplexVector(x))
+ 
 @inline function radius(V::ArbComplexVector{P}) where {P}
     return ArbComplexVector([radius(x) for x in V])
 end
@@ -67,6 +81,9 @@ end
 end
 
 @inline function real(V::ArbComplexVector{P}) where {P}
-    return ArbComplexVector([real(x) for x in V])
+    return [real(x) for x in V]
 end
 
+@inline function imag(V::ArbComplexVector{P}) where {P}
+    return [imag(x) for x in V]
+end
