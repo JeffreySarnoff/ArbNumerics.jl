@@ -118,12 +118,6 @@ function Base.Integer(x::ArbReal{P}) where {P}
     end
 end
 
-function ArbReal{P}(x::Irrational{S}) where {P,S}
-    y = ArbFloat{P}(x)
-    z = ArbReal{P}(y)
-    return z
-end
-
 function ArbReal{P}(x::ArbFloat{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
