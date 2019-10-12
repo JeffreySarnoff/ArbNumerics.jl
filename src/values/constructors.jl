@@ -128,11 +128,32 @@ for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
   end
 end
 
-# rational
+# Rational
 
 ArbFloat(x::T) where {S, T<:Rational{S}} = ArbFloat(x.num)/ArbFloat(x.den)
-ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(ArbFloat(x))
-ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x))
+ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(x.num)/ArbReal(x.den)
+ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(0))
+ArbComplex(x::T, y::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(y))
+
+# Irrational
+
+function ArbReal{P}(x::Irrational{S}) where {P,S}
+   mid = ArbFloat{P}(x)
+   rad = ulp(mid)
+   return setball(mid, rad) 
+end
+
+function ArbReal(x::Irrational{S}) where {S}
+   P = workingprecision(ArbReal)
+   mid = ArbFloat{P}(x)
+   rad = ulp(mid)
+   return setball(mid, rad) 
+end
+
+ArbComplex(x::Irrational{S}) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
+ArbComplex{P}(x::Irrational{S}) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
+ArbComplex(x::Irrational{S}, y::Real) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
+ArbComplex{P}(x::Irrational{S}, y::Real) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
 
 # fallback
 
