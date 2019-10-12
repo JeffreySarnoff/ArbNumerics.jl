@@ -208,12 +208,6 @@ function ArbComplex{P}(x::T1, y::T2) where {P,T1<:Union{Integer,AbstractFloat},T
     return z
 end
 
-function ArbComplex{P}(x::Irrational{S}) where {P,S}
-    y = ArbReal{P}(x)
-    z = ArbComplex{P}(y)
-    return z
-end
-
 function ArbComplex{P}(x::Irrational{S1}, y::Irrational{S2}) where {P,S1,S2}
     x1 = ArbReal{P}(x)
     y1 = ArbReal{P}(y)
