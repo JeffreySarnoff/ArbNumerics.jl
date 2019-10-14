@@ -69,6 +69,15 @@ function ArbDFT(x::ArbComplexVector{P}) where {P}
     return transf
 end
 
+function ArbDFTinverse(x::ArbComplexVector{P}) where {P}
+    length = x.length
+    transf = ArbComplexVector{P}(length)
+    # we call the acb_dft void acb_dft_inverse(acb_ptr w, acb_srcptr v, slong n, slong prec)
+    ccall(@libarb(acb_dft_inverse), Cvoid, (Ref{ArbComplex{P}}, Ref{ArbComplex{P}}, Cint, Cint ), transf.data, x.data, x.length, P)
+    return transf
+end
+
+
 ArbDFT(x::Array{ArbComplex{P},1}) where {P} = ArbDFT(ArbComplexVector{P}(x))
 ArbDFT(x::Array{ArbComplex,1}) = ArbDFT(ArbComplexVector(x))
  
