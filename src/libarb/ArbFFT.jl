@@ -1,5 +1,7 @@
 abstract type AbstractArbVector{P, T}  <: AbstractVector{T} end
 
+export DFT, InverseDFT
+
 mutable struct ArbComplexVector{P} <: AbstractArbVector{P, ArbComplex}
     length::Int
     data::Ptr{ArbComplex{P}}
@@ -27,6 +29,16 @@ end
 @inline function ArbComplexVector(length::Int)
     P = workingprecision(ArbComplex)
 	return ArbComplexVector{P}(length)
+end
+
+
+function ArbComplexVector{P}(fpm::Array{ArbComplex{P},1}) where {P}
+    length = size(fpm)[1]
+    arv = ArbComplexVector{P}(length)
+    @inbounds for i in 1:length
+                arv[i]=fpm[i]
+              end
+    return arv
 end
 
 function ArbComplexVector(fpm::Array{ArbComplex{P},1}) where {P}
@@ -61,25 +73,29 @@ end
 
 @inline Base.size(x::ArbComplexVector{P}) where {P} = (x.length,)
 
-function ArbDFT(x::ArbComplexVector{P}) where {P}
+function DFT(x::ArbComplexVector{P}) where {P}
     length = x.length
     transf = ArbComplexVector{P}(length)
     # we call the acb_dft void acb_dft(acb_ptr w, acb_srcptr v, slong n, slong prec)
     ccall(@libarb(acb_dft), Cvoid, (Ref{ArbComplex{P}}, Ref{ArbComplex{P}}, Cint, Cint ), transf.data, x.data, x.length, P)
-    return transf
+    return Array{ArbComplex{P},1}(transf)
 end
 
-function ArbDFTinverse(x::ArbComplexVector{P}) where {P}
+function InverseDFT(x::ArbComplexVector{P}) where {P}
     length = x.length
     transf = ArbComplexVector{P}(length)
     # we call the acb_dft void acb_dft_inverse(acb_ptr w, acb_srcptr v, slong n, slong prec)
     ccall(@libarb(acb_dft_inverse), Cvoid, (Ref{ArbComplex{P}}, Ref{ArbComplex{P}}, Cint, Cint ), transf.data, x.data, x.length, P)
-    return transf
+    return Array{ArbComplex{P},1}(transf)
 end
 
 
-ArbDFT(x::Array{ArbComplex{P},1}) where {P} = ArbDFT(ArbComplexVector{P}(x))
-ArbDFT(x::Array{ArbComplex,1}) = ArbDFT(ArbComplexVector(x))
+DFT(x::Array{ArbComplex{P},1}) where {P} = DFT(ArbComplexVector{P}(x))
+DFT(x::Array{ArbComplex,1}) = DFT(ArbComplexVector(x))
+
+InverseDFT(x::Array{ArbComplex{P},1}) where {P} = InverseDFT(ArbComplexVector{P}(x))
+InverseDFT(x::Array{ArbComplex,1}) = InverseDFT(ArbComplexVector(x))
+
  
 @inline function radius(V::ArbComplexVector{P}) where {P}
     return ArbComplexVector([radius(x) for x in V])
