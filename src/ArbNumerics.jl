@@ -69,6 +69,9 @@ export ArbNumber,
        lambertw, polylog,
        π, ℯ, γ, φ, catalan,
 
+       # fft
+       dft, inverse_dft,
+
        # special linear algebra
        determinant, inverse, fastmul, ⨱ # \timesbar
 
