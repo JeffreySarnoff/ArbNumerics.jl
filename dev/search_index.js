@@ -321,6 +321,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "mathfunctions/#transforms-1",
+    "page": "Elementary Functions",
+    "title": "transforms",
+    "category": "section",
+    "text": "dft, inverse_dft"
+},
+
+{
     "location": "ellipticintegrals/#",
     "page": "Elliptic Integrals",
     "title": "Elliptic Integrals",
