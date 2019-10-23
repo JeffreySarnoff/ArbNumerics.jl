@@ -39,8 +39,10 @@ function dft(x::Array{ArbComplex{P},1}) where {P}
 end
 
 dft(x::Array{ArbComplex,1}) = dft(Array{ArbComplex{workingprecision(ArbComplex)}, 1}(x))
-dft(x::Array{ArbReal,1}) = dft(ArbComplex.(x))
-dft(x::Array{ArbFloat,1}) = dft(ArbComplex.(x))
+dft(x::Array{ArbReal{P},1}) where {P} = dft(Array{ArbComplex{P}, 1}(x))
+dft(x::Array{ArbFloat{P},1}) where {P} = dft(Array{ArbComplex{P}, 1}(x))
+dft(x::Array{ArbReal,1}) = dft(Array{ArbComplex{workingprecision(ArbReal)}, 1}(x))
+dft(x::Array{ArbFloat,1}) = dft(Array{ArbComplex{workingprecision(ArbFloat)}, 1}(x))
 
 function inverse_dft(x::Array{ArbComplex{P},1}) where {P}
     # to guarantee safe bounds
@@ -83,5 +85,7 @@ function inverse_dft(x::Array{ArbComplex{P},1}) where {P}
 end
 
 inverse_dft(x::Array{ArbComplex,1}) = inverse_dft(Array{ArbComplex{workingprecision(ArbComplex)}, 1}(x))
-inverse_dft(x::Array{ArbReal,1}) = inverse_dft(ArbComplex.(x))
-inverse_dft(x::Array{ArbFloat,1}) = inverse_dft(ArbComplex.(x))
+inverse_dft(x::Array{ArbReal{P},1}) where {P} = dft(Array{ArbComplex{P}, 1}(x))
+inverse_dft(x::Array{ArbFloat{P},1}) where {P} = dft(Array{ArbComplex{P}, 1}(x))
+inverse_dft(x::Array{ArbReal,1}) = dft(Array{ArbComplex{workingprecision(ArbReal)}, 1}(x))
+inverse_dft(x::Array{ArbFloat,1}) = dft(Array{ArbComplex{workingprecision(ArbFloat)}, 1}(x))
