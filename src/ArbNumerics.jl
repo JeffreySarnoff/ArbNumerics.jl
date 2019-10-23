@@ -160,6 +160,7 @@ include("libarb/ArbMatrix.jl")  # must preceed ArbRealMatrix
 include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix
 include("libarb/ArbFloatMatrix.jl") # must preceed ArbComplexMatrix
 include("libarb/ArbComplexMatrix.jl")
+include("libarb/ArbFFT.jl")
 include("libarb/promote.jl")
 include("libarb/string.jl")
 include("libarb/parse.jl")
