@@ -1,6 +1,4 @@
-export DFT, InverseDFT
-
-function DFT(x::Array{ArbComplex{P},1}) where {P}
+function dft(x::Array{ArbComplex{P},1}) where {P}
     # to guarantee safe bounds
     length = size(x)[1]
     
@@ -40,9 +38,9 @@ function DFT(x::Array{ArbComplex{P},1}) where {P}
     return transf
 end
 
-DFT(x::Array{ArbComplex,1}) = DFT(Array{ArbComplex{workingprecision(ArbComplex)}, 1}(x))
+dft(x::Array{ArbComplex,1}) = DFT(Array{ArbComplex{workingprecision(ArbComplex)}, 1}(x))
 
-function InverseDFT(x::Array{ArbComplex{P},1}) where {P}
+function inverse_dft(x::Array{ArbComplex{P},1}) where {P}
     # to guarantee safe bounds
     length = size(x)[1]
     
@@ -82,4 +80,4 @@ function InverseDFT(x::Array{ArbComplex{P},1}) where {P}
     return transf
 end
 
-InverseDFT(x::Array{ArbComplex,1}) = InverseDFT(Array{ArbComplex{workingprecision(ArbComplex)}, 1}(x))
+inverse_dft(x::Array{ArbComplex,1}) = InverseDFT(Array{ArbComplex{workingprecision(ArbComplex)}, 1}(x))
