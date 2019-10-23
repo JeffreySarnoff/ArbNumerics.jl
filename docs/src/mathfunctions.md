@@ -82,3 +82,7 @@ _All of the following functions are available for `ArbFloat`, `ArbReal` and `Arb
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
 - `polylog`, `lambertw`
+
+## transforms
+
+- `dft`, `inverse_dft`
