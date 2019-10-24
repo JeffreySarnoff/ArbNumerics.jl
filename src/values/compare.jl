@@ -221,5 +221,3 @@ isapprox(x::ArbReal{P}, y::Real) where {P} = isapprox(x, ArbReal{P}(y))
 isapprox(x::Number, y::ArbReal{P}) where {P} = isapprox(ArbReal{P}(x), y)
 isapprox(x::ArbComplex{P}, y::Number) where {P} = isapprox(x, ArbComplex{P}(y))
 isapprox(x::Number, y::ArbComplex{P}) where {P} = isapprox(ArbComplex{P}(x), y)
-
-
