@@ -219,7 +219,11 @@ isapprox(x::ArbFloat{P}, y::N) where {P, N<:Number} = isapprox(x, ArbFloat{P}(y)
 isapprox(x::N, y::ArbFloat{P}) where {P, N<:Number} = isapprox(ArbFloat{P}(x), y)
 isapprox(x::ArbReal{P}, y::N) where {P, N<:Number} = isapprox(x, ArbReal{P}(y))
 isapprox(x::N, y::ArbReal{P}) where {P, N<:Number} = isapprox(ArbReal{P}(x), y)
+#=
 isapprox(x::ArbComplex{P}, y::N) where {P, N<:Number} = isapprox(x, ArbComplex{P}(y))
 isapprox(x::N, y::ArbComplex{P}) where {P, N<:Number} = isapprox(ArbComplex{P}(x), y)
+=#
+isapprox(x::ArbComplex{P}, y::Number) where {P} = isapprox(x, ArbComplex{P}(y))
+isapprox(x::Number, y::ArbComplex{P}) where {P} = isapprox(ArbComplex{P}(x), y)
 
 
