@@ -142,7 +142,7 @@ function trunc(x::ArbReal{P}) where {P}
     return result
 end
 
-trunc(::Type{T}, x::ArbReal{P}) where {P, T} = T(trunc(x))
+trunc(::Type{T}, x::ArbReal{P}) where {P, T<:Integer} = T(trunc(x))
 
 
 function modf(x::ArbReal{P}) where {P}
