@@ -215,14 +215,10 @@ isapprox(x::F, y::ArbReal{P}) where {P, F<:IEEEFloat} = isapprox(x, F(y))
 isapprox(x::ArbComplex{P}, y::F) where {P, F<:IEEEFloat} = isapprox(F(real(x)), y)
 isapprox(x::F, y::ArbComplex{P}) where {P, F<:IEEEFloat} = isapprox(x, F(real(y)))
 
-isapprox(x::ArbFloat{P}, y::N) where {P, N<:Number} = isapprox(x, ArbFloat{P}(y))
-isapprox(x::N, y::ArbFloat{P}) where {P, N<:Number} = isapprox(ArbFloat{P}(x), y)
-isapprox(x::ArbReal{P}, y::N) where {P, N<:Number} = isapprox(x, ArbReal{P}(y))
-isapprox(x::N, y::ArbReal{P}) where {P, N<:Number} = isapprox(ArbReal{P}(x), y)
-#=
-isapprox(x::ArbComplex{P}, y::N) where {P, N<:Number} = isapprox(x, ArbComplex{P}(y))
-isapprox(x::N, y::ArbComplex{P}) where {P, N<:Number} = isapprox(ArbComplex{P}(x), y)
-=#
+isapprox(x::ArbFloat{P}, y::Real) where {P} = isapprox(x, ArbFloat{P}(y))
+isapprox(x::Real, y::ArbFloat{P}) where {P} = isapprox(ArbFloat{P}(x), y)
+isapprox(x::ArbReal{P}, y::Real) where {P} = isapprox(x, ArbReal{P}(y))
+isapprox(x::Number, y::ArbReal{P}) where {P} = isapprox(ArbReal{P}(x), y)
 isapprox(x::ArbComplex{P}, y::Number) where {P} = isapprox(x, ArbComplex{P}(y))
 isapprox(x::Number, y::ArbComplex{P}) where {P} = isapprox(ArbComplex{P}(x), y)
 
