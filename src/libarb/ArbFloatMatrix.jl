@@ -31,8 +31,8 @@ function ArbFloatMatrix(fpm::Array{ArbFloat, 2})
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
        for c = 1:ncols
-	       arm[r,c] = fpm[r,c]
-	   end
+	   arm[r,c] = fpm[r,c]
+       end
     end
     return arm
 end
@@ -41,33 +41,33 @@ function ArbFloatMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
-	    for c = 1:ncols
-			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
-	    end
+	for c = 1:ncols
+	    arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	end
-	return arm
+    end
+    return arm
 end
 
 function ArbFloatMatrix{P}(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 function ArbFloatMatrix{P}(fpm::Array{ArbFloat,2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
-	    end
+        for c = 1:ncols
+            arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	end
-	return arm
+    end
+    return arm
 end
 
 function ArbFloatMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
@@ -75,11 +75,11 @@ function ArbFloatMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
     nrows, ncols = size(fpm)
     arm = ArbFloatMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
-	    end
+        for c = 1:ncols
+            arm.arbrealmatrix[r,c] = ArbReal{P}(fpm[r,c])
 	end
-	return arm
+    end
+    return arm
 end
 
 function Matrix(arm::ArbFloatMatrix{P}) where {P}
