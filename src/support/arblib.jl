@@ -24,9 +24,9 @@ println(string("\nlibdir exts = ", libdirexts,"\n"));
 libdirdlls = sum(".dll" .=== libdirexts)
 libdirdylibs = sum(".dylib" .=== libdirexts)
 libdirsos = sum(".so" .=== libdirexts)
-bindirdlls = sum(".dll" .=== libdirexts)
-bindirdylibs = sum(".dylib" .=== libdirexts)
-bindirsos = sum(".so" .=== libdirexts)
+bindirdlls = sum(".dll" .=== bindirexts)
+bindirdylibs = sum(".dylib" .=== bindirexts)
+bindirsos = sum(".so" .=== bindirexts)
 dlls = libdirdlls + bindirdlls
 dylibs = libdirdylibs + bindirdylibs
 sos = libdirsos + bindirsos
