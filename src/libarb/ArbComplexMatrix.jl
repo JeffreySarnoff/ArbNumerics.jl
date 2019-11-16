@@ -1,4 +1,3 @@
-
 const ArbMatIdx0 = zero(Int32)
 
 mutable struct ArbComplexMatrix{P} <: AbstractArbMatrix{P, ArbComplex}
