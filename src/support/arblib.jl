@@ -10,10 +10,10 @@ libdirexts = (x->splitext(x)[2]).(readdir(ArbNumerics.libdir))
 bindirexts = (x->splitext(x)[2]).(readdir(ArbNumerics.bindir))
 libdirdlls = sum(".dll" .=== libdirexts)
 libdirdynlibs = sum(".dynlib" .=== libdirexts)
-libdirdsos = sum(".so" .=== libdirexts)
+libdirsos = sum(".so" .=== libdirexts)
 bindirdlls = sum(".dll" .=== libdirexts)
 bindirdynlibs = sum(".dynlib" .=== libdirexts)
-bindirdsos = sum(".so" .=== libdirexts)
+bindirsos = sum(".so" .=== libdirexts)
 dlls = libdirdlls + bindirdlls
 dynlibs = libdirdynlibs + bindirdynlibs
 sos = libdirsos + bindirsos
