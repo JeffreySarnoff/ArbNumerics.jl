@@ -43,7 +43,7 @@ end
 
 @inline function ArbRealMatrix(nrows::Int, ncols::Int)
     P = workingprecision(ArbReal)
-	return ArbRealMatrix{P}(nrows, ncols)
+    return ArbRealMatrix{P}(nrows, ncols)
 end
 
 function ArbRealMatrix(fpm::Array{ArbReal, 2})
@@ -51,44 +51,44 @@ function ArbRealMatrix(fpm::Array{ArbReal, 2})
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = fpm[r,c]
+        end
+    end
+    return arm
 end
 
 function ArbRealMatrix(fpm::Array{ArbReal{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = fpm[r,c]
+        end
+    end
+    return arm
 end
 
 function ArbRealMatrix{P}(fpm::Array{ArbReal{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = fpm[r,c]
+        end
+    end
+    return arm
 end
 
 function ArbRealMatrix{P}(fpm::Array{ArbReal,2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbReal{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = ArbReal{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 
@@ -96,11 +96,11 @@ function ArbRealMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbReal{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = ArbReal{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 function ArbRealMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
@@ -108,11 +108,11 @@ function ArbRealMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbReal{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = ArbReal{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 function Matrix(arm::ArbRealMatrix{P}) where {P}
