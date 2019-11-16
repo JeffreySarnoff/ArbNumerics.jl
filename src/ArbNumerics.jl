@@ -37,7 +37,7 @@ export ArbNumber,
 
        inf, posinf, neginf, nan,
        typemax, typemin, floatmax, floatmin,
-       magnitude,     # complex magnitude, `angle` gives phase 
+       magnitude,     # complex magnitude, `angle` gives phase
 
        signs, signbits,
        significand_bits, relerror_bits, relaccuracy_bits,
@@ -62,7 +62,7 @@ export ArbNumber,
        regular_hypergeometric_0F1, regular_hypergeometric_1F1, regular_hypergeometric_2F1,
        F₀₁,  F₁₁, F₂₁, regularF₀₁,  regularF₁₁, regularF₂₁,
        elliptic_k, elliptic_e, elliptic_pi, elliptic_f,
-       elliptic_k2, elliptic_e2, elliptic_pi2, elliptic_f2, # modulus^2 
+       elliptic_k2, elliptic_e2, elliptic_pi2, elliptic_f2, # modulus^2
        elliptic_rf, elliptic_rg, elliptic_rj,
        weierstrass_p, weierstrass_invp, weierstrass_zeta, weierstrass_sigma,
        zeta, eta, xi,                  # Reimann
@@ -154,6 +154,8 @@ include("libarb/ArbFloat.jl")
 include("libarb/ArbReal.jl")
 include("libarb/ArbComplex.jl")
 include("support/complex.jl")
+
+include("support/ArblibVector.jl")
 
 include("support/random.jl")
 

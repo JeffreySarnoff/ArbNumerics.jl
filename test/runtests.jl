@@ -3,6 +3,10 @@ using Test
 
 setprecision(BigFloat, 512)
 
+@testset "Support" begin
+    include("ArblibVector.jl")
+end
+
 @testset "ArbNumerics tests" begin
   include("specialvalues.jl")
   include("compare.jl")
