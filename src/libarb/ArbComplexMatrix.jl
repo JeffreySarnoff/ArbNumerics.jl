@@ -39,44 +39,44 @@ function ArbComplexMatrix(fpm::Array{ArbComplex, 2})
     nrows, ncols = size(fpm)
     arm = ArbComplexMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = fpm[r,c]
+        end
+    end
+    return arm
 end
 
 function ArbComplexMatrix(fpm::Array{ArbComplex{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbComplexMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = fpm[r,c]
+        end
+    end
+    return arm
 end
 
 function ArbComplexMatrix{P}(fpm::Array{ArbComplex{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbComplexMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = fpm[r,c]
-	    end
-	end
-	return arm
+        for c = 1:ncols
+	        arm[r,c] = fpm[r,c]
+        end
+    end
+    return arm
 end
 
 function ArbComplexMatrix{P}(fpm::Array{ArbComplex,2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbComplexMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbComplex{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = ArbComplex{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 
@@ -84,11 +84,11 @@ function ArbComplexMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbComplexMatrix(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbComplex{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = ArbComplex{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 function ArbComplexMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat}}
@@ -96,11 +96,11 @@ function ArbComplexMatrix(fpm::Array{F,2}) where {F<:Union{Integer,AbstractFloat
     nrows, ncols = size(fpm)
     arm = ArbComplexMatrix{P}(nrows, ncols)
     for r = 1:nrows
-		for c = 1:ncols
-			arm[r,c] = ArbComplex{P}(fpm[r,c])
-	    end
-	end
-	return arm
+        for c = 1:ncols
+            arm[r,c] = ArbComplex{P}(fpm[r,c])
+        end
+    end
+    return arm
 end
 
 function Matrix(arm::ArbComplexMatrix{P}) where {P}
