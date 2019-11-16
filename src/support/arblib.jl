@@ -18,9 +18,6 @@ else
   libdirexts = [""]
 end
 
-println(string("\nbindir exts = ", bindirexts,"\n"));
-println(string("\nlibdir exts = ", libdirexts,"\n"));
-
 libdirdlls = sum(".dll" .=== libdirexts)
 libdirdylibs = sum(".dylib" .=== libdirexts)
 libdirsos = sum(".so" .=== libdirexts)
@@ -31,15 +28,9 @@ dlls = libdirdlls + bindirdlls
 dylibs = libdirdylibs + bindirdylibs
 sos = libdirsos + bindirsos
 
-println(string("\ndlls = ", (dlls, bindirdlls, libdirdlls), "\n"));
-println(string("\ndylibs = ", (dylibs, bindirdylibs, libdirdylibs), "\n"));
-println(string("\nsos = ", (sos, bindirsos, libdirsos), "\n"));
-
 const UseDlls = dlls >= dylibs && dlls >= sos
 const UseDylibs = dylibs >= dlls && dylibs >= sos
 const UseSos = sos >= dlls && sos >= dylibs
-
-println(string("\nuse dlls, dylibs, sos = ", (UseDlls, UseDylibs, UseSos),"\n"));
 
 if UseDlls
   UseBinDir = libdirdlls <= bindirdlls
@@ -48,8 +39,6 @@ elseif UseDylibs
 else
   UseBinDir = libdirsos <= bindirsos
 end
-
-println(string("\nuse bindir = ", UseBinDir,"\n"));
 
 if UseBinDir
   if UseDlls
