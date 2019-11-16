@@ -41,7 +41,7 @@ if UseBinDir
     const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.so")))
     const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.so")))
     const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.so")))
-  elseif UseDynlibs
+  elseif UseDylibs
     const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dylib")))
     const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dylib")))
     const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dylib")))
@@ -60,7 +60,7 @@ else
     const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.so")))
     const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.so")))
     const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.so")))
-  elseif UseDynlibs
+  elseif UseDylibs
     const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dylib")))
     const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dylib")))
     const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.dylib")))
@@ -77,10 +77,10 @@ if Sys.iswindows()
    const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dll")))
    const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dll")))
 elseif Sys.isapple()
-   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dynlib")))
-   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dynlib")))
-   const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dynlib")))
-   const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dynlib")))
+   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dylib")))
+   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dylib")))
+   const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dylib")))
+   const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dylib")))
 else
    const LibGMP = Symbol(realpath(joinpath(libdir, "libgmp.so")))
    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr.so")))
