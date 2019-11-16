@@ -6,8 +6,18 @@ const pkgdir = realpath(joinpath(dirname(@__DIR__), ".."))
 const libdir = joinpath(pkgdir, "deps", "usr", "lib")
 const bindir = joinpath(pkgdir, "deps", "usr", "bin")
 
-libdirexts = (x->splitext(x)[2]).(readdir(ArbNumerics.libdir))
-bindirexts = (x->splitext(x)[2]).(readdir(ArbNumerics.bindir))
+if isdir(bindir)
+  bindirexts = (x->splitext(x)[2]).(readdir(bindir))
+else
+  bindirexts = [""]
+end
+
+if isdir(libdir)
+  libdirexts = (x->splitext(x)[2]).(readdir(bindir))
+else
+  libdirexts = [""]
+end
+
 libdirdlls = sum(".dll" .=== libdirexts)
 libdirdylibs = sum(".dylib" .=== libdirexts)
 libdirsos = sum(".so" .=== libdirexts)
