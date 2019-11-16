@@ -13,7 +13,7 @@ else
 end
 
 if isdir(libdir)
-  libdirexts = (x->splitext(x)[2]).(readdir(bindir))
+  libdirexts = (x->splitext(x)[2]).(readdir(libdir))
 else
   libdirexts = [""]
 end
