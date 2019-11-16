@@ -9,19 +9,26 @@ const bindir = joinpath(pkgdir, "deps", "usr", "bin")
 libdirexts = (x->splitext(x)[2]).(readdir(ArbNumerics.libdir))
 bindirexts = (x->splitext(x)[2]).(readdir(ArbNumerics.bindir))
 libdirdlls = sum(".dll" .=== libdirexts)
-libdirdynlibs = sum(".dynlib" .=== libdirexts)
+libdirdylibs = sum(".dylib" .=== libdirexts)
 libdirsos = sum(".so" .=== libdirexts)
 bindirdlls = sum(".dll" .=== libdirexts)
-bindirdynlibs = sum(".dynlib" .=== libdirexts)
+bindirdylibs = sum(".dylib" .=== libdirexts)
 bindirsos = sum(".so" .=== libdirexts)
 dlls = libdirdlls + bindirdlls
-dynlibs = libdirdynlibs + bindirdynlibs
+dylibs = libdirdylibs + bindirdylibs
 sos = libdirsos + bindirsos
 
-const UseBinDir = libdirdlls+libdirdynlibs+libdirsos <= bindirdlls+bindirdynlibs+bindirsos
-const UseDlls = dlls >= dynlibs && dlls >= sos
-const UseDynlibs = dynlibs >= dlls && dynlibs >= sos
-const UseSos = sos >= dlls && sos >= dynlibs
+const UseDlls = dlls >= dylibs && dlls >= sos
+const UseDylibs = dylibs >= dlls && dylibs >= sos
+const UseSos = sos >= dlls && sos >= dylibs
+
+if UseDlls
+  UseBinDir = libdirdlls <= bindirdlls
+elseif UseDylibs
+  UseBinDir = libdirdylibs <= bindirdylibs
+else
+  UseBinDir = libdirsos <= bindirsos
+end
 
 if UseBinDir
   if UseDlls
@@ -35,10 +42,10 @@ if UseBinDir
     const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.so")))
     const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.so")))
   elseif UseDynlibs
-    const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dynlib")))
-    const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dynlib")))
-    const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dynlib")))
-    const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dynlib")))
+    const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dylib")))
+    const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dylib")))
+    const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dylib")))
+    const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dylib")))
   else
     throw(ErrorException("Compiled library files were not found"))
   end
@@ -54,10 +61,10 @@ else
     const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.so")))
     const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.so")))
   elseif UseDynlibs
-    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dynlib")))
-    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dynlib")))
-    const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.dynlib")))
-    const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.dynlib")))
+    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dylib")))
+    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dylib")))
+    const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.dylib")))
+    const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.dylib")))
   else
     throw(ErrorException("Compiled library files were not found"))
   end
