@@ -129,7 +129,6 @@ end
     return getindexˌ(x.arbrealmatrix, rowidx, colidx)
 end
 
-
 function Base.setindex!(x::ArbFloatMatrix{P}, z::ArbFloat{P}, linearidx::Int) where {P}
     rowidx, colidx = linear_to_cartesian(rowcount(x), linearidx)
     return setindex!(x.arbrealmatrix, ArbReal{P}(z), rowidx, colidx)
