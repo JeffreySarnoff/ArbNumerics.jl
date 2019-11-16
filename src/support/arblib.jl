@@ -18,6 +18,9 @@ else
   libdirexts = [""]
 end
 
+println(string("\nbindir exts = ", bindirexts,"\n"));
+println(string("\nlibdir exts = ", libdirexts,"\n"));
+
 libdirdlls = sum(".dll" .=== libdirexts)
 libdirdylibs = sum(".dylib" .=== libdirexts)
 libdirsos = sum(".so" .=== libdirexts)
@@ -28,9 +31,15 @@ dlls = libdirdlls + bindirdlls
 dylibs = libdirdylibs + bindirdylibs
 sos = libdirsos + bindirsos
 
+println(string("\ndlls = ", (dlls, bindirdlls, libdirdlls), "\n"));
+println(string("\ndylibs = ", (dylibs, bindirdylibs, libdirdylibs), "\n"));
+println(string("\nsos = ", (sos, bindirsos, libdirsos), "\n"));
+
 const UseDlls = dlls >= dylibs && dlls >= sos
 const UseDylibs = dylibs >= dlls && dylibs >= sos
 const UseSos = sos >= dlls && sos >= dylibs
+
+println(string("\nuse dlls, dylibs, sos = ", (UseDlls, UseDylibs, UseSos),"\n"));
 
 if UseDlls
   UseBinDir = libdirdlls <= bindirdlls
@@ -40,20 +49,22 @@ else
   UseBinDir = libdirsos <= bindirsos
 end
 
+println(string("\nuse bindir = ", UseBinDir,"\n"));
+
 if UseBinDir
   if UseDlls
-    const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dll")))
-    const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dll")))
+ #   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dll")))
+ #   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dll")))
     const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dll")))
     const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dll")))
   elseif UseSos
-    const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.so")))
-    const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.so")))
+ #   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.so")))
+ #   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.so")))
     const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.so")))
     const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.so")))
   elseif UseDylibs
-    const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dylib")))
-    const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dylib")))
+ #   const LibGMP = Symbol(realpath(joinpath(bindir,  "libgmp-10.dylib")))
+ #   const LibMPFR = Symbol(realpath(joinpath(bindir, "libmpfr-6.dylib")))
     const LibFlint = Symbol(realpath(joinpath(bindir, "libflint.dylib")))
     const LibArb = Symbol(realpath(joinpath(bindir,  "libarb.dylib")))
   else
@@ -61,18 +72,18 @@ if UseBinDir
   end
 else
   if UseDlls
-    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dll")))
-    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dll")))
+#    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dll")))
+#    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dll")))
     const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.dll")))
     const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.dll")))
   elseif UseSos
-    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.so")))
-    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.so")))
+#    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.so")))
+#    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.so")))
     const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.so")))
     const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.so")))
   elseif UseDylibs
-    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dylib")))
-    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dylib")))
+#    const LibGMP = Symbol(realpath(joinpath(libdir,  "libgmp-10.dylib")))
+#    const LibMPFR = Symbol(realpath(joinpath(libdir, "libmpfr-6.dylib")))
     const LibFlint = Symbol(realpath(joinpath(libdir, "libflint.dylib")))
     const LibArb = Symbol(realpath(joinpath(libdir,  "libarb.dylib")))
   else
@@ -107,6 +118,7 @@ macro libflint(libraryfunction)
     (:($libraryfunction), LibFlint)
 end
 
+#=
 macro libgmp(libraryfunction)
     (:($libraryfunction), LibGMP)
 end
@@ -114,3 +126,4 @@ end
 macro libmpfr(libraryfunction)
     (:($libraryfunction), LibMPFR)
 end
+=#
