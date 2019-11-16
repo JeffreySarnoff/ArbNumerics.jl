@@ -91,7 +91,6 @@ function ArbRealMatrix{P}(fpm::Array{ArbReal,2}) where {P}
     return arm
 end
 
-
 function ArbRealMatrix(fpm::Array{ArbFloat{P},2}) where {P}
     nrows, ncols = size(fpm)
     arm = ArbRealMatrix(nrows, ncols)
