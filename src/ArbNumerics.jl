@@ -131,7 +131,7 @@ using  GenericSVD
 using  LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
                       cholesky, tril, triu, eigvals, svdvals, floatmin2,
-                      mul!, rmul!, lmul!, eigvecs, svd, eigen
+                      mul!, rmul!, lmul!, eigvecs, svd, eigen, dot
 
 export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
        cholesky, tril, tiru, eigvals, svdvals
@@ -186,6 +186,7 @@ include("float/arith.jl")
 include("float/arith_inplace.jl")
 include("float/morearith.jl")
 include("float/muladd.jl")
+include("float/dot.jl")
 include("float/elementary.jl")
 include("float/otherspecial.jl")
 include("float/bessel.jl")

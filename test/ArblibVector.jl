@@ -1,4 +1,5 @@
 import ArbNumerics: ArblibVector, take!, free!
+using LinearAlgebra
 
 @testset "ArblibVectors" begin
     @testset "ArblibVector{$T}" for T = [ArbReal{128},ArbComplex{128}]
@@ -19,6 +20,21 @@ import ArbNumerics: ArblibVector, take!, free!
         @test length(vv) == 0
         @test vv.ptr == C_NULL
         @test_throws BoundsError vv[1]
+
+        @testset "Dot product" begin
+            # Test automatic copy to ArblibVector and dot product
+            o = ones(T, 5)
+            d = dot(o,o)
+            @test d isa T
+            @test d == T(5)
+
+            # Test dot product on manually allocated ArblibVector
+            O = ArblibVector(o)
+            D = dot(O,O)
+            @test D isa T
+            @test D == T(5)
+            free!(O)
+        end
     end
 
     @testset "ArbFloat" begin
@@ -34,5 +50,12 @@ import ArbNumerics: ArblibVector, take!, free!
 
         @test vvv == v
         @test eltype(vvv) == ArbFloat{128}
+
+        @testset "Dot product" begin
+            o = ones(ArbFloat{128}, 5)
+            d = dot(o,o)
+            @test d isa ArbFloat{128}
+            @test d == ArbFloat{128}(5)
+        end
     end
 end
