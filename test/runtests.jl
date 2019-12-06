@@ -14,4 +14,5 @@ end
   include("elementaryfunctions.jl")
   include("misc.jl")
   include("complex.jl")
+  include("dft.jl")
 end

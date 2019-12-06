@@ -1,12 +1,12 @@
-for (f,acb_f) in [(:dft, @libarb(:acb_dft), (:inverse_dft, :acb_dft_inverse))]
+for (f,acb_f) in [(:dft, :acb_dft), (:inverse_dft, :acb_dft_inverse)]
     @eval begin
         function $f(x::Vector{ArbComplex{P}}) where P
             n = length(x)
-            x_c = AcbVector(x)
-            transf_c = AcbVector(ArbComplex{P}, n)
+            x_c = ArblibVector(x)
+            transf_c = ArblibVector(ArbComplex{P}, n)
 
             # Signature: void acb_dft(acb_ptr w, acb_srcptr v, slong n, slong prec)
-            ccall($acb_f, Cvoid, (Ref{ArbComplex{P}}, Ref{ArbComplex{P}}, Cint, Cint ), transf_c.ptr, x_c.ptr, n, P)
+            ccall(@libarb($acb_f), Cvoid, (Ref{ArbComplex{P}}, Ref{ArbComplex{P}}, Cint, Cint ), transf_c.ptr, x_c.ptr, n, P)
 
             free!(x_c)
 
