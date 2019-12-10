@@ -344,7 +344,7 @@ end
 trunc(x::ArbComplex{P}) where {P} = ArbComplex{P}(trunc(real(x)), trunc(imag(x)))
 trunc(::Type{T}, x::ArbComplex{P}) where {P, T<:Integer} = T(trunc(real(x))), T(trunc(imag(x)))
 
-floor(x::ArbComplex{P}) where {P} = ArbComplex{P}(florr(real(x)), floor(imag(x)))
+floor(x::ArbComplex{P}) where {P} = ArbComplex{P}(floor(real(x)), floor(imag(x)))
 floor(::Type{T}, x::ArbComplex{P}) where {P, T<:Integer} = T(floor(real(x))), T(floor(imag(x)))
 
 ceil(x::ArbComplex{P}) where {P} = ArbComplex{P}(ceil(real(x)), ceil(imag(x)))
