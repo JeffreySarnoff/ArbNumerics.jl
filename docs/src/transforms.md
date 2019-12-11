@@ -26,7 +26,7 @@ Please remember that $e^{2\pi i k x}=\sin(2\pi k x)+i \cos(2\pi k x)$, so we are
 
 In the same way
 ```
-julia>dft(exp.(3*v)) 
+julia> dft(exp.(3*v)) 
 8-element Array{ArbComplex{128},1}:
       -1.521795939970898986998e-16 + 3.673940397442060090777e-16im
        -3.67394039744205851934e-16 + 3.673940397442060881462e-16im
