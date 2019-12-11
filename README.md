@@ -240,6 +240,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 #### transforms
 
 - `dft`, `inverse_dft`
+- see docs for use
 
 ## Intervals
 
