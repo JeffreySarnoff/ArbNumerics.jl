@@ -385,6 +385,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "matrixfunctions/#Vector-Functions-1",
+    "page": "Matrix Functions",
+    "title": "Vector Functions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "matrixfunctions/#using-ArbNumerics,-LinearAlgebra-1",
+    "page": "Matrix Functions",
+    "title": "using ArbNumerics, LinearAlgebra",
+    "category": "section",
+    "text": "dot\n.+, .-, .*, ./           ( element op element )"
+},
+
+{
     "location": "matrixfunctions/#Matrix-Functions-1",
     "page": "Matrix Functions",
     "title": "Matrix Functions",
