@@ -221,8 +221,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 #### hypergeometric functions
     
 - `hypgeom0f1`, `hypgeom1f1`, `hypgeom1f2`  
-- `hypgeom0f1reg`, `hypgeom1f1reg`, `hypgeom1f2reg`
-   - regularized
+- `hypgeom0f1reg`, `hypgeom1f1reg`, `hypgeom1f2reg` (regularized)
    
 #### other special functions
 
@@ -230,6 +229,12 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`, `polylog`
+
+#### linear algebra
+
+- `dot`
+- `inv`(matrix)
+- `*` (matrix multiply)
 
 #### transforms
 
