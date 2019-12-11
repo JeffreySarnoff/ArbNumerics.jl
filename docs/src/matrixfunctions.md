@@ -1,3 +1,10 @@
+## Vector Functions
+
+#### `using ArbNumerics, LinearAlgebra`
+
+- `dot`
+- `.+`, `.-`, `.*`, `./`           ( element op element )
+
 ## Matrix Functions
 
 #### `using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra`
