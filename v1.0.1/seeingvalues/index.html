@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Seeing Values · ArbNumerics</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link href="../assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><h1>ArbNumerics</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="../search/"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="../">Overview</a></li><li><a class="toctext" href="../thetypes/">The Types</a></li><li><a class="toctext" href="../settingvalues/">Setting Values</a></li><li class="current"><a class="toctext" href>Seeing Values</a><ul class="internal"><li><a class="toctext" href="#show,-showall,-string,-stringall-1">show, showall, string, stringall</a></li><li><a class="toctext" href="#@sprintf,-@printf-1">@sprintf, @printf</a></li><li><a class="toctext" href="#vectors,-matricies-1">vectors, matricies</a></li></ul></li><li><a class="toctext" href="../precisions/">Precisions</a></li><li><a class="toctext" href="../rounding/">Rounding</a></li><li><a class="toctext" href="../mathfunctions/">Elementary Functions</a></li><li><a class="toctext" href="../ellipticintegrals/">Elliptic Integrals</a></li><li><a class="toctext" href="../ellipticfunctions/">Elliptic Functions</a></li><li><a class="toctext" href="../matrixfunctions/">Matrix Functions</a></li><li><a class="toctext" href="../intervalfunctions/">Interval Functions</a></li><li><a class="toctext" href="../transforms/">Transforms</a></li><li><a class="toctext" href="../libarb_differences/">LibArb Differences</a></li><li><a class="toctext" href="../references/">References</a></li><li><a class="toctext" href="../documentindex/">Index</a></li></ul></nav><article id="docs"><header><nav><ul><li><a href>Seeing Values</a></li></ul><a class="edit-page" href="https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/src/seeingvalues.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Seeing Values</span><a class="fa fa-bars" href="#"></a></div></header><h2><a class="nav-anchor" id="show,-showall,-string,-stringall-1" href="#show,-showall,-string,-stringall-1">show, showall, string, stringall</a></h2><pre><code class="language-julia">using ArbNumerics
+
+julia&gt; string(ArbFloat(pi)^12)
+&quot;924269.1815233741862225791703585&quot;
+
+julia&gt; stringall(ArbFloat(pi)^12)
+&quot;924269.18152337418622257917035847560717530&quot;
+
+julia&gt; setprecision(ArbReal, 168)
+168
+
+julia&gt; show(ArbFloat(pi)^12)
+924269.18152337418622257917035847560717292226894005
+
+julia&gt; showall(ArbFloat(pi)^12)
+924269.181523374186222579170358475607172922268940049306206</code></pre><h2><a class="nav-anchor" id="@sprintf,-@printf-1" href="#@sprintf,-@printf-1">@sprintf, @printf</a></h2><pre><code class="language-julia">using ArbNumerics, Printf
+
+julia&gt; @printf &quot;%3.7f&quot; ArbFloat(pi)^12
+924269.1815234
+julia&gt; @sprintf &quot;%3.12e&quot; ArbReal(pi)^12
+&quot;9.242691815234e+05&quot;</code></pre><h2><a class="nav-anchor" id="vectors,-matricies-1" href="#vectors,-matricies-1">vectors, matricies</a></h2><pre><code class="language-julia">julia&gt; using ArbNumerics
+
+julia&gt; m = reshape(rand(ArbReal, 5*5), 5, 5)
+
+julia&gt; m
+5×5 Array{ArbFloat,2}:
+ 0.6411792438227919647430884603712  0.9172297277765197771411841297676   …  0.9223421384409213026075800198888
+ 0.8450969059727185724253076754441  0.01646810654535360936754546223339     0.08308546884930868750284819194842
+ 0.4169143288874284216661610699120  0.2171960329239345115781880947476      0.1607068347736886642746528027130
+ 0.5440900728685100306230036517586  0.2239538083426297723496374964114      0.4592276629733160297254143720105
+ 0.3350641275593416157706181564106  0.1671789815655477013169811621209      0.8609026985890416531378821669739
+
+julia&gt; Float64.(m)
+5×5 Array{Float64,2}:
+ 0.641179  0.91723    0.038678  0.867392  0.922342
+ 0.845097  0.0164681  0.218183  0.342917  0.0830855
+ 0.416914  0.217196   0.858553  0.400199  0.160707
+ 0.54409   0.223954   0.414976  0.407089  0.459228
+ 0.335064  0.167179   0.269326  0.724101  0.860903</code></pre><footer><hr/><a class="previous" href="../settingvalues/"><span class="direction">Previous</span><span class="title">Setting Values</span></a><a class="next" href="../precisions/"><span class="direction">Next</span><span class="title">Precisions</span></a></footer></article></body></html>
