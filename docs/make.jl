@@ -15,6 +15,7 @@ makedocs(
         "Elliptic Functions"       => "ellipticfunctions.md",
         "Matrix Functions"         => "matrixfunctions.md",
         "Interval Functions"       => "intervalfunctions.md",
+        "Transforms"               => "transforms.md",
         "LibArb Differences"       => "libarb_differences.md",
         "References"               => "references.md",
         "Index"                    => "documentindex.md"
