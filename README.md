@@ -232,9 +232,10 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 
 #### linear algebra
 
-- `dot`
-- `inv`(matrix)
+- `dot`                (vectors)
+- `det`, `tr`, `inv`   (matrix)
 - `*` (matrix multiply)
+- see docs for more functions
 
 #### transforms
 
