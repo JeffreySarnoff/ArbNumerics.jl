@@ -193,6 +193,7 @@ include("float/bessel.jl")
 include("float/airy.jl")
 include("float/elliptic.jl")
 include("float/hypergeometric.jl")
+include("float/integrate.jl")
 include("float/export_fallbacks.jl")
 
 include("float/float64.jl")
