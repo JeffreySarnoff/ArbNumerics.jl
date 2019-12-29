@@ -73,7 +73,8 @@ export ArbNumber,
        dft, inverse_dft,
 
        # special linear algebra
-       determinant, inverse, fastmul, ⨱ # \timesbar
+       determinant, inverse, fastmul, ⨱, # \timesbar
+       integrate
 
 import Base: IEEEFloat,
        hash, promote_rule, promote_type, convert,
