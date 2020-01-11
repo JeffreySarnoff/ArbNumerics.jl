@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Transforms · ArbNumerics</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link href="../assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><h1>ArbNumerics</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="../search/"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="../">Overview</a></li><li><a class="toctext" href="../thetypes/">The Types</a></li><li><a class="toctext" href="../settingvalues/">Setting Values</a></li><li><a class="toctext" href="../seeingvalues/">Seeing Values</a></li><li><a class="toctext" href="../precisions/">Precisions</a></li><li><a class="toctext" href="../rounding/">Rounding</a></li><li><a class="toctext" href="../mathfunctions/">Elementary Functions</a></li><li><a class="toctext" href="../ellipticintegrals/">Elliptic Integrals</a></li><li><a class="toctext" href="../ellipticfunctions/">Elliptic Functions</a></li><li><a class="toctext" href="../matrixfunctions/">Matrix Functions</a></li><li><a class="toctext" href="../intervalfunctions/">Interval Functions</a></li><li class="current"><a class="toctext" href>Transforms</a><ul class="internal"><li><a class="toctext" href="#Discrete-Fourier-Transforms-1">Discrete Fourier Transforms</a></li></ul></li><li><a class="toctext" href="../libarb_differences/">LibArb Differences</a></li><li><a class="toctext" href="../references/">References</a></li><li><a class="toctext" href="../documentindex/">Index</a></li></ul></nav><article id="docs"><header><nav><ul><li><a href>Transforms</a></li></ul><a class="edit-page" href="https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/src/transforms.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Transforms</span><a class="fa fa-bars" href="#"></a></div></header><h2><a class="nav-anchor" id="Discrete-Fourier-Transforms-1" href="#Discrete-Fourier-Transforms-1">Discrete Fourier Transforms</a></h2><ul><li><code>dft</code>, <code>inverse_dft</code></li></ul><hr/><p>The DFT is often used as a tool to analyze a collection of samples as a sum of periodic signals q.v. <a href="https://en.wikipedia.org/wiki/Discrete_Fourier_transform">DFT</a>. ArbNumerics implements a rigorous DFT and Inverse DFT. The following example is taken from the web page linked above.</p><pre><code class="language-none">
+julia&gt; fourvec =  [1.0+0.0im, 2.0-1.0im, 0.0-1.0im, -1.0+2.0im]
+4-element Array{Complex{Float64},1}:
+  1.0 + 0.0im
+  2.0 - 1.0im
+  0.0 - 1.0im
+ -1.0 + 2.0im
+
+julia&gt; x = map(ArbComplex, fourvec)
+4-element Array{ArbComplex{128},1}:
+    1.0 + 0im
+  2.0 - 1.0im
+    0 - 1.0im
+ -1.0 + 2.0im
+
+julia&gt; dft_x = dft(x)
+4-element Array{ArbComplex{128},1}:
+    2.0 + 0im
+ -2.0 - 2.0im
+    0 - 2.0im
+  4.0 + 4.0im
+
+julia&gt; invert_dft_x = inverse_dft(dft_x)
+4-element Array{ArbComplex{128},1}:
+    1.0 + 0im
+  2.0 - 1.0im
+    0 - 1.0im
+ -1.0 + 2.0im
+
+julia&gt; x == invert_dft_x
+true</code></pre><pre><code class="language-none">
+julia&gt; fourvec = [1.0, 2.0, -1.0, -2.0]
+4-element Array{Float64,1}:
+  1.0
+  2.0
+ -1.0
+ -2.0
+
+julia&gt; x = map(ArbFloat, fourvec)
+4-element Array{ArbFloat{128},1}:
+  1.0
+  2.0
+ -1.0
+ -2.0
+
+julia&gt; dft_x = dft(x)
+4-element Array{ArbComplex{128},1}:
+     0 + 0im
+ 2.0 - 4.0im
+     0 + 0im
+ 2.0 + 4.0im
+
+julia&gt; invert_dft_x = inverse_dft(dft_x)
+4-element Array{ArbComplex{128},1}:
+  1.0 + 0im
+  2.0 + 0im
+ -1.0 + 0im
+ -2.0 + 0im
+
+julia&gt; map(real, invert_dft_x)
+4-element Array{ArbReal{128},1}:
+  1.0
+  2.0
+ -1.0
+ -2.0
+
+julia&gt; ans == x
+true</code></pre><hr/><p>For a more in depth example, please <a href="https://github.com/JeffreySarnoff/ArbNumerics.jl/pull/30#issuecomment-562482450">see this</a>.</p><footer><hr/><a class="previous" href="../intervalfunctions/"><span class="direction">Previous</span><span class="title">Interval Functions</span></a><a class="next" href="../libarb_differences/"><span class="direction">Next</span><span class="title">LibArb Differences</span></a></footer></article></body></html>
