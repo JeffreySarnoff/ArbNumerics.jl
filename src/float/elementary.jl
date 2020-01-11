@@ -21,9 +21,12 @@ end
 function log_2(x::ArbReal{P}) where {P}
     return log(ArbReal{P}(2.0))
 end
+log_2(::Type{ArbReal{P}) where {P} = log(ArbReal{P}(2.0))
+  
 function log_10(x::ArbReal{P}) where {P}
     return log(ArbReal{P}(10.0))
 end
+log_10(::Type{ArbReal{P}) where {P} = log(ArbReal{P}(10.0))
 
 function log2(x::ArbReal{P}, logof2::ArbReal{P}=zero(ArbReal{P})) where {P}
     logof2 = iszero(logof2) ? log_2(ArbReal{P}) : logof2
