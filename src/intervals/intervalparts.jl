@@ -76,6 +76,11 @@ function setinterval(lo::ArbReal{P}, hi::ArbReal{P}) where {P}
     setinterval(lowerbound(lo, ArbFloat), upperbound(hi, ArbFloat))
 end
 
+function setinterval(lo::Real, hi::Real)
+    lo > hi && return setinterval(hi, lo)
+    return setinterval(ArbFloat(lo), ArbFloat(hi))
+end
+
 function interval(x::ArbReal{P}, ::Type{ArbFloat}) where {P}
     ArbFloat{P}(lowerbound(x)), ArbFloat{P}(upperbound(x))
 end
@@ -95,6 +100,11 @@ function setball(mid::ArbReal{P}, rad::ArbReal{P}) where {P}
     signbit(rad) && throw(ErrorException("nonnegative radius required ($rad)"))
     setball(ArbFloat{P}(mid), ArbFloat{P}(rad))
 end
+
+function setball(mid::Real, rad::Real)
+    return setball(ArbFloat(mid), ArbFloat(rad))
+end
+
 
 @inline ArbReal{P}(mid::ArbFloat{P}, rad::ArbFloat{P}) where {P} = setball(mid, rad)
 @inline ArbReal{P}(mid::ArbReal{P}, rad::ArbReal{P}) where {P} = setball(midpoint(mid), midpoint(rad))
