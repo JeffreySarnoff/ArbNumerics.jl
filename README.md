@@ -242,6 +242,10 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `dft`, `inverse_dft`
 - see docs for use
 
+#### complex integration
+
+- `integrate` (only for holomorphic functions)
+
 ## Intervals
 
 #### parts
