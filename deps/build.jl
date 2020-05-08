@@ -1,3 +1,4 @@
+u
 using Libdl
 
 using BinaryProvider
@@ -14,11 +15,13 @@ const wdir = joinpath(@__DIR__)
 if !issource_build
   # Dependencies that must be installed before this package can be built
   dependencies = [
-    "https://github.com/JuliaMath/GMPBuilder/releases/download/v6.1.2-2/build_GMP.v6.1.2.jl",
-    "https://github.com/JuliaMath/MPFRBuilder/releases/download/v4.0.1-3/build_MPFR.v4.0.1.jl",
-    "https://github.com/thofma/Flint2Builder/releases/download/reentrant2/build_libflint.v0.0.0-5451b53703a529ff76123b7418fe2d624e122db6.jl",
-    "https://github.com/thofma/ArbBuilder/releases/download/56ce68/build_libarb.v0.0.0-56ce687ea1ff9a279dc3c8d20f31a4dd09bae6d1.jl",
-  ]
+    # This has to be in sync with the corresponding commit in the source build below (for flint, arb, antic)
+    "https://github.com/JuliaPackaging/Yggdrasil/releases/download/GMP-v6.1.2-1/build_GMP.v6.1.2.jl",
+    "https://github.com/JuliaPackaging/Yggdrasil/releases/download/MPFR-v4.0.2-1/build_MPFR.v4.0.2.jl",
+    "https://github.com/thofma/Flint2Builder/releases/download/f46562/build_libflint.v0.0.0-f465622699d5c4c22bb3617596f8ae86e4570652.jl",
+    "https://github.com/thofma/ArbBuilder/releases/download/6c3738-v2/build_libarb.v0.0.0-6c3738555d00b8b8b24a1f5e0065ef787432513c.jl",
+    "https://github.com/thofma/AnticBuilder/releases/download/364f97-v2/build_libantic.v0.0.0-364f97edd9b6af537787113cf910f16d7bbc48a3.jl"
+   ]
 
   const prefix = Prefix(get([a for a in ARGS if a != "--verbose"], 1, joinpath(@__DIR__, "usr")))
 
@@ -50,14 +53,21 @@ if !issource_build
 
 else
   println("Doing a source build for C dependencies...")
+  if "ARBNUMERICS_BUILD_THREADS" in keys(ENV)
+     build_threads = ENV["ARBNUMERICS_BUILD_THREADS"]
+     println("Using $build_threads threads for building as specified by ARBNUMERICS_BUILD_THREADS.")
+  else
+     build_threads = Sys.CPU_THREADS
+     println("Using $build_threads threads (detected that many CPU threads).")
+  end
 
   @show M4_VERSION = "1.4.17"
   @show YASM_VERSION = "1.3.0"
   @show MPIR_VERSION = "3.0.0-90740d8fdf03b941b55723b449831c52fd7f51ca"
   @show MPFR_VERSION = "4.0.0"
-  @show FLINT_VERSION = "5451b53703a529ff76123b7418fe2d624e122db6"
-  @show ARB_VERSION = "56ce687ea1ff9a279dc3c8d20f31a4dd09bae6d1"
-
+  @show FLINT_VERSION = "f465622699d5c4c22bb3617596f8ae86e4570652"
+  @show ARB_VERSION = "6c3738555d00b8b8b24a1f5e0065ef787432513c"
+ 
   if Sys.iswindows()
     error("Source build not available on Windows")
   end
@@ -101,10 +111,11 @@ else
   if !ispath(joinpath(wdir, "yasm-$YASM_VERSION"))
      println("Building yasm ... ")
      YASM_FILE = "yasm-" * YASM_VERSION * ".tar.gz"
-     download("http://www.tortall.net/projects/yasm/releases/$YASM_FILE", YASM_FILE)
+     download("https://github.com/yasm/yasm/archive/v$(YASM_VERSION).tar.gz", YASM_FILE)
      run(`tar -xvf $YASM_FILE`)
      run(`rm $YASM_FILE`)
      cd(joinpath("$wdir","yasm-$YASM_VERSION"))
+     run(`./autogen.sh`)
      run(`./configure`)
      run(`make`)
      println("DONE")
@@ -134,7 +145,7 @@ else
   catch
      run(`./configure --with-yasm=$wdir/yasm-$YASM_VERSION/yasm --prefix=$prefixpath M4=$prefixpath/bin/m4 --enable-gmpcompat --disable-static --enable-shared`)
   end
-  run(`make -j4`)
+  run(`make -j$build_threads`)
   run(`make install`)
   cd(wdir)
   run(`rm -rf bin`)
@@ -161,7 +172,7 @@ else
   cd("$wdir/mpfr-$MPFR_VERSION")
   withenv("LD_LIBRARY_PATH"=>"$prefixpath/lib", "LDFLAGS"=>LDFLAGS) do
     run(`./configure --prefix=$prefixpath --with-gmp=$prefixpath --disable-static --enable-shared`)
-    run(`make -j4`)
+    run(`make -j$build_threads`)
     run(`make install`)
   end
   println("DONE")
@@ -192,7 +203,7 @@ else
   cd(joinpath("$wdir", "flint2"))
   withenv("LD_LIBRARY_PATH"=>"$prefixpath/lib", "LDFLAGS"=>LDFLAGS) do
     run(`./configure --prefix=$prefixpath --disable-static --enable-shared --with-mpir=$prefixpath --with-mpfr=$prefixpath`)
-    run(`make -j4`)
+    run(`make -j$build_threads`)
     run(`make install`)
   end
 
@@ -223,7 +234,7 @@ else
   cd(joinpath("$wdir", "arb"))
   withenv("LD_LIBRARY_PATH"=>"$prefixpath/lib", "LDFLAGS"=>LDFLAGS) do
     run(`./configure --prefix=$prefixpath --disable-static --enable-shared --with-mpir=$prefixpath --with-mpfr=$prefixpath --with-flint=$prefixpath`)
-    run(`make -j4`)
+    run(`make -j$build_threads`)
     run(`make install`)
   end
   println("DONE")
