@@ -19,8 +19,7 @@ if !issource_build
     "https://github.com/JuliaPackaging/Yggdrasil/releases/download/GMP-v6.1.2-1/build_GMP.v6.1.2.jl",
     "https://github.com/JuliaPackaging/Yggdrasil/releases/download/MPFR-v4.0.2-1/build_MPFR.v4.0.2.jl",
     "https://github.com/thofma/Flint2Builder/releases/download/f46562/build_libflint.v0.0.0-f465622699d5c4c22bb3617596f8ae86e4570652.jl",
-    "https://github.com/thofma/ArbBuilder/releases/download/6c3738-v2/build_libarb.v0.0.0-6c3738555d00b8b8b24a1f5e0065ef787432513c.jl",
-    "https://github.com/thofma/AnticBuilder/releases/download/364f97-v2/build_libantic.v0.0.0-364f97edd9b6af537787113cf910f16d7bbc48a3.jl"
+    "https://github.com/thofma/ArbBuilder/releases/download/6c3738-v2/build_libarb.v0.0.0-6c3738555d00b8b8b24a1f5e0065ef787432513c.jl"
    ]
 
   const prefix = Prefix(get([a for a in ARGS if a != "--verbose"], 1, joinpath(@__DIR__, "usr")))
@@ -41,7 +40,7 @@ if !issource_build
       m = @eval module $(gensym()); include($build_file); end
       append!(products, m.products)
   end
-
+#=
   filenames = ["libgmp.la", "libgmpxx.la", "libmpfr.la"]
   for filename in filenames
     fpath = joinpath(prefixpath, "lib", filename)
@@ -50,7 +49,7 @@ if !issource_build
       write(f, replace(txt, "/workspace/destdir" => prefixpath))
     end
   end
-
+=#
 else
   println("Doing a source build for C dependencies...")
   if "ARBNUMERICS_BUILD_THREADS" in keys(ENV)
