@@ -29,7 +29,6 @@ While the bounds of an `ArbReal` or `ArbComplex` are available, the default is t
 ```julia
 pkg> add Readables
 pkg> add ArbNumerics
-pkg> build ArbNumerics # only if you have not seen "Building ArbNumerics" 
 ```
 
 ### Important
