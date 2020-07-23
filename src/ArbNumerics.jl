@@ -53,6 +53,8 @@ export ArbNumber,
        tanpi, cotpi,
 
        # special functions
+       gamma, lgamma, digamma,
+       erf, erfc, erfi, erfcx,
        agm1, agm,
        logsinpi, barnesg, logbarnesg,
        ei, si, ci, shi, chi,
