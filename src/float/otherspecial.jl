@@ -223,3 +223,21 @@ function erfcx(z::ArbComplex{P}) where {P}
     setprecision(ArbComplex, P)
     return ArbComplex(real(res), imag(res), bits=P-extrabits())
 end
+
+function erfcx(x::ArbReal{P}) where {P}
+    hiprec = round(Int, P*1.25)
+    setprecision(ArbReal, hiprec)
+    w = ArbReal(x, bits=hiprec)
+    ww = w*w
+    a  = exp(ww)
+    b  = erfc(w)
+    res  = a * b
+    setprecision(ArbReal, P)
+    return ArbReal(res, bits=P-extrabits())
+end
+
+function erfcx(x::ArbFloat{P}) where {P}
+    res = erfcx(ArbReal(x))
+    return ArbFloat(res))
+end
+  
