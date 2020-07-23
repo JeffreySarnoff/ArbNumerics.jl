@@ -211,3 +211,15 @@ function agm(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
     z = midpoint_byref(w)
     return z
 end
+
+function erfcx(z::ArbComplex{P}) where {P}
+    hiprec = round(Int, P*1.25)
+    setprecision(ArbComplex, hiprec)
+    w = ArbComplex(real(z), imag(z), bits=hiprec)
+    ww = w*w
+    a  = exp(ww)
+    b  = erfc(w)
+    res  = a * b
+    setprecision(ArbComplex, P)
+    return ArbComplex(real(res), imag(res), bits=P-extrabits())
+end
