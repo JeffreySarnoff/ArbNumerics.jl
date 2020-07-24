@@ -238,6 +238,6 @@ end
 
 function erfcx(x::ArbFloat{P}) where {P}
     res = erfcx(ArbReal(x))
-    return ArbFloat(res))
+    return ArbFloat(res)
 end
   
