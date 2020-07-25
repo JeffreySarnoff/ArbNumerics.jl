@@ -195,6 +195,7 @@ include("float/bessel.jl")
 include("float/airy.jl")
 include("float/elliptic.jl")
 include("float/hypergeometric.jl")
+include("float/weierstrass.jl")
 include("float/export_fallbacks.jl")
 
 include("float/float64.jl")
@@ -207,7 +208,6 @@ include("support/minprec.jl")
 include("support/linearalgebra.jl")
 include("support/printf.jl")
 include("support/helptext.jl")
-
 
 function __init__()
     ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), Sys.CPU_THREADS)
