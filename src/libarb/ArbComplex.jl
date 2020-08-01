@@ -235,6 +235,12 @@ function ArbComplex{P}(x::T, y::ArbFloat{P}) where {P,T<:Union{Integer,AbstractF
     z = ArbComplex{P}(x1, y1)
     return z
 end
+
+ArbFloat{P}(x::ArbComplex{P}, bits::Int) where P = ArbFloat(real(x), bits=bits)
+ArbReal{P}(x::ArbComplex{P}, bits::Int) where P = ArbReal(real(x), bits=bits)
+ArbComplex{P}(x::ArbReal{P}, bits::Int) where P = ArbComplex(x, bits=bits)
+ArbComplex{P}(x::ArbFloat{P}, bits::Int) where P = ArbComplex(x, bits=bits)
+
 function ArbComplex{P}(x::ArbFloat{P}, y::T) where {P,T<:Union{Integer,AbstractFloat}}
     x1 = ArbReal{P}(x)
     y1 = ArbReal{P}(y)
