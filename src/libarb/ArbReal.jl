@@ -124,6 +124,9 @@ function ArbReal{P}(x::ArbFloat{P}) where {P}
     return z
 end
 
+ArbFloat{P}(x::ArbReal{P}, bits::Int) where P = ArbFloat(x, bits=bits)
+ArbReal{P}(x::ArbFloat{P}, bits::Int) where P = ArbReal(x, bits=bits)
+
 for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
     @eval begin
         function $F(x::ArbReal{P}) where {P}
