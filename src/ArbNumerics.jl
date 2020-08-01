@@ -54,6 +54,7 @@ export ArbNumber,
 
        # special functions
        agm1, agm,
+       erf, erfc, erfi, erfcx,
        logsinpi, barnesg, logbarnesg,
        ei, si, ci, shi, chi,
        airyai, airyaiprime, airybi, airybiprime,
