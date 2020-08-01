@@ -24,21 +24,30 @@ for (A,F) in ((:besselj, :acb_hypgeom_bessel_j), (:bessely, :acb_hypgeom_bessel_
     end
 end     
 
+besselj(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselj(ArbReal(nu), ArbReal(x), prec))
+bessely(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besseli(ArbReal(nu), ArbReal(x), prec))
+besseli(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(bessely(ArbReal(nu), ArbReal(x), prec))
+besselk(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselk(ArbReal(nu), ArbReal(x), prec))
 
-besselj(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselj(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
-bessely(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(bessely(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
-besseli(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besseli(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
-besselk(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselk(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
+besselj(nu::Integer, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselj(ArbReal(nu), ArbReal(x), prec))
+bessely(nu::Integer, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besseli(ArbReal(nu), ArbReal(x), prec))
+besseli(nu::Integer, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(bessely(ArbReal(nu), ArbReal(x), prec))
+besselk(nu::Integer, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselk(ArbReal(nu), ArbReal(x), prec))
 
-besselj(nu::S, x::ArbFloat{P}, prec::Int=P) where {P, S<:ST} = ArbFloat(besselj(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
-bessely(nu::S, x::ArbFloat{P}, prec::Int=P) where {P, S<:ST} = ArbFloat(bessely(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
-besseli(nu::S, x::ArbFloat{P}, prec::Int=P) where {P, S<:ST} = ArbFloat(besseli(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
-besselk(nu::S, x::ArbFloat{P}, prec::Int=P) where {P, S<:ST} = ArbFloat(besselk(ArbReal{P}(nu), ArbReal{P}(x)), bits=prec)
+besselj(nu::Base.IEEEFloat, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselj(ArbReal(nu), ArbReal(x), prec))
+bessely(nu::Base.IEEEFloat, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besseli(ArbReal(nu), ArbReal(x), prec))
+besseli(nu::Base.IEEEFloat, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(bessely(ArbReal(nu), ArbReal(x), prec))
+besselk(nu::Base.IEEEFloat, x::ArbFloat{P}, prec::Int=P) where {P} = ArbFloat(besselk(ArbReal(nu), ArbReal(x), prec))
 
-besselj(nu::S, x::ArbReal{P}, prec::Int=P) where {P, S<:ST} = besselj(ArbReal{P}(nu), x, bits=prec)
-bessely(nu::S, x::ArbReal{P}, prec::Int=P) where {P, S<:ST} = bessely(ArbReal{P}(nu), x, bits=prec)
-besseli(nu::S, x::ArbReal{P}, prec::Int=P) where {P, S<:ST} = besseli(ArbReal{P}(nu), x, bits=prec)
-besselk(nu::S, x::ArbReal{P}, prec::Int=P) where {P, S<:ST} = besselk(ArbReal{P}(nu), x, bits=prec)
+besselj(nu::Integer, x::ArbComplex{P}, prec::Int=P) where {P} = besselj(ArbComplex(nu), x, prec)
+bessely(nu::Integer, x::ArbComplex{P}, prec::Int=P) where {P} = bessely(ArbComplex(nu), x, prec)
+besseli(nu::Integer, x::ArbComplex{P}, prec::Int=P) where {P} = besseli(ArbComplex(nu), x, prec)
+besselk(nu::Integer, x::ArbComplex{P}, prec::Int=P) where {P} = besselk(ArbComplex(nu), x, prec)
+
+besselj(nu::Base.IEEEFloat, x::ArbComplex{P}, prec::Int=P) where {P} = besselj(ArbComplex(nu), x, prec)
+bessely(nu::Base.IEEEFloat, x::ArbComplex{P}, prec::Int=P) where {P} = bessely(ArbComplex(nu), x, prec)
+besseli(nu::Base.IEEEFloat, x::ArbComplex{P}, prec::Int=P) where {P} = besseli(ArbComplex(nu), x, prec)
+besselk(nu::Base.IEEEFloat, x::ArbComplex{P}, prec::Int=P) where {P} = besselk(ArbComplex(nu), x, prec)
 
 besselj0(x::ArbFloat{P}, prec::Int=P) where {P} = besselj(zero(ArbReal{P}), ArbReal{P}(x), bits=prec)
 besselj1(x::ArbFloat{P}, prec::Int=P) where {P} = besselj(one(ArbReal{P}), ArbReal{P}(x), bits=prec)
@@ -54,8 +63,3 @@ besselj0(x::ArbComplex{P}, prec::Int=P) where {P} = besselj(zero(ArbComplex{P}),
 besselj1(x::ArbComplex{P}, prec::Int=P) where {P} = besselj(one(ArbComplex{P}), x, bits=prec)
 bessely0(x::ArbComplex{P}, prec::Int=P) where {P} = bessely(zero(ArbComplex{P}), x, bits=prec)
 bessely1(x::ArbComplex{P}, prec::Int=P) where {P} = bessely(one(ArbComplex{P}), x, bits=prec)
-
-besselj(nu::S, x::ArbComplex{P}, prec::Int=P) where {P, S<:ST} = besselj(ArbComplex{P}(nu), x, bits=prec)
-bessely(nu::S, x::ArbComplex{P}, prec::Int=P) where {P, S<:ST} = bessely(ArbComplex{P}(nu), x, bits=prec)
-besseli(nu::S, x::ArbComplex{P}, prec::Int=P) where {P, S<:ST} = besseli(ArbComplex{P}(nu), x, bits=prec)
-besselk(nu::S, x::ArbComplex{P}, prec::Int=P) where {P, S<:ST} = besselk(ArbComplex{P}(nu), x, bits=prec)
