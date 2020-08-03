@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Matrix Functions · ArbNumerics</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">ArbNumerics</span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Overview</a></li><li><a class="tocitem" href="../thetypes/">The Types</a></li><li><a class="tocitem" href="../settingvalues/">Setting Values</a></li><li><a class="tocitem" href="../seeingvalues/">Seeing Values</a></li><li><a class="tocitem" href="../precisions/">Precisions</a></li><li><a class="tocitem" href="../rounding/">Rounding</a></li><li><a class="tocitem" href="../mathfunctions/">Elementary Functions</a></li><li><a class="tocitem" href="../ellipticintegrals/">Elliptic Integrals</a></li><li><a class="tocitem" href="../ellipticfunctions/">Elliptic Functions</a></li><li class="is-active"><a class="tocitem" href>Matrix Functions</a><ul class="internal"><li><a class="tocitem" href="#Vector-Functions-1"><span>Vector Functions</span></a></li><li><a class="tocitem" href="#Matrix-Functions-1"><span>Matrix Functions</span></a></li><li><a class="tocitem" href="#Performance-1"><span>Performance</span></a></li></ul></li><li><a class="tocitem" href="../intervalfunctions/">Interval Functions</a></li><li><a class="tocitem" href="../transforms/">Transforms</a></li><li><a class="tocitem" href="../libarb_differences/">LibArb Differences</a></li><li><a class="tocitem" href="../references/">References</a></li><li><a class="tocitem" href="../documentindex/">Index</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Matrix Functions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Matrix Functions</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/docs/src/matrixfunctions.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h2 id="Vector-Functions-1"><a class="docs-heading-anchor" href="#Vector-Functions-1">Vector Functions</a><a class="docs-heading-anchor-permalink" href="#Vector-Functions-1" title="Permalink"></a></h2><h4 id="using-ArbNumerics,-LinearAlgebra-1"><a class="docs-heading-anchor" href="#using-ArbNumerics,-LinearAlgebra-1"><code>using ArbNumerics, LinearAlgebra</code></a><a class="docs-heading-anchor-permalink" href="#using-ArbNumerics,-LinearAlgebra-1" title="Permalink"></a></h4><ul><li><code>dot</code></li><li><code>.+</code>, <code>.-</code>, <code>.*</code>, <code>./</code>           ( element op element )</li></ul><h2 id="Matrix-Functions-1"><a class="docs-heading-anchor" href="#Matrix-Functions-1">Matrix Functions</a><a class="docs-heading-anchor-permalink" href="#Matrix-Functions-1" title="Permalink"></a></h2><h4 id="using-ArbNumerics,-GenericSchur,-GenericSVD,-LinearAlgebra-1"><a class="docs-heading-anchor" href="#using-ArbNumerics,-GenericSchur,-GenericSVD,-LinearAlgebra-1"><code>using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra</code></a><a class="docs-heading-anchor-permalink" href="#using-ArbNumerics,-GenericSchur,-GenericSVD,-LinearAlgebra-1" title="Permalink"></a></h4><ul><li><p><code>det</code>, <code>tr</code></p></li><li><p><code>transpose</code>, <code>adjoint</code>, <code>inv</code></p></li><li><p><code>exp</code></p></li><li><p><code>.+</code>, <code>.-</code>, <code>.*</code>, <code>./</code>           ( element op element )</p></li><li><p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>\</code>          ( matrix  op matrix  )</p></li><li><p><code>lu</code>, <code>qr</code>, <code>factorize</code></p></li></ul><hr/><h2 id="Performance-1"><a class="docs-heading-anchor" href="#Performance-1">Performance</a><a class="docs-heading-anchor-permalink" href="#Performance-1" title="Permalink"></a></h2><p>With the working precision at 128 bits, and 100x100 element matrices, 13x (24x, 32x with 8 cores)</p><pre><code class="language-julia">using BenchmarkTools
+
+setprecision(BigFloat, workingprecision(ArbFloat))
+128
+
+n = 100;
+
+bf = rand(BigFloat, n, n);
+af = rand(ArbFloat, n, n);
+ar = rand(ArbReal, n, n);
+
+@btime $bf * $bf;
+  158.920 ms (4080002 allocations: 186.84 MiB)
+
+@btime $af * $af;
+  12.027 ms (40011 allocations: 2.44 MiB)
+  
+@btime $af * $af; # 8 cores available
+   6.611 ms (40011 allocations: 2.44 MiB)
+
+@btime $ar * $ar; # 8 cores available
+  4.881 ms (10006 allocations: 703.41 KiB)
+</code></pre><p>With the working precision at 128 bits, increasing n from 100 to 250, 18x (35x, 44x with 8 cores)</p><pre><code class="language-julia">@btime $bf * $bf;
+  2.905 s (63000002 allocations: 2.82 GiB)
+
+@btime $af * $af;
+  156.604 ms (250011 allocations: 15.26 MiB)
+  
+@btime $af * $af; # 8 cores available
+  80.941 ms (250011 allocations: 15.26 MiB)
+
+@btime $ar * $ar; # 8 cores available
+  65.392 ms (62506 allocations: 4.29 MiB)</code></pre><p>as the working precision increases, they narrow –     e.g. with precision of 512 bits and n=100, 3x (9x, 11x with 8 cores)</p><pre><code class="language-julia">@btime $bf * $bf;
+  247.357 ms (4080002 allocations: 280.23 MiB)
+
+@btime $af * $af;
+  75.515 ms (40013 allocations: 2.44 MiB)
+
+@btime $af * $af; # 8 cores available
+  25.473 ms (40013 allocations: 2.44 MiB)
+
+@btime $ar * $ar; # 8 cores available
+  21.264 ms (10008 allocations: 703.44 KiB)</code></pre><p>as n increases they widen –     e.g. with precision of 512 bits and n=250, 7x (9x, 12x with 8 cores)</p><pre><code class="language-julia">@btime $bf * $bf;
+   4.311 s (63000002 allocations: 4.22 GiB)
+
+@btime $af * $af;
+  606.713 ms (250013 allocations: 15.26 MiB)
+  
+@btime $af * $af; # 8 cores available
+  457.125 ms (250013 allocations: 15.26 MiB)
+
+@btime $ar * $ar; # 8 cores available
+  333.056 ms (62508 allocations: 4.29 MiB)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../ellipticfunctions/">« Elliptic Functions</a><a class="docs-footer-nextpage" href="../intervalfunctions/">Interval Functions »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Monday 3 August 2020 07:27">Monday 3 August 2020</span>. Using Julia version 1.0.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
