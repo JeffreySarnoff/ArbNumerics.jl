@@ -247,10 +247,10 @@ end
 function erfcx(z::ArbComplex{P}; magnify=2.125) where {P}
     external_precision = P
     external_extrabits = extrabits()
-    internal_precision = round(Int, P*magnify) + external_extrabits
+    internal_precision = round(Int, P*magnify)
     internal_extrabits = 0
     setextrabits(internal_extrabits)
-    setprecision(ArbReal, internal_precision)
+    setworkingprecision(ArbReal, internal_precision)
 
     re = round(real(z), sigdigits=internal_precision, base=2)
     im = round(imag(z), sigdigits=internal_precision, base=2)
@@ -259,25 +259,34 @@ function erfcx(z::ArbComplex{P}; magnify=2.125) where {P}
     a  = exp(ww)
     b  = erfc(w)
     ab = a * b
-    nbits = external_precision
     abre = round(real(ab), sigdigits=external_precision, base=2)
     abim = round(imag(ab), sigdigits=external_precision, base=2)
-    z    = ArbComplex(abre, abim)
+    re = ArbReal{P}(abre)
+    im = ArbReal{P}(abim)
+    z  = ArbComplex{P}(re, im)
     setextrabits(external_extrabits)
-    setprecision(ArbReal, external_precision)
-    return z # ArbComplex(real(res), imag(res), bits=P-extrabits())
+    setworkingprecision(ArbReal, external_precision)
+    return z
 end
 
 function erfcx(x::ArbReal{P}; magnify=2.125) where {P}
-    hiprec = round(Int, P*magnify)
-    setprecision(ArbReal, hiprec)
-    w = ArbReal(x, bits=hiprec)
+    external_precision = P
+    external_extrabits = extrabits()
+    internal_precision = round(Int, P*magnify)
+    internal_extrabits = 0
+    setextrabits(internal_extrabits)
+    setworkingprecision(ArbReal, internal_precision)
+
+    w = round(x, sigdigits=internal_precision, base=2)
     ww = w*w
     a  = exp(ww)
     b  = erfc(w)
-    res  = a * b
-    setprecision(ArbReal, P)
-    return ArbReal(res, bits=P-extrabits())
+    ab = a * b
+    abre = round(real(ab), sigdigits=external_precision, base=2)
+    z = ArbReal{P}(abre)
+    setextrabits(external_extrabits)
+    setworkingprecision(ArbReal, external_precision)
+    return z
 end
 
 function erfcx(x::ArbFloat{P}; magnify=2.125) where {P}
