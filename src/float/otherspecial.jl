@@ -252,15 +252,15 @@ function erfcx(z::ArbComplex{P}; magnify=2.125) where {P}
     setextrabits(internal_extrabits)
     setprecision(ArbReal, internal_precision)
 
-    re = ArbReal(real(z), bits=internal_prec)
-    im = ArbReal(imag(z), bits=internal_prec)
-    w  = ArbComplex{internal_prec}(re, im)
+    re = ArbReal(real(z), bits=internal_precision)
+    im = ArbReal(imag(z), bits=internal_precision)
+    w  = ArbComplex(re, im, bits=internal_precision)
     ww = w*w
     a  = exp(ww)
     b  = erfc(w)
     ab = a * b
-    abre = ArbReal(real(ab), bits=external_prec)
-    abim = ArbReal(imag(ab), bits=external_prec)
+    abre = ArbReal(real(ab), bits=external_precision)
+    abim = ArbReal(imag(ab), bits=external_precision)
     z    = ArbComplex{external_prec}(abre, abim)
     setexrabits(external_extrabits)
     setprecision(ArbReal, external_precision)
