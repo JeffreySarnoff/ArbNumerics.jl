@@ -244,8 +244,8 @@ function erfcx(x::ArbFloat{P}) where {P}
 end
 =#
 
-function erfcx(z::ArbComplex{P}; precision_magnifcation=2.125) where {P}
-    hiprec = round(Int, P*precision_magnification)
+function erfcx(z::ArbComplex{P}; magnify=2.125) where {P}
+    hiprec = round(Int, P*magnify)
     setprecision(ArbComplex, hiprec)
     w = ArbComplex(real(z), imag(z), bits=hiprec)
     ww = w*w
@@ -256,8 +256,8 @@ function erfcx(z::ArbComplex{P}; precision_magnifcation=2.125) where {P}
     return ArbComplex(real(res), imag(res), bits=P-extrabits())
 end
 
-function erfcx(x::ArbReal{P}; precision_magnifcation=2.125) where {P}
-    hiprec = round(Int, P*precision_magnification)
+function erfcx(x::ArbReal{P}; magnify=2.125) where {P}
+    hiprec = round(Int, P*magnify)
     setprecision(ArbReal, hiprec)
     w = ArbReal(x, bits=hiprec)
     ww = w*w
@@ -268,7 +268,7 @@ function erfcx(x::ArbReal{P}; precision_magnifcation=2.125) where {P}
     return ArbReal(res, bits=P-extrabits())
 end
 
-function erfcx(x::ArbFloat{P}; precision_magnification=2.125) where {P}
-    res = erfcx(ArbReal(x), precision_magnification = precision_magnification)
+function erfcx(x::ArbFloat{P}; magnify=2.125) where {P}
+    res = erfcx(ArbReal(x); magnify=magnify)
     return ArbFloat(res)
 end
