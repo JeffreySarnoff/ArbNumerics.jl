@@ -213,7 +213,7 @@ function agm(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
 end
 
 
-
+#=
 function erfcx(z::ArbComplex{P}) where {P}
     hiprec = round(Int, P*1.25)
     setprecision(ArbComplex, hiprec)
@@ -240,5 +240,35 @@ end
 
 function erfcx(x::ArbFloat{P}) where {P}
     res = erfcx(ArbReal(x))
+    return ArbFloat(res)
+end
+=#
+
+function erfcx(z::ArbComplex{P}; precision_magnifcation=2.125) where {P}
+    hiprec = round(Int, P*precision_magnification)
+    setprecision(ArbComplex, hiprec)
+    w = ArbComplex(real(z), imag(z), bits=hiprec)
+    ww = w*w
+    a  = exp(ww)
+    b  = erfc(w)
+    res  = a * b
+    setprecision(ArbComplex, P)
+    return ArbComplex(real(res), imag(res), bits=P-extrabits())
+end
+
+function erfcx(x::ArbReal{P}; precision_magnifcation=2.125) where {P}
+    hiprec = round(Int, P*precision_magnification)
+    setprecision(ArbReal, hiprec)
+    w = ArbReal(x, bits=hiprec)
+    ww = w*w
+    a  = exp(ww)
+    b  = erfc(w)
+    res  = a * b
+    setprecision(ArbReal, P)
+    return ArbReal(res, bits=P-extrabits())
+end
+
+function erfcx(x::ArbFloat{P}; precision_magnification=2.125) where {P}
+    res = erfcx(ArbReal(x), precision_magnification = precision_magnification)
     return ArbFloat(res)
 end
