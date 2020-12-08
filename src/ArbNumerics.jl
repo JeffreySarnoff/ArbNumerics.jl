@@ -143,7 +143,7 @@ using Libdl
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
 
-using Flint_jll
+using FLINT_jll
 using Arb_jll
 
 include("support/arblib.jl")
