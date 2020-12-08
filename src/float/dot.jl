@@ -1,3 +1,4 @@
+#= DOES NOT WORK PROPERLY
 for (TT,dot_f) in [(:ArbReal, @libarb(arb_dot)),(:ArbComplex, @libarb(acb_dot))]
     @eval begin
         function LinearAlgebra.dot(x::ArblibVector{T}, y::ArblibVector{T}) where {T<:$TT}
@@ -16,9 +17,14 @@ for (TT,dot_f) in [(:ArbReal, @libarb(arb_dot)),(:ArbComplex, @libarb(acb_dot))]
         end
     end
 end
+=#
 
 function LinearAlgebra.dot(x::AbstractVector{T}, y::AbstractVector{T}) where {T<:ArbNumber}
     length(x) == length(y) || throw(DimensionMismatch("x and y must have the same lengths"))
+    xy = x .* y
+    return sum(xy)
+    
+    #= does not work properly
     xv = ArblibVector(x)
     yv = ArblibVector(y)
 
@@ -28,4 +34,5 @@ function LinearAlgebra.dot(x::AbstractVector{T}, y::AbstractVector{T}) where {T<
     free!(yv)
 
     T(d)
+    =#
 end
