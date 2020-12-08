@@ -25,8 +25,8 @@ test = ["Test"]
 
 [compat]
 SpecialFunctions = "1"
-BinaryProvider = "0"
-GenericSVD = "0"
-GenericSchur = "0"
-Readables = "0"
+BinaryProvider = "0.6"
+GenericSVD = "0.3"
+GenericSchur = "0.4"
+Readables = "0.3"
 julia = "1"
