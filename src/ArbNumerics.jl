@@ -159,7 +159,7 @@ include("libarb/ArbReal.jl")
 include("libarb/ArbComplex.jl")
 include("support/complex.jl")
 
-include("support/ArblibVector.jl")
+# include("support/ArblibVector.jl")
 
 include("support/random.jl")
 
