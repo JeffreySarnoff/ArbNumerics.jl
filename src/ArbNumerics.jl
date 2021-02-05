@@ -59,9 +59,9 @@ export ArbNumber,
        ei, si, ci, shi, chi,
        airyai, airyaiprime, airybi, airybiprime,
        besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
-       hypergeometric_0F1, hypergeometric_1F1, hypergeometric_2F1,
-       regular_hypergeometric_0F1, regular_hypergeometric_1F1, regular_hypergeometric_2F1,
-       F₀₁,  F₁₁, F₂₁, regularF₀₁,  regularF₁₁, regularF₂₁,
+       hypergeometric_0F1, hypergeometric_1F1, hypergeometric_2F1, hypergeometric_1F2,
+       regular_hypergeometric_0F1, regular_hypergeometric_1F1, regular_hypergeometric_2F1, regular_hypergeometric_1F2,
+       F₀₁,  F₁₁, F₂₁, F₁₂, regularF₀₁,  regularF₁₁, regularF₂₁, regularF₁₂,
        elliptic_k, elliptic_e, elliptic_pi, elliptic_f,
        elliptic_k2, elliptic_e2, elliptic_pi2, elliptic_f2, # modulus^2
        elliptic_rf, elliptic_rg, elliptic_rj,
@@ -127,9 +127,9 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
 
-using  GenericSVD
+using GenericSVD
 
-using  LinearAlgebra
+using LinearAlgebra
 import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
                       cholesky, tril, triu, eigvals, svdvals, floatmin2,
                       mul!, rmul!, lmul!, eigvecs, svd, eigen, dot
@@ -163,7 +163,7 @@ include("support/ArblibVector.jl")
 
 include("support/random.jl")
 
-const ArbNumber = Union{ArbFloat, ArbReal, ArbComplex}
+const ArbNumber = Union{ArbFloat,ArbReal,ArbComplex}
 
 include("libarb/ArbMatrix.jl")  # must preceed ArbRealMatrix
 include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix

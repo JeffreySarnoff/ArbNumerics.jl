@@ -1,4 +1,4 @@
-#=
+#= 
 void acb_hypgeom_u(acb_t res, const acb_t a, const acb_t b, const acb_t z, slong prec)¶
 Computes U(a,b,z) using an automatic algorithm choice.
 
@@ -10,7 +10,9 @@ Computes the confluent hypergeometric function M(a,b,z)=1F1(a,b,z), or M(a,b,z)=
 
 acb_hypgeom_2f1(acb_t res, const acb_t a, const acb_t b,
         const acb_t c, const acb_t z, int flags, slong prec)
-=#
+
+void acb_hypgeom_pfq(acb_poly_t res, acb_srcptr a, slong p, acb_srcptr b, slong q, const acb_t z, int regularized, slong prec)
+Computes the generalized hypergeometric function pFq(z), or the regularized version if regularized is set. =#
 
 """
     hypergeometric_0F1(a, z)
@@ -114,6 +116,40 @@ end
 
 const regularF₂₁ = regular_hypergeometric_2F1
 
+"""
+    hypergeometric_1F2(a, b, z)
+
+generalized hypergeometric function ``₁F₂``
+"""
+function hypergeometric_1F2(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    result = ArbComplex{P}()
+    regularized = Cint(0)
+    p = Clong(1)
+    q = Clong(2)
+    ccall(@libarb(acb_hypgeom_pfq), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong, Ref{ArbComplex}, Clong, Ref{ArbComplex}, Cint, Clong),
+         result, a, p, b, q, z, regularized, P)
+    return result
+end
+
+const F₁₂ = hypergeometric_1F2
+
+"""
+regular_hypergeometric_1F2(a, b, z)
+
+regularized generalized hypergeometric function ``₁F₂ / gamma(a)``
+"""
+function regular_hypergeometric_1F2(a::ArbComplex{P}, b::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    result = ArbComplex{P}()
+    regularized = Cint(1)
+    p = Clong(1)
+    q = Clong(2)
+    ccall(@libarb(acb_hypgeom_pfq), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong, Ref{ArbComplex}, Clong, Ref{ArbComplex}, Cint, Clong),
+         result, a, p, b, q, z, regularized, P)
+    return result
+end
+
+const regularF₁₂ = regular_hypergeometric_1F2
+
 function hypergeometric_0F1(a::ArbReal{P}, z::ArbReal{P}) where {P}
     result = ArbReal{P}()
     regularized = Cint(0)
@@ -169,7 +205,25 @@ function regular_hypergeometric_2F1(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P},
     return result
 end
 
-# ArbFloat
+function hypergeometric_1F2(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
+    result = ArbReal{P}()
+    regularized = Cint(0)
+    p = Clong(1)
+    q = Clong(2)
+    ccall(@libarb(arb_hypgeom_pfq), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong, Ref{ArbReal}, Clong, Ref{ArbReal}, Cint, Clong),
+         result, a, p, b, q, z, regularized, P)
+    return result
+end
+
+function regular_hypergeometric_1F2(a::ArbReal{P}, b::ArbReal{P}, z::ArbReal{P}) where {P}
+    result = ArbReal{P}()
+    regularized = Cint(1)
+    p = Clong(1)
+    q = Clong(2)
+    ccall(@libarb(arb_hypgeom_pfq), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong, Ref{ArbReal}, Clong, Ref{ArbReal}, Cint, Clong),
+         result, a, p, b, q, z, regularized, P)
+    return result
+end
 
 hypergeometric_0F1(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
     ArbFloat{P}(hypgeom0f1(ArbReal{P}(a), ArbReal{P}(z)))
