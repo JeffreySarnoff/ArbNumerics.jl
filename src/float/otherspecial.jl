@@ -293,3 +293,13 @@ function erfcx(x::ArbFloat{P}; magnify=2.125) where {P}
     res = erfcx(ArbReal(x); magnify=magnify)
     return ArbFloat(res)
 end
+
+"""
+    struve(α, z)
+
+The Struve Functions, Hₐ(z), calculated from the generalized hypergeometric function, ₁F₂
+"""
+function struve(α::ArbComplex{P}, z::ArbComplex{P}) where {P}
+    return z^(α + 1) / (2^α * sqrt(ArbReal(pi) * gamma(α + 3/2))) *
+        hypergeometric_1F2(ArbComplex(1), α + 3/2, -z^2 / 4)
+end

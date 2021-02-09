@@ -69,6 +69,7 @@ export ArbNumber,
        zeta, eta, xi,                  # Reimann
        lambertw, polylog,
        π, ℯ, γ, φ, catalan,
+       struve,
 
        # fft
        dft, inverse_dft,
