@@ -218,9 +218,8 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `weierstrass_zeta`, `weierstrass_sigma`
 
 #### hypergeometric functions
-    
-- `hypgeom0f1`, `hypgeom1f1`, `hypgeom1f2`  
-- `hypgeom0f1reg`, `hypgeom1f1reg`, `hypgeom1f2reg` (regularized)
+- `hypergeometric_0F1`, `hypergeometric_1F1`, `hypergeometric_2F1`, `hypergeometric_1F2`
+- `regular_hypergeometric_0F1`, `regular_hypergeometric_1F1`, `regular_hypergeometric_2F1`, `regular_hypergeometric_1F2` (regularized)
    
 #### other special functions
 
@@ -228,6 +227,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `shi`, `chi`
 - `zeta`, `eta`, `xi`    # Reimann
 - `lambertw`, `polylog`
+- `struve`
 
 #### linear algebra
 
