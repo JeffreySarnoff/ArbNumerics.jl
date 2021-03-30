@@ -7,7 +7,7 @@
 
 ## Matrix Functions
 
-#### `using ArbNumerics, GenericSchur, GenericSVD, LinearAlgebra`
+#### `using ArbNumerics, LinearAlgebra`
 
 - `det`, `tr`
 - `transpose`, `adjoint`, `inv`

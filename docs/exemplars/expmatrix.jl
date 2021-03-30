@@ -18,7 +18,7 @@ with a   500x500 matrix of Float64s, working with 350 bits used  25 seconds
 with a   750x750 matrix of Float64s, working with 175 bits used  25 seconds
 =#
 
-using ArbNumerics # GenericSVD, LinearAlgebra, Readables
+using ArbNumerics # LinearAlgebra, Readables
 
 #=
 ArbNumerics' interactive users see the "viewable precision"; computations utilize "working precision".
