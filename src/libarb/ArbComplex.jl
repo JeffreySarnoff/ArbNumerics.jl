@@ -378,7 +378,7 @@ function Base.angle(x::ArbComplex{P}) where {P}
     !(signbit(a) || signbit(T(pi) - a)) ? a : (signbit(a) ? zero(T) : T(pi))
 end
 
-# needed for GenericSVD
+# needed for GenericLinearAlgebra
 
 flipsign(x::ArbComplex{P}, y::T) where {P, T<:Base.IEEEFloat} =
     signbit(y) ? -x : x
