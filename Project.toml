@@ -20,15 +20,17 @@ MPFR_jll = "3a97d323-0669-5f0c-9066-3539efd106a3"
 FLINT_jll = "e134572f-a0d5-539d-bddf-3cad8db41a82"
 Arb_jll = "d9960996-1013-53c9-9ba4-74a4155039c3"
 
+[compat]
+Arb_jll = "~200.2200"
+FLINT_jll = "~200.800.401"
+SpecialFunctions = "1.0, 2"SpecialFunctions = "1, 2"
+BinaryProvider = "0.4, 0.5, 0.6, 0.7, 0.9, 1"
+GenericLinearAlgebra = "0.2.5, 0.3, 0.4, 0.5, 0.6"
+Readables = "0.3"
+julia = "1"
+
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
 test = ["Test"]
-
-[compat]
-SpecialFunctions = "1, 2"
-BinaryProvider = "0.4, 0.5, 0.6, 0.7, 0.9, 1"
-GenericLinearAlgebra = "0.2.5, 0.3, 0.4, 0.5, 0.6"
-Readables = "0.3"
-julia = "1"
