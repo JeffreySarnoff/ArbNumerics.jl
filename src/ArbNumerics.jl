@@ -153,10 +153,6 @@ using Libdl
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
 
-using FLINT_jll
-using Arb_jll
-
-include("support/arblib.jl")
 include("support/abstractions.jl")
 include("support/matrices.jl")
 
