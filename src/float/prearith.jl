@@ -82,7 +82,7 @@ function abs(x::ArbReal{P}) where {P}
 end
 
 function abs(x::ArbComplex{P}) where {P}
-    z = ArbComplex{P}()
+    z = ArbReal{P}()
     ccall(@libarb(acb_abs), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
