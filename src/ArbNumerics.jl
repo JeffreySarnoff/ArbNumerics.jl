@@ -65,7 +65,7 @@ export ArbNumber,
        elliptic_k, elliptic_e, elliptic_pi, elliptic_f,
        elliptic_k2, elliptic_e2, elliptic_pi2, elliptic_f2, # modulus^2
        elliptic_rf, elliptic_rg, elliptic_rj,
-       weierstrass_p, weierstrass_invp, weierstrass_zeta, weierstrass_sigma,
+       weierstrass_p, weierstrass_p_prime, weierstrass_p_jet, weierstrass_invariants, weierstrass_roots, weierstrass_p_series, weierstrass_inv_p, weierstrass_zeta, weierstrass_sigma,
        zeta, eta, xi,                  # Reimann
        lambertw, polylog,
        π, ℯ, γ, φ, catalan,
@@ -196,6 +196,7 @@ include("float/otherspecial.jl")
 include("float/bessel.jl")
 include("float/airy.jl")
 include("float/elliptic.jl")
+include("float/weierstrass.jl")
 include("float/hypergeometric.jl")
 include("float/export_fallbacks.jl")
 
