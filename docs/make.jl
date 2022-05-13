@@ -3,7 +3,7 @@ using Documenter # , ArbNumerics
 makedocs(
     # modules = [ArbNumerics],
     sitename = "ArbNumerics.jl",
-    authors = "Jeffrey Sarnoff and other contributors"
+    authors = "Jeffrey Sarnoff and other contributors",
     pages  = Any[
         "Overview"                 => "index.md",
         "The Types"                => "thetypes.md",
