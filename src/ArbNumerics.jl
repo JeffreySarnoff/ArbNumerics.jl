@@ -127,6 +127,16 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
 
+using Arb_jll
+
+macro libarb(function_name)
+    return (:($function_name), libarb)
+end
+
+macro libflint(function_name)
+    return (:($function_name), Arb_jll.libflint)
+end
+
 using  GenericLinearAlgebra
 
 using  LinearAlgebra
