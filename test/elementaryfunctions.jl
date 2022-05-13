@@ -72,3 +72,19 @@ end
    @test isapprox(asech(flb), asech(arb))
    @test isapprox(acoth(fla), acoth(ara))
 end
+
+@testset "Weierstrass elliptic functions" begin
+    τ = ArbComplex(1.0im)
+    @test isapprox(weierstrass_p(ArbComplex(0.5+0.5im),τ),0.0,atol=1.e-8)
+    z = weierstrass_p_jet(ArbComplex(0.5),τ)
+    @test isapprox(z[1],6.87518581802)
+    @test isapprox(z[2],0.0,atol=1.e-8)
+    @test isapprox(weierstrass_inv_p(z[1],τ),0.5)
+    inv = weierstrass_invariants(τ)
+    @test isapprox(inv[1],189.0727201292338)
+    @test isapprox(inv[2],0.0,atol=1.e-8)
+    rt = weierstrass_roots(τ)
+    @test isapprox(rt[1],6.87518581802037282)
+    @test isapprox(rt[2],0.0,atol=1.e-8)
+    @test isapprox(rt[3],-6.87518581802037282)
+end
