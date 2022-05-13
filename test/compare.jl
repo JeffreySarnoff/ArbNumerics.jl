@@ -49,10 +49,21 @@
     @test 1.0 <= ArbReal(2.0)
 
     @test ArbReal(2.0) == ArbReal(2.0)
+    
     @test ArbReal(1.0) != ArbReal(2.0)
     @test ArbReal(2.0) > ArbReal(1.0)
     @test ArbReal(1.0) < ArbReal(2.0)
     @test ArbReal(2.0) >= ArbReal(1.0)
     @test ArbReal(1.0) <= ArbReal(2.0)
 
+    @test isapprox(ArbFloat(1.0), ArbFloat(1.0))
+    @test isapprox(ArbFloat(1.0), ArbReal(1.0))
+    @test isapprox(ArbReal(1.0), ArbFloat(1.0))
+    @test isapprox(ArbReal(1.0), ArbReal(1.0))
+    @test isapprox(ArbFloat(1.0), ArbComplex(1.0,0.0))
+    @test isapprox(ArbReal(1.0), ArbComplex(1.0,0.0))
+    @test isapprox(ArbComplex(1.0,0.0), ArbFloat(1.0))
+    @test isapprox(ArbComplex(1.0,0.0), ArbReal(1.0))
+    @test isapprox(ArbComplex(1.0,0.5), ArbComplex(1.0,0.5))
+            
 end
