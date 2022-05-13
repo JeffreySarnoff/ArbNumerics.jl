@@ -23,7 +23,7 @@ Arb_jll = "d9960996-1013-53c9-9ba4-74a4155039c3"
 [compat]
 Arb_jll = "~200.2200"
 FLINT_jll = "~200.800.401"
-SpecialFunctions = "1.0, 2"SpecialFunctions = "1, 2"
+SpecialFunctions = "1, 2"
 BinaryProvider = "0.4, 0.5, 0.6, 0.7, 0.9, 1"
 GenericLinearAlgebra = "0.2.5, 0.3, 0.4, 0.5, 0.6"
 Readables = "0.3"
