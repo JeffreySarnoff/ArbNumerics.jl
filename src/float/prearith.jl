@@ -82,9 +82,9 @@ function abs(x::ArbReal{P}) where {P}
 end
 
 function abs(x::ArbComplex{P}) where {P}
-    z = ArbReal{P}()
-    ccall(@libarb(acb_abs), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
+    z = ArbComplex{P}()
+    ccall(ArbNumerics.@libarb(acb_abs), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
+    return real(z)
 end
 
 abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
