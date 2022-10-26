@@ -120,7 +120,7 @@ elliptic_k2(phi::ArbComplex{P}, modulus::ArbComplex{P}) where {P} = elliptic_f(p
 function elliptic_f(phi::ArbReal{P}, modulus::ArbReal{P}) where {P}
     cphi     = ArbComplex(phi, 0)
     cmodulus = ArbComplex(modulus, 0)
-    cresult  = ellipticf(cphi, cmodulus)
+    cresult  = elliptic_f(cphi, cmodulus)
     result   = real(cresult)
     return result
 end
