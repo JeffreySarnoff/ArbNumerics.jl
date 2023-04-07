@@ -296,7 +296,7 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 - Arb tracks numerical errors automatically using the midpoint-radius representation of an interval.
 
 - Arb is designed to provide evaluands that contain the veridical numerical result.
-- Arb uses algorithms with provable error bounds foe multiprecision mathematical functions.
+- Arb uses algorithms with provable error bounds for multiprecision mathematical functions.
 
 - The code is thread-safe, portable, and extensively tested. The library outperforms others.
 
