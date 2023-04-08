@@ -68,7 +68,7 @@ function angle(x::ArbComplex{P}) where {P}
     return z
 end
 
-magnitude(x::T) where {T<:Complex} where {P} = hypot(reim(x)...)
+magnitude(x::T) where {T<:Complex} = hypot(reim(x)...)
 
 magnitude(x::ArbFloat{P})   where {P} = x
 magnitude(x::ArbReal{P})    where {P} = x
