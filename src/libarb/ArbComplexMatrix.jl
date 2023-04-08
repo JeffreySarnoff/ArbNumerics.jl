@@ -127,7 +127,7 @@ Matrix(x::Array{ArbComplex{P}, 2}) where {P} = x
 arbzeros(::Type{ArbComplex{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
     ArbComplexMatrix{P}(rowcount, colcount)
 
-arbzeros(::Type{ArbComplex},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+arbzeros(::Type{ArbComplex},rowcount::SI, colcount::SI) where {SI<:Signed} =
     ArbComplexMatrix(rowcount, colcount)
 
 @inline Base.isempty(x::ArbComplexMatrix{P}) where {P} =
