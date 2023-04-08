@@ -107,7 +107,7 @@ Matrix(x::Array{ArbFloat{P}, 2}) where {P} = x
 arbzeros(::Type{ArbFloat{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
     ArbFloatMatrix{P}(rowcount, colcount)
 
-arbzeros(::Type{ArbFloat},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+arbzeros(::Type{ArbFloat},rowcount::SI, colcount::SI) where {SI<:Signed} =
     ArbFloatMatrix(rowcount, colcount)
 
 @inline Base.isempty(x::ArbFloatMatrix{P}) where {P} =
