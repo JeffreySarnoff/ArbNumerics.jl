@@ -182,7 +182,8 @@ root(x::ArbComplex{P}, y::T) where {P, T<:AbstractFloat} = pow(x, -y)
 
 
 
-function factorial(x::Signed) where {P}
+function factorial(x::Signed)
+    P = workingprecision(ArbReal)
     z = ArbReal{P}()
     u = Culong(x)
     ccall(@libarb(arb_fac_ui), Cvoid, (Ref{ArbReal}, Culong, Clong), z, u, P)
@@ -203,7 +204,8 @@ function factorial(x::ArbReal{P}) where {P}
     return z
 end
 
-function doublefactorial(x::Signed) where {P}
+function doublefactorial(x::Signed)
+    P = workingprecision(ArbReal)
     z = ArbReal{P}()
     u = Culong(x)
     ccall(@libarb(arb_doublefac_ui), Cvoid, (Ref{ArbReal}, Culong, Clong), z, u, P)
@@ -225,7 +227,8 @@ function doublefactorial(x::ArbReal{P}) where {P}
 end
 
 
-function risingfactorial(x::Signed, n::Signed) where {P}
+function risingfactorial(x::Signed, n::Signed)
+    P = workingprecision(ArbReal)
     z = ArbReal{P}()
     ux = Culong(x)
     un = Culong(n)        
