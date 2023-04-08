@@ -4,7 +4,7 @@ repo = "https://github.com/JeffreySarnoff/ArbNumerics.jl.git"
 keywords = ["math", "floating-point", "extended-precision", "accuracy", "precision"]
 author = "Jeffrey Sarnoff"
 license = "MIT"
-version = "v1.3.2"
+version = "v1.3.3"
 
 [deps]
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
