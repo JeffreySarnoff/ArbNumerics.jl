@@ -142,7 +142,7 @@ Matrix(x::Array{ArbReal{P}, 2}) where {P} = x
 arbzeros(::Type{ArbReal{P}},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
     ArbRealMatrix{P}(rowcount, colcount)
 
-arbzeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {P, SI<:Signed} =
+arbzeros(::Type{ArbReal},rowcount::SI, colcount::SI) where {SI<:Signed} =
     ArbRealMatrix(rowcount, colcount)
 
 @inline Base.isempty(x::ArbRealMatrix{P}) where {P} =
