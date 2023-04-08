@@ -31,7 +31,7 @@ mag_clear(x::Mag) = ccall(@libarb(mag_clear), Cvoid, (Ref{Mag},), x)
 Mag(x::Mag) = x
 
 
-swap(x::Mag, y::Mag) where {P} = ccall(@libarb(mag_swap), Cvoid, (Ref{Mag}, Ref{Mag}), x, y)
+swap(x::Mag, y::Mag) = ccall(@libarb(mag_swap), Cvoid, (Ref{Mag}, Ref{Mag}), x, y)
 
 function copy(x::Mag)
     z = Mag()
