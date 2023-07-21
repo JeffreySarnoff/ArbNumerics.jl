@@ -225,15 +225,15 @@ end
 function polygamma(s::ArbReal{P}, z::ArbReal{P}, prec::Int=P) where {P}
     sc = ArbComplex(s)
     zc = ArbComplex(z)
-    wc = polygamma(sc, zc, prec)
-    return wc
+    res = polygamma(sc, zc, prec)
+    return res
 end
 
 function polygamma(s::ArbFloat{P}, z::ArbFloat{P}, prec::Int=P) where {P}
     sc = ArbComplex(s)
     zc = ArbComplex(z)
-    wc = polygamma(sc, zc, prec)
-    return wc
+    res = polygamma(sc, zc, prec)
+    return res
 end
 
 
