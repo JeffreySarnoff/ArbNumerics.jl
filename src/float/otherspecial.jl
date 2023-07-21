@@ -88,7 +88,7 @@ end
 
 function polylog(s::ArbComplex{P}, z::ArbComplex{P}, prec::Int=P) where {P}
     w = ArbComplex{P}()
-    ccall(@libarb(acb_polylog), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint), w, s, z, P)
+    ccall(@libarb(acb_polylog), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Ref{ArbComplex}, Cint), w, s, z, prec)
     return w
 end
 
@@ -108,7 +108,7 @@ end
 
 function polylog(s::Int, z::ArbComplex{P}, prec::Int=P) where {P}
     w = ArbComplex{P}()
-    ccall(@libarb(acb_polylog_si), Cvoid, (Ref{ArbComplex}, Cint, Ref{ArbComplex}, Cint), w, s, z, P)
+    ccall(@libarb(acb_polylog_si), Cvoid, (Ref{ArbComplex}, Cint, Ref{ArbComplex}, Cint), w, s, z, prec)
     return w
 end
 
@@ -123,6 +123,8 @@ function polylog(s::Int, z::ArbFloat{P}, prec::Int=P) where {P}
     wc = polylog(s, zc, prec)
     return wc
 end
+
+
 
 #=
 for (A,F) in ((:ellipticp, :acb_elliptic_p), (:ellipticpi, :acb_elliptic_pi),
