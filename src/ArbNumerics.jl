@@ -67,7 +67,7 @@ export ArbNumber,
        elliptic_rf, elliptic_rg, elliptic_rj,
        weierstrass_p, weierstrass_p_prime, weierstrass_p_jet, weierstrass_invariants, weierstrass_roots, weierstrass_p_series, weierstrass_inv_p, weierstrass_zeta, weierstrass_sigma,
        zeta, eta, xi,                  # Reimann
-       lambertw, polylog,
+       lambertw, polylog, polygamma,
        π, ℯ, γ, φ, catalan,
 
        # fft
