@@ -161,14 +161,6 @@ end
 
 deepcopy(x::ArbComplex{P}) where {P} = copy(x)
 
-# for backward compatibility (Arb does not support rounding modes)
-function ArbComplex{P}(x::ArbComplex{Q}, ::RoundingMode=RoundNearest) where {P,Q}
-    z = ArbComplex{P}()
-    res = ccall(@libarb(acb_set_round), Cvoid,
-                (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
-end
-
 ArbComplex(x::ArbFloat{P}) where {P} = ArbComplex{P}(x)
 ArbComplex(x::ArbReal{P}) where {P} = ArbComplex{P}(x)
 ArbComplex(x::ArbFloat{P}, y::ArbFloat{P}) where {P} = ArbComplex{P}(x,y)
