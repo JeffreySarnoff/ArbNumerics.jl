@@ -102,8 +102,6 @@ end
 
 ArbComplex(re::T, im::T) where T<:AbstractFloat = ArbComplex(ArbFloat(re), ArbFloat(im))
 
-const Analytic = Cint(0) # prefer the non-analytic versions
-
 @inline sign_bit(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size)
 @inline sign_bits(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size), isodd(x.imag_mid_size)
 @inline sign_bit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = isodd(x.real_mid_size)
@@ -116,9 +114,11 @@ function ArbComplex{P}(rea::Float64) where {P}
     return z
 end
 
-function ArbComplex{P}(rea::Cint) where {P}
+const ArbInts = Union{Int64,Int32,Int16,Int8}
+
+function ArbComplex{P}(rea::ArbInts) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_set_si), Cvoid, (Ref{ArbComplex}, Cint), z, rea)
+    ccall(@libarb(acb_set_si), Cvoid, (Ref{ArbComplex}, Clong), z, rea)
     return z
 end
 
@@ -146,9 +146,9 @@ function ArbComplex{P}(re::Float64, im::Float64) where {P}
     return z
 end
 
-function ArbComplex{P}(x::Int64, y::Int64) where {P}
+function ArbComplex{P}(x::ArbInts, y::ArbInts) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_set_si_si), Cvoid, (Ref{ArbComplex}, Cint, Cint, Clong), z, x, y, P)
+    ccall(@libarb(acb_set_si_si), Cvoid, (Ref{ArbComplex}, Clong, Clong, Clong), z, x, y, P)
     return z
 end
 
@@ -160,15 +160,6 @@ function copy(x::ArbComplex{P}) where {P}
 end
 
 deepcopy(x::ArbComplex{P}) where {P} = copy(x)
-
-
-function ArbComplex{P}(x::ArbComplex{Q}, roundingmode::RoundingMode) where {P,Q}
-    z = ArbComplex{P}()
-    rounding = match_rounding_mode(roundingmode)
-    res = ccall(@libarb(acb_set_round), Cint,
-                (Ref{ArbComplex}, Ref{ArbComplex}, Clong, Cint), z, x, P, rounding)
-    return z
-end
 
 ArbComplex(x::ArbFloat{P}) where {P} = ArbComplex{P}(x)
 ArbComplex(x::ArbReal{P}) where {P} = ArbComplex{P}(x)
@@ -373,7 +364,6 @@ function Base.angle(x::ArbComplex{P}) where {P}
     x = hypot(rea + 1.0, ima)
 
     a = 2 * atan(y , x)
-         
     T = ArbFloat{P}
     !(signbit(a) || signbit(T(pi) - a)) ? a : (signbit(a) ? zero(T) : T(pi))
 end
@@ -402,8 +392,8 @@ copysign(x::ArbComplex{P}, y::T) where {P, T<:ArbReal} =
 # a type specific hash function helps the type to 'just work'
 const hash_arbcomplex_lo = (UInt === UInt64) ? 0x76143ad985246e79 : 0x5b6a64dc
 const hash_0_arbcomplex_lo = hash(zero(UInt), hash_arbcomplex_lo)
-Base.hash(z::ArbComplex{P}, h::UInt) where {P} =
-    hash(z.real_mid_d1 ⊻ z.real_rad_exp ⊻ z.imag_mid_d1 ⊻ z.imag_rad_exp,     
-           h ⊻ hash(z.real_mid_d2 ⊻ (~reinterpret(UInt,P)), hash_arbcomplex_lo)
-               ⊻ hash_0_arbcomplex_lo)
-    
+function Base.hash(z::ArbComplex{P}, h::UInt) where {P}
+    hash(z.real_mid_d1 ⊻ z.real_rad_exp ⊻ z.imag_mid_d1 ⊻ z.imag_rad_exp,
+         h ⊻ hash(z.real_mid_d2 ⊻ (~reinterpret(UInt,P)), hash_arbcomplex_lo)
+         ⊻ hash_0_arbcomplex_lo)
+end

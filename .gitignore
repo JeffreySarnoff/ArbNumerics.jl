@@ -1,4 +1,7 @@
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
+*.jl.*.mem
+Manifest.toml
+settings.json
 deps/deps.jl
