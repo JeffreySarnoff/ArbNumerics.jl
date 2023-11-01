@@ -60,6 +60,7 @@ ArbComplex{P}(x::T) where {P, T<:Number} = ArbComplex{P}(real(x), imag(x))
 const PtrToArbComplex = Ptr{ArbComplex} # acb_ptr
 const PtrToPtrToArbComplex = Ptr{Ptr{ArbComplex}} # acb_ptr*
 
+const Slong = Int # to accomodate windows
 
 clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{ArbComplex},), x)
 
@@ -114,11 +115,11 @@ function ArbComplex{P}(rea::Float64) where {P}
     return z
 end
 
-const ArbInts = Union{Int64,Int32,Int16,Int8}
+const ArbInts = Union{Int,Int32,Int16,Int8} # Int is Int32 on some windows enviroment
 
 function ArbComplex{P}(rea::ArbInts) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_set_si), Cvoid, (Ref{ArbComplex}, Clong), z, rea)
+    ccall(@libarb(acb_set_si), Cvoid, (Ref{ArbComplex}, Slong), z, rea)
     return z
 end
 
@@ -148,7 +149,7 @@ end
 
 function ArbComplex{P}(x::ArbInts, y::ArbInts) where {P}
     z = ArbComplex{P}()
-    ccall(@libarb(acb_set_si_si), Cvoid, (Ref{ArbComplex}, Clong, Clong, Clong), z, x, y, P)
+    ccall(@libarb(acb_set_si_si), Cvoid, (Ref{ArbComplex}, Slong, Slong, Slong), z, x, y, P)
     return z
 end
 
