@@ -126,17 +126,14 @@ end
 Int32(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Int32(Int64(x), roundingmode)
 Int16(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Int16(Int64(x), roundingmode)
 
-BigFloat(x::ArbFloat{P}) where {P} = BigFloat(x, RoundNearest)
-function BigFloat(x::ArbFloat{P}, roundingmode::RoundingMode) where {P}
+"""
+    BigFloat(::ArbFloat; [precision=workingprecision(x), roundingmode=RoundNearest])
+
+Construct a `BigFloat`from an `ArbFloat`.
+"""
+function BigFloat(x::ArbFloat{P}; precision::Int=workingprecision(x), roundingmode::RoundingMode=RoundNearest) where {P}
     rounding = match_rounding_mode(roundingmode)
-    z = BigFloat(0, workingprecision(x))
-    roundingdir = ccall(@libarb(arf_get_mpfr), Cint, (Ref{BigFloat}, Ref{ArbFloat}, Cint), z, x, rounding)
-    return z
-end
-BigFloat(x::ArbFloat{P}, bitprecision::Int) where {P} = BigFloat(x, bitprecision, RoundNearest)
-function BigFloat(x::ArbFloat{P}, bitprecision::Int, roundingmode::RoundingMode) where {P}
-    rounding = match_rounding_mode(roundingmode)
-    z = BigFloat(0, bitprecision)
+    z = BigFloat(0; precision)
     roundingdir = ccall(@libarb(arf_get_mpfr), Cint, (Ref{BigFloat}, Ref{ArbFloat}, Cint), z, x, rounding)
     return z
 end
@@ -192,7 +189,7 @@ function divrem(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
 end
 
 fld(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
-    floor(x / y)    
+    floor(x / y)
 
 mod(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
     x - (fld(x,y) * y)
@@ -204,9 +201,9 @@ function fldmod(x::ArbFloat{P}, y::ArbFloat{P}) where {P}
 end
 
 cld(x::ArbFloat{P}, y::ArbFloat{P}) where {P} =
-    ceil(x / y)    
+    ceil(x / y)
 
-    
+
 # a type specific hash function helps the type to 'just work'
 const hash_arbfloat_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
 const hash_0_arbfloat_lo = hash(zero(UInt), hash_arbfloat_lo)

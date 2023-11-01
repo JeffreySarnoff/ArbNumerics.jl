@@ -91,36 +91,10 @@ abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
 abs2(x::ArbReal{P})    where {P} = square( abs(x) )
 abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
 
+# needed for GenericLinearAlgebra
 
-
-flipsign(x::ArbFloat{P}, y::U) where {P, U<:Unsigned} = +x
-copysign(x::ArbFloat{P}, y::U) where {P, U<:Unsigned} = +x
-
-flipsign(x::ArbFloat{P}, y::S) where {P, S<:Signed} = signbit(y) ? -x : x
-copysign(x::ArbFloat{P}, y::S) where {P, S<:Signed} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbFloat{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -x : x
-copysign(x::ArbFloat{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbReal{P}, y::U) where {P, U<:Unsigned} = +x
-copysign(x::ArbReal{P}, y::U) where {P, U<:Unsigned} = +x
-
-flipsign(x::ArbReal{P}, y::S) where {P, S<:Signed} = signbit(y) ? -x : x
-copysign(x::ArbReal{P}, y::S) where {P, S<:Signed} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbReal{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -x : x
-copysign(x::ArbReal{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbComplex{P}, y::U) where {P, U<:Unsigned} = +x
-copysign(x::ArbComplex{P}, y::U) where {P, U<:Unsigned} = +x
-
-flipsign(x::ArbComplex{P}, y::S) where {P, S<:Signed} = signbit(y) ? -x : x
-copysign(x::ArbComplex{P}, y::S) where {P, S<:Signed} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbComplex{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -x : x
-copysign(x::ArbComplex{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? (signbit(x.re) ? x : -x) : x
-
-
+flipsign(x::ArbNumber, y::Real) = signbit(y) ? -x : x
+copysign(x::ArbNumber, y::Real) = (signbit(y) == signbit(x)) ? x : -x
 
 inv(x::ArbFloat{P}) where {P} = ArbFloat{P}( inv(ArbReal{P}(x)) )
 

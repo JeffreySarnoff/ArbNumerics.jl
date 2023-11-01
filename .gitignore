@@ -2,6 +2,7 @@
 *.jl.*.cov
 *.jl.mem
 *.jl.*.mem
+lcov.info
 Manifest.toml
 settings.json
 deps/deps.jl

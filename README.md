@@ -1,28 +1,25 @@
-#
+
 # ArbNumerics.jl
 
+**Copyright © 2015-2023 by Jeffrey Sarnoff.**
 
-#### Copyright © 2015-2023 by Jeffrey Sarnoff.
-####  This work is released under The MIT License.
+**This work is released under The MIT License.**
 
 For multiprecision numerical computing using values with 25..2,500 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy.
 
 This package uses the [Arb C Library](http://arblib.org/index.html), and adapts some C library interface work from [Nemo](https://github.com/wbhart/Nemo.jl) (see [_below_](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)). Here is a presentation by the designer and architect of the [Arb C library](https://fredrikj.net/math/oxford2019.pdf).
 
-
 -----
 
 [![Travis Build Status](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/ArbNumerics.jl)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/stable/)&nbsp;&nbsp;&nbsp;[![Docs](https://img.shields.io/badge/docs-dev-blue.svg)](http://jeffreysarnoff.github.io/ArbNumerics.jl/dev/)
 
-
-----
+-----
 
 ## Introduction
 
 ArbNumerics exports three types: `ArbFloat`, `ArbReal`, `ArbComplex`.  `ArbFloat` is an extended precision floating point type. Math using `ArbFloat` is expected to be very near the veridical value, and often is the closest value for the precision in use. `ArbReal` is an interval-valued quantity formed of an `ArbFloat` (the midpoint) and a `radius`.  Math functions with `ArbReal` are assured to enclose the veridical value.  This assurance extends to multiple function applications.  `ArbComplex` is an `ArbReal` pair (real, imaginary).  The same enclosure assurance applies.
 
 While the bounds of an `ArbReal` or `ArbComplex` are available, the default is to show these values as digit sequences which almost assuredly are accurate, in a round to nearest sense, to the precision displayed.  Math with `ArbFloat` does not provide the assurance one gets using `ArbReal`, as an `ArbFloat` is a point value.  While some effort has been taken to provide you with more reliable results from math with `ArbFloat` values than would be the case using the underlying library itself, `ArbReal` or `ArbComplex` are suggested for work that is important to you.  `ArbFloat` is appropriate when exactness is not required during development, or with applications that are approximating something at increasing precisions.
-
 
 ## Installation
 
@@ -38,7 +35,7 @@ When updating ArbNumerics, do `pkg> gc` to prevent accruing a great deal of unus
 ## StartUp
 
 `using ArbNumerics`
-or, if you installed Readables, 
+or, if you installed Readables,
 `using ArbNumerics, Readables`
 
 ## Precision
@@ -49,23 +46,23 @@ Otherwise, some extra bits are used to assist with printing values rounded to th
 
 You can set the internal working precision (which is the same as the displayed precision with `setextrabits(0)`) to a given number of bits or a given number of decimal digits:
 
-`setworkingprecision(ArbFloat, bits=250)`, `setworkingprecision(ArbReal, digits=100)` 
+`setworkingprecision(ArbFloat, bits=250)`, `setworkingprecision(ArbReal, digits=100)`
 
 The type can be any of `ArbFloat`, `ArbReal`, `ArbComplex`.  All types share the same precision so interconversion makes sense.
 
 You can set the external displayed precision (which is the the same as the internal precision with `setextrabits(0)`) to a given
 number of bits or a given number of decimal digits:
 
-`setprecision(ArbFloat, bits=250)`, `setworkingprecision(ArbReal, digits=100)` 
+`setprecision(ArbFloat, bits=250)`, `setworkingprecision(ArbReal, digits=100)`
 
 The type can be any of `ArbFloat`, `ArbReal`, `ArbComplex`.  All types share the same precision so interconversion makes sense.
 
-
-## Using ArbFloat 
+## Using ArbFloat
 
 Reading the sections that follow gives you a good platform from which to develop.
 
 - consider `using ArbNumerics, Readables`
+
 ```julia
 julia> ArbFloat(pi, digits=30, base=10)
 3.14159265358979323846264338328
@@ -82,7 +79,8 @@ Initially, the default precision is set to 106 bits.  All ArbNumeric types use t
 
 The precision in use may be set globally, as with BigFloats, or it may be given with the constructor.  For most purposes, you should work with a type at one, two, or three precisions.  It is helps clarity to convert precisions explicitly, however, it is not necessary.
 
-#### Constructors using the default precision
+### Constructors using the default precision
+
 ```julia
 julia> a = ArbFloat(3)
 3.0000000000000000000000000000000
@@ -95,42 +93,39 @@ julia> c = one(ArbComplex)
 ```
 
 #### Constructors using a specified precision
+
 ```julia
 julia> BITS = 53;
 
-julia> a = sqrt(ArbFloat(2, BITS))
+julia> a = sqrt(ArbFloat(2, bits=BITS))
 1.414213562373095
 
-julia> b = ArbReal(pi, BITS)
+julia> b = ArbReal(pi, bits=BITS)
 3.141592653589793
 
-julia> c = ArbComplex(a, b, BITS)
+julia> c = ArbComplex(a, b, bits=BITS)
 1.414213562373095 + 3.141592653589793im
 ```
+
 ```julia
 julia> DIGITS = 78;
 
-julia> ArbFloat(pi, bits4digits(DIGITS))
+julia> ArbFloat(pi, digits=DIGITS)
 3.14159265358979323846264338327950288419716939937510582097494459230781640628621
 
 julia> DIGITS == length(string(ans)) - 1 # (-1 for the decimal point)
 true
 ```
+
 ### changing precision
 
 ```julia
-julia> a = ArbFloat(2, 25)
+julia> a = ArbFloat(2, bits=25)
 2.000000
-julia> a = ArbFloat(a, 50)
-2.00000000000000
-
-julia> precision = 25
-julia> a = ArbFloat(2, precision)
-2.000000
-julia> precision = 50
-julia> a = ArbFloat(a, precision)
+julia> a = ArbFloat(a, bits=50)
 2.00000000000000
 ```
+
 ### interconversion
 
 ```julia
@@ -153,11 +148,11 @@ julia> Float16(c)
 Float16(1.414)
 ```
 
-----
+-----
 
 Consider using ArbReals instead of ArbFloats if you want your results to be rock solid. That way you can examine the enclosures for your results with `radius(value)` or `bounds(value)`.  This is strongly suggested when working with precisions that you are increasing dynamically.
 
-----
+-----
 
 ### Math
 
@@ -165,7 +160,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 
 - `+`,`-`, `*`, `/`
 - `square`, `cube`, `sqrt`, `cbrt`, `hypot`
-- `pow(x,i)`, `root(x,i)` _where i is an integer > 0_
+- `pow(x, i)`, `root(x, i)` _where i is an integer > 0_
 - `factorial`, `doublefactorial`, `risingfactorial`
 - `binomial`
 
@@ -208,6 +203,7 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `elliptic_zeta`, `elliptic_sigma`
 
 ##### elliptic integrals of squared modulus
+
 - `elliptic_e2`, `elliptic_k2`
 - `elliptic_p2`, `elliptic_pi2`
 - `elliptic_zeta2`, `elliptic_sigma2`
@@ -218,10 +214,10 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `weierstrass_zeta`, `weierstrass_sigma`
 
 #### hypergeometric functions
-    
+
 - `hypgeom0f1`, `hypgeom1f1`, `hypgeom1f2`  
 - `hypgeom0f1reg`, `hypgeom1f1reg`, `hypgeom1f2reg` (regularized)
-   
+
 #### other special functions
 
 - `ei`, `si`, `ci`
@@ -241,13 +237,13 @@ Consider using ArbReals instead of ArbFloats if you want your results to be rock
 - `dft`, `inverse_dft`
 - see docs for use
 
-## Intervals
+### Intervals
 
 #### parts
 
-- midpoint, radius
-- upperbound, lowerbound, bounds
-- upperbound_abs, lowerbound_abs, bounds_abs
+- `midpoint`, `radius`
+- `upperbound`, `lowerbound`, `bounds`
+- `upperbound_abs`, `lowerbound_abs`, `bounds_abs`
 
 #### construction
 
@@ -267,26 +263,26 @@ The radii are kept using an Arb C library internal structure that has a 30 bit u
 
 When constructing intervals , you should scale the radius to be as small as possible while preserving enclosure.
 
-----
+-----
 
 ### a caution for BigFloat
 
 ```julia
-julia> p=64;setprecision(BigFloat,p);
+julia> p = 64; setprecision(BigFloat, p);
 
-julia> ArbFloat(pi,p+8)
+julia> ArbFloat(pi, bits=p+8)
 3.14159265358979323846
 
-julia> ArbFloat(pi,p),BigFloat(pi)
+julia> ArbFloat(pi, bits=p), BigFloat(pi)
 (3.141592653589793238, 3.14159265358979323851)
 
-julia> [ArbFloat(pi,p), BigFloat(pi)]
-2-element Array{ArbFloat{88},1}:
+julia> [ArbFloat(pi, bits=p), BigFloat(pi)]
+2-element Vector{ArbFloat{88}}:
  3.141592653589793238
  3.141592653589793239
 ```
 
-----
+-----
 
 ## The Arb C library
 
@@ -300,18 +296,18 @@ julia> [ArbFloat(pi,p), BigFloat(pi)]
 
 - The code is thread-safe, portable, and extensively tested. The library outperforms others.
 
-
 ## Acknowledgements
 
 This work develops parts the Arb C library within Julia.  It is entirely dependent on Arb by Fredrik Johansson and would not exist without the good work of William Hart, Tommy Hofmann and the Nemo.jl team. The libraries for `Arb` and `Flint`, and build file are theirs, used with permission.
 
-----
+-----
 
 ## Alternatives
 
 For a numeric types like `Float64` and `ComplexF64` with about twice their precision, [Quadmath.jl](https://github.com/JuliaMath/Quadmath.jl) exports `Float128` and `ComplexF128`.  For almost as much precision with better performance, [DoubleFloats.jl](https://github.com/JuliaMath/DoubleFloats.jl) exports `Double64` and `ComplexDF64`. ValidatedNumerics.jl and other packages available at [JuliaIntervals](https://github.com/JuliaIntervals) provide an alternative approach to developing correctly contained results.  Those packages are very good and worthwhile when you do not require multiprecision numerics.
 
-----
+-----
+
 ## notes
 
 - To propose internal changes, please use pull requests.

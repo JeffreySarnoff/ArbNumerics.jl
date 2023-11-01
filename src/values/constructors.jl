@@ -103,7 +103,7 @@ Complex(x::ArbComplex{P}) where {P} = Complex{Float64}(x, RoundNearest)
 
 for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
   @eval begin
-        
+
     function $I(x::ArbFloat{P}) where {P}
         !isinteger(x) && throw(InexactError("$(x) is not an integer"))
         bi = BigInt(BigFloat(x))
@@ -111,20 +111,20 @@ for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
         return $I(bi)
     end
 
-    function $I(x::ArbReal{P}) where {P}   
+    function $I(x::ArbReal{P}) where {P}
         (!isexact(x) | !isinteger(x)) && throw(InexactError("$(x) is not an integer"))
         bi = BigInt(BigFloat(x))
         !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
         return $I(bi)
     end
 
-    function $I(x::ArbComplex{P}) where {P}   
+    function $I(x::ArbComplex{P}) where {P}
         (!isexact(x) | !isinteger(x) | !iszero(imag(x))) && throw(InexactError("$(x) is not an integer"))
         bi = BigInt(BigFloat(x))
         !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
         return $I(bi)
-    end        
-        
+    end
+
   end
 end
 
@@ -140,20 +140,20 @@ ArbComplex(x::T, y::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbRea
 function ArbReal{P}(x::Irrational{S}) where {P,S}
    mid = ArbFloat{P}(x)
    rad = ulp(mid)
-   return setball(mid, rad) 
+   return setball(mid, rad)
 end
 
 function ArbReal(x::Irrational{S}) where {S}
    P = workingprecision(ArbReal)
    mid = ArbFloat{P}(x)
    rad = ulp(mid)
-   return setball(mid, rad) 
+   return setball(mid, rad)
 end
 
 ArbComplex(x::Irrational{S}) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
 ArbComplex{P}(x::Irrational{S}) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
-ArbComplex(x::Irrational{S}, y::Real) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
-ArbComplex{P}(x::Irrational{S}, y::Real) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
+ArbComplex(x::Irrational{S}, y::Real) where {S} = ArbComplex(ArbReal(x), ArbReal(y))
+ArbComplex{P}(x::Irrational{S}, y::Real) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(y))
 
 # fallback
 

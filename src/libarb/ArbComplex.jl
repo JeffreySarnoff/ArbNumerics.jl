@@ -368,27 +368,6 @@ function Base.angle(x::ArbComplex{P}) where {P}
     !(signbit(a) || signbit(T(pi) - a)) ? a : (signbit(a) ? zero(T) : T(pi))
 end
 
-# needed for GenericLinearAlgebra
-
-flipsign(x::ArbComplex{P}, y::T) where {P, T<:Base.IEEEFloat} =
-    signbit(y) ? -x : x
-flipsign(x::ArbComplex{P}, y::T) where {P, T<:Real} =
-    signbit(y) ? -x : x
-flipsign(x::ArbComplex{P}, y::T) where {P, T<:ArbFloat} =
-    signbit(y) ? -x : x
-flipsign(x::ArbComplex{P}, y::T) where {P, T<:ArbReal} =
-    signbit(y) ? -x : x
-
-copysign(x::ArbComplex{P}, y::T) where {P, T<:Base.IEEEFloat} =
-    signbit(y) ? (signbit(x) ? x : -x) : (signbit(x) ? -x : x)
-copysign(x::ArbComplex{P}, y::T) where {P, T<:Real} =
-    signbit(y) ? (signbit(x) ? x : -x) : (signbit(x) ? -x : x)
-copysign(x::ArbComplex{P}, y::T) where {P, T<:ArbFloat} =
-    signbit(y) ? (signbit(x) ? x : -x) : (signbit(x) ? -x : x)
-copysign(x::ArbComplex{P}, y::T) where {P, T<:ArbReal} =
-    signbit(y) ? (signbit(x) ? x : -x) : (signbit(x) ? -x : x)
-
-
 # a type specific hash function helps the type to 'just work'
 const hash_arbcomplex_lo = (UInt === UInt64) ? 0x76143ad985246e79 : 0x5b6a64dc
 const hash_0_arbcomplex_lo = hash(zero(UInt), hash_arbcomplex_lo)
