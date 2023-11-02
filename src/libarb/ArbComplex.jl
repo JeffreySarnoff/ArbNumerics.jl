@@ -15,7 +15,7 @@
 
 The precision of an `ArbComplex` must be >= 24 bits or >= 8 digits.
 
-Internally, an `ArbComplex` represents as a pair of `ArbReals`, where the real part and the imaginary part are each
+Internally, an `ArbComplex` represents as a pair of `ArbReal`, where the real part and the imaginary part are each
 intervals given by midpoint and radius (half-width of the interval). This representation serves as a _ball_ over the complex numbers.
 Calculations with `ArbComplex` generate results that are assured to contain the true mathematical result.
 There is no a priori assurance on the width of the interval that results.
@@ -64,6 +64,8 @@ const PtrToPtrToArbComplex = Ptr{Ptr{ArbComplex}} # acb_ptr*
 const Slong = Int # to accomodate windows
 const ArbFloatReal{P} = Union{ArbFloat{P},ArbReal{P}}
 const ArbNumber1{P} = Union{ArbFloatReal{P},ArbComplex{P}}
+const ArbInts = Union{Int,Int32,Int16,Int8} # Int may be Int32
+const ArbRealTypes = Real # Union{Integer,AbstractFloat,ArbReal}
 
 # finalizer:
 clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{ArbComplex},), x)
@@ -78,7 +80,7 @@ ArbComplex{P}(::Real, ::Missing) where {P} = missing
 
 ArbComplex(x::T; kw...) where {T<:Number} = ArbComplex(real(x), imag(x); kw...)
 
-function ArbComplex(x::T, y::Real=zero(x); bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
+function ArbComplex(x::T, y::Real=0; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
     bits > 0 && bits < MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
     digits > 0 && digits < MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
     if base === 10
@@ -88,7 +90,7 @@ function ArbComplex(x::T, y::Real=zero(x); bits::Int=0, digits::Int=0, base::Int
     else
         throw(ErrorException("base expects 2 or 10"))
     end
-    ArbComplex{bits}(x, y)
+    iszero(y) ? ArbComplex{bits}(x) : ArbComplex{bits}(x, y)
 end
 
 ArbComplex(x::ArbNumber1{P}) where {P} = ArbComplex{P}(x)
@@ -103,28 +105,15 @@ ArbComplex(x::Real, y::ArbFloatReal{P}) where {P} = ArbComplex{P}(x, y)
 @inline sign_bit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = isodd(x.imag_mid_size)
 
 # ArbComplex{P}(sqrt(2.0))
-function ArbComplex{P}(rea::Float64) where {P}
+function ArbComplex{P}(rea::Base.IEEEFloat) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_d), Cvoid, (Ref{ArbComplex}, Float64), z, rea)
     return z
 end
 
-const ArbInts = Union{Int,Int32,Int16,Int8} # Int may be Int32
-
 function ArbComplex{P}(rea::ArbInts) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_si), Cvoid, (Ref{ArbComplex}, Slong), z, rea)
-    return z
-end
-
-
-function ArbComplex{P}(rea::ArbFloat{P}) where {P}
-    x = ArbReal{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), x, rea)
-    y = ArbReal{P}()
-    ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), y, x)
-    z = ArbComplex{P}()
-    ccall(@libarb(acb_set_arb), Cvoid, (Ref{ArbComplex}, Ref{ArbReal}), z, y)
     return z
 end
 
@@ -135,7 +124,7 @@ function ArbComplex{P}(rea::ArbReal{P}) where {P}
 end
 
 # ArbComplex{P}(sqrt(2.0), inv(17.0))
-function ArbComplex{P}(re::Float64, im::Float64) where {P}
+function ArbComplex{P}(re::Base.IEEEFloat, im::Base.IEEEFloat) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_d_d), Cvoid, (Ref{ArbComplex}, Float64, Float64), z, re, im)
     return z
@@ -180,118 +169,9 @@ function ArbComplex{P}(x::T) where {P,T<:Integer}
 end
 
 
-function ArbComplex{P}(x::T1, y::T2) where {P,T1<:Union{Integer,AbstractFloat},T2<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-
-function ArbComplex{P}(x::Irrational{S1}, y::Irrational{S2}) where {P,S1,S2}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-
-function ArbComplex{P}(x::Irrational{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-
-function ArbComplex{P}(x::T, y::Irrational{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-
-function ArbComplex{P}(x::T, y::ArbFloat{P}) where {P,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-
-ArbFloat{P}(x::ArbComplex{P}, bits::Int) where {P} = ArbFloat(real(x), bits=bits)
-ArbReal{P}(x::ArbComplex{P}, bits::Int) where {P} = ArbReal(real(x), bits=bits)
-
-function ArbComplex{P}(x::ArbFloat{P}, y::T) where {P,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-
-function ArbComplex{P}(x::T, y::ArbReal{P}) where {P,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    z = ArbComplex{P}(x1, y)
-    return z
-end
-function ArbComplex{P}(x::ArbReal{P}, y::T) where {P,T<:Union{Integer,AbstractFloat}}
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x, y1)
-    return z
-end
-
-function ArbComplex{P}(x::ArbFloat{P}, y::ArbReal{P}) where {P}
-    x1 = ArbReal{P}(x)
-    z = ArbComplex{P}(x1, y)
-    return z
-end
-function ArbComplex{P}(x::ArbReal{P}, y::ArbFloat{P}) where {P}
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x, y1)
-    return z
-end
-
-function ArbComplex{P}(x::T, y::ArbFloat{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::ArbFloat{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::T, y::ArbReal{S}) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::ArbReal{S}, y::T) where {P,S,T<:Union{Integer,AbstractFloat}}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::ArbFloat{S1}, y::ArbFloat{S2}) where {P,S1,S2}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::ArbReal{S1}, y::ArbReal{S2}) where {P,S1,S2}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::ArbFloat{S1}, y::ArbReal{S2}) where {P,S1,S2}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
-    z = ArbComplex{P}(x1, y1)
-    return z
-end
-function ArbComplex{P}(x::ArbReal{S1}, y::ArbFloat{S2}) where {P,S1,S2}
-    x1 = ArbReal{P}(x)
-    y1 = ArbReal{P}(y)
+function ArbComplex{P}(x::T1, y::T2) where {P,T1<:ArbRealTypes,T2<:ArbRealTypes}
+    x1 = convert(ArbReal{P}, x)
+    y1 = convert(ArbReal{P}, y)
     z = ArbComplex{P}(x1, y1)
     return z
 end
@@ -322,8 +202,6 @@ function radius(x::ArbComplex{P}) where {P}
     return ArbComplex{P}(zreal, zimag)
 end
 
-
-
 trunc(x::ArbComplex{P}) where {P} = ArbComplex{P}(trunc(real(x)), trunc(imag(x)))
 trunc(::Type{T}, x::ArbComplex{P}) where {P,T<:Integer} = T(trunc(real(x))), T(trunc(imag(x)))
 
@@ -339,12 +217,8 @@ function modf(x::ArbComplex{P}) where {P}
     return (repart, impart)
 end
 
-fmod(repart::Tuple{ArbReal{P1},ArbReal{P1}}, impart::Tuple{ArbReal{P2},ArbReal{P2}}) where {P1,P2} =
+function fmod(repart::Tuple{ArbReal{P1},ArbReal{P1}}, impart::Tuple{ArbReal{P2},ArbReal{P2}}) where {P1,P2}
     ArbComplex(fmod(repart), fmod(impart))
-
-# phase angle
-function Base.angle(x::ArbComplex{P}) where {P}
-    atan(imag(x), real(x))
 end
 
 # a type specific hash function helps the type to 'just work'

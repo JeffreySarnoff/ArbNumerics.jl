@@ -127,39 +127,17 @@ ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real
 ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x))
 ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
 
-ArbComplex{P}(x::BigInt) where {P} = ArbComplex{P}(ArbReal{P}(x))
-ArbComplex{P}(x::BigFloat) where {P} = ArbComplex{P}(ArbReal{P}(x))
-ArbComplex{P}(x::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x))
-#ArbComplex(x::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x))
-ArbComplex{P}(x::T, y::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x), BigFloat(y))
-#ArbComplex(x::T, y::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x), BigFloat(y))
-ArbComplex{P}(x::T) where {P,T<:Complex} = ArbComplex{P}(BigFloat(real(x)), BigFloat(imag(x)))
-ArbComplex(x::T) where {T<:Complex} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(real(x)), BigFloat(imag(x)))
-
 # retype
 
 ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
 ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(real(x))
 ArbReal(x::ArbFloat{P}) where {P} = ArbReal{P}(x)
 ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(real(x))
-# ArbComplex(x::ArbFloat{P}) where {P} = ArbComplex{P}(ArbReal{P}(x))
-# ArbComplex(x::ArbReal{P}) where {P} = ArbComplex{P}(x)
 
 ArbFloat{Q}(x::ArbReal{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(x))
 ArbFloat{Q}(x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(real(x)))
 ArbReal{Q}(x::ArbFloat{P}) where {P,Q} = ArbReal{Q}(ArbFloat{Q}(x))
 ArbReal{Q}(x::ArbComplex{P}) where {P,Q} = ArbReal{Q}(real(x))
-ArbComplex{Q}(x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(ArbReal{Q}(ArbFloat{Q}(x)))
-ArbComplex{Q}(x::ArbReal{P}) where {P,Q} = ArbComplex{Q}(ArbReal{Q}(x))
-
-
-@inline convert(::Type{ArbFloat{Q}}, x::ArbReal{P}) where {P,Q} = ArbFloat{Q}(x)
-@inline convert(::Type{ArbFloat{Q}}, x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(x)
-@inline convert(::Type{ArbReal{Q}}, x::ArbFloat{P}) where {P,Q} = ArbReal{Q}(x)
-@inline convert(::Type{ArbReal{Q}}, x::ArbComplex{P}) where {P,Q} = ArbReal{Q}(x)
-@inline convert(::Type{ArbComplex{Q}}, x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(x)
-@inline convert(::Type{ArbComplex{Q}}, x::ArbReal{P}) where {P,Q} = ArbComplex{Q}(x)
-
 
 # change precision
 

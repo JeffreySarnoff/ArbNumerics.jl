@@ -66,7 +66,7 @@
 
         @test midpoint(ac) == ac
         @test 1e-38 <= abs(radius(ArbComplex(π))) <= 2e-38
-        api = ArbComplex(pi, -pi)
+        api = ArbComplex(pi, -pi) # note `-pi is Float64`
         @test trunc(api) == ArbComplex(3 - 3im)
         @test floor(api) == ArbComplex(3 - 4im)
         @test ceil(api) == ArbComplex(4 - 3im)
@@ -76,6 +76,7 @@
         @test modf(ArbComplex(3.5, -2.5)) == ((0.5, 3.0), (-0.5, -2.0))
         @test fmod(modf(api)...) == api
         @test angle(api) ≈ angle(Complex(api))
+        @test api' ≈ ArbComplex(pi, pi) rtol=1e-16
 
         @test flipsign(api, -1) == -api
         @test flipsign(api, 0.0) == api
