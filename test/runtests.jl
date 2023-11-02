@@ -8,11 +8,14 @@ setprecision(BigFloat, 512)
 # end
 
 @testset "ArbNumerics tests" begin
-  include("specialvalues.jl")
-  include("compare.jl")
-  include("arithmetic.jl")
-  include("elementaryfunctions.jl")
-  include("misc.jl")
-  include("complex.jl")
-  include("dft.jl")
+    @testset "ArbNumerics without ambiguous methods" begin
+        @test isempty(detect_ambiguities(ArbNumerics))
+    end
+    include("specialvalues.jl")
+    include("compare.jl")
+    include("arithmetic.jl")
+    include("elementaryfunctions.jl")
+    include("misc.jl")
+    include("complex.jl")
+    include("dft.jl")
 end

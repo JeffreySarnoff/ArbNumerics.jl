@@ -1,38 +1,3 @@
-@inline function ArbFloat(x)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbFloat{prec}(x)
-    return res
-end
-@inline function ArbReal(x)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbReal{prec}(x)
-    return res
-end
-
-@inline function ArbComplex(x)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x)
-    return res
-end
-
-@inline function ArbComplex(x, y)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x, y)
-    return res
-end
-
-@inline function ArbComplex(x::I, y::T) where {I<:Integer, T<:AbstractFloat}
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(T(x), y)
-    return res
-end
-
-@inline function ArbComplex(x::T, y::I) where {I<:Integer, T<:AbstractFloat}
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x, T(y))
-    return res
-end
-
 # IEEEFloat
 
 # rounds up (widens)
@@ -150,14 +115,9 @@ function ArbReal(x::Irrational{S}) where {S}
    return setball(mid, rad)
 end
 
-ArbComplex(x::Irrational{S}) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
-ArbComplex{P}(x::Irrational{S}) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
-ArbComplex(x::Irrational{S}, y::Real) where {S} = ArbComplex(ArbReal(x), ArbReal(y))
-ArbComplex{P}(x::Irrational{S}, y::Real) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(y))
-
 # fallback
 
-ArbFloat{P}(x::T) where {P,T<:Real} = ArbFloat{P}(BigFloat(x))
+# ArbFloat{P}(x::T) where {P,T<:Real} = ArbFloat{P}(BigFloat(x))
 ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(x))
 ArbFloat{P}(x::T) where {P,T<:Complex} = ArbFloat{P}(BigFloat(real(x)))
 ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(real(x)))

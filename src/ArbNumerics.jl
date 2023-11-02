@@ -169,7 +169,7 @@ include("support/ArblibVector.jl")
 
 include("support/random.jl")
 
-const ArbNumber = Union{ArbFloat, ArbReal, ArbComplex}
+const ArbNumber{P} = Union{ArbFloat{P}, ArbReal{P}, ArbComplex{P}}
 
 include("libarb/ArbMatrix.jl")  # must preceed ArbRealMatrix
 include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix

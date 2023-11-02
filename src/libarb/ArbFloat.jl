@@ -155,11 +155,13 @@ for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
             ccall(@libarb($A), Cvoid, (Ref{ArbFloat}, Ref{ArbFloat}), z, x)
             return z
         end
+        $F(::Type{Bool}, x::ArbFloat{P}) where {P} = Bool($F(x))
         $F(::Type{T}, x::ArbFloat{P}) where {P, T<:Integer} = T($F(x))
     end
 end
 
 trunc(x::ArbFloat{P}) where {P} = signbit(x) ? ceil(x) : floor(x)
+trunc(::Type{Bool}, x::ArbFloat{P}) where {P} = Bool(trunc(x))
 trunc(::Type{T}, x::ArbFloat{P}) where {P, T<:Integer} = T(trunc(x))
 
 midpoint(x::ArbFloat{P}) where {P} = x
