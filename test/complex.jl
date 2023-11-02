@@ -75,7 +75,7 @@
         @test ceil(Int16, api) == (4, -3)
         @test modf(ArbComplex(3.5, -2.5)) == ((0.5, 3.0), (-0.5, -2.0))
         @test fmod(modf(api)...) == api
-        @test_broken angle(api) ≈ angle(Complex(api))
+        @test angle(api) ≈ angle(Complex(api))
 
         @test flipsign(api, -1) == -api
         @test flipsign(api, 0.0) == api

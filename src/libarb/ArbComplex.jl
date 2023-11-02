@@ -344,14 +344,7 @@ fmod(repart::Tuple{ArbReal{P1},ArbReal{P1}}, impart::Tuple{ArbReal{P2},ArbReal{P
 
 # phase angle
 function Base.angle(x::ArbComplex{P}) where {P}
-    rea, ima = reim(x / hypot(reim(x)...,))
-
-    y = hypot(rea - 1.0, ima)
-    x = hypot(rea + 1.0, ima)
-
-    a = 2 * atan(y, x)
-    T = ArbFloat{P}
-    !(signbit(a) || signbit(T(pi) - a)) ? a : (signbit(a) ? zero(T) : T(pi))
+    atan(imag(x), real(x))
 end
 
 # a type specific hash function helps the type to 'just work'
