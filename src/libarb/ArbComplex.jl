@@ -61,11 +61,8 @@ ArbComplex{P}(x::T) where {P,T<:Number} = ArbComplex{P}(real(x), imag(x))
 const PtrToArbComplex = Ptr{ArbComplex} # acb_ptr
 const PtrToPtrToArbComplex = Ptr{Ptr{ArbComplex}} # acb_ptr*
 
-const Slong = Int # to accomodate windows
 const ArbFloatReal{P} = Union{ArbFloat{P},ArbReal{P}}
 const ArbNumber1{P} = Union{ArbFloatReal{P},ArbComplex{P}}
-const ArbInts = Union{Int,Int32,Int16,Int8} # Int may be Int32
-const ArbRealTypes = Real # Union{Integer,AbstractFloat,ArbReal}
 
 # finalizer:
 clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{ArbComplex},), x)
@@ -81,15 +78,7 @@ ArbComplex{P}(::Real, ::Missing) where {P} = missing
 ArbComplex(x::T; kw...) where {T<:Number} = ArbComplex(real(x), imag(x); kw...)
 
 function ArbComplex(x::T, y::Real=0; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
-    bits > 0 && bits < MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
-    digits > 0 && digits < MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
-    if base === 10
-        bits = digits > 0 ? bits4digits(digits) + extrabits() : (bits > 0 ? bits + extrabits() : DEFAULT_PRECISION.x)
-    elseif base === 2
-        bits = bits > 0 ? bits + extrabits() : (digits > 0 ? digits + extrabits() : DEFAULT_PRECISION.x)
-    else
-        throw(ErrorException("base expects 2 or 10"))
-    end
+    bits = get_bits(bits, digits, base)
     iszero(y) ? ArbComplex{bits}(x) : ArbComplex{bits}(x, y)
 end
 
@@ -99,8 +88,6 @@ ArbComplex(x::ArbFloatReal{P}, y::ArbFloatReal{S}) where {P,S} = ArbComplex{min(
 ArbComplex(x::ArbFloatReal{P}, y::Real) where {P} = ArbComplex{P}(x, y)
 ArbComplex(x::Real, y::ArbFloatReal{P}) where {P} = ArbComplex{P}(x, y)
 
-@inline sign_bit(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size)
-@inline sign_bits(x::ArbComplex{P}) where {P} = isodd(x.real_mid_size), isodd(x.imag_mid_size)
 @inline sign_bit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = isodd(x.real_mid_size)
 @inline sign_bit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = isodd(x.imag_mid_size)
 
@@ -136,7 +123,6 @@ function ArbComplex{P}(x::ArbInts, y::ArbInts) where {P}
     return z
 end
 
-
 function copy(x::ArbComplex{P}) where {P}
     z = ArbComplex{P}()
     ccall(@libarb(acb_set), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}), z, x)
@@ -145,22 +131,16 @@ end
 
 deepcopy(x::ArbComplex{P}) where {P} = copy(x)
 
-Base.Complex(x::ArbFloat{P}) where {P} = ArbComplex(x)
-Base.Complex(x::ArbReal{P}) where {P} = ArbComplex(x)
-Base.Complex(re::ArbFloat{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, im)
-Base.Complex(re::ArbReal{P}, im::ArbReal{P}) where {P} = ArbComplex(re, im)
+Complex(x::ArbNumber1) = convert(ArbComplex, x)
+Complex(re::ArbFloatReal, im::ArbFloatReal) = ArbComplex(re, im)
 
-Base.complex(re::ArbFloat{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, im)
-Base.complex(re::ArbReal{P}, im::ArbReal{P}) where {P} = ArbComplex(re, im)
+complex(re::ArbNumber1) = convert(ArbComplex, re)
+complex(re::ArbFloatReal, im::ArbFloatReal) = ArbComplex(re, im)
 
-Base.Complex(re::ArbFloat{P}, im::ArbReal{P}) where {P} = ArbComplex(ArbReal{P}(re), im)
-Base.Complex(re::ArbReal{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, ArbReal{P}(im))
-Base.complex(re::ArbFloat{P}, im::ArbReal{P}) where {P} = ArbComplex(ArbReal{P}(re), im)
-Base.complex(re::ArbReal{P}, im::ArbFloat{P}) where {P} = ArbComplex(re, ArbReal{P}(im))
+complex(::Type{T}) where {T<:ArbNumber1} = ArbComplex
+complex(::Type{T}) where {P,T<:ArbNumber1{P}} = ArbComplex{P}
 
-Base.Complex{ArbFloat{P}}(x::ArbComplex{P}) where {P} = x
-Base.Complex{ArbReal{P}}(x::ArbComplex{P}) where {P} = x
-
+Base.Complex{T}(x::ArbComplex{P}) where {P,T<:ArbFloatReal{P}} = x
 
 function ArbComplex{P}(x::T) where {P,T<:Integer}
     y = ArbReal{P}(x)
@@ -169,7 +149,7 @@ function ArbComplex{P}(x::T) where {P,T<:Integer}
 end
 
 
-function ArbComplex{P}(x::T1, y::T2) where {P,T1<:ArbRealTypes,T2<:ArbRealTypes}
+function ArbComplex{P}(x::T1, y::T2) where {P,T1<:Real,T2<:Real}
     x1 = convert(ArbReal{P}, x)
     y1 = convert(ArbReal{P}, y)
     z = ArbComplex{P}(x1, y1)

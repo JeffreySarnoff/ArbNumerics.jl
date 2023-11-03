@@ -50,7 +50,7 @@ export ArbNumber,
        addmul, submul, mulsub,
        square, cube, rsqrt, rcbrt, pow, root, loghypot,
        risingfactorial, doublefactorial,
-       tanpi, cotpi,
+       tanpi, cotpi, swap!,
 
        # special functions
        agm1, agm,
@@ -152,6 +152,10 @@ import Base.MathConstants: π, ℯ, γ, φ, catalan
 using Libdl
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
+
+const Slong = Int # to accomodate windows
+const USlong = unsigned(Slong)
+const ArbInts = Union{Int,Int32,Int16,Int8} # Int may be Int32
 
 include("support/abstractions.jl")
 include("support/matrices.jl")

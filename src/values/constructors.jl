@@ -69,13 +69,6 @@ Complex(x::ArbComplex{P}) where {P} = Complex{Float64}(x, RoundNearest)
 for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
   @eval begin
 
-    function $I(x::ArbFloat{P}) where {P}
-        !isinteger(x) && throw(InexactError("$(x) is not an integer"))
-        bi = BigInt(BigFloat(x))
-        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
-        return $I(bi)
-    end
-
     function $I(x::ArbReal{P}) where {P}
         (!isexact(x) | !isinteger(x)) && throw(InexactError("$(x) is not an integer"))
         bi = BigInt(BigFloat(x))
@@ -95,10 +88,10 @@ end
 
 # Rational
 
-ArbFloat(x::T) where {S, T<:Rational{S}} = ArbFloat(x.num)/ArbFloat(x.den)
-ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(x.num)/ArbReal(x.den)
-ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(0))
-ArbComplex(x::T, y::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(y))
+1#ArbFloat(x::T) where {S, T<:Rational{S}} = ArbFloat(x.num)/ArbFloat(x.den)
+#ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(x.num)/ArbReal(x.den)
+#ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(0))
+#ArbComplex(x::Rational, y::Rational) = ArbComplex(ArbReal(x), ArbReal(y))
 
 # Irrational
 
@@ -118,7 +111,7 @@ end
 # fallback
 
 # ArbFloat{P}(x::T) where {P,T<:Real} = ArbFloat{P}(BigFloat(x))
-ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(x))
+# ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(x))
 ArbFloat{P}(x::T) where {P,T<:Complex} = ArbFloat{P}(BigFloat(real(x)))
 ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(real(x)))
 

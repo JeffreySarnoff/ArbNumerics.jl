@@ -35,10 +35,20 @@
         @test_throws ErrorException ArbComplex(5.0, base=3)
         @test_throws ErrorException ArbComplex(5.0, 1.0, base=3)
         @test ArbComplex{128}(1) == 1
+
         ac = ArbComplex{64}(1.0 + 2im)
         rac = real(ac)
         fac = float(rac)
         @test abs(ac) ≈ sqrt(abs2(fac) + abs2(imag(ac)))
+        @test angle(ac) ≈ angle(Complex(ac))
+        @test magnitude(ac) ≈ sqrt(5)
+        @test angle(fac) == 0
+        @test angle(-rac) ≈ pi
+        @test midpoint(ac) == ac
+        @test radius(ac) ≈ 0
+        @test sign(fac) == 1
+        @test sign(rac) == 1
+
         @test ArbComplex{64}(ac) === ac
         @test ArbComplex{64}(fac) == ArbComplex(fac)
         @test ArbComplex(5, digits=53) == 5
@@ -46,10 +56,14 @@
         @test ArbComplex{53}(1 + 2im) == 1 + 2im
         @test signbit(ac) == false
         @test signbits(ac) == (false, false)
+        @test sign(ac) == 1.0 # TODO that is incompatible with sign(::Complex); maybe rename
+        @test signs(ac) == (1, 1)
+        @test_broken sign(ac) ≈ ac / abs(ac)
         @test ArbComplex(fac) == ArbComplex(rac)
         @test copy(ac) == deepcopy(ac)
         @test ArbComplex(rac, fac) == Complex(rac, fac) == complex(rac, fac)
         @test ArbComplex(rac) == Complex(rac) == complex(rac)
+        @test Complex{typeof(fac)}(ac) === ac
 
         @test typeof(ArbComplex(rac, Int128(1))) == ArbComplex{64}
         @test typeof(ArbComplex(fac, UInt8(1))) == ArbComplex{64}
@@ -64,8 +78,8 @@
         @test ArbComplex{256}(1.0 + im) == ArbComplex(1 + im, bits=256)
         @test ArbComplex{256}(1.0 + im) == ArbComplex(1, 1, bits=256)
 
-        @test midpoint(ac) == ac
         @test 1e-38 <= abs(radius(ArbComplex(π))) <= 2e-38
+
         api = ArbComplex(pi, -pi) # note `-pi is Float64`
         @test trunc(api) == ArbComplex(3 - 3im)
         @test floor(api) == ArbComplex(3 - 4im)
@@ -73,9 +87,10 @@
         @test trunc(Int, api) == (3, -3)
         @test floor(Int8, api) == (3, -4)
         @test ceil(Int16, api) == (4, -3)
+
         @test modf(ArbComplex(3.5, -2.5)) == ((0.5, 3.0), (-0.5, -2.0))
         @test fmod(modf(api)...) == api
-        @test angle(api) ≈ angle(Complex(api))
+
         @test api' ≈ ArbComplex(pi, pi) rtol=1e-16
 
         @test flipsign(api, -1) == -api
@@ -97,6 +112,22 @@
 
         @test abs2(api) ≈ abs2(real(api)) + abs2(imag(api))
 
+    end
+
+    TYPE_TESTS = [
+        (complex, ArbFloat, ArbComplex),
+        (complex, ArbReal{42}, ArbComplex{42}),
+        (complex, ArbComplex{42}, ArbComplex{42}),
+        (float, ArbReal, ArbFloat),
+        (float, ArbFloat{42}, ArbFloat{42}),
+        (real, ArbFloat, ArbFloat),
+        (real, ArbComplex, ArbReal),
+        (real, ArbFloat{42}, ArbFloat{42}),
+        (real, ArbComplex{42}, ArbReal{42}),
+        (imag, ArbComplex, ArbReal)
+    ]
+    @testset "$f(::Type{$T})" for (f, T, R) in TYPE_TESTS
+        @test f(T) == R
     end
 
     INF = typemax(Int)

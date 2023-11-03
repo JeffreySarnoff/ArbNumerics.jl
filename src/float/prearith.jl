@@ -4,11 +4,10 @@ signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
 
 signbit(x::ArbReal{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
 
-signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
-signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
+signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = sign_bit(x, RealPart)
+signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = sign_bit(x, ImagPart)
 signbit(x::ArbComplex{P}) where {P} = signbit(x, RealPart)
 signbits(x::ArbComplex{P}) where {P} = signbit(x, RealPart), signbit(x, ImagPart)
-
 
 function sign(x::ArbFloat{P}) where {P}
     thesgn = ccall(@libarb(arf_sgn), Cint, (Ref{ArbFloat},), x)

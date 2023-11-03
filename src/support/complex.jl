@@ -25,10 +25,6 @@ function imag(x::ArbComplex{P}) where {P}
     return z
 end
 
-complex(::Type{T}) where {T<:ArbNumber1} = ArbComplex
-complex(::Type{T}) where {P,T<:ArbNumber1{P}} = ArbComplex{P}
-complex(x::T) where {T<:ArbNumber1} = convert(ArbComplex, x)
-
 # other parts
 
 angle(x::T) where {T<:ArbNumber1} = signbit(x) ? T(pi) : zero(T)

@@ -123,11 +123,11 @@ end
 # interact with Bool
 
 @inline ArbFloat{P}(b::Bool) where {P} = b ? one(ArbFloat{P}) : zero(ArbFloat{P})
-@inline Base.Bool(x::ArbFloat{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
+@inline Base.Bool(x::ArbFloat{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError(:Bool, Bool, x)))
 @inline ArbReal{P}(b::Bool) where {P} = b ? one(ArbReal{P}) : zero(ArbReal{P})
-@inline Base.Bool(x::ArbReal{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
+@inline Base.Bool(x::ArbReal{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError(:Bool, Bool, x)))
 @inline ArbComplex{P}(b::Bool) where {P} = b ? one(ArbComplex{P}) : zero(ArbComplex{P})
-@inline Base.Bool(x::ArbComplex{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError("")))
+@inline Base.Bool(x::ArbComplex{P}) where {P} = iszero(x) ? false : (isone(x) ? true : throw(InexactError(:Bool, Bool, x)))
 
 (+)(x::ArbFloat{P}, b::Bool) where {P} = b ? one(ArbFloat{P}) + x : zero(ArbFloat{P})
 (+)(b::Bool, x::ArbFloat{P}) where {P} = b ? x + one(ArbFloat{P}) : zero(ArbFloat{P})
