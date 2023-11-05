@@ -86,7 +86,7 @@ trim_bits(x::Mag) = x
 
 function trim_bits(x::ArbFloat{P}, roundingmode::RoundingMode=RoundFromZero) where {P}
     nbits = significand_bits(x)
-    nbits == P && return x
+    (nbits == P || nbits == 0 ) && return x
     rounding = match_rounding_mode(roundingmode)
     z = ArbFloat{nbits}
     res = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, nbits, rounding)

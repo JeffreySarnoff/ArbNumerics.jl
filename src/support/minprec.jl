@@ -1,11 +1,13 @@
 # protect minimum precision
-minprecerror() = throw(DomainError("minimum precision is 24 bits"))
+@noinline function minprecerror(n, minp, t, f)
+    text = t === f ? "" : " for $t"
+    throw(DomainError("$f: minimum precision$text is $minp bits but was $n"))
+end
 
-for T in (:Float32, :Float64, :Int16, :Int32, :Int64, :Int128, :BigFloat)
-  for N in collect(0:23)
-    @eval ArbFloat{$N}(x::$T) = minprecerror()
-    @eval ArbReal{$N}(x::$T) = minprecerror()
-    @eval ArbComplex{$N}(x::$T) = minprecerror()
-    @eval ArbComplex{$N}(x::$T, y::$T) = minprecerror()
-  end
+function minprec(n, t, f=t)
+    minp = max(extrabits(ArbFloat), 1)
+    if n < minp
+        minprecerror(n, minp, t, f)
+    end
+    nothing
 end

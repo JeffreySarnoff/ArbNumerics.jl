@@ -70,16 +70,16 @@ for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
   @eval begin
 
     function $I(x::ArbReal{P}) where {P}
-        (!isexact(x) | !isinteger(x)) && throw(InexactError("$(x) is not an integer"))
+        (!isexact(x) || !isinteger(x)) && throw(InexactError(nameof($I), $I, x))
         bi = BigInt(BigFloat(x))
-        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
+        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError(nameof($I), $I, x))
         return $I(bi)
     end
 
     function $I(x::ArbComplex{P}) where {P}
-        (!isexact(x) | !isinteger(x) | !iszero(imag(x))) && throw(InexactError("$(x) is not an integer"))
+        (!isexact(x) | !isinteger(x) | !iszero(imag(x))) && throw(InexactError(nameof($I), $I, x))
         bi = BigInt(BigFloat(x))
-        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
+        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError(nameof($I), $I, x))
         return $I(bi)
     end
 
@@ -113,19 +113,19 @@ end
 # ArbFloat{P}(x::T) where {P,T<:Real} = ArbFloat{P}(BigFloat(x))
 # ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(x))
 ArbFloat{P}(x::T) where {P,T<:Complex} = ArbFloat{P}(BigFloat(real(x)))
-ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(real(x)))
+ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(real(x))) # TODO shouldn't that InexactError
 
-ArbReal{P}(x::T) where {P,T<:Real} = ArbReal{P}(BigFloat(x))
-ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
-ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x))
+#ArbReal{P}(x::T) where {P,T<:Real} = ArbReal{P}(BigFloat(x))
+#ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
+ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x)) # TODO shouldn't that InexactError
 ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
 
 # retype
 
 ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
-ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(real(x))
+ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(real(x)) # TODO shouldn't that InexactError
 ArbReal(x::ArbFloat{P}) where {P} = ArbReal{P}(x)
-ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(real(x))
+ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(real(x)) # TODO shouldn't that InexactError
 
 ArbFloat{Q}(x::ArbReal{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(x))
 ArbFloat{Q}(x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(real(x)))
@@ -135,6 +135,7 @@ ArbReal{Q}(x::ArbComplex{P}) where {P,Q} = ArbReal{Q}(real(x))
 # change precision
 
 function ArbFloat{P}(x::ArbFloat{Q}, roundingmode::RoundingMode) where {P,Q}
+    minprec(P, ArbFloat)
     rounding = match_rounding_mode(roundingmode)
     z = ArbFloat{P}()
     rnd = ccall(@libarb(arf_set_round), Cint,
@@ -144,6 +145,7 @@ end
 ArbFloat{P}(x::ArbFloat{Q}) where {P,Q} = ArbFloat{P}(x, RoundNearest)
 
 function ArbReal{P}(x::ArbReal{Q}) where {P,Q}
+    minprec(P, ArbReal)
     z = ArbReal{P}()
     ccall(@libarb(arb_set_round), Cvoid,
           (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, P)
@@ -151,6 +153,7 @@ function ArbReal{P}(x::ArbReal{Q}) where {P,Q}
 end
 
 function ArbComplex{P}(x::ArbComplex{Q}) where {P,Q}
+    minprec(P, ArbComplex)
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_round), Cvoid,
           (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)

@@ -73,9 +73,11 @@ end
 
 # int arf_set_round(arf_t res, const arf_t x, slong prec, arf_rnd_t rnd)
 function roundbits(x::ArbFloat{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    minprec(sigbits, ArbFloat{P}, roundbits)
     sigbits >= P && return ArbFloat{sigbits}(x)
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
+    # sigbits <= 0 evokes SIGSEGFAULT
     rounddir = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, sigbits, rounding)
     return z
 end
@@ -100,8 +102,10 @@ rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} 
 rounddigits!(x::ArbFloat{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, bits4digits(digits))
 
 function roundbits(x::ArbReal{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    minprec(sigbits, ArbReal{P}, roundbits)
     sigbits >= P && return ArbReal{sigbits}(x)
     z = ArbReal{P}()
+    # sigbits <= 0 evokes SIGSEGFAULT
     ccall(@libarb(arb_set_round), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, sigbits)
     return z
 end
@@ -125,8 +129,10 @@ rounddigits!(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
 rounddigits!(x::ArbReal{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, bits4digits(digits))
 
 function roundbits(x::ArbComplex{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    minprec(sigbits, ArbComplex{P}, roundbits)
     sigbits >= P && return ArbComplex{sigbits}(x)
     z = ArbComplex{P}()
+    # sigbits <= 0 evokes SIGSEGFAULT
     ccall(@libarb(acb_set_round), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, sigbits)
     return z
 end

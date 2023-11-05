@@ -32,6 +32,7 @@
         @test_throws MethodError ismissing(ArbComplex{99}(missing, 1+im))
     end
     @testset "ArbComplex constructors" begin
+        @test_throws DomainError ArbComplex{23}(0)
         @test_throws ErrorException ArbComplex(5.0, base=3)
         @test_throws ErrorException ArbComplex(5.0, 1.0, base=3)
         @test ArbComplex{128}(1) == 1
@@ -75,6 +76,7 @@
         @test ArbComplex(Int32(-1), Int32(-2)) == ArbComplex(-1.0, -2.0)
         @test ArbComplex(typemax(Int32) + 1) == ArbComplex(float(typemax(Int32) + 1))
         @test hash(ArbComplex(-2, -2)) isa UInt
+        @test_broken hash(ArbComplex(2, 1)) == hash(Complex(2, 1))
         @test ArbComplex{256}(1.0 + im) == ArbComplex(1 + im, bits=256)
         @test ArbComplex{256}(1.0 + im) == ArbComplex(1, 1, bits=256)
 

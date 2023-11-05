@@ -33,6 +33,7 @@ mutable struct ArbReal{P} <: Real     # P is the precision in bits
     rad_man::UInt   # mp_limb_t  radius, unsigned by definition
 
     function ArbReal{P}() where {P}
+        minprec(P, ArbReal)
         z = new{P}(0,0,0,0,0,0)
         ccall(@libarb(arb_init), Cvoid, (Ref{ArbReal},), z)
         finalizer(arb_clear, z)
@@ -44,31 +45,24 @@ end
 const PtrToArbReal = Ptr{ArbReal} # arb_ptr
 const PtrToPtrToArbReal = Ptr{Ptr{ArbReal}} # arb_ptr*
 
-
 arb_clear(x::ArbReal{P}) where {P} = ccall(@libarb(arb_clear), Cvoid, (Ref{ArbReal},), x)
 
 ArbReal{P}(x::ArbReal{P}) where {P} = x
-ArbReal(x::ArbReal{P}) where {P} = x
+ArbReal(x::ArbReal{P}) where {P} = ArbReal{P}(x)
 
-ArbReal{P}(x::Missing) where {P} = missing
-ArbReal(x::Missing) = missing
+ArbReal{P}(::Missing) where {P} = missing
+ArbReal(::Missing) = missing
 
 @inline sign_bit(x::ArbReal{P}) where {P} = isodd(x.mid_size)
 
 function ArbReal(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
-    bits > 0 && bits < MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
-    digits > 0 && digits < MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
-    if base === 10
-        bits = digits > 0 ? bits4digits(digits)+extrabits() : (bits > 0 ? bits+extrabits() : DEFAULT_PRECISION.x)
-    elseif base === 2
-        bits = bits > 0 ? bits+extrabits() : (digits > 0 ? digits+extrabits() : DEFAULT_PRECISION.x)
-    else
-        throw(ErrorException("base expects 2 or 10"))
-    end
+    bits = get_bits(bits, digits, base)
     ArbReal{bits}(x)
 end
 
-swap(x::ArbReal{P}, y::ArbReal{P}) where {P} = ccall(@libarb(arb_swap), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+function swap!(x::ArbReal{P}, y::ArbReal{P}) where {P}
+    ccall(@libarb(arb_swap), Cvoid, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+end
 
 function copy(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
@@ -76,45 +70,41 @@ function copy(x::ArbReal{P}) where {P}
     return z
 end
 
-function ArbReal{P}(x::Int32) where {P}
+function ArbReal{P}(x::ArbInts) where {P}
     z = ArbReal{P}()
-    ccall(@libarb(arb_set_si), Cvoid, (Ref{ArbReal}, Clong), z, x)
+    ccall(@libarb(arb_set_si), Cvoid, (Ref{ArbReal}, Slong), z, x)
     return z
 end
-ArbReal{P}(x::T) where {P, T<:Union{Int8, Int16}} = ArbReal{P}(Int32(x))
-ArbReal{P}(x::T) where {P, T<:Union{Int64, Int128}} = ArbReal{P}(BigInt(x))
 
-function ArbReal{P}(x::UInt32) where {P}
+function ArbReal{P}(x::USlong) where {P}
     z = ArbReal{P}()
-    ccall(@libarb(arb_set_ui), Cvoid, (Ref{ArbReal}, Culong), z, x)
+    ccall(@libarb(arb_set_ui), Cvoid, (Ref{ArbReal}, USlong), z, x)
     return z
 end
-ArbReal{P}(x::T) where {P, T<:Union{UInt8, UInt16}} = ArbReal{P}(UInt32(x))
-ArbReal{P}(x::T) where {P, T<:Union{UInt64, UInt128}} = ArbReal{P}(BigInt(x))
+ArbReal{P}(x::T) where {P, T<:Integer} = ArbReal{P}(BigFloat(x, precision=P + 2))
 
-function ArbReal{P}(x::Float64) where {P}
+function ArbReal{P}(x::Base.IEEEFloat) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_d), Cvoid, (Ref{ArbReal}, Cdouble), z, x)
     return z
 end
-ArbReal{P}(x::T) where {P, T<:Union{Float16, Float32}} = ArbReal{P}(Float64(x))
 
 function ArbReal{P}(x::BigFloat) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_interval_mpfr), Cvoid, (Ref{ArbReal}, Ref{BigFloat}, Ref{BigFloat}, Clong), z, x, x, P)
     return z
 end
-ArbReal{P}(x::BigInt) where {P} = ArbReal{P}(BigFloat(x))
-ArbReal{P}(x::Rational{T}) where {P, T<:Signed} = ArbReal{P}(BigFloat(x))
+
+ArbReal{P}(x::Rational{T}) where {P, T<:Signed} = ArbReal{P}(BigFloat(x; precision=P + 2))
 
 BigFloat(x::ArbReal{P}) where {P} = BigFloat(ArbFloat{P}(x))
 BigInt(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(ArbFloat{P}(x))))
 
-function Base.Integer(x::ArbReal{P}) where {P}
+function Base.Integer(x::ArbReal)
     if isinteger(x)
-       abs(x) <= typemax(Int64) ? Int64(x) : BigInt(x)
+       typemin(Int64) <= x <= typemax(Int64) ? Int64(x) : BigInt(x)
     else
-       throw(InexactError("$x"))
+       throw(InexactError(:Integer, Integer, x))
     end
 end
 
@@ -123,9 +113,6 @@ function ArbReal{P}(x::ArbFloat{P}) where {P}
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
     return z
 end
-
-ArbFloat{P}(x::ArbReal{P}, bits::Int) where P = ArbFloat(x, bits=bits)
-ArbReal{P}(x::ArbFloat{P}, bits::Int) where P = ArbReal(x, bits=bits)
 
 for (F,A) in ((:floor, :arf_floor), (:ceil, :arf_ceil))
     @eval begin
@@ -147,7 +134,6 @@ end
 
 trunc(::Type{T}, x::ArbReal{P}) where {P, T<:Integer} = T(trunc(x))
 
-
 function modf(x::ArbReal{P}) where {P}
     ipart = trunc(x)
     fpart = x - ipart
@@ -158,7 +144,6 @@ fmod(fpartipart::Tuple{ArbReal{P}, ArbReal{P}}) where {P} =
     fpartipart[1] + fpartipart[2]
 fmod(fpart::ArbReal{P}, ipart::ArbReal{P}) where {P}=
     fpart + ipart
-
 
 div(x::ArbReal{P}, y::ArbReal{P}) where {P} =
     trunc(x / y)
@@ -172,7 +157,6 @@ function divrem(x::ArbReal{P}, y::ArbReal{P}) where {P}
     return (dv, rm)
 end
 
-
 fld(x::ArbReal{P}, y::ArbReal{P}) where {P} =
     floor(x / y)
 
@@ -184,9 +168,6 @@ function fldmod(x::ArbReal{P}, y::ArbReal{P}) where {P}
     md = x - (fd * y)
     return (fd, md)
 end
-
-cld(x::ArbReal{P}, y::ArbReal{P}) where {P} =
-    ceil(x / y)    
 
 function midpoint(x::ArbReal{P}) where {P}
     z = ArbReal{P}()
@@ -224,14 +205,13 @@ function radius(x::ArbReal{P}, ::Type{ArbFloat{P}}) where {P}
     return z
 end
 
-
 # a type specific hash function helps the type to 'just work'
 const hash_arbreal_lo = (UInt === UInt64) ? 0x37e642589da3416a : 0x5d46a6b4
 const hash_0_arbreal_lo = hash(zero(UInt), hash_arbreal_lo)
 # two values of the same precision
-#    with identical midpoint significands and identical radus_exponentOf2s hash equal
+#    with identical midpoint significands and identical radius_exponentOf2s hash equal
 # they are the same value, one is less accurate yet centered about the other
 Base.hash(z::ArbReal{P}, h::UInt) where {P} =
-    hash(z.d1 ⊻ z.exp,
-         (h ⊻ hash(z.d2 ⊻ (~reinterpret(UInt,P)), hash_arbreal_lo)
+    hash(z.mid_d1 ⊻ z.mid_exp,
+         (h ⊻ hash(z.mid_d2 ⊻ (~reinterpret(UInt,P)), hash_arbreal_lo)
             ⊻ hash_0_arbreal_lo))
