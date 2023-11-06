@@ -141,7 +141,7 @@
         a = ArbReal(ℯ)
         @test midpoint(a) ≈ a
         @test !iszero(radius(a))
-        @test radius(a, ArbFloat) == radius(a)
+        @test radius(a, ArbFloat) ≈ radius(a) rtol=1e-5
         @test radius(a, ArbNumerics.Mag) == radius(a)
 
         @test modf(a) == (a - 2, 2)

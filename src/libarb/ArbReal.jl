@@ -198,8 +198,8 @@ end
 midpoint(x::ArbReal{P}, ::Type{ArbFloat{P}}) where {P} = midpoint_byref(x)
 radius(x::ArbReal{P}, ::Type{Mag}) where {P} = radius_byref(x)
 
-function radius(x::ArbReal{P}, ::Type{ArbFloat{P}}) where {P}
-    z = ArbFloat{P}()
+function radius(x::ArbReal, ::Type{T}) where {T<:ArbFloat}
+    z = ArbFloat{workingprecision(T)}()
     mag = radius_byref(x)
     ccall(@libarb(arf_set_mag), Cvoid, (Ref{ArbFloat}, Ref{Mag}), z, mag)
     return z
