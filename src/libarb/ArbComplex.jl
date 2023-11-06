@@ -26,48 +26,6 @@ See also: [`ArbFloat`](@ref), [`ArbReal`](@ref), [`ball`](@ref), [`setball`](@re
 """
 ArbComplex
 
-# ArbComplex structs hold complex balls given as ArbReal pairs
-
-mutable struct ArbComplex{P} <: Number  # P is the precision in bits
-    #      real midpoint
-    real_mid_exp::Int    # fmpz         exponent of 2 (2^exp)
-    real_mid_size::UInt  # mp_size_t    nwords and sign (lsb holds sign of significand)
-    real_mid_d1::UInt    # significand  unsigned, immediate value or the initial span
-    real_mid_d2::UInt    #   (d1, d2)   the final part indicating the significand, or 0
-    #      real radius
-    real_rad_exp::Int    # fmpz       exponent of 2 (2^exp)
-    real_rad_man::UInt   # mp_limb_t  radius, unsigned by definition
-    #      imaginary midpoint
-    imag_mid_exp::Int    # fmpz         exponent of 2 (2^exp)
-    imag_mid_size::UInt  # mp_size_t    nwords and sign (lsb holds sign of significand)
-    imag_mid_d1::UInt    # significand  unsigned, immediate value or the initial span
-    imag_mid_d2::UInt    #   (d1, d2)   the final part indicating the significand, or 0
-    #      imaginary radius
-    imag_rad_exp::Int    # fmpz       exponent of 2 (2^exp)
-    imag_rad_man::UInt   # mp_limb_t  radius, unsigned by definition
-
-
-    function ArbComplex{P}() where {P}
-        minprec(P, ArbComplex)
-        z = new{P}(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-        ccall(@libarb(acb_init), Cvoid, (Ref{ArbComplex},), z)
-        finalizer(clear_acb, z)
-        return z
-    end
-end
-
-ArbComplex{P}(x::T) where {P,T<:Number} = ArbComplex{P}(real(x), imag(x))
-
-# for use within a struct, eg. ArbComplexMatrix
-const PtrToArbComplex = Ptr{ArbComplex} # acb_ptr
-const PtrToPtrToArbComplex = Ptr{Ptr{ArbComplex}} # acb_ptr*
-
-const ArbFloatReal{P} = Union{ArbFloat{P},ArbReal{P}}
-const ArbNumber1{P} = Union{ArbFloatReal{P},ArbComplex{P}}
-
-# finalizer:
-clear_acb(x::ArbComplex{P}) where {P} = ccall(@libarb(acb_clear), Cvoid, (Ref{ArbComplex},), x)
-
 ArbComplex{P}(x::ArbComplex{P}) where {P} = x
 ArbComplex(x::ArbComplex{P}) where {P} = x
 
@@ -83,7 +41,7 @@ function ArbComplex(x::T, y::Real=0; bits::Int=0, digits::Int=0, base::Int=iszer
     iszero(y) ? ArbComplex{bits}(x) : ArbComplex{bits}(x, y)
 end
 
-ArbComplex(x::ArbNumber1{P}) where {P} = ArbComplex{P}(x)
+ArbComplex(x::ArbNumber{P}) where {P} = ArbComplex{P}(x)
 
 ArbComplex(x::ArbFloatReal{P}, y::ArbFloatReal{S}) where {P,S} = ArbComplex{min(P, S)}(x, y)
 ArbComplex(x::ArbFloatReal{P}, y::Real) where {P} = ArbComplex{P}(x, y)
@@ -132,14 +90,14 @@ end
 
 deepcopy(x::ArbComplex{P}) where {P} = copy(x)
 
-Complex(x::ArbNumber1) = convert(ArbComplex, x)
+Complex(x::ArbNumber) = convert(ArbComplex, x)
 Complex(re::ArbFloatReal, im::ArbFloatReal) = ArbComplex(re, im)
 
-complex(re::ArbNumber1) = convert(ArbComplex, re)
+complex(re::ArbNumber) = convert(ArbComplex, re)
 complex(re::ArbFloatReal, im::ArbFloatReal) = ArbComplex(re, im)
 
-complex(::Type{T}) where {T<:ArbNumber1} = ArbComplex
-complex(::Type{T}) where {P,T<:ArbNumber1{P}} = ArbComplex{P}
+complex(::Type{T}) where {T<:ArbNumber} = ArbComplex
+complex(::Type{T}) where {P,T<:ArbNumber{P}} = ArbComplex{P}
 
 Base.Complex{T}(x::ArbComplex{P}) where {P,T<:ArbFloatReal{P}} = x
 
@@ -148,7 +106,6 @@ function ArbComplex{P}(x::T) where {P,T<:Integer}
     z = ArbComplex{P}(y)
     return z
 end
-
 
 function ArbComplex{P}(x::T1, y::T2) where {P,T1<:Real,T2<:Real}
     x1 = convert(ArbReal{P}, x)

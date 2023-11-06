@@ -114,6 +114,7 @@
 
         @test abs2(api) ≈ abs2(real(api)) + abs2(imag(api))
 
+        @test widen(ArbComplex{24}) == ArbComplex{52}
     end
 
     TYPE_TESTS = [
@@ -138,7 +139,7 @@
     dprec(a::ArbNumber) = sprec(a)
     dprec(::Number) = INF
 
-    TEST_TYPES = (Int8, Int, UInt32, Float16, Float64, BigFloat, ArbFloat{200}, ArbReal{200})
+    TEST_TYPES = (Int8, Int, UInt32, Float16, Float32, Float64, BigFloat, ArbFloat{200}, ArbReal{200})
 
     @testset "ArbComplex(::$T)" for T in (TEST_TYPES..., ArbComplex{200})
         a = T(10)
@@ -158,10 +159,14 @@
         DEF == INF && (DEF = sprec(a))
         c = ArbComplex(a, b)
         @test c == 10 + 20im
-        @test typeof(c) == ArbComplex{DEF} || a isa ArbNumber || b isa ArbNumber # TODO should be true also for ArbNumbers
+        @test typeof(c) == ArbComplex{DEF} || a isa ArbNumber || b isa ArbNumber # TODO should be true also for ArbNumber
 
         d = ArbComplex{250}(a, b)
         @test typeof(d) == ArbComplex{250}
+
+        @test_throws InexactError Float64(c)
+        @test isreal(c) == false
+        @test isreal(ArbComplex(pi)) == true
     end
 
     @testset "ArbComplex(::Int, ::ArbComplex)" begin

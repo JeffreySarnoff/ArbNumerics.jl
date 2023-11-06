@@ -9,7 +9,7 @@
         @test_throws InexactError ArbNumerics.Mag(-1)
     end
 
-    @testset "$T($v)" for T in (ArbReal, ArbReal{64}, ArbReal, ArbReal{64}),
+    @testset "$T($v)" for T in (ArbFloat, ArbFloat{64}, ArbReal, ArbReal{64}),
         (v, c, f, t) in [(0.6, 1, 0, 0), (-0.6, 0, -1, 0)]
 
         x = T(v)
@@ -54,15 +54,28 @@
     end
 
     @testset "convert ArbFloat to Integer" begin
-        v = typemax(Int32) + 1.5
+        v = typemax(Int32) + 1.51
         w = round(v)
         a = ArbFloat(v)
         @test_throws InexactError Int32(a)
+        @test_throws InexactError Int64(a) == w
+        @test_throws InexactError Int128(a) == w
+        @test_throws InexactError BigInt(a) == w
+
+        @test_throws InexactError Int32(a, RoundUp) == w
+        @test Int64(a, RoundDown) == w - 1
+        @test Int128(a, RoundNearest) == w
+        @test Int128(a, RoundUp) == w
+        @test BigInt(a, RoundToZero) == w - 1
+
+        @test_throws InexactError Integer(a)
+
+        a = ArbFloat(w)
+        @test_throws InexactError Int32(a) == w
         @test Int64(a) == w
         @test Int128(a) == w
         @test BigInt(a) == w
 
-        @test_throws InexactError Integer(a) # TODO inconsistent with Int64, BigInt, ...
         v = typemin(Int32) - 1
         a = ArbFloat(v)
         x = Integer(a)
@@ -94,6 +107,8 @@
 
         @test hash(a) isa UInt
         @test_broken hash(b) == hash(1) # because isequal(b, 1), see ?hash
+
+        @test widen(ArbFloat{24}) == ArbFloat{52}
     end
 
     @testset "ArbReal" begin
@@ -107,6 +122,11 @@
         @test ArbReal(a) === a
         @test copy(a) == a
         @test copy(a) !== a
+
+        ma = ArbNumerics.Mag(a)
+        @test Float64(ma) ≈ Float64(pi)
+        @test Float32(a) ≈ Float32(pi)
+        @test Float16(a) ≈ Float16(pi)
 
         @test ArbReal(typemax(UInt)) == typemax(UInt)
         @test ArbReal(typemax(Int128)) == typemax(Int128)
@@ -159,6 +179,8 @@
 
         @test hash(a) isa UInt
         @test_broken hash(b) == hash(1) # because isequal(b, 1), see ?hash
+
+        @test widen(ArbReal{24}) == ArbReal{52}
     end
 
 end

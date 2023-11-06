@@ -9,7 +9,7 @@
 
 mutable struct ArbFloatMatrix{P} <: AbstractArbMatrix{P, ArbFloat}
     arbrealmatrix::ArbRealMatrix{P}
-	
+
     function ArbFloatMatrix{P}(rowcount::Int, colcount::Int) where {P}
         z = ArbRealMatrix{P}(rowcount, colcount)
         return new{P}(z)
@@ -166,7 +166,7 @@ function transpose(x::Array{ArbFloat,2})
     y = transpose(Array{ArbReal,2}(x))
     z = Array{ArbFloat,2}(undef, size(y))
     z[:,:] = y[:,:]
-    return (Transpose{ArbFloat,Array{ArbFloat,2}}).(z)	
+    return (Transpose{ArbFloat,Array{ArbFloat,2}}).(z)
 end
 =#
 
@@ -175,14 +175,14 @@ end
 if Sys.CPU_THREADS <= 2
 
     function mul!(z::ArbFloatMatrix{P}, x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
-        ccall(@libarb(arb_mat_approx_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+        ccall(@libarb(arb_mat_approx_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
                z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
         return nothing
     end
 
     function matmul(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
         z = ArbFloatMatrix{P}(rowcount(x), colcount(y))
-        ccall(@libarb(arb_mat_approx_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+        ccall(@libarb(arb_mat_approx_mul), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
               z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
         return ArbFloat{P}.(Matrix(z))
     end
@@ -190,14 +190,14 @@ if Sys.CPU_THREADS <= 2
 else
 
     function mul!(z::ArbFloatMatrix{P}, x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
-        ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+        ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
                z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
         return nothing
     end
 
     function matmul(x::ArbFloatMatrix{P}, y::ArbFloatMatrix{P}) where {P}
         z = ArbFloatMatrix{P}(rowcount(x), colcount(y))
-        ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+        ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
               z.arbrealmatrix, x.arbrealmatrix, y.arbrealmatrix, P)
         return ArbFloat{P}.(Matrix(z))
     end
@@ -230,7 +230,7 @@ end
 
 @inline function Base.:(*)(x::Array{ArbFloat,2}, y::Array{ArbFloat,2})
     checkmulable(x, y)
-    P = workingprecision(ArbFloat)	
+    P = workingprecision(ArbFloat)
     return matmul(ArbFloatMatrix{P}(x), ArbFloatMatrix{P}(y))
 end
 
@@ -269,9 +269,9 @@ end
 
 function exp(x::Array{ArbFloat{P},2}) where {P}
     checksquare(x)
-    y = ArbFloatMatrix{P}(x) 	
+    y = ArbFloatMatrix{P}(x)
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
-    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
       z.arbrealmatrix, y.arbrealmatrix, P)
     return ArbFloat{P}.(Matrix(z))
 end
@@ -279,18 +279,18 @@ end
 function exp(x::Array{ArbFloat,2})
     checksquare(x)
     P = workingprecision(ArbFloat)
-    y = ArbFloatMatrix{P}(x) 	
+    y = ArbFloatMatrix{P}(x)
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
-    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
       z.arbrealmatrix, y.arbrealmatrix, P)
     return ArbFloat{P}.(Matrix(z))
 end
 
 #=
 function exp(x::ArbFloatMatrix{P}) where {P}
-    y = ArbFloatMatrix{P}(x) 	
+    y = ArbFloatMatrix{P}(x)
     z = ArbFloatMatrix{P}(rowcount(x), colcount(x))
-    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), 
+    ccall(@libarb(arb_mat_exp), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint),
       z.arbrealmatrix, y.arbrealmatrix, P)
     return ArbFloat{P}.(Matrix(z))
 end

@@ -231,7 +231,7 @@ end
 
 # matrix multiply
 
-    
+
 function mul!(z::ArbRealMatrix{P}, x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     ccall(@libarb(arb_mat_mul_threaded), Cvoid, (Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Ref{ArbRealMatrix}, Cint), z, x, y, P)
     return nothing
@@ -277,7 +277,7 @@ end
 
 @inline function Base.:(*)(x::Array{ArbReal,2}, y::Array{ArbReal,2})
     checkmulable(x, y)
-    P = workingprecision(ArbReal)	
+    P = workingprecision(ArbReal)
     return matmul(ArbRealMatrix{P}(x), ArbRealMatrix{P}(y))
 end
 
@@ -481,9 +481,9 @@ function matmul(x::ArbRealMatrix{P}, y::ArbRealMatrix{P}) where {P}
     return Matrix(z)
 end
 =#
-				
+
 function exp(x::Array{ArbReal, 2})
-    checksquare(x)				
+    checksquare(x)
     P = workingprecision(ArbReal)
     y = ArbRealMatrix(x)
     z = ArbRealMatrix{P}(rowcount(x), colcount(x))

@@ -85,7 +85,7 @@ import Base: IEEEFloat,
        Float16, Float32, Float64, float,
        UInt8, UInt16, UInt32, UInt64, UInt128,
        Int8, Int16, Int32, Int64, Int128,
-       BigInt, BigFloat, Rational, Complex, real, imag, complex, angle,
+       BigInt, BigFloat, Rational, Complex, real, imag, isreal, complex, angle,
        floatmax, floatmin, typemax, typemin, maxintfloat,
        rationalize,
 
@@ -153,9 +153,7 @@ using Libdl
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
 
-const Slong = Int # to accomodate windows
-const USlong = unsigned(Slong)
-const ArbInts = Union{Int,Int32,Int16,Int8} # Int may be Int32
+include("ArbTypes.jl")
 
 include("support/abstractions.jl")
 include("support/matrices.jl")
@@ -172,8 +170,6 @@ include("support/complex.jl")
 include("support/ArblibVector.jl")
 
 include("support/random.jl")
-
-const ArbNumber{P} = Union{ArbFloat{P}, ArbReal{P}, ArbComplex{P}}
 
 include("libarb/ArbMatrix.jl")  # must preceed ArbRealMatrix
 include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix

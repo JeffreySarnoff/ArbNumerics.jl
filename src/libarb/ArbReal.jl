@@ -20,33 +20,6 @@ of the resultant width required, and to check the radius of results.
 See also: [`ArbFloat`](@ref), [`ArbComplex`](@ref), [`ball`](@ref), [`setball`](@ref), [`midpoint`](@ref), [`radius`](@ref)
 """ ArbReal
 
-# ArbReal structs hold balls given as midpoint, radius
-
-mutable struct ArbReal{P} <: Real     # P is the precision in bits
-                    #      midpoint
-    mid_exp::Int    # fmpz         exponent of 2 (2^exp)
-    mid_size::UInt  # mp_size_t    nwords and sign (lsb holds sign of significand)
-    mid_d1::UInt    # significand  unsigned, immediate value or the initial span
-    mid_d2::UInt    #   (d1, d2)   the final part indicating the significand, or 0
-                    #      radius
-    rad_exp::Int    # fmpz       exponent of 2 (2^exp)
-    rad_man::UInt   # mp_limb_t  radius, unsigned by definition
-
-    function ArbReal{P}() where {P}
-        minprec(P, ArbReal)
-        z = new{P}(0,0,0,0,0,0)
-        ccall(@libarb(arb_init), Cvoid, (Ref{ArbReal},), z)
-        finalizer(arb_clear, z)
-        return z
-    end
-end
-
-# for use within structs, e.g. ArbRealMatrix
-const PtrToArbReal = Ptr{ArbReal} # arb_ptr
-const PtrToPtrToArbReal = Ptr{Ptr{ArbReal}} # arb_ptr*
-
-arb_clear(x::ArbReal{P}) where {P} = ccall(@libarb(arb_clear), Cvoid, (Ref{ArbReal},), x)
-
 ArbReal{P}(x::ArbReal{P}) where {P} = x
 ArbReal(x::ArbReal{P}) where {P} = ArbReal{P}(x)
 

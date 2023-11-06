@@ -17,27 +17,6 @@ See also: [`ArbReal`](@ref), [`ArbComplex`](@ref), [`workingprecision`](@ref), [
 """
 ArbFloat
 
-mutable struct ArbFloat{P} <: AbstractFloat    # P is the precision in bits
-    exp::Int        # fmpz         exponent of 2 (2^exp)
-    size::UInt      # mp_size_t    nwords and sign (lsb holds sign of significand)
-    d1::UInt        # significand  unsigned, immediate value or the initial span
-    d2::UInt        #   (d1, d2)   the final part indicating the significand, or 0
-
-    function ArbFloat{P}() where {P}
-        minprec(P, ArbFloat)
-        z = new{P}(0, 0, 0, 0)
-        ccall(@libarb(arf_init), Cvoid, (Ref{ArbFloat},), z)
-        finalizer(arf_clear, z)
-        return z
-    end
-end
-
-# for use within structs, e.g ArbFloatMatrix
-const PtrToArbFloat = Ptr{ArbFloat} # arf_ptr
-const PtrToPtrToArbFloat = Ptr{Ptr{ArbFloat}} # arf_ptr*
-
-arf_clear(x::ArbFloat{P}) where {P} = ccall(@libarb(arf_clear), Cvoid, (Ref{ArbFloat},), x)
-
 ArbFloat{P}(x::ArbFloat{P}) where {P} = x
 ArbFloat(x::ArbFloat{P}) where {P} = x
 
@@ -125,17 +104,33 @@ function ArbFloat{P}(x::Irrational{S}) where {P,S}
     return z
 end
 
-function (::Type{T})(x::ArbFloat, roundingmode::RoundingMode=RoundNearest) where {T<:ArbInts}
-    rounding = match_rounding_mode(roundingmode)
-    if !( typemin(T) <= x <= typemax(T))
+function (::Type{T})(x::ArbFloat, roundingmode::RoundingMode) where {T<:ArbInts}
+    if !(typemin(T) <= x <= typemax(T))
         throw(InexactError(nameof(T), T, x))
         # attention: ccall segfaults, if result would become too large for Slong
     end
+    rounding = match_rounding_mode(roundingmode)
+    z = ccall(@libarb(arf_get_si), Slong, (Ref{ArbFloat}, Cint), x, rounding)
+    return convert(T, z)
+end
+function (::Type{T})(x::ArbFloat) where {T<:ArbInts}
+    if !( isinteger(x) && typemin(T) <= x <= typemax(T))
+        throw(InexactError(nameof(T), T, x))
+        # attention: ccall segfaults, if result would become too large for Slong
+    end
+    rounding = match_rounding_mode(RoundNearest)
     z = ccall(@libarb(arf_get_si), Slong, (Ref{ArbFloat}, Cint), x, rounding)
     return convert(T, z)
 end
 
-function (::Type{T})(x::ArbFloat{P}, roundingmode::RoundingMode=RoundNearest) where {P,T<:Integer}
+function (::Type{T})(x::ArbFloat{P}, roundingmode::RoundingMode) where {P,T<:Integer}
+    y = round(x, roundingmode)
+    z = BigFloat(y; precision=P + 2)
+    return convert(T, z)
+end
+function (::Type{T})(x::ArbFloat{P}) where {P,T<:Integer}
+    !isinteger(x) && throw(InexactError(nameof(T), T, x))
+    roundingmode = RoundNearest
     y = round(x, roundingmode)
     z = BigFloat(y; precision=P + 2)
     return convert(T, z)
