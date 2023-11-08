@@ -90,40 +90,8 @@ function ArbFloat{P}(x::ArbReal{P}, ::Type{LowerBound}) where {P}
           (Ref{ArbFloat}, Ref{ArbReal}, Clong), z, x, P)
     return z
 end
+
 convert(::Type{ArbFloat{P}}, x::ArbReal{P}, ::Type{LowerBound}) where {P} = ArbFloat{P}(x)
-
-ArbFloat{P}(x::ArbComplex{P}) where {P} = ArbFloat{P}(x, UpperBound)
-
-function ArbFloat{P}(x::ArbComplex{P}, ::Type{UpperBound}, ) where {P}
-    z = ArbFloat{P}()
-    ccall(@libarb(arb_get_ubound_arf), Cvoid,
-          (Ref{ArbFloat}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
-end
-
-function ArbFloat{P}(x::ArbComplex{P}, ::Type{LowerBound}) where {P}
-    z = ArbFloat{P}()
-    ccall(@libarb(arb_get_lbound_arf), Cvoid,
-          (Ref{ArbFloat}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
-end
-
-ArbFloat{P}(x::ArbComplex{P}, ::Type{Radius}) where {P} = ArbFloat{P}(x, UpperBound, Radius)
-convert(::Type{ArbFloat{P}}, x::ArbComplex{P}, ::Type{Radius}) where {P} = ArbFloat{P}(x, Radius)
-
-function ArbFloat{P}(x::ArbComplex{P}, ::Type{UpperBound}, ::Type{Radius}) where {P}
-    z = ArbFloat{P}()
-    ccall(@libarb(arb_get_rad_ubound_arf), Cvoid,
-          (Ref{ArbFloat}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
-end
-
-function ArbFloat{P}(x::ArbComplex{P}, ::Type{LowerBound}, ::Type{Radius}) where {P}
-    z = ArbFloat{P}()
-    ccall(@libarb(arb_get_rad_lbound_arf), Cvoid,
-          (Ref{ArbFloat}, Ref{ArbComplex}, Clong), z, x, P)
-    return z
-end
 
 Mag(x::ArbComplex{P}) where {P} = Mag(x, UpperBound)
 

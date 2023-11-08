@@ -40,15 +40,31 @@ end
        and the sign of the imaginary part when z is on the imaginary axis.
 =#
 function sign(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_sgn), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Slong), z, x, P)
+    return z
+end
+"""
+    csign(::ArbComplex)
+
+Return the extension of the real sign function taking the value 1
+for z strictly in the right half plane, -1 for z strictly in the left half plane,
+and the sign of the imaginary part when z is on the imaginary axis.
+"""
+function csign(x::ArbComplex{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(acb_csgn), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}), z, x)
     return z
 end
 
+"""
+    signs(z::ArbComplex)
+
+Return (sign(real(z)), sign(imag(z)))
+"""
 function signs(x::ArbComplex{P}) where {P}
     return sign(real(x)), sign(imag(x))
 end
-
 
 function (-)(x::ArbFloat{P}) where {P}
     z = ArbFloat{P}()

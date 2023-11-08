@@ -70,7 +70,6 @@ end
 
 ArbReal{P}(x::Rational{T}) where {P, T<:Signed} = ArbReal{P}(BigFloat(x; precision=P + 2))
 
-BigFloat(x::ArbReal{P}) where {P} = BigFloat(ArbFloat{P}(x))
 BigInt(x::ArbReal{P}) where {P} = BigInt(trunc(BigFloat(ArbFloat{P}(x))))
 
 function Base.Integer(x::ArbReal)

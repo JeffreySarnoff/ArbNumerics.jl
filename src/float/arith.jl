@@ -46,79 +46,11 @@ for (A,F) in ((:(+), :acb_add), (:(-), :acb_sub), (:(*), :acb_mul), (:(/), :acb_
     end
 end
 
-(+)(x::ArbComplex{P}, y::ArbReal{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbComplex{P}, y::ArbReal{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbComplex{P}, y::ArbReal{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbComplex{P}, y::ArbReal{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbComplex{P}, y::ArbReal{P}) where {P} = (^)(promote(x, y)...,)
-(+)(x::ArbReal{P}, y::ArbComplex{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbReal{P}, y::ArbComplex{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbReal{P}, y::ArbComplex{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbReal{P}, y::ArbComplex{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbReal{P}, y::ArbComplex{P}) where {P} = (^)(promote(x, y)...,)
-
-(+)(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbComplex{P}, y::ArbFloat{P}) where {P} = (^)(promote(x, y)...,)
-(+)(x::ArbFloat{P}, y::ArbComplex{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbFloat{P}, y::ArbComplex{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbFloat{P}, y::ArbComplex{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbFloat{P}, y::ArbComplex{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbFloat{P}, y::ArbComplex{P}) where {P} = (^)(promote(x, y)...,)
-
-(+)(x::ArbReal{P}, y::ArbFloat{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbReal{P}, y::ArbFloat{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbReal{P}, y::ArbFloat{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbReal{P}, y::ArbFloat{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbReal{P}, y::ArbFloat{P}) where {P} = (^)(promote(x, y)...,)
-(+)(x::ArbFloat{P}, y::ArbReal{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbFloat{P}, y::ArbReal{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbFloat{P}, y::ArbReal{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbFloat{P}, y::ArbReal{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbFloat{P}, y::ArbReal{P}) where {P} = (^)(promote(x, y)...,)
-
-(+)(x::Mag, y::ArbFloat{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::Mag, y::ArbFloat{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::Mag, y::ArbFloat{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::Mag, y::ArbFloat{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::Mag, y::ArbFloat{P}) where {P} = (^)(promote(x, y)...,)
-(+)(x::ArbFloat{P}, y::Mag) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbFloat{P}, y::Mag) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbFloat{P}, y::Mag) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbFloat{P}, y::Mag) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbFloat{P}, y::Mag) where {P} = (^)(promote(x, y)...,)
-
-(+)(x::Mag, y::ArbReal{P}) where {P} = (+)(promote(x, y)...,)
-(-)(x::Mag, y::ArbReal{P}) where {P} = (-)(promote(x, y)...,)
-(*)(x::Mag, y::ArbReal{P}) where {P} = (*)(promote(x, y)...,)
-(/)(x::Mag, y::ArbReal{P}) where {P} = (/)(promote(x, y)...,)
-(^)(x::Mag, y::ArbReal{P}) where {P} = (^)(promote(x, y)...,)
-(+)(x::ArbReal{P}, y::Mag) where {P} = (+)(promote(x, y)...,)
-(-)(x::ArbReal{P}, y::Mag) where {P} = (-)(promote(x, y)...,)
-(*)(x::ArbReal{P}, y::Mag) where {P} = (*)(promote(x, y)...,)
-(/)(x::ArbReal{P}, y::Mag) where {P} = (/)(promote(x, y)...,)
-(^)(x::ArbReal{P}, y::Mag) where {P} = (^)(promote(x, y)...,)
-
-for F in (:(+), :(-), :(*), :(/), :(^))
-  @eval begin
-    ($F)(x::ArbFloat{P}, y::Integer) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::ArbReal{P}, y::Integer) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::ArbComplex{P}, y::Integer) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::ArbFloat{P}, y::AbstractFloat) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::ArbReal{P}, y::AbstractFloat) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::ArbComplex{P}, y::AbstractFloat) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::ArbComplex{P}, y::Complex) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::Integer, y::ArbFloat{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::Integer, y::ArbReal{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::Integer, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::IEEEFloat, y::ArbFloat{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::IEEEFloat, y::ArbReal{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::IEEEFloat, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
-    ($F)(x::Complex, y::ArbComplex{P}) where {P} = ($F)(promote(x, y)...,)
-  end
+function (^)(a::ArbNumber, b::Integer)
+    x = Base.power_by_squaring(a, abs(b))
+    b < 0 ? inv(x) : x
 end
+
 
 # interact with Bool
 

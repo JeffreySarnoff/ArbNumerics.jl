@@ -107,8 +107,8 @@ end
 
 function arbstring(x::ArbComplex{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     # rea, ima = real(x), imag(x)
-    rea = ArbReal(x)
-    ima = ArbReal(x)
+    rea = real(x)
+    ima = imag(x)
 
     ima_isneg = signbit(ima)
     connection = ima_isneg ? " - " : " + "

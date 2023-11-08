@@ -114,7 +114,7 @@ function (::Type{T})(x::ArbFloat, roundingmode::RoundingMode) where {T<:ArbInts}
     return convert(T, z)
 end
 function (::Type{T})(x::ArbFloat) where {T<:ArbInts}
-    if !( isinteger(x) && typemin(T) <= x <= typemax(T))
+    if !(isinteger(x) && typemin(T) <= x <= typemax(T))
         throw(InexactError(nameof(T), T, x))
         # attention: ccall segfaults, if result would become too large for Slong
     end
@@ -130,19 +130,17 @@ function (::Type{T})(x::ArbFloat{P}, roundingmode::RoundingMode) where {P,T<:Int
 end
 function (::Type{T})(x::ArbFloat{P}) where {P,T<:Integer}
     !isinteger(x) && throw(InexactError(nameof(T), T, x))
-    roundingmode = RoundNearest
-    y = round(x, roundingmode)
-    z = BigFloat(y; precision=P + 2)
+    z = BigFloat(x, precision=P + 2)
     return convert(T, z)
 end
 
 """
-    BigFloat(::ArbFloat; [precision=workingprecision(x), roundingmode=RoundNearest])
+    BigFloat(::ArbFloat, [roundingmode=RoundNearest]; [precision=workingprecision(x))
 
 Construct a `BigFloat`from an `ArbFloat`.
 """
-function BigFloat(x::ArbFloat; precision::Int=workingprecision(x), roundingmode::RoundingMode=RoundNearest)
-    rounding = match_rounding_mode(roundingmode)
+function BigFloat(x::ArbFloat, roundingmode::RoundingMode=RoundNearest; precision::Int=workingprecision(x))
+    rounding = mpfr_rounding_mode(roundingmode)
     z = BigFloat(0; precision)
     roundingdir = ccall(@libarb(arf_get_mpfr), Cint, (Ref{BigFloat}, Ref{ArbFloat}, Cint), z, x, rounding)
     return z

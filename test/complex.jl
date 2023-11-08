@@ -57,9 +57,9 @@
         @test ArbComplex{53}(1 + 2im) == 1 + 2im
         @test signbit(ac) == false
         @test signbits(ac) == (false, false)
-        @test sign(ac) == 1.0 # TODO that is incompatible with sign(::Complex); maybe rename
+        @test csign(ac) == 1.0 # the name `acb_csgn` is used in Arb.jll
         @test signs(ac) == (1, 1)
-        @test_broken sign(ac) ≈ ac / abs(ac)
+        @test sign(ac) ≈ ac / abs(ac)
         @test ArbComplex(fac) == ArbComplex(rac)
         @test copy(ac) == deepcopy(ac)
         @test ArbComplex(rac, fac) == Complex(rac, fac) == complex(rac, fac)
@@ -105,9 +105,10 @@
         @test copysign(-api, ArbFloat(-1)) == -api
         @test copysign(-api, ArbReal(0.0)) == api
 
-        @test sign(api) == 1
+        @test csign(api) == 1
         @test signs(api) == (1, -1)
         @test signs(ArbComplex(0)) == (0, 0)
+        @test sign(api) ≈ (1 - im) * sqrt(0.5) rtol=1e-16
 
         @test signbit(api) == false
         @test signbits(api) == (false, true)
