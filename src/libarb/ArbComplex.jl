@@ -36,16 +36,10 @@ ArbComplex{P}(::Real, ::Missing) where {P} = missing
 
 ArbComplex(x::T; kw...) where {T<:Number} = ArbComplex(real(x), imag(x); kw...)
 
-function ArbComplex(x::T, y::Real=0; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
-    bits = get_bits(bits, digits, base)
+function ArbComplex(x::T, y::Real; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Real}
+    bits = get_bits(bits, digits, base, x, y)
     iszero(y) ? ArbComplex{bits}(x) : ArbComplex{bits}(x, y)
 end
-
-ArbComplex(x::ArbNumber{P}) where {P} = ArbComplex{P}(x)
-
-ArbComplex(x::ArbFloatReal{P}, y::ArbFloatReal{S}) where {P,S} = ArbComplex{min(P, S)}(x, y)
-ArbComplex(x::ArbFloatReal{P}, y::Real) where {P} = ArbComplex{P}(x, y)
-ArbComplex(x::Real, y::ArbFloatReal{P}) where {P} = ArbComplex{P}(x, y)
 
 @inline sign_bit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = isodd(x.real_mid_size)
 @inline sign_bit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = isodd(x.imag_mid_size)

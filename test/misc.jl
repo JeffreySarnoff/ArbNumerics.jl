@@ -48,9 +48,19 @@
         @test copy(a, 24) == copy(a, 24, RoundUp)
         @test_throws DomainError copy(a, 10)
 
+        @test Float64(a) ≈ Float64(pi)
+        @test Float32(a) ≈ Float32(pi)
+        @test Float16(a) ≈ Float16(pi)
+        @test BigFloat(a) ≈ BigFloat(pi, precision=128)
+
         @test ArbFloat(typemax(UInt)) == typemax(UInt)
         @test ArbFloat(typemax(Int128)) == typemax(Int128)
         @test ArbFloat(1 // 3) ≈ ArbFloat(1) / ArbFloat(3)
+        @test ArbFloat(a, bits=25) isa ArbFloat{49}
+
+        @test ArbFloat{25}(ArbReal{26}(42)) == 42
+        @test ArbFloat{25}(ArbComplex{26}(42)) == 42
+        @test_throws InexactError ArbFloat{25}(ArbComplex{26}(1+im))
     end
 
     @testset "convert ArbFloat to Integer" begin
@@ -123,14 +133,22 @@
         @test copy(a) == a
         @test copy(a) !== a
 
-        ma = ArbNumerics.Mag(a)
-        @test Float64(ma) ≈ Float64(pi)
+        @test Float64(a) ≈ Float64(pi)
         @test Float32(a) ≈ Float32(pi)
         @test Float16(a) ≈ Float16(pi)
+        @test BigFloat(a) ≈ BigFloat(pi, precision=128)
+
+        ma = ArbNumerics.Mag(a)
+        @test Float64(ma) ≈ Float64(pi)
+        @test Float32(ma) ≈ Float32(pi)
+        @test Float16(ma) ≈ Float16(pi)
+        @test_throws MethodError BigFloat(ma) ≈ BigFloat(pi, precision=128)
 
         @test ArbReal(typemax(UInt)) == typemax(UInt)
         @test ArbReal(typemax(Int128)) == typemax(Int128)
         @test ArbReal(1 // 3) ≈ ArbReal(1) / ArbReal(3)
+        @test ArbReal(1 + 0im) == 1
+        @test ArbReal{25}(ArbComplex{26}(42)) == 42
     end
 
     @testset "convert ArbReal to Integer" begin

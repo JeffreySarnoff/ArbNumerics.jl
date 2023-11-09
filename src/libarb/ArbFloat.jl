@@ -21,31 +21,54 @@ ArbFloat{P}(x::ArbFloat{P}) where {P} = x
 ArbFloat(x::ArbFloat{P}) where {P} = x
 
 ArbFloat{P}(::Missing) where {P} = missing
-ArbFloat(::Missing) = missing
+ArbFloat(::Missing; kw...) = missing
 
 @inline sign_bit(x::ArbFloat{P}) where {P} = isodd(x.size)
 
-function ArbFloat(x::Union{AbstractFloat,AbstractIrrational,Integer}; kw...)
+function ArbFloat(x::Union{AbstractFloat,AbstractIrrational,Integer,ArbNumber}; kw...)
     _ArbFloat(x; kw...)
 end
-function ArbFloat(x::Union{Rational}; kw...)
+function ArbFloat(x::Rational; kw...)
     _ArbFloat(x; kw...)
 end
-function _ArbFloat(x::Real; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2)
-    bits = get_bits(bits, digits, base)
+function _ArbFloat(x::Number; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2)
+    bits = get_bits(bits, digits, base, x)
     ArbFloat{bits}(x)
 end
-function get_bits(bits, digits, base)
+
+function get_bits(bits, digits, base, x::ArbNumber{P}, y::ArbNumber{Q}) where {P,Q}
+    if bits == digits == 0
+        max(P, Q)
+    else
+        get_bits(bits, digits, base)
+    end
+end
+function get_bits(bits, digits, base, x::ArbNumber{P}, y::Any=0) where {P}
+    if bits == digits == 0
+        P
+    else
+        get_bits(bits, digits, base)
+    end
+end
+function get_bits(bits, digits, base, y::Any, x::ArbNumber{P}) where {P}
+    if bits == digits == 0
+        P
+    else
+        get_bits(bits, digits, base)
+    end
+end
+
+function get_bits(bits, digits, base, ::Any...)
     bits > 0 && bits < MINIMUM_PRECISION_BASE2 && throw(DomainError("bit precision $bits < $MINIMUM_PRECISION_BASE2"))
     digits > 0 && digits < MINIMUM_PRECISION_BASE10 && throw(DomainError("digit precision $digits < $MINIMUM_PRECISION_BASE10"))
     if base === 10
-        bits = digits > 0 ? bits4digits(digits) + extrabits() : (bits > 0 ? bits + extrabits() : DEFAULT_PRECISION.x)
+        bi = digits > 0 ? bits4digits(digits) + extrabits() : (bits > 0 ? bits + extrabits() : DEFAULT_PRECISION.x)
     elseif base === 2
-        bits = bits > 0 ? bits + extrabits() : (digits > 0 ? digits + extrabits() : DEFAULT_PRECISION.x)
+        bi = bits > 0 ? bits + extrabits() : (digits > 0 ? digits + extrabits() : DEFAULT_PRECISION.x)
     else
         throw(ErrorException("base expects 2 or 10"))
     end
-    bits
+    bi
 end
 
 function swap!(x::ArbFloat{P}, y::ArbFloat{P}) where {P}

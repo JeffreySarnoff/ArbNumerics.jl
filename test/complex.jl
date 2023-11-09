@@ -80,6 +80,8 @@
         @test ArbComplex{256}(1.0 + im) == ArbComplex(1 + im, bits=256)
         @test ArbComplex{256}(1.0 + im) == ArbComplex(1, 1, bits=256)
 
+        @test typeof(ArbComplex(1, ArbReal(2), bits=25)) == ArbComplex{49}
+
         @test 1e-38 <= abs(radius(ArbComplex(π))) <= 2e-38
 
         api = ArbComplex(pi, -pi) # note `-pi is Float64`
@@ -173,6 +175,18 @@
     @testset "ArbComplex(::Int, ::ArbComplex)" begin
         @test_throws MethodError ArbComplex(-12, ArbComplex(1))
         @test_throws MethodError ArbComplex(ArbComplex(1), 0)
+    end
+
+    @testset "(...)(::ArbComplex)" begin
+        ac = ArbComplex{64}(1 + pi*im)
+        @test Complex{BigFloat}(ac) ≈ ac
+        @test_throws InexactError Float64(ac)
+        @test_throws InexactError Int(ac)
+
+        ac = ArbComplex{64}(120000)
+        @test BigFloat(ac) == 120000
+        @test Int64(ac) == 120000
+        @test_throws InexactError Int16(ac)
     end
 
 end

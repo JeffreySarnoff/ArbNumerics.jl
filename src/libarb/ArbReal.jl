@@ -28,8 +28,12 @@ ArbReal(::Missing) = missing
 
 @inline sign_bit(x::ArbReal{P}) where {P} = isodd(x.mid_size)
 
-function ArbReal(x::T; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2) where {T<:Number}
-    bits = get_bits(bits, digits, base)
+function ArbReal(x::Real; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2)
+    bits = get_bits(bits, digits, base, x)
+    ArbReal{bits}(x)
+end
+function ArbReal(x::Complex; bits::Int=0, digits::Int=0, base::Int=iszero(bits) ? 10 : 2)
+    bits = get_bits(bits, digits, base, x)
     ArbReal{bits}(x)
 end
 

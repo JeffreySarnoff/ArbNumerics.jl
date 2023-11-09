@@ -21,7 +21,11 @@ end
 
 function (::Type{T})(x::ArbComplex{P}, rm::RoundingMode=RoundNearest) where {P,T<:IEEEFloat}
     isreal(x) || throw(InexactError(nameof(T), T, x))
-    T(ArbFloat(midpoint(real(x))), rm)
+    T(convert(ArbFloat, midpoint(real(x))), rm)
+end
+function BigFloat(x::ArbComplex{P}, rm::RoundingMode=RoundNearest) where {P}
+    isreal(x) || throw(InexactError(nameof(T), T, x))
+    BigFloat(convert(ArbFloat, midpoint(real(x))), rm)
 end
 
 function Complex{T}(x::ArbComplex{P}, rm::RoundingMode=RoundNearest) where {P,T<:Real}
@@ -61,25 +65,27 @@ ArbReal(x::Irrational) = ArbReal{workingprecision(ArbReal)}(x)
 
 # retype
 
-ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
-ArbReal(x::ArbFloat{P}) where {P} = ArbReal{P}(x)
-ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(x)
-ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(x)
-ArbReal(x::Complex) = ArbReal{workingprecision(ArbReal)}(x)
-ArbFloat(x::Complex) = ArbFloat{workingprecision(ArbFloat)}(x)
+#ArbFloat(x::ArbNumber{P}) where {P} = ArbFloat{P}(x)
+#ArbReal(x::ArbNumber{P}) where {P} = ArbReal{P}(x)
+#ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
+#ArbReal(x::ArbFloat{P}) where {P} = ArbReal{P}(x)
+#ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(x)
+#ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(x)
+#ArbReal(x::Complex) = ArbReal{workingprecision(ArbReal)}(x)
+#ArbFloat(x::Complex) = ArbFloat{workingprecision(ArbFloat)}(x)
 
-function _ArbFloatReal(::Type{T}, x::ArbComplex{P}) where {P,T<:ArbFloatReal}
+function convert_to_real(::Type{T}, x::ArbComplex{P}) where {P,T<:Real}
     if isreal(x)
         convert(T, real(x))
     else
-        throw(InexactError(:ArbReal, ArbReal, x))
+        throw(InexactError(nameof(T), T, x))
     end
 end
 
 ArbFloat{Q}(x::ArbReal{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(x))
 ArbReal{Q}(x::ArbFloat{P}) where {P,Q} = ArbReal{Q}(ArbFloat{Q}(x))
-ArbReal{Q}(x::ArbComplex) where {Q} = _ArbFloatReal(ArbReal{Q}, x)
-ArbFloat{Q}(x::ArbComplex) where {Q} = _ArbFloatReal(ArbFloat{Q}, x)
+ArbReal{Q}(x::ArbComplex) where {Q} = convert_to_real(ArbReal{Q}, x)
+ArbFloat{Q}(x::ArbComplex) where {Q} = convert_to_real(ArbFloat{Q}, x)
 
 # change precision
 
