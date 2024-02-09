@@ -27,23 +27,34 @@ const MpfrRoundFromZero = Cint(4) # RoundingMode{:FromZero}()
 
 # matched with Julia's terminology
 
+#=
 match_rounding_mode(::Type{Val{ArbRoundNearest}})      = RoundNearest
 match_rounding_mode(::Type{Val{ArbRoundDown}})         = RoundDown
 match_rounding_mode(::Type{Val{ArbRoundUp}})           = RoundUp
 match_rounding_mode(::Type{Val{ArbRoundToZero}})       = RoundToZero
 match_rounding_mode(::Type{Val{ArbRoundFromZero}})     = RoundFromZero
+=#
 
 match_rounding_mode(::Type{Val{RoundNearest}})         = ArbRoundNearest
 match_rounding_mode(::Type{Val{RoundDown}})            = ArbRoundDown
 match_rounding_mode(::Type{Val{RoundUp}})              = ArbRoundUp
 match_rounding_mode(::Type{Val{RoundToZero}})          = ArbRoundToZero
 match_rounding_mode(::Type{Val{RoundFromZero}})        = ArbRoundFromZero
-match_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = ArbRoundNearest
-match_rounding_mode(::Type{Val{RoundNearestTiesUp}})   = throw(ErrorException("RoundNearestTiesUp is not supported"))
+match_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = ArbRoundFromZero
+match_rounding_mode(::Type{Val{RoundNearestTiesUp}})   = ArbRoundUp
 
+mpfr_rounding_mode(::Type{Val{RoundNearest}})         = MpfrRoundNearest
+mpfr_rounding_mode(::Type{Val{RoundDown}})            = MpfrRoundDown
+mpfr_rounding_mode(::Type{Val{RoundUp}})              = MpfrRoundUp
+mpfr_rounding_mode(::Type{Val{RoundToZero}})          = MpfrRoundToZero
+mpfr_rounding_mode(::Type{Val{RoundFromZero}})        = MpfrRoundFromZero
+mpfr_rounding_mode(::Type{Val{RoundNearestTiesAway}}) = MpfrRoundFromZero
+mpfr_rounding_mode(::Type{Val{RoundNearestTiesUp}})   = MpfrRoundUp
 
 @inline match_rounding_mode(mode::Cint) =
     match_rounding_mode(Val{mode})
 
 @inline match_rounding_mode(mode::RoundingMode{S}) where {S} =
     match_rounding_mode(Val{mode})
+
+@inline mpfr_rounding_mode(mode::RoundingMode) = mpfr_rounding_mode(Val{mode})

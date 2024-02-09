@@ -37,7 +37,7 @@ export ArbNumber,
 
        inf, posinf, neginf, nan,
        typemax, typemin, floatmax, floatmin,
-       magnitude,     # complex magnitude, `angle` gives phase
+       magnitude, csign,    # complex magnitude, `angle` gives phase
 
        signs, signbits,
        significand_bits, relerror_bits, relaccuracy_bits,
@@ -50,7 +50,7 @@ export ArbNumber,
        addmul, submul, mulsub,
        square, cube, rsqrt, rcbrt, pow, root, loghypot,
        risingfactorial, doublefactorial,
-       tanpi, cotpi,
+       tanpi, cotpi, swap!,
 
        # special functions
        agm1, agm,
@@ -85,7 +85,7 @@ import Base: IEEEFloat,
        Float16, Float32, Float64, float,
        UInt8, UInt16, UInt32, UInt64, UInt128,
        Int8, Int16, Int32, Int64, Int128,
-       BigInt, BigFloat, Rational, Complex, real, imag, complex,
+       BigInt, BigFloat, Rational, Complex, real, imag, isreal, complex, angle,
        floatmax, floatmin, typemax, typemin, maxintfloat,
        rationalize,
 
@@ -153,6 +153,8 @@ using Libdl
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
 
+include("ArbTypes.jl")
+
 include("support/abstractions.jl")
 include("support/matrices.jl")
 
@@ -168,8 +170,6 @@ include("support/complex.jl")
 include("support/ArblibVector.jl")
 
 include("support/random.jl")
-
-const ArbNumber = Union{ArbFloat, ArbReal, ArbComplex}
 
 include("libarb/ArbMatrix.jl")  # must preceed ArbRealMatrix
 include("libarb/ArbRealMatrix.jl")  # must preceed ArbFloatMatrix

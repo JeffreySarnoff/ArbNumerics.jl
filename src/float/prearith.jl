@@ -4,11 +4,10 @@ signbit(x::ArbFloat{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
 
 signbit(x::ArbReal{P}) where {P} = isfinite(x) ? sign_bit(x) : isneginf(x)
 
-signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = signbit(real(x))
-signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = signbit(imag(x))
+signbit(x::ArbComplex{P}, ::Type{RealPart}) where {P} = sign_bit(x, RealPart)
+signbit(x::ArbComplex{P}, ::Type{ImagPart}) where {P} = sign_bit(x, ImagPart)
 signbit(x::ArbComplex{P}) where {P} = signbit(x, RealPart)
 signbits(x::ArbComplex{P}) where {P} = signbit(x, RealPart), signbit(x, ImagPart)
-
 
 function sign(x::ArbFloat{P}) where {P}
     thesgn = ccall(@libarb(arf_sgn), Cint, (Ref{ArbFloat},), x)
@@ -41,15 +40,31 @@ end
        and the sign of the imaginary part when z is on the imaginary axis.
 =#
 function sign(x::ArbComplex{P}) where {P}
+    z = ArbComplex{P}()
+    ccall(@libarb(acb_sgn), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Slong), z, x, P)
+    return z
+end
+"""
+    csign(::ArbComplex)
+
+Return the extension of the real sign function taking the value 1
+for z strictly in the right half plane, -1 for z strictly in the left half plane,
+and the sign of the imaginary part when z is on the imaginary axis.
+"""
+function csign(x::ArbComplex{P}) where {P}
     z = ArbReal{P}()
     ccall(@libarb(acb_csgn), Cvoid, (Ref{ArbReal}, Ref{ArbComplex}), z, x)
     return z
 end
 
+"""
+    signs(z::ArbComplex)
+
+Return (sign(real(z)), sign(imag(z)))
+"""
 function signs(x::ArbComplex{P}) where {P}
     return sign(real(x)), sign(imag(x))
 end
-
 
 function (-)(x::ArbFloat{P}) where {P}
     z = ArbFloat{P}()
@@ -91,36 +106,10 @@ abs2(x::ArbFloat{P})   where {P} = square( abs(x) )
 abs2(x::ArbReal{P})    where {P} = square( abs(x) )
 abs2(x::ArbComplex{P}) where {P} = square( abs(x) )
 
+# needed for GenericLinearAlgebra
 
-
-flipsign(x::ArbFloat{P}, y::U) where {P, U<:Unsigned} = +x
-copysign(x::ArbFloat{P}, y::U) where {P, U<:Unsigned} = +x
-
-flipsign(x::ArbFloat{P}, y::S) where {P, S<:Signed} = signbit(y) ? -x : x
-copysign(x::ArbFloat{P}, y::S) where {P, S<:Signed} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbFloat{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -x : x
-copysign(x::ArbFloat{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbReal{P}, y::U) where {P, U<:Unsigned} = +x
-copysign(x::ArbReal{P}, y::U) where {P, U<:Unsigned} = +x
-
-flipsign(x::ArbReal{P}, y::S) where {P, S<:Signed} = signbit(y) ? -x : x
-copysign(x::ArbReal{P}, y::S) where {P, S<:Signed} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbReal{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -x : x
-copysign(x::ArbReal{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbComplex{P}, y::U) where {P, U<:Unsigned} = +x
-copysign(x::ArbComplex{P}, y::U) where {P, U<:Unsigned} = +x
-
-flipsign(x::ArbComplex{P}, y::S) where {P, S<:Signed} = signbit(y) ? -x : x
-copysign(x::ArbComplex{P}, y::S) where {P, S<:Signed} = signbit(y) ? -abs(x) : abs(x)
-
-flipsign(x::ArbComplex{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? -x : x
-copysign(x::ArbComplex{P}, y::F) where {P, F<:AbstractFloat} = signbit(y) ? (signbit(x.re) ? x : -x) : x
-
-
+flipsign(x::ArbNumber, y::Real) = signbit(y) ? -x : x
+copysign(x::ArbNumber, y::Real) = (signbit(y) == signbit(x)) ? x : -x
 
 inv(x::ArbFloat{P}) where {P} = ArbFloat{P}( inv(ArbReal{P}(x)) )
 

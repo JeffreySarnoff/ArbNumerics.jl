@@ -86,7 +86,7 @@ trim_bits(x::Mag) = x
 
 function trim_bits(x::ArbFloat{P}, roundingmode::RoundingMode=RoundFromZero) where {P}
     nbits = significand_bits(x)
-    nbits == P && return x
+    (nbits == P || nbits == 0 ) && return x
     rounding = match_rounding_mode(roundingmode)
     z = ArbFloat{nbits}
     res = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, nbits, rounding)
@@ -108,16 +108,16 @@ end
 void arf_mag_set_ulp(mag_t res, const arf_t x, slong prec)
     Sets res to the magnitude of the unit in the last place (ulp) of x at precision prec.
 =#
-    
+
 
 function ulp(x::ArbFloat{P}) where {P}
     if isnan(x) || isinf(x)
         return ArbFloat{P}(NaN)
-    end    
+    end
     if !iszero(x)
         w = Mag()
         #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision P.
-        ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Clong), w, x, P)
+        ccall(@libarb(arf_mag_set_ulp), Cvoid, (Ref{Mag}, Ref{ArbFloat}, Slong), w, x, P)
         z = ArbFloat{P}(w)
     else
         z = ArbFloat{P}(2.0)^(-workingprecision(x))
@@ -128,7 +128,7 @@ end
 function eps(x::ArbFloat{P}) where {P}
     if isnan(x) || isinf(x)
         return ArbFloat{P}(NaN)
-    end    
+    end
     if !iszero(x)
         w = Mag()
         #   Sets z to the magnitude of the unit in the last place (ulp) of x at precision P.

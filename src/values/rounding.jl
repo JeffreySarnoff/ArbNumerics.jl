@@ -73,9 +73,11 @@ end
 
 # int arf_set_round(arf_t res, const arf_t x, slong prec, arf_rnd_t rnd)
 function roundbits(x::ArbFloat{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    minprec(sigbits, ArbFloat{P}, roundbits)
     sigbits >= P && return ArbFloat{sigbits}(x)
     z = ArbFloat{P}()
     rounding = match_rounding_mode(roundingmode)
+    # sigbits <= 0 evokes SIGSEGFAULT
     rounddir = ccall(@libarb(arf_set_round), Cint, (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, sigbits, rounding)
     return z
 end
@@ -100,8 +102,10 @@ rounddigits!(x::ArbFloat{P}, roundingmode::RoundingMode, digits::Int) where {P} 
 rounddigits!(x::ArbFloat{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, bits4digits(digits))
 
 function roundbits(x::ArbReal{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    minprec(sigbits, ArbReal{P}, roundbits)
     sigbits >= P && return ArbReal{sigbits}(x)
     z = ArbReal{P}()
+    # sigbits <= 0 evokes SIGSEGFAULT
     ccall(@libarb(arb_set_round), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, sigbits)
     return z
 end
@@ -125,8 +129,10 @@ rounddigits!(x::ArbReal{P}, roundingmode::RoundingMode, digits::Int) where {P} =
 rounddigits!(x::ArbReal{P}, digits::Int) where {P} = roundbits!(x, RoundNearest, bits4digits(digits))
 
 function roundbits(x::ArbComplex{P}, roundingmode::RoundingMode, sigbits::Int) where {P}
+    minprec(sigbits, ArbComplex{P}, roundbits)
     sigbits >= P && return ArbComplex{sigbits}(x)
     z = ArbComplex{P}()
+    # sigbits <= 0 evokes SIGSEGFAULT
     ccall(@libarb(acb_set_round), Cvoid, (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, sigbits)
     return z
 end
@@ -144,7 +150,16 @@ rounddigits(x::ArbComplex{P}, roundingmode::RoundingMode, digits::Int) where {P}
 
 rounddigits(x::ArbComplex{P}, digits::Int) where {P} = roundbits(x, RoundNearest, bits4digits(digits))
 
+function round(x::ArbFloat{P}, roundingmode::RoundingMode{:NearestTiesUp}; sigdigits::Integer, base::Integer=10) where {P}
+    _round(x, roundingmode, sigdigits, base)
+end
+function round(x::ArbFloat{P}, roundingmode::RoundingMode{:NearestTiesAway}; sigdigits::Integer, base::Integer=10) where {P}
+    _round(x, roundingmode, sigdigits, base)
+end
 function round(x::ArbFloat{P}, roundingmode::RoundingMode; sigdigits::Integer, base::Integer=10) where {P}
+    _round(x, roundingmode, sigdigits, base)
+end
+function _round(x::ArbFloat{P}, roundingmode::RoundingMode, sigdigits::Integer, base::Integer=10) where {P}
    r = round!(x, roundingmode, sigdigits=sigdigits, base=base)
    s = string(r)
    result = ArbFloat{P}(s)
@@ -201,7 +216,7 @@ function round!(x::ArbComplex{P}, roundingmode::RoundingMode; sigdigits::Integer
    end
 end
 
-    
+
 function roundfrac(x::ArbFloat{P}, roundingmode::RoundingMode, sigdigits::Integer, base::Integer) where {P}
    if base==10
        return rounddigits(x, roundingmode, sigdigits)
@@ -214,7 +229,7 @@ end
 
 
 
-#=    
+#=
 function round(x::ArbFloat{P}, bitprecision::Int) where {P}
     z = ArbFloat{P}()
     rounding = match_rounding_mode(RoundNearest)
@@ -237,18 +252,18 @@ function round(x::ArbComplex{P}, bitprecision::Int) where {P}
 end
 =#
 
-#=    
+#=
 for A in (:ArbFloat, :ArbReal, :ArbComplex)
   @eval begin
-    
+
     round(::Type{T}, x::$A{P}, rounding::RoundingMode=RoundNearest) where {P,T} =
        T(round(x, digits=P, base=rounding))
 
-    function round(x::$A{P}, rounding::RoundingMode=RoundNearest; 
+    function round(x::$A{P}, rounding::RoundingMode=RoundNearest;
                    sigdigits::Integer = 0, digits::Integer = 0, base = 10) where {P}
-        sigdigits = max(sigdigits, digits) 
+        sigdigits = max(sigdigits, digits)
         if base == 10
-            round(x, digits=digits4bits(sigdigits), base=rounding) 
+            round(x, digits=digits4bits(sigdigits), base=rounding)
         elseif base ==  2
             round(x, digits=sigdigits, base=rounding)
         else
@@ -256,7 +271,7 @@ for A in (:ArbFloat, :ArbReal, :ArbComplex)
         end
      end
   end
-                
+
 end
 =#
 
@@ -280,5 +295,3 @@ end
   integer, with ties (fractional values of 0.5) being rounded to the nearest even integer. Note that round may give
   incorrect results if the global rounding mode is changed (see rounding).
 =#
-
-

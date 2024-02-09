@@ -1,233 +1,122 @@
-@inline function ArbFloat(x)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbFloat{prec}(x)
-    return res
-end
-@inline function ArbReal(x)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbReal{prec}(x)
-    return res
-end
-
-@inline function ArbComplex(x)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x)
-    return res
-end
-
-@inline function ArbComplex(x, y)
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x, y)
-    return res
-end
-
-@inline function ArbComplex(x::I, y::T) where {I<:Integer, T<:AbstractFloat}
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(T(x), y)
-    return res
-end
-
-@inline function ArbComplex(x::T, y::I) where {I<:Integer, T<:AbstractFloat}
-    prec = DEFAULT_PRECISION.x
-    res  = ArbComplex{prec}(x, T(y))
-    return res
-end
-
 # IEEEFloat
 
 # rounds up (widens)
-function Float64(x::Mag)
+function (::Type{T})(x::Mag) where {T<:IEEEFloat}
     z = ccall(@libarb(mag_get_d), Float64, (Ref{Mag},), x)
-    return z
+    return convert(T, z)
 end
 
-function Float64(x::ArbFloat{P}) where {P}
-    rounding = match_rounding_mode(RoundNearest)
+function (::Type{T})(x::ArbFloat{P}, rm::RoundingMode=RoundNearest) where {P,T<:IEEEFloat}
+    rounding = match_rounding_mode(rm)
     z = ccall(@libarb(arf_get_d), Float64, (Ref{ArbFloat}, Cint), x, rounding)
-    return z
-end
-Float32(x::ArbFloat{P}) where {P} = Float32(Float64(x))
-Float16(x::ArbFloat{P}) where {P} = Float16(Float64(x))
-
-function Float64(x::ArbReal{P}) where {P}
-    x = midpoint(x)
-    y = ArbFloat{P}(x)
-    Float64(y)
-end
-Float32(x::ArbReal{P}) where {P} = Float32(Float64(x))
-Float16(x::ArbReal{P}) where {P} = Float16(Float64(x))
-
-function Float64(x::ArbComplex{P}) where {P}
-    x = midpoint(real(x))
-    y = ArbFloat{P}(x)
-    Float64(y)
-end
-Float32(x::ArbComplex{P}) where {P} = Float32(Float64(x))
-Float16(x::ArbComplex{P}) where {P} = Float16(Float64(x))
-
-function Float64(x::ArbFloat{P}, roundingmode::RoundingMode) where {P}
-    rounding = match_rounding_mode(roundingmode)
-    z = ccall(@libarb(arf_get_d), Float64, (Ref{ArbFloat}, Cint), x, rounding)
-    return z
-end
-Float32(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::ArbFloat{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
-
-function Float64(x::ArbReal{P}, roundingmode::RoundingMode) where {P}
-    x = midpoint(x)
-    y = ArbFloat{P}(x)
-    Float64(y, roundingmode)
-end
-Float32(x::ArbReal{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::ArbReal{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
-
-function Float64(x::ArbComplex{P}, roundingmode::RoundingMode) where {P}
-    x = midpoint(real(x))
-    y = ArbFloat{P}(x)
-    Float64(y, roundingmode)
-end
-Float32(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float32(Float64(x, roundingmode))
-Float16(x::ArbComplex{P}, roundingmode::RoundingMode) where {P} = Float16(Float64(x, roundingmode))
-
-
-function Complex{T}(x::ArbComplex{P}, roundingmode::RoundingMode) where {P, T<:IEEEFloat}
-   re = T(real(x), roundingmode)
-   im = T(imag(x), roundingmode)
-   return Complex{T}(re, im)
+    return convert(T, z)
 end
 
-Complex{T}(x::ArbComplex{P}) where {P, T<:IEEEFloat} = Complex{T}(x, RoundNearest)
-Complex(x::ArbComplex{P}) where {P} = Complex{Float64}(x, RoundNearest)
+function (::Type{T})(x::ArbReal{P}, rm::RoundingMode=RoundNearest) where {P,T<:IEEEFloat}
+    T(ArbFloat(midpoint(x)), rm)
+end
+function BigFloat(x::ArbReal{P}, rm::RoundingMode=RoundNearest) where {P}
+    BigFloat(convert(ArbFloat, midpoint(x)), rm)
+end
+
+function (::Type{T})(x::ArbComplex{P}, rm::RoundingMode=RoundNearest) where {P,T<:IEEEFloat}
+    isreal(x) || throw(InexactError(nameof(T), T, x))
+    T(convert(ArbFloat, midpoint(real(x))), rm)
+end
+function BigFloat(x::ArbComplex{P}, rm::RoundingMode=RoundNearest) where {P}
+    isreal(x) || throw(InexactError(nameof(T), T, x))
+    BigFloat(convert(ArbFloat, midpoint(real(x))), rm)
+end
+
+function Complex{T}(x::ArbComplex{P}, rm::RoundingMode=RoundNearest) where {P,T<:Real}
+    re = T(real(x), rm)
+    im = T(imag(x), rm)
+    return Complex{T}(re, im)
+end
 
 # integers
 
-for I in (:Int8, :Int16, :Int32, :Int64, :Int128)
-  @eval begin
-        
-    function $I(x::ArbFloat{P}) where {P}
-        !isinteger(x) && throw(InexactError("$(x) is not an integer"))
-        bi = BigInt(BigFloat(x))
-        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
-        return $I(bi)
-    end
+function (::Type{T})(x::ArbReal) where {T<:Integer}
+    isexact(x) || throw(InexactError(nameof(T), T, x))
+    T(ArbFloat(x))
+end
 
-    function $I(x::ArbReal{P}) where {P}   
-        (!isexact(x) | !isinteger(x)) && throw(InexactError("$(x) is not an integer"))
-        bi = BigInt(BigFloat(x))
-        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
-        return $I(bi)
-    end
-
-    function $I(x::ArbComplex{P}) where {P}   
-        (!isexact(x) | !isinteger(x) | !iszero(imag(x))) && throw(InexactError("$(x) is not an integer"))
-        bi = BigInt(BigFloat(x))
-        !(typemin($I) <= bi <= typemax($I)) && throw(InexactError("$(x)"))
-        return $I(bi)
-    end        
-        
-  end
+function (::Type{T})(x::ArbComplex) where {T<:Integer}
+    (isexact(x) && iszero(imag(x))) || throw(InexactError(nameof(T), T, x))
+    T(ArbFloat(x))
 end
 
 # Rational
 
-ArbFloat(x::T) where {S, T<:Rational{S}} = ArbFloat(x.num)/ArbFloat(x.den)
-ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(x.num)/ArbReal(x.den)
-ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(0))
-ArbComplex(x::T, y::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(y))
+#ArbFloat(x::T) where {S, T<:Rational{S}} = ArbFloat(x.num)/ArbFloat(x.den)
+#ArbReal(x::T) where {S, T<:Rational{S}} = ArbReal(x.num)/ArbReal(x.den)
+#ArbComplex(x::T) where {S, T<:Rational{S}} = ArbComplex(ArbReal(x), ArbReal(0))
+#ArbComplex(x::Rational, y::Rational) = ArbComplex(ArbReal(x), ArbReal(y))
 
 # Irrational
 
-function ArbReal{P}(x::Irrational{S}) where {P,S}
-   mid = ArbFloat{P}(x)
-   rad = ulp(mid)
-   return setball(mid, rad) 
+function ArbReal{P}(x::Irrational) where {P}
+    mid = ArbFloat{P}(x)
+    rad = ulp(mid)
+    return setball(mid, rad)
 end
 
-function ArbReal(x::Irrational{S}) where {S}
-   P = workingprecision(ArbReal)
-   mid = ArbFloat{P}(x)
-   rad = ulp(mid)
-   return setball(mid, rad) 
-end
-
-ArbComplex(x::Irrational{S}) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
-ArbComplex{P}(x::Irrational{S}) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
-ArbComplex(x::Irrational{S}, y::Real) where {S} = ArbComplex(ArbReal(x), ArbReal(0))
-ArbComplex{P}(x::Irrational{S}, y::Real) where {P,S} = ArbComplex{P}(ArbReal{P}(x), ArbReal{P}(0))
-
-# fallback
-
-ArbFloat{P}(x::T) where {P,T<:Real} = ArbFloat{P}(BigFloat(x))
-ArbFloat(x::T) where {T<:Real} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(x))
-ArbFloat{P}(x::T) where {P,T<:Complex} = ArbFloat{P}(BigFloat(real(x)))
-ArbFloat(x::T) where {T<:Complex} = ArbFloat{workingprecision(ArbFloat)}(BigFloat(real(x)))
-
-ArbReal{P}(x::T) where {P,T<:Real} = ArbReal{P}(BigFloat(x))
-ArbReal(x::T) where {T<:Real} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
-ArbReal{P}(x::T) where {P,T<:Complex} = ArbReal{P}(BigFloat(x))
-ArbReal(x::T) where {T<:Complex} = ArbReal{workingprecision(ArbReal)}(BigFloat(real(x)))
-
-ArbComplex{P}(x::BigInt) where {P} = ArbComplex{P}(ArbReal{P}(x))
-ArbComplex{P}(x::BigFloat) where {P} = ArbComplex{P}(ArbReal{P}(x))
-ArbComplex{P}(x::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x))
-#ArbComplex(x::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x))
-ArbComplex{P}(x::T, y::T) where {P,T<:Real} = ArbComplex{P}(BigFloat(x), BigFloat(y))
-#ArbComplex(x::T, y::T) where {T<:Real} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(x), BigFloat(y))
-ArbComplex{P}(x::T) where {P,T<:Complex} = ArbComplex{P}(BigFloat(real(x)), BigFloat(imag(x)))
-ArbComplex(x::T) where {T<:Complex} = ArbComplex{workingprecision(ArbComplex)}(BigFloat(real(x)), BigFloat(imag(x)))
+ArbReal(x::Irrational) = ArbReal{workingprecision(ArbReal)}(x)
 
 # retype
 
-ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
-ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(real(x))
-ArbReal(x::ArbFloat{P}) where {P} = ArbReal{P}(x)
-ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(real(x))
-# ArbComplex(x::ArbFloat{P}) where {P} = ArbComplex{P}(ArbReal{P}(x))
-# ArbComplex(x::ArbReal{P}) where {P} = ArbComplex{P}(x)
+#ArbFloat(x::ArbNumber{P}) where {P} = ArbFloat{P}(x)
+#ArbReal(x::ArbNumber{P}) where {P} = ArbReal{P}(x)
+#ArbFloat(x::ArbReal{P}) where {P} = ArbFloat{P}(x)
+#ArbReal(x::ArbFloat{P}) where {P} = ArbReal{P}(x)
+#ArbReal(x::ArbComplex{P}) where {P} = ArbReal{P}(x)
+#ArbFloat(x::ArbComplex{P}) where {P} = ArbFloat{P}(x)
+#ArbReal(x::Complex) = ArbReal{workingprecision(ArbReal)}(x)
+#ArbFloat(x::Complex) = ArbFloat{workingprecision(ArbFloat)}(x)
+
+function convert_to_real(::Type{T}, x::ArbComplex{P}) where {P,T<:Real}
+    if isreal(x)
+        convert(T, real(x))
+    else
+        throw(InexactError(nameof(T), T, x))
+    end
+end
 
 ArbFloat{Q}(x::ArbReal{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(x))
-ArbFloat{Q}(x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(ArbReal{Q}(real(x)))
 ArbReal{Q}(x::ArbFloat{P}) where {P,Q} = ArbReal{Q}(ArbFloat{Q}(x))
-ArbReal{Q}(x::ArbComplex{P}) where {P,Q} = ArbReal{Q}(real(x))
-ArbComplex{Q}(x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(ArbReal{Q}(ArbFloat{Q}(x)))
-ArbComplex{Q}(x::ArbReal{P}) where {P,Q} = ArbComplex{Q}(ArbReal{Q}(x))
-
-
-@inline convert(::Type{ArbFloat{Q}}, x::ArbReal{P}) where {P,Q} = ArbFloat{Q}(x)
-@inline convert(::Type{ArbFloat{Q}}, x::ArbComplex{P}) where {P,Q} = ArbFloat{Q}(x)
-@inline convert(::Type{ArbReal{Q}}, x::ArbFloat{P}) where {P,Q} = ArbReal{Q}(x)
-@inline convert(::Type{ArbReal{Q}}, x::ArbComplex{P}) where {P,Q} = ArbReal{Q}(x)
-@inline convert(::Type{ArbComplex{Q}}, x::ArbFloat{P}) where {P,Q} = ArbComplex{Q}(x)
-@inline convert(::Type{ArbComplex{Q}}, x::ArbReal{P}) where {P,Q} = ArbComplex{Q}(x)
-
+ArbReal{Q}(x::ArbComplex) where {Q} = convert_to_real(ArbReal{Q}, x)
+ArbFloat{Q}(x::ArbComplex) where {Q} = convert_to_real(ArbFloat{Q}, x)
 
 # change precision
 
 function ArbFloat{P}(x::ArbFloat{Q}, roundingmode::RoundingMode) where {P,Q}
+    minprec(P, ArbFloat)
     rounding = match_rounding_mode(roundingmode)
     z = ArbFloat{P}()
     rnd = ccall(@libarb(arf_set_round), Cint,
-                (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, P, rounding)
+        (Ref{ArbFloat}, Ref{ArbFloat}, Clong, Cint), z, x, P, rounding)
     return z
 end
 ArbFloat{P}(x::ArbFloat{Q}) where {P,Q} = ArbFloat{P}(x, RoundNearest)
 
 function ArbReal{P}(x::ArbReal{Q}) where {P,Q}
+    minprec(P, ArbReal)
     z = ArbReal{P}()
     ccall(@libarb(arb_set_round), Cvoid,
-          (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, P)
+        (Ref{ArbReal}, Ref{ArbReal}, Clong), z, x, P)
     return z
 end
 
 function ArbComplex{P}(x::ArbComplex{Q}) where {P,Q}
+    minprec(P, ArbComplex)
     z = ArbComplex{P}()
     ccall(@libarb(acb_set_round), Cvoid,
-          (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
+        (Ref{ArbComplex}, Ref{ArbComplex}, Clong), z, x, P)
     return z
 end
 
 # widen
 
-widen(::Type{ArbFloat{P}}) where {P} = ArbFloat{P+P+4}
-widen(::Type{ArbReal{P}}) where {P} = ArbReal{P+P+4}
-widen(::Type{ArbComplex{P}}) where {P} = ArbComplex{P+P+4}
+widen(::Type{ArbFloat{P}}) where {P} = ArbFloat{P + P + 4}
+widen(::Type{ArbReal{P}}) where {P} = ArbReal{P + P + 4}
+widen(::Type{ArbComplex{P}}) where {P} = ArbComplex{P + P + 4}
