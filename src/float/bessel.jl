@@ -3,6 +3,20 @@ const ST = Union{Int32, Int64, Float32, Float64}
 for (A,F) in ((:besselj, :arb_hypgeom_bessel_j), (:bessely, :arb_hypgeom_bessel_y),
               (:besseli, :arb_hypgeom_bessel_i), (:besselk, :arb_hypgeom_bessel_k))
     @eval begin
+        function ($A)(nu::Union{ST, ArbFloat{P}}, x::Union{ST, ArbFloat{P}}, prec::Int=P) where {P}
+            nu_ar = ArbReal{P}(nu)
+            x_ar = ArbReal{P}(x)
+            z = ArbReal{P}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+                                      z, nu_ar, x_ar, prec)
+        return z
+        end
+    end
+end
+
+for (A,F) in ((:besselj, :arb_hypgeom_bessel_j), (:bessely, :arb_hypgeom_bessel_y),
+              (:besseli, :arb_hypgeom_bessel_i), (:besselk, :arb_hypgeom_bessel_k))
+    @eval begin
         function ($A)(nu::ArbReal{P}, x::ArbReal{P}, prec::Int=P) where {P}
             z = ArbReal{P}()
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
