@@ -11,6 +11,30 @@ for (A,F) in ((:besselj, :arb_hypgeom_bessel_j), (:bessely, :arb_hypgeom_bessel_
                                       z, nu_ar, x_ar, prec)
         return z
         end
+        function ($A)(nu::ArbFloat{P}, x::ST, prec::Int=P) where {P}
+            nu_ar = ArbReal{prec}(nu)
+            x_ar = ArbReal{prec}(x)
+            z = ArbReal{prec}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+                                      z, nu_ar, x_ar, prec)
+            return z
+        end
+        function ($A)(nu::ArbFloat{P}, x::ArbFloat{P}, prec::Int=P) where {P}
+            nu_ar = ArbReal{prec}(nu)
+            x_ar = ArbReal{prec}(x)
+            z = ArbReal{prec}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+                                      z, nu_ar, x_ar, prec)
+            return z
+        end
+        function ($A)(nu::ArbFloat{P}, x::ArbFloat{Q}, prec::Int=max(P,Q)) where {P,Q}
+            nu_ar = ArbReal{prec}(nu)
+            x_ar = ArbReal{prec}(x)
+            z = ArbReal{prec}()
+            ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
+                                      z, nu_ar, x_ar, prec)
+            return z
+        end
     end
 end
 
