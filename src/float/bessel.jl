@@ -4,9 +4,9 @@ for (A,F) in ((:besselj, :arb_hypgeom_bessel_j), (:bessely, :arb_hypgeom_bessel_
               (:besseli, :arb_hypgeom_bessel_i), (:besselk, :arb_hypgeom_bessel_k))
     @eval begin
         function ($A)(nu::Union{ST, ArbFloat{P}}, x::Union{ST, ArbFloat{P}}, prec::Int=P) where {P}
-            nu_ar = ArbReal{P}(nu)
-            x_ar = ArbReal{P}(x)
-            z = ArbReal{P}()
+            nu_ar = ArbReal{prec}(nu)
+            x_ar = ArbReal{prec}(x)
+            z = ArbReal{prec}()
             ccall(@libarb($F), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Clong),
                                       z, nu_ar, x_ar, prec)
         return z
