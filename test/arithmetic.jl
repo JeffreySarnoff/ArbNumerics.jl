@@ -16,4 +16,8 @@ acb = inv(ArbComplex(3))
     @test Float64(arf / arf) == 1.0
     @test Float64(arb / arb) == 1.0
     @test Float64(acb / acb) == 1.0
+
+    @test arb + 1 isa ArbReal
+    @test 1.0 - arb isa ArbReal
+    @test arb * acb isa ArbComplex
 end
