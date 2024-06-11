@@ -77,7 +77,7 @@ export ArbNumber,
        determinant, inverse, fastmul, ⨱ # \timesbar
 
 import Base: IEEEFloat,
-       hash, promote_rule, promote_type, convert,
+       hash, promote_rule, convert,
        copy, deepcopy, string, show,
 
        zero, one,
