@@ -30,9 +30,9 @@ promote_rule(::Type{ArbFloat{P}}, ::Type{Rational{I}}) where {P,I} = ArbFloat{P}
 promote_rule(::Type{ArbReal{P}}, ::Type{Rational{I}}) where {P,I} = ArbReal{P}
 promote_rule(::Type{ArbComplex{P}}, ::Type{Rational{I}}) where {P,I} = ArbComplex{P}
 
-promote_rule(::Type{ArbFloat{P}}, ::Type{BigFloat}) where {P} = ArbFloat{P}
-promote_rule(::Type{ArbReal{P}}, ::Type{BigFloat}) where {P} = ArbReal{P}
-promote_rule(::Type{ArbComplex{P}}, ::Type{BigFloat}) where {P} = ArbComplex{P}
+promote_type(::Type{ArbFloat{P}}, ::Type{BigFloat}) where {P} = ArbFloat{P}
+promote_type(::Type{ArbReal{P}}, ::Type{BigFloat}) where {P} = ArbReal{P}
+promote_type(::Type{ArbComplex{P}}, ::Type{BigFloat}) where {P} = ArbComplex{P}
 
 promote_rule(::Type{ArbFloat{P}}, ::Type{I}) where {P, I<:Integer} = ArbFloat{P}
 promote_rule(::Type{ArbReal{P}}, ::Type{I}) where {P, I<:Integer} = ArbReal{P}
