@@ -57,7 +57,7 @@ function string(x::Mag, maxdigits::Int = maximin_digits(30), flags::UInt = NO_FL
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, y)
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
                       (Ref{ArbReal}, Clong, Culong), z, maxdigits, flags)
-    str = deepcopy( unsafe_string(pointer(unsafestr)) )
+    str = unsafe_string(unsafestr)
     ccall(@libflint(flint_free), Cvoid, (Cstring,), unsafestr)
     return str
 end
@@ -75,7 +75,7 @@ function arbstring(x::ArbFloat{P}, maxdigits::Int=digit_precision(P); flags::UIn
     ccall(@libarb(arb_set_arf), Cvoid, (Ref{ArbReal}, Ref{ArbFloat}), z, x)
     unsafestr = ccall(@libarb(arb_get_str), Cstring,
                       (Ref{ArbReal}, Clong, Culong), z, maxdigits, flags)
-    str = deepcopy( unsafe_string(pointer(unsafestr)) )
+    str = unsafe_string(unsafestr)
     str = trimzeros(str)
     ccall(@libflint(flint_free), Cvoid, (Cstring,), unsafestr)
     return str
@@ -93,7 +93,7 @@ stringall(x::ArbReal{P}; radius::Bool=false) where {P} =
 
 function arbstring(x::ArbReal{P}, maxdigits::Int=digit_precision(P); flags::UInt = NO_FLAGS) where {P}
     unsafestr = ccall(@libarb(arb_get_str), Cstring, (Ref{ArbReal}, Clong, Culong), x, maxdigits, flags)
-    str = deepcopy( unsafe_string(pointer(unsafestr)) )
+    str = unsafe_string(unsafestr)
     str = trimzeros(str)
     ccall(@libflint(flint_free), Cvoid, (Cstring,), unsafestr)
     return str
