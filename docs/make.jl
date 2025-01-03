@@ -9,6 +9,7 @@ makedocs(
         "The Types"                => "thetypes.md",
         "Setting Values"           => "settingvalues.md",
         "Seeing Values"            => "seeingvalues.md",
+        "Using Threads"            => "usingthreads.md",
         "Precisions"               => "precisions.md",
         "Rounding"                 => "rounding.md",
         "Elementary Functions"     => "mathfunctions.md",

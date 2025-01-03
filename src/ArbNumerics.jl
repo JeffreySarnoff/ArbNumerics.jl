@@ -126,15 +126,17 @@ import SpecialFunctions: gamma, lgamma, lfact, digamma, invdigamma, polygamma, t
      airyai, airyaiprime, airybi, airybiprime,
      besselj, besselj0, besselj1, bessely, bessely0, bessely1, besseli, besselk,
      eta, zeta
+     
+import Libdl     
+using FLINT_jll: libflint
 
-using Arb_jll
-
+# for backward compatibility
 macro libarb(function_name)
-    return (:($function_name), libarb)
+    return (:($function_name), libflint)
 end
 
 macro libflint(function_name)
-    return (:($function_name), Arb_jll.libflint)
+    return (:($function_name), libflint)
 end
 
 using  GenericLinearAlgebra
@@ -149,7 +151,6 @@ export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
 
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
-using Libdl
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
 
@@ -217,9 +218,40 @@ include("support/linearalgebra.jl")
 include("support/printf.jl")
 include("support/helptext.jl")
 
+import Hwloc: num_virtual_cores, num_physical_cores
 
 function __init__()
-    ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), Sys.CPU_THREADS)
+    
+    Chr(x::SubString{String}) = Char(x[1])
+
+    function posint(x)
+        y = 0
+        if isa(x, Integer) && x > 0
+            y = x
+        elseif isa(x, Real)
+            y = floor(Int, x)
+        elseif isa(x, Char) && isdigit(x)
+            y = parse(Int, x)
+        elseif isa(x, String)
+            x = strip(x)
+            chrs = map(Chr, split(x,""))
+            if all(isdigit.(chrs))
+                y = parse(Int, x)
+            end
+        end
+        y > 0 ? y : nothing
+    end
+
+    if haskey(ENV, "FLINT_NUM_THREADS") && ENV["FLINT_NUM_THREADS"] > "0"
+        threadcount = posint(ENV["FLINT_NUM_THREADS"])
+    elseif haskey(ENV, "ARB_NUM_THREADS") && ENV["ARB_NUM_THREADS"] > "0"
+        threadcount = posint(ENV["ARB_NUM_THREADS"])
+    else
+        threadcount = fld(num_physical_cores()^2//num_virtual_cores(), 1)
+        threadcount = max(threadcount, Sys.CPU_THREADS >> 1) 
+    end
+    threadcount = min(threadcount, Sys.CPU_THREADS - 1)
+    ccall(@libflint(flint_set_num_threads), Cvoid, (Cint,), threadcount)
     return nothing
 end
 

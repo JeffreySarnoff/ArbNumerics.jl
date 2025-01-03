@@ -1,0 +1,6 @@
+[general]
+library_name = "libflint3"
+output_file_path = "./LibFlint3.jl"
+module_name = "LibFlint3"
+jll_pkg_name = "Flint3_jll"
+export_symbol_prefixes = ["flint3_"]
