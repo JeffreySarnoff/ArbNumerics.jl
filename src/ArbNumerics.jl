@@ -154,10 +154,13 @@ import Base.MathConstants: π, ℯ, γ, φ, catalan
 using Random
 using Random: SamplerType, SamplerTrivial, CloseOpen01
 
+include("support/constants.jl")
+
 include("ArbTypes.jl")
 
 include("support/abstractions.jl")
 include("support/matrices.jl")
+include("support/minprec.jl")
 
 include("libarb/roundingmodes.jl")
 include("libarb/ArbMatrix.jl")
@@ -213,7 +216,7 @@ include("intervals/intervalparts.jl")
 include("intervals/complex_intervalparts.jl")
 include("intervals/eps_ulp.jl")
 
-include("support/minprec.jl")
+include("support/serialization.jl")
 include("support/linearalgebra.jl")
 include("support/printf.jl")
 include("support/helptext.jl")

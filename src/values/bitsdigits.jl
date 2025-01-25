@@ -1,8 +1,3 @@
-extrabits(nbits::Int) = nbits + precision(Float32)
-extrabits(x::ArbFloat{P})   where {P} = extrabits(P)
-extrabits(x::ArbReal{P})    where {P} = extrabits(P)
-extrabits(x::ArbComplex{P}) where {P} = extrabits(P)
-
 struct BitPrecision
     working::Int
     evinced::Int
@@ -34,13 +29,6 @@ function DigitPrecision(; working::Int=0, evinced::Int=0)
     evinced = digits2bits(evinced)
     BitPrecison(; working, evinced)
 end
-
-
-    
-
-
-
-
 
 # this many digits[bits] (are given by) that many bits[digits]
 # sum([abs(i-maximin_digits(maximin_bits(i))) for i=24:4000])
@@ -86,29 +74,7 @@ end
     floor(Int, digs)
 end
 
-#     working_precision exceeds evinced_precision
-
-# additional precision (more of the significant bits)
-#    absorbs some kinds of numerical jitter
-#    before any undesired resonance occurs
-const BitsOfStability  =  9
-
-# additional accuracy (more bits of the significand)
-#    may compensate for 1,2,3 ulp enclosure widenings
-const BitsOfAbsorption = 15
-
-const ExtraBits = Ref(BitsOfStability + BitsOfAbsorption)
-
-@inline workingbits(evincedbits) = evincedbits + ExtraBits.x
-@inline evincedbits(workingbits) = workingbits - ExtraBits.x
-
-
-# preset precisions
-const MINIMUM_PRECISION_BASE2 = 24
-const MINIMUM_PRECISION_BASE10 = 8
-const MINIMUM_PRECISION = MINIMUM_PRECISION_BASE2
-
-const DEFAULT_PRECISION = Ref(workingbits(128 - ExtraBits.x))
+# constants moved to support/constants.jl
 
 # these typed significands have this many signficant bits
 
@@ -176,6 +142,7 @@ function setworkingprecision(::Type{T}, n::Int) where {T<:ArbNumber}
 end
 
 extrabits() = ExtraBits.x
+extrabits(nbits::Int) = nbits + precision(Float32)
 
 extrabits(::Type{ArbFloat}) = ExtraBits.x
 extrabits(::Type{ArbReal}) = ExtraBits.x
