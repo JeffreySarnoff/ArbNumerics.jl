@@ -15,7 +15,7 @@ This package uses the [FLINT3 C library](https://flintlib.org/doc/), which encap
 -----
 
 # Notes for v1.6
-- There are reports of a few Mac OS versions (not the current version) having issues.
+- There are reports of Mac OS M1 with Julia v9, v10 having issues (v11 works).
     - If you find this use the prior version
       ```
       using Pkg
