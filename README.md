@@ -6,7 +6,7 @@
 
 For multiprecision numerical computing using values with 25..2,500 digits. With arithmetic and higher level mathematics, this package offers you the best balance of performance and accuracy.
 
-This package uses the [Arb C Library](http://arblib.org/index.html), and adapts some C library interface work from [Nemo](https://github.com/wbhart/Nemo.jl) (see [_below_](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)). Here is a presentation by the designer and architect of the [Arb C library](https://fredrikj.net/math/oxford2019.pdf).
+This package uses the [FLINT3 C library](https://flintlib.org/doc/), which encapsulates libarb, and adapts some C library interface work from [Nemo](https://github.com/wbhart/Nemo.jl) (see [_below_](https://github.com/JeffreySarnoff/ArbNumerics.jl/blob/master/README.md#acknowledgements)). Here is a presentation by the designer and architect of the [Arb C library](https://fredrikj.net/math/oxford2019.pdf).
 
 -----
 
@@ -14,10 +14,14 @@ This package uses the [Arb C Library](http://arblib.org/index.html), and adapts 
 
 -----
 
-# Note for v1.5
-### for now, use e.g. `besseli(0, ArbReal(1))` in place of `besseli(0, ArbFloat(1))`
-#### while I investigate the hiccup with ArbFloat used that way.
-
+# Notes for v1.6
+- There are reports of a few Mac OS versions (not the current version) having issues.
+    - If you find this use the prior version
+      ```
+      using Pkg
+      Pkg.add(name="ArbNumerics", version="1.5.4")
+      ```
+- Use ArbReals with bessel_ functions and any other special functions that do not expect ArbFloats.
 
 -----
 
