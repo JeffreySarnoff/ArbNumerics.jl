@@ -147,6 +147,7 @@ import LinearAlgebra: tr, det, transpose, transpose!, norm, lu, ldlt,
 export tr, det, transpose, transpose!, norm, mul!, lmul!, rmul!, lu, ldlt,
        cholesky, tril, tiru, eigvals, svdvals
 
+import Base: Matrix
 import Base.MathConstants: π, ℯ, γ, φ, catalan
 
 using Libdl
