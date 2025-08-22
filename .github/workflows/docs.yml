@@ -1,28 +1,57 @@
-name: Documentation
+name: Docs
 
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'LICENSE.md'
-      - 'README.md'
-    tags: ['*']
+    paths:
+      - "docs/**"
+      - "src/**"
+      - "*.toml"
+    tags: ["*"]
   pull_request:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "src/**"
+      - "*.toml"
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  # Skip intermediate builds: always.
+  # Cancel intermediate builds: only if it is a pull request build.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
-  build:
+  docs:
+    name: Documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: julia-actions/setup-julia@latest
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
         with:
-          version: '1.7'
-      - name: Install dependencies
-        run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
-      - name: Build and deploy
+          version: "1"
+      - name: Use Julia cache
+        uses: julia-actions/cache@v2
+      - name: Instantiate environment with development version of the package
+        run: |
+          julia --project=docs -e '
+            using Pkg
+            Pkg.develop(PackageSpec(path=pwd()))
+            Pkg.instantiate()'
+      - name: Run doctest
+        run: |
+          julia --project=docs -e '
+            using Documenter: DocMeta, doctest
+            using FloatsForML
+            DocMeta.setdocmeta!(FloatsForML, :DocTestSetup, :(using FloatsForML); recursive=true)
+            doctest(FloatsForML)'
+      - name: Generate and deploy documentation
+        run: julia --project=docs docs/make.jl
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # If authenticating with GitHub Actions token
-          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }} # If authenticating with SSH deploy key
-        run: julia --project=docs/ docs/make.jl
-        
+          JULIA_PKG_SERVER: ""
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
+          GKSwstype: "100" # https://discourse.julialang.org/t/generation-of-documentation-fails-qt-qpa-xcb-could-not-connect-to-display/60988
