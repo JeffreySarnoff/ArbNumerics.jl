@@ -3,29 +3,17 @@
 function (==)(x::Mag, y::Mag)
     0 != ccall(@libarb(mag_equal), Cint, (Ref{Mag}, Ref{Mag}), x, y)
 end
-function (!=)(x::Mag, y::Mag)
-    0 == ccall(@libarb(mag_equal), Cint, (Ref{Mag}, Ref{Mag}), x, y)
-end
 
 function (==)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     0 != ccall(@libarb(arf_equal), Cint, (Ref{ArbFloat}, Ref{ArbFloat}), x, y)
-end
-function (!=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
-    0 == ccall(@libarb(arf_equal), Cint, (Ref{ArbFloat}, Ref{ArbFloat}), x, y)
 end
 
 function (==)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     0 != ccall(@libarb(arb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
-function (!=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    0 == ccall(@libarb(arb_equal), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
-end
 
 function (==)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
     0 != ccall(@libarb(acb_equal), Cint, (Ref{ArbComplex}, Ref{ArbComplex}), x, y)
-end
-function (!=)(x::ArbComplex{P}, y::ArbComplex{P})  where {P}
-    0 == ccall(@libarb(acb_equal), Cint, (Ref{ArbComplex}, Ref{ArbComplex}), x, y)
 end
 
 
@@ -45,27 +33,15 @@ end
 function (<)(x::Mag, y::Mag)
     signbit(cmp(x, y))
 end
-function (>)(x::Mag, y::Mag)
-    signbit(cmp(y, x))
-end
 function (<=)(x::Mag, y::Mag)
     (x < y) || (x == y)
-end
-function (>=)(x::Mag, y::Mag)
-    (x > y) || (x == y)
 end
 
 function (<)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     signbit(cmp(x, y))
 end
-function (>)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
-    signbit(cmp(y, x))
-end
 function (<=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
     (x < y) || (x == y)
-end
-function (>=)(x::ArbFloat{P}, y::ArbFloat{P})  where {P}
-    (x > y) || (x == y)
 end
 
 function (<)(x::ArbReal{P}, y::ArbReal{P})  where {P}
@@ -74,26 +50,15 @@ function (<)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
-function (>)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    x = lowerbound(x)
-    y = upperbound(y)
-    0 != ccall(@libarb(arb_gt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
-end
-
 function (<=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     x < y ||
-    0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
-end
-
-function (>=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
-    x > y ||
     0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
 # ArbComplex comparisons < > <= >=
 
 
-for F in (:(==), :(!=), :(<), :(<=), :(>=), :(>), :isequal, :isless)
+for F in (:(==), :(<), :(<=), :isequal, :isless)
     @eval begin
         $F(x::ArbFloat{P}, y::T) where {P, T<:Integer} =
             $F(promote(x, y)...,)
