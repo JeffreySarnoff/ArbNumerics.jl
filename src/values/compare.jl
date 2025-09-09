@@ -50,8 +50,19 @@ function (<)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     0 != ccall(@libarb(arb_lt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
+function (>)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    x = lowerbound(x)
+    y = upperbound(y)
+    0 != ccall(@libarb(arb_gt), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+end
+
 function (<=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
     x < y ||
+    0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
+end
+
+function (>=)(x::ArbReal{P}, y::ArbReal{P})  where {P}
+    x > y ||
     0 != ccall(@libarb(arb_contains), Cint, (Ref{ArbReal}, Ref{ArbReal}), x, y)
 end
 
