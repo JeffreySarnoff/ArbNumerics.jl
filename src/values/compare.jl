@@ -69,7 +69,7 @@ end
 # ArbComplex comparisons < > <= >=
 
 
-for F in (:(==), :(<), :(<=), :isequal, :isless)
+for F in (:(==), :(<), :(<=), :(>=), :(>), :isequal, :isless)
     @eval begin
         $F(x::ArbFloat{P}, y::T) where {P, T<:Integer} =
             $F(promote(x, y)...,)
