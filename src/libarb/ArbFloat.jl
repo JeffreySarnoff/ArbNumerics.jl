@@ -107,7 +107,7 @@ end
 
 ArbFloat{P}(x::T) where {P,T<:Integer} = ArbFloat{P}(BigFloat(x, precision=P + 2))
 
-ArbFloat{P}(x::DoubleFloats.DoubleFloat{T}) where {P,T<:IEEEFloat} = ArbFloat{P}(x.hi) + ArbFloat{P}(x.lo)
+ArbFloat{P}(x::DoubleFloat{T}) where {P,T<:IEEEFloat} = ArbFloat{P}(x.hi) + ArbFloat{P}(x.lo)
 
 function ArbFloat{P}(x::Base.IEEEFloat) where {P}
     z = ArbFloat{P}()
