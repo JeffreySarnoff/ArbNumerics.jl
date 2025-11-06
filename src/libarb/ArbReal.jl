@@ -60,6 +60,9 @@ function ArbReal{P}(x::USlong) where {P}
 end
 ArbReal{P}(x::T) where {P, T<:Integer} = ArbReal{P}(BigFloat(x, precision=P + 2))
 
+ArbReal{P}(x::DoubleFloats.DoubleFloat{T}) where {P,T<:IEEEFloat} = ArbReal{P}(x.hi) + ArbReal{P}(x.lo)
+
+
 function ArbReal{P}(x::Base.IEEEFloat) where {P}
     z = ArbReal{P}()
     ccall(@libarb(arb_set_d), Cvoid, (Ref{ArbReal}, Cdouble), z, x)

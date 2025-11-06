@@ -169,25 +169,76 @@ function regular_hypergeometric_2F1(a::ArbReal{P}, b::ArbReal{P}, c::ArbReal{P},
     return result
 end
 
+"""
+    hypergeometric_gamma_lower(s, z)
+
+lower incomplete gamma function, ``small_gamma(s, z) = (z^s / s) * ₁F₁(s, s+1, -z)``
+"""
+function hypergeometric_gamma_lower(s::ArbReal{P}, z::ArbReal{P}) where {P}
+    result = ArbReal{P}()
+    regularized = Cint(0)
+    ccall(@libarb(arb_hypgeom_gamma_lower), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
+         result, s, z, regularized, P)
+    return result
+end
+
+"""
+    regular_hypergeometric_gamma_lower(s, z)
+
+regularized lower incomplete gamma function, ``P(s, z) = small_gamma(s, z) / gamma(s)``
+"""
+function regular_hypergeometric_gamma_lower(s::ArbReal{P}, z::ArbReal{P}) where {P}
+    result = ArbReal{P}()
+    regularized = Cint(1)
+    ccall(@libarb(arb_hypgeom_gamma_lower), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
+         result, s, z, regularized, P)
+    return result
+end
+
+"""
+    further_regular_hypergeometric_gamma_lower(s, z)
+
+'further' regularized lower incomplete gamma function, ``small_gamma_star(s, z) = z^-s * P(s, z)``
+"""
+function further_regular_hypergeometric_gamma_lower(s::ArbReal{P}, z::ArbReal{P}) where {P}
+    result = ArbReal{P}()
+    regularized = Cint(2)
+    ccall(@libarb(arb_hypgeom_gamma_lower), Cvoid, (Ref{ArbReal}, Ref{ArbReal}, Ref{ArbReal}, Cint, Clong),
+         result, s, z, regularized, P)
+    return result
+end
+
+
+
+
 # ArbFloat
 
 hypergeometric_0F1(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom0f1(ArbReal{P}(a), ArbReal{P}(z)))
+    ArbFloat{P}(hypergeometric_0F1(ArbReal{P}(a), ArbReal{P}(z)))
 
 hypergeometric_0F1_regularized(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom0f1reg(ArbReal{P}(a), ArbReal{P}(z)))
+    ArbFloat{P}(hypergeometric_0F1_regularized(ArbReal{P}(a), ArbReal{P}(z)))
 
-hypergeometric_U(a::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeomu(ArbReal{P}(a), ArbReal{P}(z)))
+hypergeometric_U(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(hypergeometric_U(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
 
 hypergeometric_1F1(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom1f1(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
+    ArbFloat{P}(hypergeometric_1F1(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
 
 hypergeometric_1F1_regularized(a::ArbFloat{P}, b::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom1f1reg(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
+    ArbFloat{P}(hypergeometric_1F1_regularized(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(z)))
 
 hypergeometric_1F2(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom1f2(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
+    ArbFloat{P}(hypergeometric_1F2(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
 
 hypergeometric_1F2_regularized(a::ArbFloat{P}, b::ArbFloat{P}, c::ArbFloat{P}, z::ArbFloat{P}) where {P} =
-    ArbFloat{P}(hypgeom1f2reg(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
+    ArbFloat{P}(hypergeometric_1F2_regularized(ArbReal{P}(a), ArbReal{P}(b), ArbReal{P}(c), ArbReal{P}(z)))
+
+hypergeometric_gamma_lower(s::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(hypergeometric_gamma_lower(ArbReal{P}(s), ArbReal{P}(z)))
+
+regular_hypergeometric_gamma_lower(s::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(hypergeometric_gamma_lower(ArbReal{P}(s), ArbReal{P}(z)))
+
+further_regular_hypergeometric_gamma_lower(s::ArbFloat{P}, z::ArbFloat{P}) where {P} =
+    ArbFloat{P}(further_hypergeometric_gamma_lower(ArbReal{P}(s), ArbReal{P}(z)))
