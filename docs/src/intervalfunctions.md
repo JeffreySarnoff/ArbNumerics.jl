@@ -1,3 +1,5 @@
+# Interval Functions
+
 _Where `x` is an `ArbReal` value and other values are `ArbFloat`s._
 
 ## parts

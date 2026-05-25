@@ -1,3 +1,5 @@
+# Seeing Values
+
 ## show, showall, string, stringall
 ```julia
 using ArbNumerics

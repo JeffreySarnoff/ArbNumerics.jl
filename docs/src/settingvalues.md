@@ -1,3 +1,5 @@
+# Setting Values
+
 ## Set a Floating Point value
 
 To set a floating point value with 100 bits of precision
@@ -57,4 +59,3 @@ re = ArbReal(1.0, digits=30)
 im = ArbReal(0.5, digits=30)
 ArbComplex(re, im)
 ```
-
