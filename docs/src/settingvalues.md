@@ -1,21 +1,27 @@
+```@meta
+DocTestSetup = :(using ArbNumerics)
+```
+
 # Setting Values
 
 ## Set a Floating Point value
 
 To set a floating point value with 100 bits of precision
-```julia
+```jldoctest
 julia> two = ArbFloat(2, bits=100)
 2.0
+
 julia> sqrt2 = sqrt(two)
-1.41421356237309504880168872421
+1.4142135623730950488016887242096980785748735510732
 ```
 
 To set a floating point value with a precision of 30 digits
-```julia
+```jldoctest
 julia> two = ArbFloat(2, digits=30)
 2.0
+
 julia> sqrt2 = sqrt(two)
-1.41421356237309504880168872421
+1.41421356237309504880168872420969807857487355107319
 ```
 
 ## Set a Real enclosure
