@@ -1,3 +1,5 @@
+# Precisions
+
 ## available precision
 
 - The minimum precision is 24 significant bits, or 8 significant digits.
@@ -64,9 +66,9 @@ When computing for production or for presentation
  - use `setextrabits` once only, and at the start
  - modifying `extrabits` may reduce reliablility
  - changing a variables' precision is reliable
- 
 
-## finding precisions 
+
+## finding precisions
 
 - `precision(<ArbNumber>)` gives the number signficant bits displayed
 - `workingprecision(<ArbNumber>)` gives the internal bit precision

@@ -7,5 +7,6 @@ lcov.info
 Manifest.toml
 settings.json
 deps/deps.jl
+docs/build
 gen/
 src/clang/arblib_api.*

@@ -3,7 +3,8 @@ function rand(rng::AbstractRNG, ::Random.SamplerTrivial{Random.CloseOpen01{ArbFl
     setprecision(BigFloat, P)
     bfrand = rand(rng, BigFloat, dims...)
     result = ArbFloat{P}.(bfrand)
-    setprecision(BigFloat, bfprec); println("ok")
+    setprecision(BigFloat, bfprec)
+    # println("ok")
     return result
 end
 
@@ -21,7 +22,8 @@ function rand(rng::AbstractRNG, ::Random.SamplerTrivial{Random.CloseOpen01{ArbRe
     setprecision(BigFloat, P)
     bfrand = rand(rng, BigFloat, dims...)
     result = ArbReal{P}.(bfrand)
-    setprecision(BigFloat, bfprec); println("ok")
+    setprecision(BigFloat, bfprec)
+    # println("ok")
     return result
 end
 
